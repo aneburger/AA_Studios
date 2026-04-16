@@ -1,0 +1,64 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.2.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MarshRooms!", "MarshRooms!", "{D847FD93-8FFB-61B0-8232-EE65302C38FD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp", "MarshRooms!\Assembly-CSharp.csproj", "{0CDC108B-634A-7BA7-B95C-09F1560BA887}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity.InputSystem", "MarshRooms!\Unity.InputSystem.csproj", "{678D88ED-AC2E-FB37-306A-3AF89B061031}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity.InputSystem.DocCodeSamples", "MarshRooms!\Unity.InputSystem.DocCodeSamples.csproj", "{2CDC5F51-28C4-17C7-97DC-F6CDCB1F2EBE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity.InputSystem.ForUI", "MarshRooms!\Unity.InputSystem.ForUI.csproj", "{8F2ACAE8-FCC5-18D8-06B1-E4D2D7BF2FC0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity.InputSystem.IntegrationTests", "MarshRooms!\Unity.InputSystem.IntegrationTests.csproj", "{6459A1E8-A048-99CC-2419-FC7FB4A088CA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity.InputSystem.TestFramework", "MarshRooms!\Unity.InputSystem.TestFramework.csproj", "{408E3A0D-63C1-0E7E-D24E-4DBF5C92467E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0CDC108B-634A-7BA7-B95C-09F1560BA887}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0CDC108B-634A-7BA7-B95C-09F1560BA887}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0CDC108B-634A-7BA7-B95C-09F1560BA887}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0CDC108B-634A-7BA7-B95C-09F1560BA887}.Release|Any CPU.Build.0 = Release|Any CPU
+		{678D88ED-AC2E-FB37-306A-3AF89B061031}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{678D88ED-AC2E-FB37-306A-3AF89B061031}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{678D88ED-AC2E-FB37-306A-3AF89B061031}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{678D88ED-AC2E-FB37-306A-3AF89B061031}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2CDC5F51-28C4-17C7-97DC-F6CDCB1F2EBE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2CDC5F51-28C4-17C7-97DC-F6CDCB1F2EBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2CDC5F51-28C4-17C7-97DC-F6CDCB1F2EBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2CDC5F51-28C4-17C7-97DC-F6CDCB1F2EBE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F2ACAE8-FCC5-18D8-06B1-E4D2D7BF2FC0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F2ACAE8-FCC5-18D8-06B1-E4D2D7BF2FC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F2ACAE8-FCC5-18D8-06B1-E4D2D7BF2FC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F2ACAE8-FCC5-18D8-06B1-E4D2D7BF2FC0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6459A1E8-A048-99CC-2419-FC7FB4A088CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6459A1E8-A048-99CC-2419-FC7FB4A088CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6459A1E8-A048-99CC-2419-FC7FB4A088CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6459A1E8-A048-99CC-2419-FC7FB4A088CA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{408E3A0D-63C1-0E7E-D24E-4DBF5C92467E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{408E3A0D-63C1-0E7E-D24E-4DBF5C92467E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{408E3A0D-63C1-0E7E-D24E-4DBF5C92467E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{408E3A0D-63C1-0E7E-D24E-4DBF5C92467E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{0CDC108B-634A-7BA7-B95C-09F1560BA887} = {D847FD93-8FFB-61B0-8232-EE65302C38FD}
+		{678D88ED-AC2E-FB37-306A-3AF89B061031} = {D847FD93-8FFB-61B0-8232-EE65302C38FD}
+		{2CDC5F51-28C4-17C7-97DC-F6CDCB1F2EBE} = {D847FD93-8FFB-61B0-8232-EE65302C38FD}
+		{8F2ACAE8-FCC5-18D8-06B1-E4D2D7BF2FC0} = {D847FD93-8FFB-61B0-8232-EE65302C38FD}
+		{6459A1E8-A048-99CC-2419-FC7FB4A088CA} = {D847FD93-8FFB-61B0-8232-EE65302C38FD}
+		{408E3A0D-63C1-0E7E-D24E-4DBF5C92467E} = {D847FD93-8FFB-61B0-8232-EE65302C38FD}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C2DCB133-E95F-4321-ADD9-CE3DA05D4F95}
+	EndGlobalSection
+EndGlobal
