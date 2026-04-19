@@ -1,79 +1,91 @@
 fileFormatVersion: 2
-guid: 8756dabada3e5e64c9d632821506e88c
+guid: 1f14bf02d9317e549af6fa4eef1f7d76
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 4859111369432227376
-    second: marsh-idle_0
+      213: -7264351296683859198
+    second: marsht-hurt_0
   - first:
-      213: 1510097912983026349
-    second: marsh-idle_1
+      213: 7648519275347617625
+    second: marsht-hurt_1
   - first:
-      213: 1833911726018912801
-    second: marsh-idle_2
+      213: -7145255475799631550
+    second: marsht-hurt_2
   - first:
-      213: -5564815004886356989
-    second: marsh-idle_3
+      213: 751482266029879730
+    second: marsht-hurt_3
   - first:
-      213: 2527888014332491514
-    second: marsh-idle_4
+      213: 7712131396727798769
+    second: marsht-hurt_4
   - first:
-      213: -9194912399932058476
-    second: marsh-idle_5
+      213: -3132542657065999890
+    second: marsht-hurt_5
   - first:
-      213: -5537549095807393598
-    second: marsh-idle_6
+      213: 170647986799323719
+    second: marsht-hurt_6
   - first:
-      213: 983133446492209907
-    second: marsh-idle_7
+      213: -8979546905991118094
+    second: marsht-hurt_7
   - first:
-      213: 499540502285889489
-    second: marsh-idle_8
+      213: -5721277901205664591
+    second: marsht-hurt_8
   - first:
-      213: 831789393829170263
-    second: marsh-idle_9
+      213: -4279017271369711253
+    second: marsht-hurt_9
   - first:
-      213: -2606192891955470059
-    second: marsh-idle_10
+      213: 6856513892179861298
+    second: marsht-hurt_10
   - first:
-      213: -8933540762134067723
-    second: marsh-idle_11
+      213: -8713985527084685197
+    second: marsht-hurt_11
   - first:
-      213: 8360069459718488769
-    second: marsh-idle_12
+      213: 7461338866415704903
+    second: marsht-hurt_12
   - first:
-      213: 657301845869981712
-    second: marsh-idle_13
+      213: 8983552533374750943
+    second: marsht-hurt_13
   - first:
-      213: -9154240347085681578
-    second: marsh-idle_14
+      213: -8077736611141191832
+    second: marsht-hurt_14
   - first:
-      213: -3110992608161748588
-    second: marsh-idle_15
+      213: -7884539787360933088
+    second: marsht-hurt_15
   - first:
-      213: -1988898017751613686
-    second: marsh-idle_16
+      213: 6394715847846094217
+    second: marsht-hurt_16
   - first:
-      213: -3057189636658574852
-    second: marsh-idle_17
+      213: -7213234477489339894
+    second: marsht-hurt_17
   - first:
-      213: -880803214593648721
-    second: marsh-idle_18
+      213: -7406081212558373734
+    second: marsht-hurt_18
   - first:
-      213: 869619231074116552
-    second: marsh-idle_19
+      213: -8938264599383961174
+    second: marsht-hurt_19
   - first:
-      213: 8745382415170643893
-    second: marsh-idle_20
+      213: 299505425065872510
+    second: marsht-hurt_20
   - first:
-      213: 2309630648089644036
-    second: marsh-idle_21
+      213: -5157494607571294734
+    second: marsht-hurt_21
   - first:
-      213: 3045753918030164350
-    second: marsh-idle_22
+      213: -5747829154211257743
+    second: marsht-hurt_22
   - first:
-      213: 2532859419500481596
-    second: marsh-idle_23
+      213: -5101957116260316629
+    second: marsht-hurt_23
+  - first:
+      213: 8503780060242907787
+    second: marsht-hurt_24
+  - first:
+      213: 994749446399816346
+    second: marsht-hurt_25
+  - first:
+      213: -8895606889577080694
+    second: marsht-hurt_26
+  - first:
+      213: 2448242495987527510
+    second: marsht-hurt_27
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -182,13 +194,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: marsh-idle_0
+      name: marsht-hurt_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 90
-        width: 30
-        height: 30
+        y: 81
+        width: 27
+        height: 27
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -197,20 +209,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 03ed11bbb080f6340800000000000000
-      internalID: 4859111369432227376
+      spriteID: 203a28ddbf6df2b90800000000000000
+      internalID: -7264351296683859198
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: marsh-idle_1
+      name: marsht-hurt_1
       rect:
         serializedVersion: 2
-        x: 30
-        y: 90
-        width: 30
-        height: 30
+        x: 27
+        y: 81
+        width: 27
+        height: 27
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -219,20 +231,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: daa796f0d02f4f410800000000000000
-      internalID: 1510097912983026349
+      spriteID: 957a2d0e1cff42a60800000000000000
+      internalID: 7648519275347617625
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: marsh-idle_2
+      name: marsht-hurt_2
       rect:
         serializedVersion: 2
-        x: 60
-        y: 90
-        width: 30
-        height: 30
+        x: 54
+        y: 81
+        width: 27
+        height: 27
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -241,20 +253,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 122e7c29ffc537910800000000000000
-      internalID: 1833911726018912801
+      spriteID: 2495c8f7004f6dc90800000000000000
+      internalID: -7145255475799631550
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: marsh-idle_3
+      name: marsht-hurt_3
       rect:
         serializedVersion: 2
-        x: 90
-        y: 90
-        width: 30
-        height: 30
+        x: 81
+        y: 81
+        width: 27
+        height: 27
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -263,20 +275,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 30c2cf89c3ec5c2b0800000000000000
-      internalID: -5564815004886356989
+      spriteID: 2b177b1b32dcd6a00800000000000000
+      internalID: 751482266029879730
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: marsh-idle_4
+      name: marsht-hurt_4
       rect:
         serializedVersion: 2
-        x: 120
-        y: 90
-        width: 30
-        height: 30
+        x: 108
+        y: 81
+        width: 27
+        height: 27
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -285,20 +297,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: af6714671ccd41320800000000000000
-      internalID: 2527888014332491514
+      spriteID: 1fbf81b05aef60b60800000000000000
+      internalID: 7712131396727798769
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: marsh-idle_5
+      name: marsht-hurt_5
       rect:
         serializedVersion: 2
-        x: 150
-        y: 90
-        width: 30
-        height: 30
+        x: 135
+        y: 81
+        width: 27
+        height: 27
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -307,152 +319,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 494173593eb156080800000000000000
-      internalID: -9194912399932058476
+      spriteID: ee1a2d1ec09f684d0800000000000000
+      internalID: -3132542657065999890
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: marsh-idle_6
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 60
-        width: 30
-        height: 30
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 2c06d12cf6ca623b0800000000000000
-      internalID: -5537549095807393598
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: marsh-idle_7
-      rect:
-        serializedVersion: 2
-        x: 30
-        y: 60
-        width: 30
-        height: 30
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 3f249f429aac4ad00800000000000000
-      internalID: 983133446492209907
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: marsh-idle_8
-      rect:
-        serializedVersion: 2
-        x: 60
-        y: 60
-        width: 30
-        height: 30
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 1dfabada079bee600800000000000000
-      internalID: 499540502285889489
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: marsh-idle_9
-      rect:
-        serializedVersion: 2
-        x: 90
-        y: 60
-        width: 30
-        height: 30
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 75c0023fb0c1b8b00800000000000000
-      internalID: 831789393829170263
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: marsh-idle_10
-      rect:
-        serializedVersion: 2
-        x: 120
-        y: 60
-        width: 30
-        height: 30
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 511a8da7f51f4dbd0800000000000000
-      internalID: -2606192891955470059
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: marsh-idle_11
-      rect:
-        serializedVersion: 2
-        x: 150
-        y: 60
-        width: 30
-        height: 30
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 5f5c68e3200b50480800000000000000
-      internalID: -8933540762134067723
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: marsh-idle_12
+      name: marsht-hurt_6
       rect:
         serializedVersion: 2
         x: 0
-        y: 30
-        width: 30
-        height: 30
+        y: 54
+        width: 27
+        height: 27
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -461,20 +341,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 1c2cc1c41eee40470800000000000000
-      internalID: 8360069459718488769
+      spriteID: 74a2fca90734e5200800000000000000
+      internalID: 170647986799323719
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: marsh-idle_13
+      name: marsht-hurt_7
       rect:
         serializedVersion: 2
-        x: 30
-        y: 30
-        width: 30
-        height: 30
+        x: 27
+        y: 54
+        width: 27
+        height: 27
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -483,20 +363,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 010f949db843f1900800000000000000
-      internalID: 657301845869981712
+      spriteID: 2f201782aad326380800000000000000
+      internalID: -8979546905991118094
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: marsh-idle_14
+      name: marsht-hurt_8
       rect:
         serializedVersion: 2
-        x: 60
-        y: 30
-        width: 30
-        height: 30
+        x: 54
+        y: 54
+        width: 27
+        height: 27
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -505,20 +385,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 65cc863d7ea95f080800000000000000
-      internalID: -9154240347085681578
+      spriteID: 1bc085dbf00f990b0800000000000000
+      internalID: -5721277901205664591
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: marsh-idle_15
+      name: marsht-hurt_9
       rect:
         serializedVersion: 2
-        x: 90
-        y: 30
-        width: 30
-        height: 30
+        x: 81
+        y: 54
+        width: 27
+        height: 27
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -527,20 +407,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 49927a3a4b883d4d0800000000000000
-      internalID: -3110992608161748588
+      spriteID: b614f308670ed94c0800000000000000
+      internalID: -4279017271369711253
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: marsh-idle_16
+      name: marsht-hurt_10
       rect:
         serializedVersion: 2
-        x: 120
-        y: 30
-        width: 30
-        height: 30
+        x: 108
+        y: 54
+        width: 27
+        height: 27
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -549,20 +429,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: a0fbf6d5ac30664e0800000000000000
-      internalID: -1988898017751613686
+      spriteID: 23f59ecbe0b372f50800000000000000
+      internalID: 6856513892179861298
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: marsh-idle_17
+      name: marsht-hurt_11
       rect:
         serializedVersion: 2
-        x: 150
-        y: 30
-        width: 30
-        height: 30
+        x: 135
+        y: 54
+        width: 27
+        height: 27
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -571,20 +451,152 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: cf9c5ff193ea295d0800000000000000
-      internalID: -3057189636658574852
+      spriteID: 378e830f454b11780800000000000000
+      internalID: -8713985527084685197
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: marsh-idle_18
+      name: marsht-hurt_12
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 27
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 74b1689ca200c8760800000000000000
+      internalID: 7461338866415704903
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: marsht-hurt_13
+      rect:
+        serializedVersion: 2
+        x: 27
+        y: 27
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fd0dcd4ae6dfbac70800000000000000
+      internalID: 8983552533374750943
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: marsht-hurt_14
+      rect:
+        serializedVersion: 2
+        x: 54
+        y: 27
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 867f2cf895d16ef80800000000000000
+      internalID: -8077736611141191832
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: marsht-hurt_15
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 27
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 02beae466dc749290800000000000000
+      internalID: -7884539787360933088
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: marsht-hurt_16
+      rect:
+        serializedVersion: 2
+        x: 108
+        y: 27
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9856d66de289eb850800000000000000
+      internalID: 6394715847846094217
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: marsht-hurt_17
+      rect:
+        serializedVersion: 2
+        x: 135
+        y: 27
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a02c5a7c57175eb90800000000000000
+      internalID: -7213234477489339894
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: marsht-hurt_18
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 30
-        height: 30
+        width: 27
+        height: 27
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -593,20 +605,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: fa79f1d9422c6c3f0800000000000000
-      internalID: -880803214593648721
+      spriteID: a9c83c35060583990800000000000000
+      internalID: -7406081212558373734
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: marsh-idle_19
+      name: marsht-hurt_19
       rect:
         serializedVersion: 2
-        x: 30
+        x: 27
         y: 0
-        width: 30
-        height: 30
+        width: 27
+        height: 27
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -615,20 +627,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 8c3650e4512811c00800000000000000
-      internalID: 869619231074116552
+      spriteID: aa1154d24b7e4f380800000000000000
+      internalID: -8938264599383961174
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: marsh-idle_20
+      name: marsht-hurt_20
       rect:
         serializedVersion: 2
-        x: 60
+        x: 54
         y: 0
-        width: 30
-        height: 30
+        width: 27
+        height: 27
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -637,20 +649,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 5b7a139b8f6dd5970800000000000000
-      internalID: 8745382415170643893
+      spriteID: e7c8a55e89e082400800000000000000
+      internalID: 299505425065872510
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: marsh-idle_21
+      name: marsht-hurt_21
       rect:
         serializedVersion: 2
-        x: 90
+        x: 81
         y: 0
-        width: 30
-        height: 30
+        width: 27
+        height: 27
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -659,20 +671,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 40c0db566d47d0020800000000000000
-      internalID: 2309630648089644036
+      spriteID: 2f568b0eaf5ec68b0800000000000000
+      internalID: -5157494607571294734
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: marsh-idle_22
+      name: marsht-hurt_22
       rect:
         serializedVersion: 2
-        x: 120
+        x: 108
         y: 0
-        width: 30
-        height: 30
+        width: 27
+        height: 27
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -681,20 +693,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: e7131752d01b44a20800000000000000
-      internalID: 3045753918030164350
+      spriteID: 172aa9966db9b30b0800000000000000
+      internalID: -5747829154211257743
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: marsh-idle_23
+      name: marsht-hurt_23
       rect:
         serializedVersion: 2
-        x: 150
+        x: 135
         y: 0
-        width: 30
-        height: 30
+        width: 27
+        height: 27
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -703,8 +715,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: c3c045de836862320800000000000000
-      internalID: 2532859419500481596
+      spriteID: b2a070ab8053239b0800000000000000
+      internalID: -5101957116260316629
       vertices: []
       indices: 
       edges: []
@@ -713,7 +725,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: ece65092a4bd4fb48a4a06d29a2b2528
+    spriteID: cbe672a019ba6c7499daa161403da750
     internalID: 0
     vertices: []
     indices: 
@@ -723,32 +735,32 @@ TextureImporter:
     spriteCustomMetadata:
       entries:
       - key: SpriteEditor.SliceSettings
-        value: '{"sliceOnImport":false,"gridCellCount":{"x":6.0,"y":4.0},"gridSpriteSize":{"x":30.0,"y":30.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":6.0,"y":4.0},"gridSpriteSize":{"x":27.0,"y":27.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      marsh-idle_0: 4859111369432227376
-      marsh-idle_1: 1510097912983026349
-      marsh-idle_10: -2606192891955470059
-      marsh-idle_11: -8933540762134067723
-      marsh-idle_12: 8360069459718488769
-      marsh-idle_13: 657301845869981712
-      marsh-idle_14: -9154240347085681578
-      marsh-idle_15: -3110992608161748588
-      marsh-idle_16: -1988898017751613686
-      marsh-idle_17: -3057189636658574852
-      marsh-idle_18: -880803214593648721
-      marsh-idle_19: 869619231074116552
-      marsh-idle_2: 1833911726018912801
-      marsh-idle_20: 8745382415170643893
-      marsh-idle_21: 2309630648089644036
-      marsh-idle_22: 3045753918030164350
-      marsh-idle_23: 2532859419500481596
-      marsh-idle_3: -5564815004886356989
-      marsh-idle_4: 2527888014332491514
-      marsh-idle_5: -9194912399932058476
-      marsh-idle_6: -5537549095807393598
-      marsh-idle_7: 983133446492209907
-      marsh-idle_8: 499540502285889489
-      marsh-idle_9: 831789393829170263
+      marsht-hurt_0: -7264351296683859198
+      marsht-hurt_1: 7648519275347617625
+      marsht-hurt_10: 6856513892179861298
+      marsht-hurt_11: -8713985527084685197
+      marsht-hurt_12: 7461338866415704903
+      marsht-hurt_13: 8983552533374750943
+      marsht-hurt_14: -8077736611141191832
+      marsht-hurt_15: -7884539787360933088
+      marsht-hurt_16: 6394715847846094217
+      marsht-hurt_17: -7213234477489339894
+      marsht-hurt_18: -7406081212558373734
+      marsht-hurt_19: -8938264599383961174
+      marsht-hurt_2: -7145255475799631550
+      marsht-hurt_20: 299505425065872510
+      marsht-hurt_21: -5157494607571294734
+      marsht-hurt_22: -5747829154211257743
+      marsht-hurt_23: -5101957116260316629
+      marsht-hurt_3: 751482266029879730
+      marsht-hurt_4: 7712131396727798769
+      marsht-hurt_5: -3132542657065999890
+      marsht-hurt_6: 170647986799323719
+      marsht-hurt_7: -8979546905991118094
+      marsht-hurt_8: -5721277901205664591
+      marsht-hurt_9: -4279017271369711253
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
