@@ -352,6 +352,7 @@ GameObject:
   - component: {fileID: 1425337692}
   - component: {fileID: 1425337695}
   - component: {fileID: 1425337694}
+  - component: {fileID: 1425337696}
   m_Layer: 0
   m_Name: Marsh
   m_TagString: Untagged
@@ -448,49 +449,6 @@ MonoBehaviour:
   body: {fileID: 1425337695}
   spriteRenderer: {fileID: 1425337692}
   walkSpeed: 4
-  frameRate: 10
-  nWalkSprites:
-  - {fileID: -4837480319957736709, guid: fb330b7ecf522f44e93548b1ae04f658, type: 3}
-  - {fileID: -6199702526411796835, guid: fb330b7ecf522f44e93548b1ae04f658, type: 3}
-  - {fileID: -1841174092858931220, guid: fb330b7ecf522f44e93548b1ae04f658, type: 3}
-  - {fileID: 1778582028836958385, guid: fb330b7ecf522f44e93548b1ae04f658, type: 3}
-  - {fileID: -102797757678166974, guid: fb330b7ecf522f44e93548b1ae04f658, type: 3}
-  - {fileID: -7261271967392192282, guid: fb330b7ecf522f44e93548b1ae04f658, type: 3}
-  eWalkSprites:
-  - {fileID: 5088625007591109475, guid: fb330b7ecf522f44e93548b1ae04f658, type: 3}
-  - {fileID: 4065039196031182358, guid: fb330b7ecf522f44e93548b1ae04f658, type: 3}
-  - {fileID: 5288122289880432427, guid: fb330b7ecf522f44e93548b1ae04f658, type: 3}
-  - {fileID: 3061948497990083439, guid: fb330b7ecf522f44e93548b1ae04f658, type: 3}
-  - {fileID: -4852639808896093260, guid: fb330b7ecf522f44e93548b1ae04f658, type: 3}
-  - {fileID: -5591725508932858694, guid: fb330b7ecf522f44e93548b1ae04f658, type: 3}
-  sWalkSprites:
-  - {fileID: 8222986263845957772, guid: fb330b7ecf522f44e93548b1ae04f658, type: 3}
-  - {fileID: 5887577618695902230, guid: fb330b7ecf522f44e93548b1ae04f658, type: 3}
-  - {fileID: 5328606866756909235, guid: fb330b7ecf522f44e93548b1ae04f658, type: 3}
-  - {fileID: 4923420742985259335, guid: fb330b7ecf522f44e93548b1ae04f658, type: 3}
-  - {fileID: 6859503948420118934, guid: fb330b7ecf522f44e93548b1ae04f658, type: 3}
-  - {fileID: 5042304198999544448, guid: fb330b7ecf522f44e93548b1ae04f658, type: 3}
-  nIdleSprites:
-  - {fileID: 8360069459718488769, guid: 8756dabada3e5e64c9d632821506e88c, type: 3}
-  - {fileID: 657301845869981712, guid: 8756dabada3e5e64c9d632821506e88c, type: 3}
-  - {fileID: -9154240347085681578, guid: 8756dabada3e5e64c9d632821506e88c, type: 3}
-  - {fileID: -3110992608161748588, guid: 8756dabada3e5e64c9d632821506e88c, type: 3}
-  - {fileID: -1988898017751613686, guid: 8756dabada3e5e64c9d632821506e88c, type: 3}
-  - {fileID: -3057189636658574852, guid: 8756dabada3e5e64c9d632821506e88c, type: 3}
-  eIdleSprites:
-  - {fileID: -5537549095807393598, guid: 8756dabada3e5e64c9d632821506e88c, type: 3}
-  - {fileID: 983133446492209907, guid: 8756dabada3e5e64c9d632821506e88c, type: 3}
-  - {fileID: 499540502285889489, guid: 8756dabada3e5e64c9d632821506e88c, type: 3}
-  - {fileID: 831789393829170263, guid: 8756dabada3e5e64c9d632821506e88c, type: 3}
-  - {fileID: -2606192891955470059, guid: 8756dabada3e5e64c9d632821506e88c, type: 3}
-  - {fileID: -8933540762134067723, guid: 8756dabada3e5e64c9d632821506e88c, type: 3}
-  sIdleSprites:
-  - {fileID: 4859111369432227376, guid: 8756dabada3e5e64c9d632821506e88c, type: 3}
-  - {fileID: 1510097912983026349, guid: 8756dabada3e5e64c9d632821506e88c, type: 3}
-  - {fileID: 1833911726018912801, guid: 8756dabada3e5e64c9d632821506e88c, type: 3}
-  - {fileID: -5564815004886356989, guid: 8756dabada3e5e64c9d632821506e88c, type: 3}
-  - {fileID: 2527888014332491514, guid: 8756dabada3e5e64c9d632821506e88c, type: 3}
-  - {fileID: -9194912399932058476, guid: 8756dabada3e5e64c9d632821506e88c, type: 3}
 --- !u!50 &1425337695
 Rigidbody2D:
   serializedVersion: 5
@@ -518,6 +476,28 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
+--- !u!95 &1425337696
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1425337691}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: e50ad25b54aca8743b3dda8e4726a488, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
