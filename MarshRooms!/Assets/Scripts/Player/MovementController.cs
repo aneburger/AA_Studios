@@ -3,15 +3,15 @@ using UnityEngine;
 
 public class MovementController : MonoBehaviour {
     [Header("References")]
-    public Rigidbody2D body;
-    public SpriteRenderer spriteRenderer;
+    [SerializeField] private Rigidbody2D body;
+    [SerializeField] private SpriteRenderer spriteRenderer;
     private Animator anim;
 
     [Header("Player Settings")]
-    public float walkSpeed;
-    public float dodgeForce;
-    public float dodgeDuration;
-    public float dodgeCooldown;
+    [SerializeField] private float walkSpeed;
+    [SerializeField] private float dodgeForce;
+    [SerializeField] private float dodgeDuration;
+    [SerializeField] private float dodgeCooldown;
 
     private Vector2 lastDirection;  
     private Vector2 direction; 
