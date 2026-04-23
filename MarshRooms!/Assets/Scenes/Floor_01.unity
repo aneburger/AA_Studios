@@ -245,7 +245,7 @@ MonoBehaviour:
   Composition:
     ScreenPosition: {x: 0, y: 0}
     DeadZone:
-      Enabled: 1
+      Enabled: 0
       Size: {x: 0.15, y: 0.15}
     HardLimits:
       Enabled: 0
@@ -253,9 +253,9 @@ MonoBehaviour:
       Offset: {x: 0, y: 0}
   CenterOnActivate: 0
   TargetOffset: {x: 0, y: 0, z: 0}
-  Damping: {x: 0.1, y: 0.1, z: 0.1}
+  Damping: {x: 0, y: 0, z: 0}
   Lookahead:
-    Enabled: 1
+    Enabled: 0
     Time: 0
     Smoothing: 0
     IgnoreY: 0
@@ -311,7 +311,7 @@ Transform:
   m_GameObject: {fileID: 356983338}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.7633622, y: -2.370022, z: -10}
+  m_LocalPosition: {x: 4.39, y: -4.32, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2437,10 +2437,10 @@ Camera:
   m_LensShift: {x: 0, y: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0.000907441
-    y: 0.0019762847
-    width: 0.9981851
-    height: 0.9960475
+    x: 0
+    y: 0
+    width: 1
+    height: 1
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 34
@@ -2470,7 +2470,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.7633622, y: -2.370022, z: -10}
+  m_LocalPosition: {x: 4.39, y: -4.32, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2871,7 +2871,7 @@ GameObject:
   - component: {fileID: 875811076}
   - component: {fileID: 875811077}
   m_Layer: 0
-  m_Name: stool-2
+  m_Name: stool-1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3864,7 +3864,7 @@ GameObject:
   - component: {fileID: 1143730309}
   - component: {fileID: 1143730308}
   m_Layer: 0
-  m_Name: stool-2 (2)
+  m_Name: stool-2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4015,7 +4015,7 @@ GameObject:
   - component: {fileID: 1171020738}
   - component: {fileID: 1171020737}
   m_Layer: 0
-  m_Name: stool-2 (1)
+  m_Name: stool-3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4396,8 +4396,9 @@ GameObject:
   - component: {fileID: 1425337696}
   - component: {fileID: 1425337695}
   - component: {fileID: 1425337698}
-  - component: {fileID: 1425337694}
   - component: {fileID: 1425337699}
+  - component: {fileID: 1425337700}
+  - component: {fileID: 1425337701}
   m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
@@ -4479,24 +4480,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1425337694
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1425337691}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f3ceabcf8e20944d85fc4d7088bc39f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: '::'
-  body: {fileID: 1425337695}
-  spriteRenderer: {fileID: 1425337692}
-  walkSpeed: 4.5
-  dodgeForce: 8
-  dodgeDuration: 0.2
-  dodgeCooldown: 0.3
 --- !u!50 &1425337695
 Rigidbody2D:
   serializedVersion: 5
@@ -4604,6 +4587,52 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ac5e3cd19a51ae48bb2450ecd5ba10d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpriteYSorter
+--- !u!114 &1425337700
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1425337691}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.InputSystem::UnityEngine.InputSystem.PlayerInput
+  m_Actions: {fileID: -944628639613478452, guid: 340bf3510e7562a409f0a52dd6cec5b4, type: 3}
+  m_NotificationBehavior: 0
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents: []
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: Player
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
+--- !u!114 &1425337701
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1425337691}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 306c759e0d174c540961a5ab42c4416a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TopDown.Movement.PlayerMover
+  moveSpeed: 4.5
+  dodgeForce: 4
+  dodgeDuration: 0.2
+  dodgeCooldown: 0.3
 --- !u!1 &1744613391
 GameObject:
   m_ObjectHideFlags: 0
@@ -8239,7 +8268,7 @@ GameObject:
   - component: {fileID: 1900623264}
   - component: {fileID: 1900623265}
   m_Layer: 8
-  m_Name: table-front-1
+  m_Name: table-front
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
