@@ -1,11 +1,12 @@
-using UnityEngine;
 // Base class for all movement logic
+
+using UnityEngine;
 
 namespace TopDown.Movement
 {
     [RequireComponent(typeof(Rigidbody2D))]
     
-    public class Mover : MonoBehaviour //Parent class for PlayerMovement and EnemyMovement
+    public class Mover : MonoBehaviour // Parent class for PlayerMovement and EnemyMovement
     {
         [SerializeField] protected float moveSpeed;
         protected Rigidbody2D body { get; private set; }

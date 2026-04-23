@@ -1,3 +1,5 @@
+// Controls player movement + dodging
+
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -13,8 +15,12 @@ namespace TopDown.Movement
         [SerializeField] private float dodgeDuration;
         [SerializeField] private float dodgeCooldown;
 
+        [SerializeField] private DirectionalAnimator directionalAnimator;
+        [SerializeField] private PlayerAim aim;
+
         private Animator anim;
         private Vector2 lastDirection = Vector2.down;
+
         private bool isDodging;
         private float dodgeCooldownTimer;
 
@@ -22,7 +28,9 @@ namespace TopDown.Movement
         protected override void Awake()
         {
             base.Awake();
-            anim = GetComponent<Animator>();
+
+            anim = GetComponentInChildren<Animator>();
+            directionalAnimator = GetComponentInChildren<DirectionalAnimator>();
         }
 
         // -- UPDATE -- 
@@ -31,13 +39,14 @@ namespace TopDown.Movement
             if (!isDodging)
             {
                 bool isMoving = moveInput.sqrMagnitude > 0.01f;
-                if (isMoving) lastDirection = moveInput;
+                if (isMoving)
+                {
+                    lastDirection = moveInput;
+                } 
 
                 anim.SetBool("isWalking", isMoving);
 
-                Vector2 animDir = isMoving ? moveInput : lastDirection;
-                anim.SetFloat("x", animDir.x);
-                anim.SetFloat("y", animDir.y);
+                directionalAnimator.SetDirection(aim.AimDirection);
             }
 
             if (dodgeCooldownTimer > 0f)
@@ -69,8 +78,6 @@ namespace TopDown.Movement
         {
             isDodging = true;
 
-            anim.SetFloat("x", lastDirection.x);
-            anim.SetFloat("y", lastDirection.y);
             anim.SetTrigger("Dodge");
 
             body.AddForce(lastDirection * dodgeForce, ForceMode2D.Impulse);
