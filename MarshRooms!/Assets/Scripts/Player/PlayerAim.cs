@@ -27,6 +27,6 @@ public class PlayerAim : MonoBehaviour
         AimDirection = dir.normalized;
 
         // Comment out if you want to seee the aim direction for debugging
-        // Debug.DrawRay(aimOrigin.position, AimDirection * 2f, Color.red);
+        Debug.DrawRay(aimOrigin.position, AimDirection * 2f, Color.red);
     }
 }
