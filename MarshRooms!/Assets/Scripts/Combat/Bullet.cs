@@ -8,6 +8,8 @@ public class Bullet : MonoBehaviour
     public void SetDirection(Vector2 dir)
     {
         direction = dir.normalized;
+        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.Euler(0f, 0f, angle);
     }
 
     void Update()

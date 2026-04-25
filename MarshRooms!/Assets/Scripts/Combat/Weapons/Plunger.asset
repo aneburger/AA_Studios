@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36776f04a1ca3d8449b04b532f7a016e, type: 3}
+  m_Name: Plunger
+  m_EditorClassIdentifier: Assembly-CSharp::WeaponData
+  bulletPrefab: {fileID: 6894130498819508759, guid: cd353b89fa8c32641b060f3e43237936, type: 3}
+  fireRate: 0.4
+  sprite: {fileID: -5603803822816017939, guid: a1ef06a7ec304f54dad6e229c4e389d9, type: 3}
+  shakeForce: 0.1
+  knockbackForce: 2
+  recoilAmount: 15
+  recoilDecay: 10

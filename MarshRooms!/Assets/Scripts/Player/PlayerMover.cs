@@ -17,6 +17,7 @@ namespace TopDown.Movement
 
         [SerializeField] private DirectionalAnimator directionalAnimator;
         [SerializeField] private PlayerAim aim;
+        [SerializeField] private Shooter shooter;
 
         private Animator anim;
         private Vector2 lastDirection = Vector2.down;
@@ -39,14 +40,13 @@ namespace TopDown.Movement
             if (!isDodging)
             {
                 bool isMoving = moveInput.sqrMagnitude > 0.01f;
-                if (isMoving)
-                {
-                    lastDirection = moveInput;
-                } 
+                if (isMoving) lastDirection = moveInput;
 
                 anim.SetBool("isWalking", isMoving);
 
-                directionalAnimator.SetDirection(aim.AimDirection);
+                // Face aim direction if armed, otherise face movement direction
+                Vector2 facingDir = shooter.IsArmed ? aim.AimDirection : lastDirection;
+                directionalAnimator.SetDirection(facingDir);
             }
 
             if (dodgeCooldownTimer > 0f)

@@ -221,6 +221,7 @@ GameObject:
   - component: {fileID: 356983341}
   - component: {fileID: 356983340}
   - component: {fileID: 356983339}
+  - component: {fileID: 356983342}
   m_Layer: 0
   m_Name: Cinemachine Camera
   m_TagString: Untagged
@@ -317,6 +318,30 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &356983342
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 356983338}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00b2d199b96b516448144ab30fb26aed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineImpulseListener
+  ApplyAfter: 2
+  ChannelMask: 1
+  Gain: 1
+  Use2DDistance: 0
+  UseCameraSpace: 1
+  SignalCombinationMode: 0
+  ReactionSettings:
+    m_SecondaryNoise: {fileID: 0}
+    AmplitudeGain: 1
+    FrequencyGain: 1
+    Duration: 1
+    m_NoiseOffsets: {x: 0, y: 0, z: 0}
 --- !u!1 &413686387
 GameObject:
   m_ObjectHideFlags: 0
@@ -2511,7 +2536,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 13.133179
+  orthographic size: 8.5
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -4494,7 +4519,7 @@ GameObject:
   - component: {fileID: 1626631790}
   - component: {fileID: 1626631791}
   m_Layer: 0
-  m_Name: Plunger
+  m_Name: WeaponSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4564,7 +4589,7 @@ SpriteRenderer:
   m_SortingLayer: 3
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: -5603803822816017939, guid: a1ef06a7ec304f54dad6e229c4e389d9, type: 3}
+  m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -4572,8 +4597,65 @@ SpriteRenderer:
   m_Size: {x: 1.25, y: 0.6875}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_SpriteSortPoint: 0
+--- !u!1001 &1676680857
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 355038307526482999, guid: 4e74a7e3444ef9549abeb84382ec9efd, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1.1396084
+      objectReference: {fileID: 0}
+    - target: {fileID: 355038307526482999, guid: 4e74a7e3444ef9549abeb84382ec9efd, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -4.5756884
+      objectReference: {fileID: 0}
+    - target: {fileID: 355038307526482999, guid: 4e74a7e3444ef9549abeb84382ec9efd, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 355038307526482999, guid: 4e74a7e3444ef9549abeb84382ec9efd, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 355038307526482999, guid: 4e74a7e3444ef9549abeb84382ec9efd, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 355038307526482999, guid: 4e74a7e3444ef9549abeb84382ec9efd, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 355038307526482999, guid: 4e74a7e3444ef9549abeb84382ec9efd, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 355038307526482999, guid: 4e74a7e3444ef9549abeb84382ec9efd, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 355038307526482999, guid: 4e74a7e3444ef9549abeb84382ec9efd, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 355038307526482999, guid: 4e74a7e3444ef9549abeb84382ec9efd, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1303430737314922756, guid: 4e74a7e3444ef9549abeb84382ec9efd, type: 3}
+      propertyPath: m_Name
+      value: Plunger
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 4e74a7e3444ef9549abeb84382ec9efd, type: 3}
 --- !u!1 &1744613391
 GameObject:
   m_ObjectHideFlags: 0
@@ -8211,6 +8293,7 @@ GameObject:
   - component: {fileID: 1771327119}
   - component: {fileID: 1771327118}
   - component: {fileID: 1771327124}
+  - component: {fileID: 1771327125}
   m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
@@ -8250,6 +8333,7 @@ MonoBehaviour:
   dodgeCooldown: 0.35
   directionalAnimator: {fileID: 2068561614}
   aim: {fileID: 1771327118}
+  shooter: {fileID: 1771327124}
 --- !u!114 &1771327120
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8431,10 +8515,66 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63d74d3048e9df14bacd28954fcea6ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerShooter
-  bulletPrefab: {fileID: 6894130498819508759, guid: cd353b89fa8c32641b060f3e43237936, type: 3}
   firePoint: {fileID: 736845885}
   aim: {fileID: 1771327118}
-  fireRate: 0.4
+  impulseSource: {fileID: 1771327125}
+  weaponAimer: {fileID: 727688410}
+  mover: {fileID: 1771327119}
+  weaponSprite: {fileID: 1626631791}
+  currentWeapon: {fileID: 0}
+--- !u!114 &1771327125
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1771327117}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 180ecf9b41d478f468eb3e9083753217, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineImpulseSource
+  ImpulseDefinition:
+    ImpulseChannel: 1
+    ImpulseShape: 3
+    CustomImpulseShape:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    ImpulseDuration: 0.1
+    ImpulseType: 0
+    DissipationRate: 0.25
+    RawSignal: {fileID: 0}
+    AmplitudeGain: 1
+    FrequencyGain: 1
+    RepeatMode: 0
+    Randomize: 1
+    TimeEnvelope:
+      AttackShape:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      DecayShape:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      AttackTime: 0
+      SustainTime: 0.2
+      DecayTime: 0.7
+      ScaleWithImpact: 1
+      HoldForever: 0
+    ImpactRadius: 100
+    DirectionMode: 0
+    DissipationMode: 2
+    DissipationDistance: 100
+    PropagationSpeed: 343
+  DefaultVelocity: {x: 1, y: 0, z: 0}
 --- !u!1 &1900623261
 GameObject:
   m_ObjectHideFlags: 0
@@ -8738,3 +8878,4 @@ SceneRoots:
   - {fileID: 434774038}
   - {fileID: 356983341}
   - {fileID: 973914246}
+  - {fileID: 1676680857}
