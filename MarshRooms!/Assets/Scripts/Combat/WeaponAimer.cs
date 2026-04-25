@@ -37,7 +37,7 @@ public class WeaponAimer : MonoBehaviour
 
         float enterBackMin = 50f;
         float enterBackMax = 130f;
-        
+
         float exitBackMin = 40f;
         float exitBackMax = 140f;
 
@@ -69,6 +69,6 @@ public class WeaponAimer : MonoBehaviour
         }
 
         // -- DEBUG --
-        Debug.DrawRay(weaponPivot.position, dir * 2f, Color.green);
+        //Debug.DrawRay(weaponPivot.position, dir * 2f, Color.green);
     }
 }

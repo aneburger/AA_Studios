@@ -61,14 +61,16 @@ namespace TopDown.Movement
         }
 
         // -- MOVE INPUT --
-        private void OnMove(InputValue value)
+        public void OnMove(InputAction.CallbackContext context)
         {
-            moveInput = value.Get<Vector2>();
+            moveInput = context.ReadValue<Vector2>();
         }
 
         // -- DODGE INPUT --
-        private void OnDodge()
+        public void OnDodge(InputAction.CallbackContext context)
         {
+            if (!context.started) return;
+
             if (!isDodging && dodgeCooldownTimer <= 0f)
                 StartCoroutine(Dodge());
         }

@@ -1,4 +1,5 @@
-// This script calculates what direction the mouse is relative to the player
+// This script calculates what direction from the AimOrigin to the mouse
+// Gives direction vector used by weapons and bullets
 
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -26,7 +27,7 @@ public class PlayerAim : MonoBehaviour
 
         AimDirection = dir.normalized;
 
-        // Comment out if you want to seee the aim direction for debugging
-        Debug.DrawRay(aimOrigin.position, AimDirection * 2f, Color.red);
+        // -- DEBUG --
+        //Debug.DrawRay(aimOrigin.position, AimDirection * 2f, Color.red);
     }
 }
