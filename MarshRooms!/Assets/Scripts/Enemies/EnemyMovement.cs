@@ -1,10 +1,19 @@
-using UnityEngine;
+// Controls enemy movments, inherits velocity and knockback from Mover
 
+using UnityEngine;
 namespace TopDown.Movement
+
 {
-    public class EnemyMover : Mover
+    public class EnemyMover : BaseMover
     {
-        
-        //Implement later...
+        public void Move(Vector2 direction)
+        {
+            moveInput = direction;
+        }
+
+        public void Stop()
+        {
+            moveInput = Vector2.zero;
+        }
     }
 }

@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class WeaponPickup : MonoBehaviour
 {
-    [SerializeField] private WeaponData weaponData;
+    [SerializeField] public WeaponData weaponData;
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Shooter shooter = other.GetComponentInParent<Shooter>();
+        BaseShooter shooter = other.GetComponentInParent<BaseShooter>();
 
         if (shooter == null) return;
 

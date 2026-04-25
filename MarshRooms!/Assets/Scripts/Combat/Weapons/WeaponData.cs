@@ -1,9 +1,9 @@
-// This will hold all stats for a specific weapon
-// To add a new weapon: Right click Project tab - Create - Scriptable Objects - WeaponData
+// Holds all stats for a specific weapon
+// To add a new weapon: Right click Project tab - Create - Weapons - WeaponData
 
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "WeaponData", menuName = "Scriptable Objects/WeaponData")]
+[CreateAssetMenu(fileName = "WeaponData", menuName = "Weapons/WeaponData")]
 public class WeaponData : ScriptableObject
 {
     [Header("Firing")]

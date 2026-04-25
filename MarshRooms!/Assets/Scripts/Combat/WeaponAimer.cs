@@ -5,15 +5,24 @@ using UnityEngine;
 
 public class WeaponAimer : MonoBehaviour
 {
-    [SerializeField] private PlayerAim aim;
     [SerializeField] private Transform weaponPivot;
     [SerializeField] private SpriteRenderer weaponRenderer;
-    [SerializeField] private SpriteRenderer playerRenderer;
+    [SerializeField] private SpriteRenderer characterRenderer;
     [SerializeField] private float rotationSpeed;
 
     private float recoilAmount;
     private float recoilDecay;
     private float currentRecoil;
+
+    private Vector2 aimDirection;
+    
+    public Vector2 AimDirection => aimDirection;
+
+    // -- SET DIRECTION -- (call from PlayerAim or Enemy AI)
+    public void SetAimDirection(Vector2 direction)
+    {
+        aimDirection = direction;
+    }
 
     // -- APPLY RECOIL -- (Called by Shooter)
     public void ApplyRecoil(float amount, float decay)
@@ -26,16 +35,14 @@ public class WeaponAimer : MonoBehaviour
     // -- UPDATE --
     private void Update()
     {
-        Vector2 dir = aim.AimDirection;
-
-        if (dir.sqrMagnitude < 0.001f)
+        if (aimDirection.sqrMagnitude < 0.001f)
             return;
 
         // -- RECOIL --
         currentRecoil = Mathf.Lerp(currentRecoil, 0f, 1f - Mathf.Exp(-recoilDecay * Time.deltaTime));
 
         // -- ROTATION --
-        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+        float angle = Mathf.Atan2(aimDirection.y, aimDirection.x) * Mathf.Rad2Deg;
 
         Quaternion target = Quaternion.Euler(0, 0, angle + currentRecoil);
 
@@ -46,14 +53,14 @@ public class WeaponAimer : MonoBehaviour
         );
 
         // -- FLIP WEAPON --
-        weaponRenderer.flipY = dir.x < 0f;
+        weaponRenderer.flipY = aimDirection.x < 0f;
 
         // --- FRONT / BACK SORTING ---
         bool isBack = angle >= 50f && angle <= 130f;
-        int baseOrder = playerRenderer.sortingOrder;
+        int baseOrder = characterRenderer.sortingOrder;
         weaponRenderer.sortingOrder = isBack ? baseOrder - 10 : baseOrder + 10;
 
         // -- DEBUG --
-        //Debug.DrawRay(weaponPivot.position, dir * 2f, Color.green);
+        Debug.DrawRay(weaponPivot.position, aimDirection * 2f, Color.green);
     }
 }

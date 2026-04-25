@@ -7,7 +7,7 @@ namespace TopDown.Movement
 {
     [RequireComponent(typeof(Rigidbody2D))]
     
-    public class Mover : MonoBehaviour
+    public class BaseMover : MonoBehaviour
     {
         [SerializeField] protected float moveSpeed;
         protected Rigidbody2D body { get; private set; }
@@ -25,6 +25,12 @@ namespace TopDown.Movement
         public void ApplyKnockback(Vector2 force)
         {
             knockbackVelocity = force;
+        }
+
+        // -- SET SPEED --
+        public void SetSpeed(float speed)
+        {
+            moveSpeed = speed;
         }
 
         // -- FIXEDUPDATE --

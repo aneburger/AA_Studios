@@ -8,7 +8,7 @@ namespace TopDown.Movement
 {
     [RequireComponent(typeof(PlayerInput))]
     
-    public class PlayerMover : Mover //Inherits from the Mover class
+    public class PlayerMover : BaseMover
     {
         [Header("Dodge Settings")]
         [SerializeField] private float dodgeForce;
@@ -16,8 +16,8 @@ namespace TopDown.Movement
         [SerializeField] private float dodgeCooldown;
 
         [SerializeField] private DirectionalAnimator directionalAnimator;
-        [SerializeField] private PlayerAim aim;
-        [SerializeField] private Shooter shooter;
+        [SerializeField] private PlayerAimer aim;
+        [SerializeField] private PlayerShooter shooter;
 
         private Animator anim;
         private Vector2 lastDirection = Vector2.down;

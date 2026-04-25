@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1194510614602569093}
   - component: {fileID: 43877468385842577}
   m_Layer: 0
-  m_Name: green-bullet
+  m_Name: red-bullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -84,12 +84,12 @@ SpriteRenderer:
   m_SortingLayer: 3
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 2208703988740019828, guid: f1ba8ca31771ced4f87cc34cf820a862, type: 3}
+  m_Sprite: {fileID: 2208703988740019828, guid: c1abc64f31992bd49b84a445fe3e9304, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.75, y: 0.75}
+  m_Size: {x: 0.875, y: 0.5625}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -169,4 +169,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c3dd22c4a9b0924b8be593f7593d16d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Bullet
-  speed: 10
+  speed: 6
