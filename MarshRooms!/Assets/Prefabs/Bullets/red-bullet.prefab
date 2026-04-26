@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5717465801929208006}
   - component: {fileID: 1194510614602569093}
   - component: {fileID: 43877468385842577}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: red-bullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -169,4 +169,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c3dd22c4a9b0924b8be593f7593d16d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Bullet
-  speed: 6
+  speed: 0
+  damage: 0

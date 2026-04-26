@@ -34,6 +34,6 @@ public class PlayerAimer : MonoBehaviour
             weaponAimer.SetAimDirection(AimDirection);
 
         // -- DEBUG --
-        Debug.DrawRay(aimOrigin.position, AimDirection * 2f, Color.red);
+        // Debug.DrawRay(aimOrigin.position, AimDirection * 2f, Color.red);
     }
 }

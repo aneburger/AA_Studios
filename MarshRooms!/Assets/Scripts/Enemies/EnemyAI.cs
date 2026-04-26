@@ -8,6 +8,7 @@ public class EnemyAI : MonoBehaviour
     private enum State { Idle, Chase, Attack }
 
     private State currentState = State.Idle;
+    private bool playerDead = false;
 
     private EnemyController enemy;
     private EnemyMover mover;
@@ -29,7 +30,7 @@ public class EnemyAI : MonoBehaviour
     // -- UPDATE --
     private void Update()
     {
-        if (player == null) return;
+        if (player == null || playerDead) return;
 
         float distance = Vector2.Distance(transform.position, player.position);
 
@@ -85,4 +86,22 @@ public class EnemyAI : MonoBehaviour
         if (distance > enemy.Data.attackRange)
             currentState = State.Chase;
     }
+
+    private void OnEnable()
+    {
+        PlayerHealth.OnPlayerDeath += HandlePlayerDeath;
+    }
+
+    private void OnDisable()
+    {
+        PlayerHealth.OnPlayerDeath -= HandlePlayerDeath;
+    }
+
+    private void HandlePlayerDeath()
+    {
+        playerDead = true;
+        mover.Stop();
+        currentState = State.Idle;
+    }
+
 }

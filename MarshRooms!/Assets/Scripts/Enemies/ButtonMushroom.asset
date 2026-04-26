@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6302092c942ee1644bc4027ea868e779, type: 3}
   m_Name: ButtonMushroom
   m_EditorClassIdentifier: Assembly-CSharp::EnemyData
-  maxHealth: 10
-  moveSpeed: 1
+  maxHealth: 5
+  moveSpeed: 1.5
   weapon: {fileID: 11400000, guid: 83dbe672d81c88f449382074c1dd233d, type: 2}
-  detectionRange: 10
-  attackRange: 7
+  detectionRange: 11
+  attackRange: 7.5

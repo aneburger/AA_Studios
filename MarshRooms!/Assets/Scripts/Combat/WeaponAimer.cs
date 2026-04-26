@@ -61,6 +61,6 @@ public class WeaponAimer : MonoBehaviour
         weaponRenderer.sortingOrder = isBack ? baseOrder - 10 : baseOrder + 10;
 
         // -- DEBUG --
-        Debug.DrawRay(weaponPivot.position, aimDirection * 2f, Color.green);
+        // Debug.DrawRay(weaponPivot.position, aimDirection * 2f, Color.green);
     }
 }

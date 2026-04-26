@@ -1,8 +1,12 @@
 using UnityEngine;
+using TopDown.Movement;
 
 public class Bullet : MonoBehaviour
 {
-    public float speed = 10f;
+    public float speed;
+    public float damage;
+    public float knockback;
+
     private Vector2 direction;
 
     public void SetDirection(Vector2 dir)
@@ -19,6 +23,18 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        BaseHealth health = collision.GetComponentInParent<BaseHealth>();
+
+        if (health != null)
+        {
+            health.TakeDamage(damage);
+
+            // Apply knockback
+            BaseMover mover = collision.GetComponentInParent<BaseMover>();
+            if (mover != null)
+                mover.ApplyKnockback(direction * knockback);
+        }
+
         Destroy(gameObject);
     }
 }

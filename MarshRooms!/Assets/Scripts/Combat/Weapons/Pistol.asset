@@ -13,9 +13,12 @@ MonoBehaviour:
   m_Name: Pistol
   m_EditorClassIdentifier: Assembly-CSharp::WeaponData
   bulletPrefab: {fileID: 6894130498819508759, guid: a39c1ac104b6d094498500cecc7bfd24, type: 3}
-  fireRate: 1.8
+  fireRate: 2
+  damage: 1
+  bulletSpeed: 7
   sprite: {fileID: -4854829337826818713, guid: 6e0dd451b4501c54da27a492414f70a4, type: 3}
   shakeForce: 0
   knockbackForce: 1
+  hitKnockback: 3
   recoilAmount: 35
   recoilDecay: 25

@@ -8,7 +8,9 @@ public class WeaponData : ScriptableObject
 {
     [Header("Firing")]
     public GameObject bulletPrefab;
-    public float fireRate = 0.4f;
+    public float fireRate;
+    public float damage;
+    public float bulletSpeed;
 
     [Header("Visuals")]
     public Sprite sprite;
@@ -16,8 +18,9 @@ public class WeaponData : ScriptableObject
     [Header("Audio")]
 
     [Header("Feel")]
-    public float shakeForce = 0.1f;
-    public float knockbackForce = 2f;
-    public float recoilAmount = 15f;
-    public float recoilDecay = 10f;
+    public float shakeForce;
+    public float knockbackForce;
+    public float hitKnockback;
+    public float recoilAmount;
+    public float recoilDecay;
 }

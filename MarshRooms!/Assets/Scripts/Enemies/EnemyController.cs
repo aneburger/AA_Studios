@@ -1,4 +1,4 @@
-// Central hub for the enemy - read EnemyData andd initialises components
+// Central hub for the enemy, read EnemyData andd initialises components
 
 using UnityEngine;
 using TopDown.Movement;
@@ -11,6 +11,7 @@ public class EnemyController : MonoBehaviour
     private EnemyShooter shooter;
     private EnemyMover mover;
     private WeaponAimer weaponAimer;
+    private EnemyHealth health;
 
     public EnemyData Data => enemyData;
 
@@ -20,12 +21,14 @@ public class EnemyController : MonoBehaviour
         // Initialise componenets
         mover = GetComponent<EnemyMover>();
         shooter = GetComponent<EnemyShooter>();
+        health = GetComponent<EnemyHealth>();
         mover.SetSpeed(enemyData.moveSpeed);
     }
 
     private void Start()
     {
         InitialiseWeapon();
+        health.Initialise(enemyData.maxHealth);
     }
 
     private void InitialiseWeapon()

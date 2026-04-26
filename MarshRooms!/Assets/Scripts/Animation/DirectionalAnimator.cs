@@ -1,4 +1,5 @@
 // Sets the facing direction of a sprite, can be reused for Player, enemies ect.
+
 using UnityEngine;
 
 public class DirectionalAnimator : MonoBehaviour
