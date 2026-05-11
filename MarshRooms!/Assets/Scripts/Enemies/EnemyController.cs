@@ -25,12 +25,32 @@ public class EnemyController : MonoBehaviour
         mover.SetSpeed(enemyData.moveSpeed);
     }
 
+    // -- START--
     private void Start()
     {
         InitialiseWeapon();
         health.Initialise(enemyData.maxHealth);
     }
 
+    // -- CONTACT DAMAGE --
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        PlayerHealth playerHealth = collision.GetComponentInParent<PlayerHealth>();
+
+        if (playerHealth == null) return;
+        if (playerHealth.IsOnCooldown()) return;
+
+        playerHealth.TakeDamage(enemyData.contactDamage);
+
+        BaseMover playerMover = collision.GetComponentInParent<BaseMover>();
+        if (playerMover != null)
+        {
+            Vector2 knockbackDir = (collision.transform.position - transform.position).normalized;
+            playerMover.ApplyKnockback(knockbackDir * enemyData.contactKnockback);
+        }
+    }
+
+    // -- INITIALISE WEAPON --
     private void InitialiseWeapon()
     {
         if (enemyData == null) return;
@@ -38,4 +58,6 @@ public class EnemyController : MonoBehaviour
 
         shooter.EquipWeapon(enemyData.weapon);
     }
+
+
 }

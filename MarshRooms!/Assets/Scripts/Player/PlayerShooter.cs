@@ -12,22 +12,12 @@ public class PlayerShooter : BaseShooter
     [SerializeField] private PlayerAimer aim;
     [SerializeField] private CinemachineImpulseSource impulseSource;
 
-    [Header("Audio")]
-    [SerializeField] private AudioSource sfxSource;
-    [SerializeField] private AudioClip shootClip;
-    [SerializeField, Range(0f, 1f)] private float shootVolume = 1f;
-
     private bool isShooting = false;
 
     // -- START --
     private void Start()
     {
         UpdateWeaponVisuals();
-
-        if (sfxSource == null)
-        {
-            sfxSource = GetComponent<AudioSource>();
-        }
     }
 
     // -- UPDATE --
@@ -53,11 +43,6 @@ public class PlayerShooter : BaseShooter
     {
         base.OnShootEffects(direction);
         impulseSource?.GenerateImpulse(currentWeapon.shakeForce);
-
-        if (sfxSource != null && shootClip != null)
-        {
-            sfxSource.PlayOneShot(shootClip, shootVolume);
-        }
     }
 
     // -- SHOOT INPUT --

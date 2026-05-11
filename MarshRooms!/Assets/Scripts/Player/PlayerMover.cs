@@ -10,17 +10,22 @@ namespace TopDown.Movement
     
     public class PlayerMover : BaseMover
     {
+        [Header("References")]
+        [SerializeField] private PlayerAimer aim;
+        [SerializeField] private PlayerShooter shooter;
+        [SerializeField] private DirectionalAnimator directionalAnimator;
+
         [Header("Dodge Settings")]
         [SerializeField] private float dodgeForce;
         [SerializeField] private float dodgeDuration;
         [SerializeField] private float dodgeCooldown;
 
-        [SerializeField] private DirectionalAnimator directionalAnimator;
-        [SerializeField] private PlayerAimer aim;
-        [SerializeField] private PlayerShooter shooter;
+        [Header("VFX Settings")]
+        [SerializeField] private float dustDistance = 0.5f;
 
         private Animator anim;
         private Vector2 lastDirection = Vector2.down;
+        private Vector2 lastDustPosition;
 
         private bool isDodging;
         private float dodgeCooldownTimer;
@@ -40,7 +45,20 @@ namespace TopDown.Movement
             if (!isDodging)
             {
                 bool isMoving = moveInput.sqrMagnitude > 0.01f;
-                if (isMoving) lastDirection = moveInput;
+                if (isMoving)
+                {
+                    lastDirection = moveInput;
+
+                    if (Vector2.Distance(transform.position, lastDustPosition) >= dustDistance)
+                    {
+                        VFXManager.Instance.SpawnWalkDust(transform.position);
+                        lastDustPosition = transform.position;
+                    }
+                }
+                else
+                {
+                    lastDustPosition = transform.position;
+                }
 
                 anim.SetBool("isWalking", isMoving);
 
@@ -71,7 +89,8 @@ namespace TopDown.Movement
         {
             if (!context.started) return;
 
-            if (!isDodging && dodgeCooldownTimer <= 0f)
+            // Cannot Dodge when standing still
+            if (!isDodging && dodgeCooldownTimer <= 0f && moveInput.sqrMagnitude > 0.01f)
                 StartCoroutine(Dodge());
         }
 
@@ -79,14 +98,33 @@ namespace TopDown.Movement
         private IEnumerator Dodge()
         {
             isDodging = true;
-
             anim.SetTrigger("Dodge");
 
-            body.AddForce(lastDirection * dodgeForce, ForceMode2D.Impulse);
+            // Determine dodge direction
+            Vector2 dodgeDirection;
+            if (moveInput.sqrMagnitude > 0.01f)
+                dodgeDirection = moveInput.normalized;
+            else if (shooter.IsArmed)
+                dodgeDirection = aim.AimDirection.normalized;
+            else
+                dodgeDirection = lastDirection.normalized;
+
+            // Dodge movement
+            body.AddForce(dodgeDirection * dodgeForce, ForceMode2D.Impulse);
             yield return new WaitForSeconds(dodgeDuration);
 
+            // Spawn dust cloud after landing dodge
+            VFXManager.Instance.SpawnDodgeDust(transform.position);
+
+            // Stop dodging
             isDodging = false;
             dodgeCooldownTimer = dodgeCooldown;
+
+            // Slow down speed slightly after dodging
+            float originalSpeed = moveSpeed;
+            moveSpeed *= 0.8f;
+            yield return new WaitForSeconds(0.5f);
+            moveSpeed = originalSpeed;
         }
     }   
 }

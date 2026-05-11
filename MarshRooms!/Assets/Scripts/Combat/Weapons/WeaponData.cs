@@ -16,6 +16,8 @@ public class WeaponData : ScriptableObject
     public Sprite sprite;
 
     [Header("Audio")]
+    public AudioClip shootClip;
+    [Range(0f, 1f)] public float shootVolume;
 
     [Header("Feel")]
     public float shakeForce;

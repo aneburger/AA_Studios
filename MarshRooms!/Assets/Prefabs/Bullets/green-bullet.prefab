@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5717465801929208006}
   - component: {fileID: 1194510614602569093}
   - component: {fileID: 43877468385842577}
-  m_Layer: 8
+  m_Layer: 11
   m_Name: green-bullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -171,3 +171,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Bullet
   speed: 0
   damage: 0
+  knockback: 0

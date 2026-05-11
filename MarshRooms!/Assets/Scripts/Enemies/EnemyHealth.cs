@@ -5,8 +5,6 @@ using UnityEngine;
 
 public class EnemyHealth : BaseHealth
 {
-    [Header("Death Settings")]
-    [SerializeField] private float deathDelay = 0f; // update later for death animation
 
     protected override void Awake()
     {
@@ -17,7 +15,7 @@ public class EnemyHealth : BaseHealth
     {
         base.Die();
 
-        // Ddestroy game object for now
-        Destroy(gameObject, deathDelay);
+        // Destroy game object for now
+        Destroy(gameObject);
     }
 }

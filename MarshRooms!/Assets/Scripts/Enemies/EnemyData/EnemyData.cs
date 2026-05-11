@@ -9,6 +9,8 @@ public class EnemyData : ScriptableObject
     [Header("Stats")]
     public float maxHealth;
     public float moveSpeed;
+    public float contactDamage;
+    public float contactKnockback;
 
     [Header("Weapon")]
     public WeaponData weapon;

@@ -1,16 +1,96 @@
 // Player health extends BaseHealth
-// Handles game over and UI updates .. please add this :)
 
 using UnityEngine;
+using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class PlayerHealth : BaseHealth
-{
+{   
+    [Header("Damage Settings")]
+    [SerializeField] private float damageCooldown = 0.5f;
+    [SerializeField] private float flickerInterval = 0.08f;
+
+    private float damageCooldownTimer;
+    private bool isInvincible = false;
+
     public static event System.Action OnPlayerDeath;
 
+    // -- Update -- 
+    private void Update()
+    {
+        if (damageCooldownTimer > 0f)
+            damageCooldownTimer -= Time.deltaTime;
+    }
+
+    // -- SET INVINCIBILITY -- 
+    public void SetInvincible(bool value)
+    {
+        isInvincible = value;
+    }
+
+    // -- TAKE DAMAGE -- 
+    public override void TakeDamage(float amount)
+    {   
+        // Check if invinsible or on cooldown
+        if (isInvincible) return;
+        if (damageCooldownTimer > 0f) return;
+
+        damageCooldownTimer = damageCooldown;
+        base.TakeDamage(amount);
+
+        StartCoroutine(Flicker());
+    }
+
+    // -- DIE -- 
     protected override void Die()
     {
         base.Die();
         OnPlayerDeath?.Invoke();
         gameObject.SetActive(false);
+
+        SceneManager.LoadScene("Floor_01");
+    }
+
+    // -- IS ON COOLDOWN -- 
+    public bool IsOnCooldown()
+    {
+        return damageCooldownTimer > 0f || isInvincible;
+    }
+
+    // -- HIT EFFECT --
+    protected virtual void OnHitEffect()
+    {
+        StartCoroutine(Flicker());
+    }
+
+    // -- FLICKER --
+    private IEnumerator Flicker()
+    {
+        SpriteRenderer[] renderers = GetComponentsInChildren<SpriteRenderer>();
+        float elapsed = 0f;
+
+        while (elapsed < damageCooldown)
+        {
+            // Toggle between transparent and opaque
+            float alpha = Mathf.PingPong(elapsed, flickerInterval) < flickerInterval / 2f ? 0f : 1f;
+
+            foreach (var sr in renderers)
+            {
+                Color c = sr.color;
+                c.a = alpha;
+                sr.color = c;
+            }
+
+            yield return new WaitForSeconds(flickerInterval);
+            elapsed += flickerInterval;
+        }
+
+        // Restore full opacity
+        foreach (var sr in renderers)
+        {
+            Color c = sr.color;
+            c.a = 1f;
+            sr.color = c;
+        }
     }
 }

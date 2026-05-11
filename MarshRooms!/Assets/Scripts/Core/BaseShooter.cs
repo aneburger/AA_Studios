@@ -53,6 +53,9 @@ public abstract class BaseShooter : MonoBehaviour
     {
         weaponAimer?.ApplyRecoil(currentWeapon.recoilAmount, currentWeapon.recoilDecay);
         mover?.ApplyKnockback(-direction * currentWeapon.knockbackForce);
+
+        // Play weapon sound
+        AudioManager.Instance.PlaySFX(currentWeapon.shootClip, currentWeapon.shootVolume); 
     }
 
     // -- SHOW / HIDE WEAPON --
