@@ -334,14 +334,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 306c759e0d174c540961a5ab42c4416a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TopDown.Movement.PlayerMover
-  moveSpeed: 6
-  dodgeForce: 7
-  dodgeDuration: 0.2
-  dodgeCooldown: 0.35
-  directionalAnimator: {fileID: 1064126481}
+  moveSpeed: 7
   aim: {fileID: 319489606}
   shooter: {fileID: 319489605}
-  dustDistance: 2.5
+  directionalAnimator: {fileID: 1064126481}
+  dodgeForce: 11
+  dodgeDuration: 0.2
+  dodgeCooldown: 0.25
+  dustDistance: 2
 --- !u!114 &319489608
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -530,6 +530,8 @@ MonoBehaviour:
   onTakeDamage:
     m_PersistentCalls:
       m_Calls: []
+  damageCooldown: 1
+  flickerInterval: 0.08
 --- !u!82 &319489613
 AudioSource:
   m_ObjectHideFlags: 0
@@ -664,7 +666,7 @@ MonoBehaviour:
   Composition:
     ScreenPosition: {x: 0, y: 0}
     DeadZone:
-      Enabled: 1
+      Enabled: 0
       Size: {x: 0.05, y: 0.05}
     HardLimits:
       Enabled: 0
@@ -730,7 +732,7 @@ Transform:
   m_GameObject: {fileID: 356983338}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.6026077, y: -5.0433416, z: -10}
+  m_LocalPosition: {x: 5.9, y: -5.52, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3023,7 +3025,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 6.75
+  orthographic size: 8.4375
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -3068,8 +3070,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Unity.RenderPipelines.Universal.2D.Runtime::UnityEngine.Rendering.Universal.PixelPerfectCamera
   m_ComponentVersion: 1
   m_AssetsPPU: 16
-  m_RefResolutionX: 360
-  m_RefResolutionY: 180
+  m_RefResolutionX: 480
+  m_RefResolutionY: 270
   m_CropFrame: 0
   m_GridSnapping: 0
   m_FilterMode: 0
@@ -5333,7 +5335,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 765051faeb28e3547afc0645b010b83d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::VFXManager
-  dustPrefab: {fileID: 4081999799842582576, guid: 5a81eb1955c0238499f21aad97b5dcef, type: 3}
+  dustWalkPrefab: {fileID: 4081999799842582576, guid: 5a81eb1955c0238499f21aad97b5dcef, type: 3}
+  dodgeDustPrefab: {fileID: 4081999799842582576, guid: 0ee882d1c596cb947a3fb25bf423f6b4, type: 3}
 --- !u!4 &1399008576
 Transform:
   m_ObjectHideFlags: 0
@@ -5738,7 +5741,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1303430737314922756, guid: 4e74a7e3444ef9549abeb84382ec9efd, type: 3}
       propertyPath: m_Layer
-      value: 8
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

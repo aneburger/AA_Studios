@@ -4,6 +4,8 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
 
+using TopDown.Movement;
+
 public class PlayerHealth : BaseHealth
 {   
     [Header("Damage Settings")]
@@ -14,6 +16,9 @@ public class PlayerHealth : BaseHealth
     private bool isInvincible = false;
 
     public static event System.Action OnPlayerDeath;
+
+    // References
+    private PlayerMover mover;
 
     // -- Update -- 
     private void Update()
@@ -26,6 +31,12 @@ public class PlayerHealth : BaseHealth
     public void SetInvincible(bool value)
     {
         isInvincible = value;
+
+        // Delay speed when invincible
+        if (mover != null)
+            mover.SetSpeed(value ? mover.OriginalSpeed * 0.8f : mover.OriginalSpeed);
+
+        gameObject.layer = LayerMask.NameToLayer(value ? "PlayerInvincible" : "Player");
     }
 
     // -- TAKE DAMAGE -- 
@@ -37,8 +48,6 @@ public class PlayerHealth : BaseHealth
 
         damageCooldownTimer = damageCooldown;
         base.TakeDamage(amount);
-
-        StartCoroutine(Flicker());
     }
 
     // -- DIE -- 
@@ -58,19 +67,25 @@ public class PlayerHealth : BaseHealth
     }
 
     // -- HIT EFFECT --
-    protected virtual void OnHitEffect()
+    protected override void OnHitEffect()
     {
+        if (IsDead()) return;
         StartCoroutine(Flicker());
     }
 
     // -- FLICKER --
     private IEnumerator Flicker()
     {
+        // Wait for hurt animation
+        yield return new WaitForSeconds(0.2f);
+
         SpriteRenderer[] renderers = GetComponentsInChildren<SpriteRenderer>();
         float elapsed = 0f;
 
         while (elapsed < damageCooldown)
         {
+            if (IsDead()) yield break;
+
             // Toggle between transparent and opaque
             float alpha = Mathf.PingPong(elapsed, flickerInterval) < flickerInterval / 2f ? 0f : 1f;
 

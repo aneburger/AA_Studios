@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyData
   maxHealth: 5
   moveSpeed: 1.5
+  contactDamage: 1
+  contactKnockback: 5
   weapon: {fileID: 11400000, guid: 83dbe672d81c88f449382074c1dd233d, type: 2}
   detectionRange: 11
   attackRange: 7.5

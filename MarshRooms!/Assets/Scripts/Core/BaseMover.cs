@@ -10,6 +10,8 @@ namespace TopDown.Movement
     public class BaseMover : MonoBehaviour
     {
         [SerializeField] protected float moveSpeed;
+        public float OriginalSpeed { get; private set; }
+        
         protected Rigidbody2D body { get; private set; }
         protected Vector2 moveInput { get; set; }
 
@@ -19,6 +21,7 @@ namespace TopDown.Movement
         protected virtual void Awake()
         {
             body = GetComponent<Rigidbody2D>();
+            OriginalSpeed = moveSpeed;
         }
 
         // -- KNOCKBACK -- (Called by Shooter)

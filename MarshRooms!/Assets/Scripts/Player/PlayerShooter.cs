@@ -6,11 +6,14 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using Unity.Cinemachine;
 
+using TopDown.Movement;
+
 public class PlayerShooter : BaseShooter
 {
     [Header("Player References")]
     [SerializeField] private PlayerAimer aim;
     [SerializeField] private CinemachineImpulseSource impulseSource;
+    [SerializeField] private PlayerMover playerMover;
 
     private bool isShooting = false;
 
@@ -24,6 +27,7 @@ public class PlayerShooter : BaseShooter
     private void Update()
     {
         if (!IsArmed) return;
+        if (playerMover.IsDodging) return;
 
         if (isShooting && Time.time >= nextFireTime)
         {
@@ -49,7 +53,15 @@ public class PlayerShooter : BaseShooter
     public void OnShoot(InputAction.CallbackContext context)
     {
         if (!IsArmed) return;
+        if (playerMover.IsDodging) return; 
+
         if (context.started)  isShooting = true;
         if (context.canceled) isShooting = false;
+    }
+
+    // -- STOP SHOOTING --
+    public void StopShooting()
+    {
+        isShooting = false;
     }
 }

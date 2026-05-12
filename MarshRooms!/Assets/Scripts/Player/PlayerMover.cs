@@ -21,9 +21,11 @@ namespace TopDown.Movement
         [SerializeField] private float dodgeCooldown;
 
         [Header("VFX Settings")]
-        [SerializeField] private float dustDistance = 0.5f;
+        [SerializeField] private float dustDistance;
 
         private Animator anim;
+        private PlayerHealth playerHealth;
+
         private Vector2 lastDirection = Vector2.down;
         private Vector2 lastDustPosition;
 
@@ -35,8 +37,10 @@ namespace TopDown.Movement
         {
             base.Awake();
 
+            // Get References
             anim = GetComponentInChildren<Animator>();
             directionalAnimator = GetComponentInChildren<DirectionalAnimator>();
+            playerHealth = GetComponent<PlayerHealth>();
         }
 
         // -- UPDATE -- 
@@ -94,6 +98,12 @@ namespace TopDown.Movement
                 StartCoroutine(Dodge());
         }
 
+        // -- GET ISDODGING --
+        public bool IsDodging
+        {
+            get { return isDodging; }
+        }
+
         // -- DODGE --
         private IEnumerator Dodge()
         {
@@ -109,9 +119,12 @@ namespace TopDown.Movement
             else
                 dodgeDirection = lastDirection.normalized;
 
-            // Dodge movement
+            playerHealth.SetInvincible(true);
             body.AddForce(dodgeDirection * dodgeForce, ForceMode2D.Impulse);
-            yield return new WaitForSeconds(dodgeDuration);
+            yield return new WaitForSeconds(dodgeDuration * (5f / 6f)); // Invinsible for the first 4 frames
+
+            playerHealth.SetInvincible(false);
+            yield return new WaitForSeconds(dodgeDuration * (1f / 6f)); // Vulnerable for the last 2 frames
 
             // Spawn dust cloud after landing dodge
             VFXManager.Instance.SpawnDodgeDust(transform.position);
@@ -123,7 +136,7 @@ namespace TopDown.Movement
             // Slow down speed slightly after dodging
             float originalSpeed = moveSpeed;
             moveSpeed *= 0.8f;
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(dodgeCooldown);
             moveSpeed = originalSpeed;
         }
     }   

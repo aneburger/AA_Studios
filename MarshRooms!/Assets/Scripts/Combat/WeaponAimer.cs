@@ -58,7 +58,7 @@ public class WeaponAimer : MonoBehaviour
         // --- FRONT / BACK SORTING ---
         bool isBack = angle >= 50f && angle <= 130f;
         int baseOrder = characterRenderer.sortingOrder;
-        weaponRenderer.sortingOrder = isBack ? baseOrder - 10 : baseOrder + 10;
+        weaponRenderer.sortingOrder = isBack ? baseOrder - 100 : baseOrder + 100;
 
         // -- DEBUG --
         // Debug.DrawRay(weaponPivot.position, aimDirection * 2f, Color.green);
