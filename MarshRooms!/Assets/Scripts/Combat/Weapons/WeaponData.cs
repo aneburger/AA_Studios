@@ -5,9 +5,18 @@ using UnityEngine;
 
 [CreateAssetMenu(fileName = "WeaponData", menuName = "Weapons/WeaponData")]
 public class WeaponData : ScriptableObject
-{
-    [Header("Firing")]
+{   
+    [Header("Name")]
+    public string gunName;
+
+    [Header("Prefabs")]
     public GameObject bulletPrefab;
+    public GameObject shellsPrefab;
+    public GameObject hitPrefab;
+    public GameObject muzzleExplosionPrefab;
+
+
+    [Header("Firing")]
     public float fireRate;
     public float damage;
     public float bulletSpeed;

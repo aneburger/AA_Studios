@@ -15,7 +15,7 @@ public class DirectionalAnimator : MonoBehaviour
         }
     }
 
-    // Set direction from other scripts
+    // -- SET DIRECTION --
     public void SetDirection(Vector2 direction)
     {
         if (direction.sqrMagnitude < 0.001f)
@@ -29,7 +29,7 @@ public class DirectionalAnimator : MonoBehaviour
         anim.SetFloat("y", finalDirection.y);
     }
 
-    // Converts direction vector to one of 4 directions
+    // -- SET CLOSEST DIRECTION --
     private Vector2 GetClosestDirection(Vector2 input)
     {
         if (Mathf.Abs(input.x) > Mathf.Abs(input.y))
@@ -38,5 +38,11 @@ public class DirectionalAnimator : MonoBehaviour
         }
 
         return input.y >= 0f ? Vector2.up : Vector2.down;
+    }
+    
+    // -- SET ANIMATION SPEED --
+    public void SetAnimationSpeed(float speed)
+    {
+        anim.speed = speed;
     }
 }

@@ -12,11 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36776f04a1ca3d8449b04b532f7a016e, type: 3}
   m_Name: Pistol
   m_EditorClassIdentifier: Assembly-CSharp::WeaponData
+  gunName: Pistol
   bulletPrefab: {fileID: 6894130498819508759, guid: a39c1ac104b6d094498500cecc7bfd24, type: 3}
+  shellsPrefab: {fileID: 0}
+  hitPrefab: {fileID: 4081999799842582576, guid: a1a081b6f887bac44b78da706df05dc0, type: 3}
+  muzzleExplosionPrefab: {fileID: 0}
   fireRate: 2
   damage: 1
   bulletSpeed: 7
   sprite: {fileID: -4854829337826818713, guid: 6e0dd451b4501c54da27a492414f70a4, type: 3}
+  shootClip: {fileID: 0}
+  shootVolume: 0
   shakeForce: 0
   knockbackForce: 1
   hitKnockback: 3

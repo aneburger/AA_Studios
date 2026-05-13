@@ -7,7 +7,7 @@ public class VFXManager : MonoBehaviour
 {
     public static VFXManager Instance { get; private set; }
 
-    [Header("VFX Prefabs")]
+    [Header("Dust Prefabs")]
     [SerializeField] private GameObject dustWalkPrefab;
     [SerializeField] private GameObject dodgeDustPrefab;
 
@@ -34,5 +34,26 @@ public class VFXManager : MonoBehaviour
     {
         if (dodgeDustPrefab == null) return;
         Instantiate(dodgeDustPrefab, position, Quaternion.identity);
+    }
+
+    // -- SPAWN VFX SIMPLE -- (General VFX)
+    public void SpawnVFX(GameObject vfxPrefab, Vector2 position)
+    {
+        if (vfxPrefab == null) return;
+        Instantiate(vfxPrefab, position, Quaternion.identity);
+    }
+
+    // -- SPAWN HIT VFX --
+    public void SpawnHitVFX(GameObject vfxPrefab, Vector2 position, int sortingOrder = 0)
+    {
+        if (vfxPrefab == null) return;
+        
+        // Random rotation on Z axis
+        Quaternion randomRotation = Quaternion.Euler(0f, 0f, Random.Range(0f, 360f));
+        GameObject vfx = Instantiate(vfxPrefab, position, randomRotation);
+        
+        SpriteRenderer sr = vfx.GetComponent<SpriteRenderer>();
+        if (sr != null)
+            sr.sortingOrder = sortingOrder; 
     }
 }

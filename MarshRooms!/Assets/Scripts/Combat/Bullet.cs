@@ -7,7 +7,13 @@ public class Bullet : MonoBehaviour
     public float damage;
     public float knockback;
 
+    // -- VFX --
+    public GameObject hitVFX;
+    public GameObject muzzleVFX;
+    public GameObject shellVFX;
+
     private Vector2 direction;
+    public int weaponSortingOrder;
 
     public void SetDirection(Vector2 dir)
     {
@@ -35,6 +41,7 @@ public class Bullet : MonoBehaviour
                 mover.ApplyKnockback(direction * knockback);
         }
 
+        VFXManager.Instance.SpawnHitVFX(hitVFX, transform.position, weaponSortingOrder);
         Destroy(gameObject);
     }
 }

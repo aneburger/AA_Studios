@@ -34,7 +34,10 @@ public class PlayerHealth : BaseHealth
 
         // Delay speed when invincible
         if (mover != null)
-            mover.SetSpeed(value ? mover.OriginalSpeed * 0.8f : mover.OriginalSpeed);
+        {
+            mover.SetSpeed(value ? mover.OriginalSpeed * 0.7f : mover.OriginalSpeed);
+            mover.DirectionalAnimator.SetAnimationSpeed(value ? 0.7f : 1f);
+        }
 
         gameObject.layer = LayerMask.NameToLayer(value ? "PlayerInvincible" : "Player");
     }

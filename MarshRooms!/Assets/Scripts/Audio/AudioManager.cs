@@ -61,4 +61,23 @@ public sealed class AudioManager : MonoBehaviour
         sfxSource.volume = volume;
     }
 
+    // --------------------------- AUDIO EFFECTS ---------------------------------
+
+    // -- PLAY SFX WITH PITCH VARIATION --
+    public void PlaySFXWithPitch(AudioClip clip, float volume = 1f, float pitchVariation = 0.1f)
+    {
+        if (clip == null) return;
+
+        GameObject tempAudio = new GameObject("TempAudio");
+        AudioSource source = tempAudio.AddComponent<AudioSource>();
+
+        source.clip = clip; 
+        source.volume = volume;
+        source.pitch = 1f + Random.Range(-pitchVariation, pitchVariation);
+ 
+        source.Play();
+
+        Destroy(tempAudio, clip.length); 
+    }
+
 }

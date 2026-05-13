@@ -10,21 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 36776f04a1ca3d8449b04b532f7a016e, type: 3}
-  m_Name: Plunger
+  m_Name: Banana
   m_EditorClassIdentifier: Assembly-CSharp::WeaponData
-  gunName: Plunger
-  bulletPrefab: {fileID: 6894130498819508759, guid: cd353b89fa8c32641b060f3e43237936, type: 3}
+  gunName: B-NANA
+  bulletPrefab: {fileID: 6894130498819508759, guid: 9ab4e2f5c7bd5b94f8b9a790ce4ca601, type: 3}
   shellsPrefab: {fileID: 0}
-  hitPrefab: {fileID: 4081999799842582576, guid: c904ccd69bb38fb4e835b6a03e41e4dd, type: 3}
+  hitPrefab: {fileID: 4081999799842582576, guid: 9223993810704a64baf6fc20725813ba, type: 3}
   muzzleExplosionPrefab: {fileID: 0}
   fireRate: 0.5
-  damage: 1
-  bulletSpeed: 10
-  sprite: {fileID: -5603803822816017939, guid: a1ef06a7ec304f54dad6e229c4e389d9, type: 3}
-  shootClip: {fileID: 8300000, guid: ed944b2c2b7821940bee9324b3b2ac6b, type: 3}
-  shootVolume: 0.805
+  damage: 3
+  bulletSpeed: 15
+  sprite: {fileID: -1325218693181487552, guid: ca18fef1eef6fa340b8f8060816ba3d0, type: 3}
+  shootClip: {fileID: 8300000, guid: 5b674002838ff2742bb98f8fb24cb327, type: 3}
+  shootVolume: 0.8
   shakeForce: 0.1
-  knockbackForce: 4
-  hitKnockback: 6
-  recoilAmount: 15
+  knockbackForce: 10
+  hitKnockback: 15
+  recoilAmount: 30
   recoilDecay: 10

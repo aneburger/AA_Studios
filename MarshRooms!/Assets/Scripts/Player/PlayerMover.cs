@@ -32,6 +32,17 @@ namespace TopDown.Movement
         private bool isDodging;
         private float dodgeCooldownTimer;
 
+        // -- GETTERS --
+        public bool IsDodging
+        {
+            get { return isDodging; }
+        }
+
+        public DirectionalAnimator DirectionalAnimator
+        {
+            get { return directionalAnimator; }
+        }
+
         // -- AWAKE --
         protected override void Awake()
         {
@@ -98,12 +109,6 @@ namespace TopDown.Movement
                 StartCoroutine(Dodge());
         }
 
-        // -- GET ISDODGING --
-        public bool IsDodging
-        {
-            get { return isDodging; }
-        }
-
         // -- DODGE --
         private IEnumerator Dodge()
         {
@@ -135,9 +140,14 @@ namespace TopDown.Movement
 
             // Slow down speed slightly after dodging
             float originalSpeed = moveSpeed;
-            moveSpeed *= 0.8f;
+
+            moveSpeed *= 0.7f;
+            directionalAnimator.SetAnimationSpeed(0.7f);
+
             yield return new WaitForSeconds(dodgeCooldown);
+
             moveSpeed = originalSpeed;
+            directionalAnimator.SetAnimationSpeed(1f);
         }
     }   
 }

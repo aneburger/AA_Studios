@@ -41,9 +41,13 @@ public abstract class BaseShooter : MonoBehaviour
         Bullet b = bullet.GetComponent<Bullet>();
         
         b.SetDirection(direction);
+
+        // Pass weapon data to bullet
         b.damage = currentWeapon.damage;
         b.speed = currentWeapon.bulletSpeed;
         b.knockback = currentWeapon.hitKnockback;
+        b.hitVFX = currentWeapon.hitPrefab;
+        b.weaponSortingOrder = weaponSprite.sortingOrder;
 
         OnShootEffects(direction);
     }
@@ -55,7 +59,7 @@ public abstract class BaseShooter : MonoBehaviour
         mover?.ApplyKnockback(-direction * currentWeapon.knockbackForce);
 
         // Play weapon sound
-        AudioManager.Instance.PlaySFX(currentWeapon.shootClip, currentWeapon.shootVolume); 
+        AudioManager.Instance.PlaySFXWithPitch(currentWeapon.shootClip, currentWeapon.shootVolume, 0.1f); 
     }
 
     // -- SHOW / HIDE WEAPON --
