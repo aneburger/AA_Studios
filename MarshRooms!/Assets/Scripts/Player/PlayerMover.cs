@@ -13,7 +13,6 @@ namespace TopDown.Movement
         [Header("References")]
         [SerializeField] private PlayerAimer aim;
         [SerializeField] private PlayerShooter shooter;
-        [SerializeField] private DirectionalAnimator directionalAnimator;
 
         [Header("Dodge Settings")]
         [SerializeField] private float dodgeForce;
@@ -25,23 +24,14 @@ namespace TopDown.Movement
 
         private Animator anim;
         private PlayerHealth playerHealth;
+        private PlayerWeaponSlot weaponSlot;
 
         private Vector2 lastDirection = Vector2.down;
         private Vector2 lastDustPosition;
 
-        private bool isDodging;
         private float dodgeCooldownTimer;
-
-        // -- GETTERS --
-        public bool IsDodging
-        {
-            get { return isDodging; }
-        }
-
-        public DirectionalAnimator DirectionalAnimator
-        {
-            get { return directionalAnimator; }
-        }
+        private bool isDodging;
+        public bool IsDodging => isDodging;
 
         // -- AWAKE --
         protected override void Awake()
@@ -50,8 +40,8 @@ namespace TopDown.Movement
 
             // Get References
             anim = GetComponentInChildren<Animator>();
-            directionalAnimator = GetComponentInChildren<DirectionalAnimator>();
             playerHealth = GetComponent<PlayerHealth>();
+            weaponSlot = GetComponent<PlayerWeaponSlot>();
         }
 
         // -- UPDATE -- 
@@ -79,7 +69,7 @@ namespace TopDown.Movement
 
                 // Face aim direction if armed, otherise face movement direction
                 Vector2 facingDir = shooter.IsArmed ? aim.AimDirection : lastDirection;
-                directionalAnimator.SetDirection(facingDir);
+                base.UpdateFacing(facingDir);
             }
 
             if (dodgeCooldownTimer > 0f)
@@ -107,6 +97,24 @@ namespace TopDown.Movement
             // Cannot Dodge when standing still
             if (!isDodging && dodgeCooldownTimer <= 0f && moveInput.sqrMagnitude > 0.01f)
                 StartCoroutine(Dodge());
+        }
+
+        
+        // -- SCROLL INPUT --
+        public void OnScroll(InputAction.CallbackContext context)
+        {
+            if (!context.performed) return;
+
+            float scroll = context.ReadValue<float>();
+            if (scroll > 0f) weaponSlot.ScrollUp();
+            else if (scroll < 0f) weaponSlot.ScrollDown();
+        }
+
+        // -- INTERACT INPUT --
+        public void OnInteract(InputAction.CallbackContext context)
+        {
+            if (!context.started) return;
+            weaponSlot.PickupWeapon();
         }
 
         // -- DODGE --
@@ -141,13 +149,13 @@ namespace TopDown.Movement
             // Slow down speed slightly after dodging
             float originalSpeed = moveSpeed;
 
-            moveSpeed *= 0.7f;
-            directionalAnimator.SetAnimationSpeed(0.7f);
+            moveSpeed *= 0.6f;
+            SetAnimationSpeed(0.6f);
 
             yield return new WaitForSeconds(dodgeCooldown);
 
             moveSpeed = originalSpeed;
-            directionalAnimator.SetAnimationSpeed(1f);
+            SetAnimationSpeed(1f);
         }
-    }   
+    } 
 }

@@ -10,7 +10,7 @@
                     "name": "Move",
                     "type": "Value",
                     "id": "85f16f1a-cd83-49af-a706-af1a9023e613",
-                    "expectedControlType": "Vector2",
+                    "expectedControlType": "Axis",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
@@ -32,6 +32,24 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Pickup",
+                    "type": "Button",
+                    "id": "24f6f0f6-0441-4a8d-a67d-15fcd6fdd3cd",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "ScrollWeapon",
+                    "type": "Value",
+                    "id": "dd4595c6-a670-4038-bb04-d09cd0ebf1b7",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -131,6 +149,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "Shoot",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8d9b6b2e-2b45-42ce-aa6a-931fe771b459",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pickup",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "261de2bb-644d-4235-a30c-d8dc812932f2",
+                    "path": "<Mouse>/scroll/y",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ScrollWeapon",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

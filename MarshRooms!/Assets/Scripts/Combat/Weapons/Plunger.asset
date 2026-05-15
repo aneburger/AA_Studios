@@ -13,18 +13,18 @@ MonoBehaviour:
   m_Name: Plunger
   m_EditorClassIdentifier: Assembly-CSharp::WeaponData
   gunName: Plunger
-  bulletPrefab: {fileID: 6894130498819508759, guid: cd353b89fa8c32641b060f3e43237936, type: 3}
+  bulletPrefab: {fileID: 6894130498819508759, guid: 989315d858cfc6645bc9a7e148af8cf5, type: 3}
   shellsPrefab: {fileID: 0}
-  hitPrefab: {fileID: 4081999799842582576, guid: c904ccd69bb38fb4e835b6a03e41e4dd, type: 3}
-  muzzleExplosionPrefab: {fileID: 0}
-  fireRate: 0.5
+  hitPrefab: {fileID: 4081999799842582576, guid: f2bb86fcfdc161c4685633b4f4a7113e, type: 3}
+  muzzleFlashPrefab: {fileID: 4081999799842582576, guid: 634be7655033d594bace4670510eeb81, type: 3}
+  fireRate: 0.6
   damage: 1
   bulletSpeed: 10
   sprite: {fileID: -5603803822816017939, guid: a1ef06a7ec304f54dad6e229c4e389d9, type: 3}
   shootClip: {fileID: 8300000, guid: ed944b2c2b7821940bee9324b3b2ac6b, type: 3}
   shootVolume: 0.805
-  shakeForce: 0.1
-  knockbackForce: 4
-  hitKnockback: 6
+  shakeForce: 0.05
+  knockbackForce: 2
+  hitKnockback: 4
   recoilAmount: 15
   recoilDecay: 10

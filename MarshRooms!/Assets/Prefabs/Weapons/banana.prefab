@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 1030860500392597893}
   - component: {fileID: 4335018509098030027}
   - component: {fileID: 2765967550098509236}
-  m_Layer: 0
-  m_Name: banana
+  m_Layer: 10
+  m_Name: Banana
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -144,11 +144,11 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.3125, y: 0.8125}
+    oldSize: {x: 1.375, y: 0.8125}
     newSize: {x: 1.25, y: 0.6875}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1.14, y: 0.45}
+  m_Size: {x: 1.61, y: 1.1}
   m_EdgeRadius: 0

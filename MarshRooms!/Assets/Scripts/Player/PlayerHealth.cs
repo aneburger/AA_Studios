@@ -27,6 +27,13 @@ public class PlayerHealth : BaseHealth
             damageCooldownTimer -= Time.deltaTime;
     }
 
+    // -- AWAKE -- 
+    protected override void Awake()
+    {
+        base.Awake();
+        mover = GetComponent<PlayerMover>();
+    }
+
     // -- SET INVINCIBILITY -- 
     public void SetInvincible(bool value)
     {

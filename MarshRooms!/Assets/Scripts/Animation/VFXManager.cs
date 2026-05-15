@@ -56,4 +56,17 @@ public class VFXManager : MonoBehaviour
         if (sr != null)
             sr.sortingOrder = sortingOrder; 
     }
+
+    // -- SPAWN MUZZLE FLASH --
+    public void SpawnMuzzleFlash(GameObject vfxPrefab, Vector2 position, float angle, int sortingOrder = 0)
+    {
+        if (vfxPrefab == null) return;
+        
+        Quaternion rotation = Quaternion.Euler(0f, 0f, angle);
+        GameObject vfx = Instantiate(vfxPrefab, position, rotation);
+        
+        SpriteRenderer sr = vfx.GetComponent<SpriteRenderer>();
+        if (sr != null)
+            sr.sortingOrder = sortingOrder;
+    }
 }

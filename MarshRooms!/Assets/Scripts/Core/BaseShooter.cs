@@ -3,11 +3,12 @@
 
 using UnityEngine;
 using TopDown.Movement;
+using System.Collections;
 
 public abstract class BaseShooter : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] protected Transform firePoint;
+    [SerializeField] protected Transform firePoint; 
     [SerializeField] protected WeaponAimer weaponAimer;
     [SerializeField] protected BaseMover mover;
     [SerializeField] protected SpriteRenderer weaponSprite;
@@ -16,15 +17,33 @@ public abstract class BaseShooter : MonoBehaviour
     [SerializeField] protected WeaponData currentWeapon;
 
     public bool IsArmed => currentWeapon != null;
-
     protected float nextFireTime = 0f;
+
+    private Coroutine squishCoroutine;
+    private Vector3 defaultScale;
+    
+     // -- AWAKE --
+    protected virtual void Awake()
+    {
+        if (weaponSprite != null)
+            defaultScale = weaponSprite.transform.localScale;
+    }
 
     // -- EQUIP WEAPON --
     public void EquipWeapon(WeaponData weapon)
-    {
+    {   
+        // Set current weapon
         currentWeapon = weapon;
         nextFireTime = 0f;
         UpdateWeaponVisuals();
+
+        // Weapon equip effects
+        if (squishCoroutine != null) StopCoroutine(squishCoroutine);
+        squishCoroutine = StartCoroutine(SquishWeapon());
+        weaponAimer?.ApplyRecoil(currentWeapon.recoilAmount, currentWeapon.recoilDecay);
+
+        // Weapon equip sound
+        
     }
 
     // -- GET SHOOT DIRECTION (implemented by subclasses) --
@@ -49,6 +68,8 @@ public abstract class BaseShooter : MonoBehaviour
         b.hitVFX = currentWeapon.hitPrefab;
         b.weaponSortingOrder = weaponSprite.sortingOrder;
 
+        VFXManager.Instance.SpawnVFX(currentWeapon.shellsPrefab, firePoint.position);
+
         OnShootEffects(direction);
     }
 
@@ -59,7 +80,15 @@ public abstract class BaseShooter : MonoBehaviour
         mover?.ApplyKnockback(-direction * currentWeapon.knockbackForce);
 
         // Play weapon sound
-        AudioManager.Instance.PlaySFXWithPitch(currentWeapon.shootClip, currentWeapon.shootVolume, 0.1f); 
+        AudioManager.Instance.PlaySFXWithPitch(currentWeapon.shootClip, currentWeapon.shootVolume, 0.1f);
+
+        // Spawn muzzle flash VFX
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        VFXManager.Instance.SpawnMuzzleFlash(currentWeapon.muzzleFlashPrefab, firePoint.position, angle, weaponSprite.sortingOrder);
+
+        // Squish weapon sprite
+        if (squishCoroutine != null) StopCoroutine(squishCoroutine);
+        squishCoroutine = StartCoroutine(SquishWeapon());
     }
 
     // -- SHOW / HIDE WEAPON --
@@ -72,5 +101,17 @@ public abstract class BaseShooter : MonoBehaviour
         }
 
         if (weaponAimer != null) weaponAimer.enabled = IsArmed;
+        
+    }
+
+    // -- SQUISH --
+    private IEnumerator SquishWeapon()
+    {
+        if (weaponSprite == null) yield break;
+
+        Transform weaponTransform = weaponSprite.transform;
+        weaponTransform.localScale = new Vector3(defaultScale.x * 0.7f, defaultScale.y * 1.2f, 1f);
+        yield return new WaitForSeconds(0.05f);
+        weaponTransform.localScale = defaultScale;
     }
 }

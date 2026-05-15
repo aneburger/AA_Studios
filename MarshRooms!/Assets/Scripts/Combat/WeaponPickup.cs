@@ -1,18 +1,25 @@
 using UnityEngine;
 
-// When player walks over a weapon it is picked up
-
 public class WeaponPickup : MonoBehaviour
 {
     [SerializeField] public WeaponData weaponData;
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        BaseShooter shooter = other.GetComponentInParent<BaseShooter>();
+        PlayerWeaponSlot handler = other.GetComponentInParent<PlayerWeaponSlot>();
+        if (handler == null) return;
+        handler.SetNearbyPickup(this);
+    }
 
-        if (shooter == null) return;
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        PlayerWeaponSlot handler = other.GetComponentInParent<PlayerWeaponSlot>();
+        if (handler == null) return;
+        handler.ClearNearbyPickup(this);
+    }
 
-        shooter.EquipWeapon(weaponData);
+    public void Destroy()
+    {
         Destroy(gameObject);
     }
 }

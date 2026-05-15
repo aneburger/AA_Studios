@@ -1,0 +1,756 @@
+fileFormatVersion: 2
+guid: 353fe267d60cba040ba24dc1c4207fbb
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -6708654097992876903
+    second: button-walking_0
+  - first:
+      213: 3342792004808971373
+    second: button-walking_1
+  - first:
+      213: 8962143213271988775
+    second: button-walking_2
+  - first:
+      213: 491506228195868204
+    second: button-walking_3
+  - first:
+      213: -9208749283322364709
+    second: button-walking_4
+  - first:
+      213: -3280152635071723769
+    second: button-walking_5
+  - first:
+      213: 4506414468693311665
+    second: button-walking_6
+  - first:
+      213: 9187203784485942076
+    second: button-walking_7
+  - first:
+      213: 3642199899627579813
+    second: button-walking_8
+  - first:
+      213: -9033749518996415484
+    second: button-walking_9
+  - first:
+      213: 6514653966233763734
+    second: button-walking_10
+  - first:
+      213: -7888888853265703638
+    second: button-walking_11
+  - first:
+      213: 1755385334220653914
+    second: button-walking_12
+  - first:
+      213: 1077157470881647042
+    second: button-walking_13
+  - first:
+      213: -1238363317343510111
+    second: button-walking_14
+  - first:
+      213: 7041232047526475328
+    second: button-walking_15
+  - first:
+      213: 1955282439290423211
+    second: button-walking_16
+  - first:
+      213: 8432361650098876817
+    second: button-walking_17
+  - first:
+      213: 4757275358678961891
+    second: button-walking_18
+  - first:
+      213: 3060807891782046911
+    second: button-walking_19
+  - first:
+      213: -4990430212054613782
+    second: button-walking_20
+  - first:
+      213: -875408224699039619
+    second: button-walking_21
+  - first:
+      213: 2545861667275881745
+    second: button-walking_22
+  - first:
+      213: -8474590114701793295
+    second: button-walking_23
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 16
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: button-walking_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 90
+        width: 30
+        height: 30
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 99c7a2054a216e2a0800000000000000
+      internalID: -6708654097992876903
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: button-walking_1
+      rect:
+        serializedVersion: 2
+        x: 30
+        y: 90
+        width: 30
+        height: 30
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d6497a41e9bf36e20800000000000000
+      internalID: 3342792004808971373
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: button-walking_2
+      rect:
+        serializedVersion: 2
+        x: 60
+        y: 90
+        width: 30
+        height: 30
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 72a314dd4cdef5c70800000000000000
+      internalID: 8962143213271988775
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: button-walking_3
+      rect:
+        serializedVersion: 2
+        x: 90
+        y: 90
+        width: 30
+        height: 30
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c2eb1887f4e22d600800000000000000
+      internalID: 491506228195868204
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: button-walking_4
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 90
+        width: 30
+        height: 30
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bdcffed1153f33080800000000000000
+      internalID: -9208749283322364709
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: button-walking_5
+      rect:
+        serializedVersion: 2
+        x: 150
+        y: 90
+        width: 30
+        height: 30
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7070d71be8e8a72d0800000000000000
+      internalID: -3280152635071723769
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: button-walking_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 60
+        width: 30
+        height: 30
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1b0452155100a8e30800000000000000
+      internalID: 4506414468693311665
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: button-walking_7
+      rect:
+        serializedVersion: 2
+        x: 30
+        y: 60
+        width: 30
+        height: 30
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c33b8658a218f7f70800000000000000
+      internalID: 9187203784485942076
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: button-walking_8
+      rect:
+        serializedVersion: 2
+        x: 60
+        y: 60
+        width: 30
+        height: 30
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5a9e342f281bb8230800000000000000
+      internalID: 3642199899627579813
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: button-walking_9
+      rect:
+        serializedVersion: 2
+        x: 90
+        y: 60
+        width: 30
+        height: 30
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 40cdc52ecaca1a280800000000000000
+      internalID: -9033749518996415484
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: button-walking_10
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 60
+        width: 30
+        height: 30
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 69ff3f32443b86a50800000000000000
+      internalID: 6514653966233763734
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: button-walking_11
+      rect:
+        serializedVersion: 2
+        x: 150
+        y: 60
+        width: 30
+        height: 30
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a2d1f849269058290800000000000000
+      internalID: -7888888853265703638
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: button-walking_12
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 30
+        width: 30
+        height: 30
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a55072a39a16c5810800000000000000
+      internalID: 1755385334220653914
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: button-walking_13
+      rect:
+        serializedVersion: 2
+        x: 30
+        y: 30
+        width: 30
+        height: 30
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2c90f034305d2fe00800000000000000
+      internalID: 1077157470881647042
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: button-walking_14
+      rect:
+        serializedVersion: 2
+        x: 60
+        y: 30
+        width: 30
+        height: 30
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1a1addebf1370dee0800000000000000
+      internalID: -1238363317343510111
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: button-walking_15
+      rect:
+        serializedVersion: 2
+        x: 90
+        y: 30
+        width: 30
+        height: 30
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 04679edbd3b77b160800000000000000
+      internalID: 7041232047526475328
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: button-walking_16
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 30
+        width: 30
+        height: 30
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ba7077dd40f822b10800000000000000
+      internalID: 1955282439290423211
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: button-walking_17
+      rect:
+        serializedVersion: 2
+        x: 150
+        y: 30
+        width: 30
+        height: 30
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 19135c38e34c50570800000000000000
+      internalID: 8432361650098876817
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: button-walking_18
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 30
+        height: 30
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3ee47cccbbc350240800000000000000
+      internalID: 4757275358678961891
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: button-walking_19
+      rect:
+        serializedVersion: 2
+        x: 30
+        y: 0
+        width: 30
+        height: 30
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fb4916b8f8c2a7a20800000000000000
+      internalID: 3060807891782046911
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: button-walking_20
+      rect:
+        serializedVersion: 2
+        x: 60
+        y: 0
+        width: 30
+        height: 30
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ae08b1e992e6ebab0800000000000000
+      internalID: -4990430212054613782
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: button-walking_21
+      rect:
+        serializedVersion: 2
+        x: 90
+        y: 0
+        width: 30
+        height: 30
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d70cb559bdce9d3f0800000000000000
+      internalID: -875408224699039619
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: button-walking_22
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 0
+        width: 30
+        height: 30
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 11d3345a2b7b45320800000000000000
+      internalID: 2545861667275881745
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: button-walking_23
+      rect:
+        serializedVersion: 2
+        x: 150
+        y: 0
+        width: 30
+        height: 30
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1f7a924e035346a80800000000000000
+      internalID: -8474590114701793295
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 79ab8388b821212418ff61298a07f20d
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":30.0,"y":30.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
+    nameFileIdTable:
+      button-walking_0: -6708654097992876903
+      button-walking_1: 3342792004808971373
+      button-walking_10: 6514653966233763734
+      button-walking_11: -7888888853265703638
+      button-walking_12: 1755385334220653914
+      button-walking_13: 1077157470881647042
+      button-walking_14: -1238363317343510111
+      button-walking_15: 7041232047526475328
+      button-walking_16: 1955282439290423211
+      button-walking_17: 8432361650098876817
+      button-walking_18: 4757275358678961891
+      button-walking_19: 3060807891782046911
+      button-walking_2: 8962143213271988775
+      button-walking_20: -4990430212054613782
+      button-walking_21: -875408224699039619
+      button-walking_22: 2545861667275881745
+      button-walking_23: -8474590114701793295
+      button-walking_3: 491506228195868204
+      button-walking_4: -9208749283322364709
+      button-walking_5: -3280152635071723769
+      button-walking_6: 4506414468693311665
+      button-walking_7: 9187203784485942076
+      button-walking_8: 3642199899627579813
+      button-walking_9: -9033749518996415484
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

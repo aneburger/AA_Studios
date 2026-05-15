@@ -10,23 +10,29 @@ public class DirectionalAnimator : MonoBehaviour
     private void Awake()
     {
         if (anim == null)
-        {
-            anim = GetComponent<Animator>();
-        }
+            anim = GetComponentInChildren<Animator>();
     }
 
     // -- SET DIRECTION --
     public void SetDirection(Vector2 direction)
     {
-        if (direction.sqrMagnitude < 0.001f)
-        {
-            return;
-        }
-
+        if (direction.sqrMagnitude < 0.001f) return;
+        
         Vector2 finalDirection = GetClosestDirection(direction);
-
         anim.SetFloat("x", finalDirection.x);
         anim.SetFloat("y", finalDirection.y);
+    }
+
+    // -- SET WALKING --
+    public void SetWalking(bool walking)
+    {
+        anim.SetBool("isWalking", walking);
+    }
+
+    // -- SET ANIMATION SPEED --
+    public void SetAnimationSpeed(float speed)
+    {
+        anim.speed = speed;
     }
 
     // -- SET CLOSEST DIRECTION --
@@ -38,11 +44,5 @@ public class DirectionalAnimator : MonoBehaviour
         }
 
         return input.y >= 0f ? Vector2.up : Vector2.down;
-    }
-    
-    // -- SET ANIMATION SPEED --
-    public void SetAnimationSpeed(float speed)
-    {
-        anim.speed = speed;
     }
 }

@@ -13,7 +13,7 @@ public class WeaponData : ScriptableObject
     public GameObject bulletPrefab;
     public GameObject shellsPrefab;
     public GameObject hitPrefab;
-    public GameObject muzzleExplosionPrefab;
+    public GameObject muzzleFlashPrefab;
 
 
     [Header("Firing")]

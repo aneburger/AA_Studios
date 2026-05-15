@@ -9,8 +9,6 @@ public class Bullet : MonoBehaviour
 
     // -- VFX --
     public GameObject hitVFX;
-    public GameObject muzzleVFX;
-    public GameObject shellVFX;
 
     private Vector2 direction;
     public int weaponSortingOrder;

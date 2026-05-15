@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::WeaponData
   gunName: Pistol
   bulletPrefab: {fileID: 6894130498819508759, guid: a39c1ac104b6d094498500cecc7bfd24, type: 3}
-  shellsPrefab: {fileID: 0}
+  shellsPrefab: {fileID: 3331065470414262999, guid: b2b9e163261c23b418b6fc5856cd3a3c, type: 3}
   hitPrefab: {fileID: 4081999799842582576, guid: a1a081b6f887bac44b78da706df05dc0, type: 3}
-  muzzleExplosionPrefab: {fileID: 0}
+  muzzleFlashPrefab: {fileID: 4081999799842582576, guid: 0904047496256e44586456f8a20d959a, type: 3}
   fireRate: 2
   damage: 1
   bulletSpeed: 7
