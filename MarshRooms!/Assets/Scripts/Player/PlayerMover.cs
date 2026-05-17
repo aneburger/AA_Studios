@@ -22,9 +22,16 @@ namespace TopDown.Movement
         [Header("VFX Settings")]
         [SerializeField] private float dustDistance;
 
+        [Header("Audio")]
+        [SerializeField] private AudioClip dodgeClip;
+        [SerializeField] private float dodgeVolume = 1f;
+        [SerializeField] private AudioClip runningClip;
+        [SerializeField] private float runningVolume = 1f;
+
         private Animator anim;
         private PlayerHealth playerHealth;
         private PlayerWeaponSlot weaponSlot;
+        private AudioSource runningAudioSource;
 
         private Vector2 lastDirection = Vector2.down;
         private Vector2 lastDustPosition;
@@ -32,6 +39,8 @@ namespace TopDown.Movement
         private float dodgeCooldownTimer;
         private bool isDodging;
         public bool IsDodging => isDodging;
+
+        private bool isRunningAudioPlaying;
 
         // -- AWAKE --
         protected override void Awake()
@@ -42,6 +51,13 @@ namespace TopDown.Movement
             anim = GetComponentInChildren<Animator>();
             playerHealth = GetComponent<PlayerHealth>();
             weaponSlot = GetComponent<PlayerWeaponSlot>();
+
+            // Create audio source for running sound
+            runningAudioSource = gameObject.AddComponent<AudioSource>();
+            runningAudioSource.clip = runningClip;
+            runningAudioSource.volume = runningVolume;
+            runningAudioSource.pitch = 2.0f;
+            runningAudioSource.loop = true;
         }
 
         // -- UPDATE -- 
@@ -59,10 +75,22 @@ namespace TopDown.Movement
                         VFXManager.Instance.SpawnWalkDust(transform.position);
                         lastDustPosition = transform.position;
                     }
+
+                    if (!isRunningAudioPlaying)
+                    {
+                        runningAudioSource.Play();
+                        isRunningAudioPlaying = true;
+                    }
                 }
                 else
                 {
                     lastDustPosition = transform.position;
+
+                    if (isRunningAudioPlaying)
+                    {
+                        runningAudioSource.Stop();
+                        isRunningAudioPlaying = false;
+                    }
                 }
 
                 anim.SetBool("isWalking", isMoving);
@@ -123,6 +151,13 @@ namespace TopDown.Movement
             isDodging = true;
             anim.SetTrigger("Dodge");
 
+            // Stop running audio when dodging
+            if (isRunningAudioPlaying)
+            {
+                runningAudioSource.Stop();
+                isRunningAudioPlaying = false;
+            }
+
             // Determine dodge direction
             Vector2 dodgeDirection;
             if (moveInput.sqrMagnitude > 0.01f)
@@ -131,6 +166,8 @@ namespace TopDown.Movement
                 dodgeDirection = aim.AimDirection.normalized;
             else
                 dodgeDirection = lastDirection.normalized;
+
+            AudioManager.Instance.PlaySFX(dodgeClip, dodgeVolume);
 
             playerHealth.SetInvincible(true);
             body.AddForce(dodgeDirection * dodgeForce, ForceMode2D.Impulse);

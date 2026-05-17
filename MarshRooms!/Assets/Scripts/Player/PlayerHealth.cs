@@ -12,6 +12,10 @@ public class PlayerHealth : BaseHealth
     [SerializeField] private float damageCooldown = 0.5f;
     [SerializeField] private float flickerInterval = 0.08f;
 
+    [Header("Audio")]
+    [SerializeField] private AudioClip hurtClip;
+    [SerializeField] private float hurtVolume = 1f;
+
     private float damageCooldownTimer;
     private bool isInvincible = false;
 
@@ -80,6 +84,8 @@ public class PlayerHealth : BaseHealth
     protected override void OnHitEffect()
     {
         if (IsDead()) return;
+
+        AudioManager.Instance.PlaySFX(hurtClip, hurtVolume);
         StartCoroutine(Flicker());
     }
 
