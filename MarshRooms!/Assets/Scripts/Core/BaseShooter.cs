@@ -16,6 +16,10 @@ public abstract class BaseShooter : MonoBehaviour
     [Header("Weapon")]
     [SerializeField] protected WeaponData currentWeapon;
 
+    [Header("Audio")]
+    [SerializeField] private AudioClip equipClip;
+    [SerializeField] private float equipVolume = 1f;
+
     public bool IsArmed => currentWeapon != null;
     protected float nextFireTime = 0f;
 
@@ -43,7 +47,7 @@ public abstract class BaseShooter : MonoBehaviour
         weaponAimer?.ApplyRecoil(currentWeapon.recoilAmount, currentWeapon.recoilDecay);
 
         // Weapon equip sound
-        
+        AudioManager.Instance.PlaySFX(equipClip, equipVolume);
     }
 
     // -- GET SHOOT DIRECTION (implemented by subclasses) --

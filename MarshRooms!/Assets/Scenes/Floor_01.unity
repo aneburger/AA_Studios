@@ -339,11 +339,14 @@ MonoBehaviour:
   moveSpeed: 7
   aim: {fileID: 319489606}
   shooter: {fileID: 319489605}
-  directionalAnimator: {fileID: 1064126481}
   dodgeForce: 6.5
   dodgeDuration: 0.25
   dodgeCooldown: 0.25
   dustDistance: 2
+  dodgeClip: {fileID: 8300000, guid: d5e454f6514e0974eb5a29576bf2c883, type: 3}
+  dodgeVolume: 1
+  runningClip: {fileID: 8300000, guid: 134f1f5e5486f52498e7a87e8bd5716e, type: 3}
+  runningVolume: 1
 --- !u!114 &319489608
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -590,6 +593,8 @@ MonoBehaviour:
       m_Calls: []
   damageCooldown: 1.2
   flickerInterval: 0.08
+  hurtClip: {fileID: 8300000, guid: f26380b3bb13e1941bac300f4961c42e, type: 3}
+  hurtVolume: 1
 --- !u!82 &319489613
 AudioSource:
   m_ObjectHideFlags: 0
@@ -3097,7 +3102,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 13.133179
+  orthographic size: 16.46875
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -3122,7 +3127,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.03722143, y: -1.0223002, z: -10}
+  m_LocalPosition: {x: -0.008988857, y: -5.36202, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

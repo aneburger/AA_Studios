@@ -5,7 +5,9 @@ using UnityEngine;
 
 public class EnemyHealth : BaseHealth
 {
-
+    [Header("Audio")]
+    [SerializeField] private AudioClip hurtClip;
+    [SerializeField] private float hurtVolume = 1f;
     protected override void Awake()
     {
         base.Awake();
@@ -17,5 +19,12 @@ public class EnemyHealth : BaseHealth
 
         // Destroy game object for now
         Destroy(gameObject);
+    }
+
+    // -- HIT EFFECT --
+    protected override void OnHitEffect()
+    {
+        base.OnHitEffect();
+        AudioManager.Instance.PlaySFX(hurtClip, hurtVolume);
     }
 }
