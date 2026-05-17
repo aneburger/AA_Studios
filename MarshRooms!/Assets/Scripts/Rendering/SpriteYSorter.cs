@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class SpriteYSorter : MonoBehaviour
 {
+    [SerializeField] private float sortingOffset = 0f;
+    
     private SpriteRenderer sr;
 
     private void Awake()
@@ -10,8 +12,8 @@ public class SpriteYSorter : MonoBehaviour
         sr = GetComponent<SpriteRenderer>();
     }
 
-    void LateUpdate()
+    private void LateUpdate()
     {
-        sr.sortingOrder = -(int)(transform.position.y * 100);
+        sr.sortingOrder = -(int)(transform.position.y * 100) + (int)sortingOffset;
     }
 }
