@@ -128,6 +128,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 4308149926835442162}
   - {fileID: 4698166982508756797}
   - {fileID: 5395735851033162757}
   - {fileID: 7866796958824413751}
@@ -250,6 +251,8 @@ MonoBehaviour:
   mover: {fileID: 9141055844336914756}
   weaponSprite: {fileID: 4781575144476638892}
   currentWeapon: {fileID: 11400000, guid: 83dbe672d81c88f449382074c1dd233d, type: 2}
+  equipClip: {fileID: 0}
+  equipVolume: 0
 --- !u!114 &662099414253420649
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -281,6 +284,9 @@ MonoBehaviour:
   onTakeDamage:
     m_PersistentCalls:
       m_Calls: []
+  healthBar: {fileID: 4231396693802100234}
+  hurtClip: {fileID: 0}
+  hurtVolume: 0
 --- !u!1 &1474284981994161219
 GameObject:
   m_ObjectHideFlags: 0
@@ -422,6 +428,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ac5e3cd19a51ae48bb2450ecd5ba10d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpriteYSorter
+  sortingOffset: 0
 --- !u!1 &2223798187010705781
 GameObject:
   m_ObjectHideFlags: 0
@@ -580,3 +587,76 @@ Transform:
   m_Children: []
   m_Father: {fileID: 8431050919276464193}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &3676925540415327517
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 208003371081328597}
+    m_Modifications:
+    - target: {fileID: 634602670860180719, guid: d10a319c85c09cd4aa88037a9112cab5, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.031
+      objectReference: {fileID: 0}
+    - target: {fileID: 634602670860180719, guid: d10a319c85c09cd4aa88037a9112cab5, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.177
+      objectReference: {fileID: 0}
+    - target: {fileID: 634602670860180719, guid: d10a319c85c09cd4aa88037a9112cab5, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 634602670860180719, guid: d10a319c85c09cd4aa88037a9112cab5, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 634602670860180719, guid: d10a319c85c09cd4aa88037a9112cab5, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 634602670860180719, guid: d10a319c85c09cd4aa88037a9112cab5, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 634602670860180719, guid: d10a319c85c09cd4aa88037a9112cab5, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 634602670860180719, guid: d10a319c85c09cd4aa88037a9112cab5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 634602670860180719, guid: d10a319c85c09cd4aa88037a9112cab5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 634602670860180719, guid: d10a319c85c09cd4aa88037a9112cab5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6553418807101348367, guid: d10a319c85c09cd4aa88037a9112cab5, type: 3}
+      propertyPath: m_Name
+      value: EnemyHealthBar
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: d10a319c85c09cd4aa88037a9112cab5, type: 3}
+--- !u!114 &4231396693802100234 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 702526993082772247, guid: d10a319c85c09cd4aa88037a9112cab5, type: 3}
+  m_PrefabInstance: {fileID: 3676925540415327517}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96298e16c6196e947a49d2a67ea65097, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyHealthBar
+--- !u!4 &4308149926835442162 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 634602670860180719, guid: d10a319c85c09cd4aa88037a9112cab5, type: 3}
+  m_PrefabInstance: {fileID: 3676925540415327517}
+  m_PrefabAsset: {fileID: 0}

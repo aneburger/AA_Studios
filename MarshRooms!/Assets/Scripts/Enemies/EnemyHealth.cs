@@ -4,20 +4,25 @@
 using UnityEngine;
 
 public class EnemyHealth : BaseHealth
-{
+{   
+    [Header("Health Bar")]
+    [SerializeField] private EnemyHealthBar healthBar;
+
     [Header("Audio")]
     [SerializeField] private AudioClip hurtClip;
     [Range(0f, 1f)] public float hurtVolume;
+
+    // -- AWAKE --
     protected override void Awake()
     {
         base.Awake();
     }
 
+    // -- DIE --
     protected override void Die()
     {
         base.Die();
         SpawnSpores();
-        // Destroy game object for now
         Destroy(gameObject);
     }
 
@@ -34,7 +39,13 @@ public class EnemyHealth : BaseHealth
             Instantiate(controller.Data.sporePrefab, (Vector2)transform.position + offset, Quaternion.identity);
         }
     }
-
+    
+    // -- TAKE DAMAGE --
+    public override void TakeDamage(float amount)
+    {
+        base.TakeDamage(amount);
+        healthBar?.UpdateHealth(currentHealth, maxHealth);
+    }
 
     // -- HIT EFFECT --
     protected override void OnHitEffect()

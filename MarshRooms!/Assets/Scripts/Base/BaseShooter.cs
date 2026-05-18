@@ -75,9 +75,6 @@ public abstract class BaseShooter : MonoBehaviour
         b.knockback = currentWeapon.hitKnockback;
         b.hitVFX = currentWeapon.hitPrefab;
         b.weaponSortingOrder = weaponSprite.sortingOrder;
-
-        VFXManager.Instance.SpawnVFX(currentWeapon.shellsPrefab, firePoint.position);
-
         OnShootEffects(direction);
     }
 

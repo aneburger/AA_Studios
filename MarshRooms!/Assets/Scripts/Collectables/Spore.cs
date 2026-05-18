@@ -22,6 +22,10 @@ public class Spore : MonoBehaviour
     [SerializeField] private float lifetime = 8f;
     [SerializeField] private float flickerStart = 5f;
 
+    [Header("Audio")]
+    [SerializeField] private AudioClip sporeCollectClip;
+    [Range(0f, 1f)] public float sporeCollectVolume;
+
     private SpriteRenderer sr;
     private Transform player;
     private bool isAttracting = false;
@@ -92,6 +96,7 @@ public class Spore : MonoBehaviour
     {
         StopAllCoroutines();
         Destroy(gameObject);
+        AudioManager.Instance.PlaySFXWithPitch(sporeCollectClip, sporeCollectVolume, 0.1f);
     }
 
     // -- LIFETIME TIMER --
