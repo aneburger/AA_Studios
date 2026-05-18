@@ -14,7 +14,7 @@ public class PlayerHealth : BaseHealth
 
     [Header("Audio")]
     [SerializeField] private AudioClip hurtClip;
-    [SerializeField] private float hurtVolume = 1f;
+    [Range(0f, 1f)] public float hurtVolume;
 
     private float damageCooldownTimer;
     private bool isInvincible = false;
@@ -85,7 +85,7 @@ public class PlayerHealth : BaseHealth
     {
         if (IsDead()) return;
 
-        AudioManager.Instance.PlaySFX(hurtClip, hurtVolume);
+        AudioManager.Instance.PlaySFXWithPitch(hurtClip, hurtVolume);
         StartCoroutine(Flicker());
     }
 

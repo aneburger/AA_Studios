@@ -24,9 +24,9 @@ namespace TopDown.Movement
 
         [Header("Audio")]
         [SerializeField] private AudioClip dodgeClip;
-        [SerializeField] private float dodgeVolume = 1f;
+        [Range(0f, 1f)] public float dodgeVolume;
         [SerializeField] private AudioClip runningClip;
-        [SerializeField] private float runningVolume = 1f;
+        [Range(0f, 1f)] public float runningVolume;
 
         private Animator anim;
         private PlayerHealth playerHealth;
@@ -40,7 +40,10 @@ namespace TopDown.Movement
         private bool isDodging;
         public bool IsDodging => isDodging;
 
-        private bool isRunningAudioPlaying;
+        private float scrollCooldown = 0.35f;
+        private float scrollCooldownTimer;
+
+        private AudioSource runningSFX;
 
         // -- AWAKE --
         protected override void Awake()
@@ -51,13 +54,6 @@ namespace TopDown.Movement
             anim = GetComponentInChildren<Animator>();
             playerHealth = GetComponent<PlayerHealth>();
             weaponSlot = GetComponent<PlayerWeaponSlot>();
-
-            // Create audio source for running sound
-            runningAudioSource = gameObject.AddComponent<AudioSource>();
-            runningAudioSource.clip = runningClip;
-            runningAudioSource.volume = runningVolume;
-            runningAudioSource.pitch = 2.0f;
-            runningAudioSource.loop = true;
         }
 
         // -- UPDATE -- 
@@ -76,21 +72,15 @@ namespace TopDown.Movement
                         lastDustPosition = transform.position;
                     }
 
-                    if (!isRunningAudioPlaying)
-                    {
-                        runningAudioSource.Play();
-                        isRunningAudioPlaying = true;
-                    }
+                    // When moving starts
+                    AudioManager.Instance.PlayLoopingSFX(ref runningSFX, runningClip, runningVolume, 2.0f);
                 }
                 else
                 {
                     lastDustPosition = transform.position;
 
-                    if (isRunningAudioPlaying)
-                    {
-                        runningAudioSource.Stop();
-                        isRunningAudioPlaying = false;
-                    }
+                    // When moving stops
+                    AudioManager.Instance.StopLoopingSFX(ref runningSFX);
                 }
 
                 anim.SetBool("isWalking", isMoving);
@@ -100,8 +90,13 @@ namespace TopDown.Movement
                 base.UpdateFacing(facingDir);
             }
 
+            // Dodge Cooldown
             if (dodgeCooldownTimer > 0f)
                 dodgeCooldownTimer -= Time.deltaTime;
+            
+            // Scroll Cooldown
+            if (scrollCooldownTimer > 0f)
+                scrollCooldownTimer -= Time.deltaTime;
         }
 
         // -- FIXED UPDATE -- 
@@ -131,11 +126,15 @@ namespace TopDown.Movement
         // -- SCROLL INPUT --
         public void OnScroll(InputAction.CallbackContext context)
         {
+
             if (!context.performed) return;
+            if (scrollCooldownTimer > 0f) return;
 
             float scroll = context.ReadValue<float>();
             if (scroll > 0f) weaponSlot.ScrollUp();
             else if (scroll < 0f) weaponSlot.ScrollDown();
+
+            scrollCooldownTimer = scrollCooldown;
         }
 
         // -- INTERACT INPUT --
@@ -151,12 +150,8 @@ namespace TopDown.Movement
             isDodging = true;
             anim.SetTrigger("Dodge");
 
-            // Stop running audio when dodging
-            if (isRunningAudioPlaying)
-            {
-                runningAudioSource.Stop();
-                isRunningAudioPlaying = false;
-            }
+            // Stop running audio when dodging:
+            AudioManager.Instance.StopLoopingSFX(ref runningSFX);
 
             // Determine dodge direction
             Vector2 dodgeDirection;

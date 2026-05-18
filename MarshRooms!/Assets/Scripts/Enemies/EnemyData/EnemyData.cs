@@ -18,4 +18,8 @@ public class EnemyData : ScriptableObject
     [Header("AI")]
     public float detectionRange;
     public float attackRange;
+
+    [Header("Drops")]
+    public int maxSporeDrops;
+    public GameObject sporePrefab;
 }

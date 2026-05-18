@@ -34,7 +34,7 @@ public sealed class AudioManager : MonoBehaviour
     }
 
     // -- PLAY MUSIC --
-    public void PlayMusic(AudioClip clip, float volume = 1f)
+    public void PlayMusic(AudioClip clip, float volume = 0.8f)
     {
         if (clip == null || musicSource.clip == clip) return;
         musicSource.clip = clip;
@@ -78,6 +78,30 @@ public sealed class AudioManager : MonoBehaviour
         source.Play();
 
         Destroy(tempAudio, clip.length); 
+    }
+
+    // -- PLAY LOOPING SFX --
+    public void PlayLoopingSFX(ref AudioSource source, AudioClip clip, float volume = 1f, float pitch = 1f)
+    {
+        if (clip == null || source != null) return;
+
+        GameObject tempAudio = new GameObject("LoopingSFX");
+        AudioSource newSource = tempAudio.AddComponent<AudioSource>();
+        newSource.clip = clip;
+        newSource.volume = volume;
+        newSource.pitch = pitch;
+        newSource.loop = true;
+        newSource.Play();
+
+        source = newSource;
+    }
+
+    // -- STOP LOOPING SFX --
+    public void StopLoopingSFX(ref AudioSource source)
+    {
+        if (source == null) return;
+        Destroy(source.gameObject);
+        source = null;
     }
 
 }

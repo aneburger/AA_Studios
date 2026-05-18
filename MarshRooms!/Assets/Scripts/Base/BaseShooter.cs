@@ -18,13 +18,14 @@ public abstract class BaseShooter : MonoBehaviour
 
     [Header("Audio")]
     [SerializeField] private AudioClip equipClip;
-    [SerializeField] private float equipVolume = 1f;
+    [Range(0f, 1f)] public float equipVolume;
 
     public bool IsArmed => currentWeapon != null;
     protected float nextFireTime = 0f;
 
     private Coroutine squishCoroutine;
     private Vector3 defaultScale;
+    private bool isFirstEquip = true;
     
      // -- AWAKE --
     protected virtual void Awake()
@@ -38,16 +39,19 @@ public abstract class BaseShooter : MonoBehaviour
     {   
         // Set current weapon
         currentWeapon = weapon;
-        nextFireTime = 0f;
+        nextFireTime = Time.time + 0.2f;
         UpdateWeaponVisuals();
 
-        // Weapon equip effects
-        if (squishCoroutine != null) StopCoroutine(squishCoroutine);
-        squishCoroutine = StartCoroutine(SquishWeapon());
-        weaponAimer?.ApplyRecoil(currentWeapon.recoilAmount, currentWeapon.recoilDecay);
+        if (!isFirstEquip)
+        {
+            // Weapon equip effects
+            if (squishCoroutine != null) StopCoroutine(squishCoroutine);
+            squishCoroutine = StartCoroutine(SquishWeapon());
+            weaponAimer?.ApplyRecoil(currentWeapon.recoilAmount, currentWeapon.recoilDecay);
+            AudioManager.Instance.PlaySFX(equipClip, equipVolume);
+        }
 
-        // Weapon equip sound
-        AudioManager.Instance.PlaySFX(equipClip, equipVolume);
+        isFirstEquip = false;
     }
 
     // -- GET SHOOT DIRECTION (implemented by subclasses) --

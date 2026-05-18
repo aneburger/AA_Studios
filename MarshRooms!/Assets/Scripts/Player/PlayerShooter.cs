@@ -52,11 +52,11 @@ public class PlayerShooter : BaseShooter
     // -- SHOOT INPUT --
     public void OnShoot(InputAction.CallbackContext context)
     {
-        if (!IsArmed) return;
-        if (playerMover.IsDodging) return; 
+        if (context.started && IsArmed && !playerMover.IsDodging)
+            isShooting = true;
 
-        if (context.started)  isShooting = true;
-        if (context.canceled) isShooting = false;
+        if (context.canceled)
+            isShooting = false;
     }
 
     // -- STOP SHOOTING --

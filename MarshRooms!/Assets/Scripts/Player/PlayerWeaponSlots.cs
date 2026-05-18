@@ -31,16 +31,20 @@ public class PlayerWeaponSlot : MonoBehaviour
     // -- SCROLL UP --
     public void ScrollUp()
     {
-        currentSlot = (currentSlot - 1 + maxWeapons) % maxWeapons;
-        SkipEmptySlots(-1);
+        int newSlot = (currentSlot - 1 + maxWeapons) % maxWeapons;
+        SkipEmptySlots(-1, ref newSlot);
+        if (newSlot == currentSlot) return;
+        currentSlot = newSlot;
         EquipCurrentSlot();
     }
 
     // -- SCROLL DOWN --
     public void ScrollDown()
     {
-        currentSlot = (currentSlot + 1) % maxWeapons;
-        SkipEmptySlots(1);
+        int newSlot = (currentSlot + 1) % maxWeapons;
+        SkipEmptySlots(1, ref newSlot);
+        if (newSlot == currentSlot) return;
+        currentSlot = newSlot;
         EquipCurrentSlot();
     }
 
@@ -91,12 +95,12 @@ public class PlayerWeaponSlot : MonoBehaviour
     }
 
     // -- SKIP EMPTY SLOTS --
-    private void SkipEmptySlots(int direction)
+    private void SkipEmptySlots(int direction, ref int slot)
     {
         for (int i = 0; i < maxWeapons; i++)
         {
-            if (slots[currentSlot] != null) break;
-            currentSlot = (currentSlot + direction + maxWeapons) % maxWeapons;
+            if (slots[slot] != null) break;
+            slot = (slot + direction + maxWeapons) % maxWeapons;
         }
     }
 }

@@ -21,7 +21,7 @@ Please add this header to whichever script needs it:
 
 [Header("Audio")]
 [SerializeField] private AudioClip clipName;
-[SerializeField] private float clipVolume = 1f;
+[Range(0f, 1f)] public float clipVolume;
 
 Then play it using AudioManager:
 You can use either PlaySFX or PlaySFXWithPitch(if you think it sounds better with variation)
