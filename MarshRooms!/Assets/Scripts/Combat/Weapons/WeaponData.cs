@@ -14,12 +14,13 @@ public class WeaponData : ScriptableObject
     public GameObject shellsPrefab;
     public GameObject hitPrefab;
     public GameObject muzzleFlashPrefab;
-
+    public GameObject pickupPrefab;
 
     [Header("Firing")]
     public float fireRate;
     public float damage;
     public float bulletSpeed;
+    public int maxAmmo;
 
     [Header("Visuals")]
     public Sprite sprite;

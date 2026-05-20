@@ -1,10 +1,13 @@
 fileFormatVersion: 2
-guid: a9180c833a9cd0c49a96c3739ada7813
+guid: aca0a8c9efa5ed148ad94cc6e88b6784
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 93842847431156931
-    second: mini-gun_0
+      213: -5522526206291636345
+    second: interaction-indicator_0
+  - first:
+      213: -7159033145416904399
+    second: interaction-indicator_1
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,13 +116,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: mini-gun_0
+      name: interaction-indicator_0
       rect:
         serializedVersion: 2
-        x: 3
-        y: 4
-        width: 14
-        height: 11
+        x: 7
+        y: 1
+        width: 6
+        height: 18
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +131,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 3c468d192956d4100800000000000000
-      internalID: 93842847431156931
+      spriteID: 78f833bccab0c53b0800000000000000
+      internalID: -5522526206291636345
       vertices: []
       indices: 
       edges: []
@@ -138,7 +141,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: e6b98caf3f6e5b948b24f70ff8c89c59
+    spriteID: ed2b88f30dbe4864ca575945dfe12e31
     internalID: 0
     vertices: []
     indices: 
@@ -148,7 +151,8 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      mini-gun_0: 93842847431156931
+      interaction-indicator_0: -5522526206291636345
+      interaction-indicator_1: -7159033145416904399
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
