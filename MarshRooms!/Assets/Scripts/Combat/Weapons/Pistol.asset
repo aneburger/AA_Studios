@@ -17,9 +17,11 @@ MonoBehaviour:
   shellsPrefab: {fileID: 3331065470414262999, guid: b2b9e163261c23b418b6fc5856cd3a3c, type: 3}
   hitPrefab: {fileID: 4081999799842582576, guid: a1a081b6f887bac44b78da706df05dc0, type: 3}
   muzzleFlashPrefab: {fileID: 4081999799842582576, guid: 0904047496256e44586456f8a20d959a, type: 3}
-  fireRate: 2
-  damage: 1
-  bulletSpeed: 5
+  pickupPrefab: {fileID: 0}
+  fireRate: 1.5
+  damage: 2
+  bulletSpeed: 6
+  maxAmmo: -1
   sprite: {fileID: -4854829337826818713, guid: 6e0dd451b4501c54da27a492414f70a4, type: 3}
   shootClip: {fileID: 8300000, guid: d82fd3063321ffb44af8a9ae49c5adaa, type: 3}
   shootVolume: 0.805

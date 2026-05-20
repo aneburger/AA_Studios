@@ -1,6 +1,11 @@
+BELANGRIK OM TE WEET:
+So die resolution is 480 x 270 soos jy weet en ek het nou screen effects by gesit (vir die hurt effect, maar dis net n placeholder rooi blok vir nou)
+as dit lyk asof dit afgesny word dan in game view kan jy n custom resolution add (ek weet nie of myne op git gaan wees nie want user setting is .gitignore..)
+Anyways ek dink net dis belangrik vir die HUD dat jy presies kan sien waar al die elements gaan sit. 
+Ook as jy dit op 480 x 270 render lyk die rotated pixels weird maar dit lyk darem nie so as jy dit build nie
+<3
 
 Hellooo, hier is wat jy solank aan kan werk, laat weet my as iets nie sin maak nie :)
-
 
 Sound Effects:
 - Dodge - goes in PlayerMover

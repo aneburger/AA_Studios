@@ -84,7 +84,8 @@ public class PlayerHealth : BaseHealth
     protected override void OnHitEffect()
     {
         if (IsDead()) return;
-
+        
+        ScreenEffects.Instance.FlashDamage();
         AudioManager.Instance.PlaySFXWithPitch(hurtClip, hurtVolume);
         StartCoroutine(Flicker());
     }

@@ -28,6 +28,12 @@ namespace TopDown.Movement
         [SerializeField] private AudioClip runningClip;
         [Range(0f, 1f)] public float runningVolume;
 
+        [Header("Sleep Settings")]
+        [SerializeField] private float sleepDelay = 30f
+        ;
+        private float inactivityTimer = 0f;
+        private bool isSleeping = false;
+
         private Animator anim;
         private PlayerHealth playerHealth;
         private PlayerWeaponSlot weaponSlot;
@@ -88,6 +94,32 @@ namespace TopDown.Movement
                 // Face aim direction if armed, otherise face movement direction
                 Vector2 facingDir = shooter.IsArmed ? aim.AimDirection : lastDirection;
                 base.UpdateFacing(facingDir);
+            }
+
+            // -- CHECK INACTIVITY --
+            bool isActive = moveInput.sqrMagnitude > 0.01f || isDodging || Mouse.current.leftButton.isPressed || Mouse.current.rightButton.isPressed;
+
+            if (isActive)
+            {
+                inactivityTimer = 0f;
+                if (isSleeping)
+                {
+                    // Wake up
+                    isSleeping = false;
+                    anim.SetBool("isSleeping", false);
+                    shooter.SetSleeping(false);
+                }
+            }
+            else
+            {
+                inactivityTimer += Time.deltaTime;
+                if (inactivityTimer >= sleepDelay && !isSleeping)
+                {
+                    // Sleep
+                    isSleeping = true;
+                    anim.SetBool("isSleeping", true);
+                    shooter.SetSleeping(true);
+                }
             }
 
             // Dodge Cooldown
