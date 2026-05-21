@@ -18,14 +18,6 @@ public class EnemyHealth : BaseHealth
         base.Awake();
     }
 
-    // -- DIE --
-    protected override void Die()
-    {
-        base.Die();
-        SpawnSpores();
-        Destroy(gameObject);
-    }
-
     // -- SPAWN SPORES --
     private void SpawnSpores()
     {
@@ -50,7 +42,15 @@ public class EnemyHealth : BaseHealth
     // -- HIT EFFECT --
     protected override void OnHitEffect()
     {
-        base.OnHitEffect();
         AudioManager.Instance.PlaySFX(hurtClip, hurtVolume);
+    }
+
+    // -- DIE --
+    protected override void Die()
+    {
+        base.Die();
+        VFXManager.Instance.SpawnEnemyExplosion(transform.position);
+        SpawnSpores();
+        Destroy(gameObject);
     }
 }

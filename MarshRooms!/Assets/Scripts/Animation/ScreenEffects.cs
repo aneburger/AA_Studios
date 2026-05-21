@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using Unity.Cinemachine;
 
 public class ScreenEffects : MonoBehaviour
 {
@@ -7,6 +8,7 @@ public class ScreenEffects : MonoBehaviour
 
     [Header("References")]
     [SerializeField] private Image flashImage;
+    [SerializeField] private CinemachineImpulseSource impulseSource;
 
     [Header("Sprites")]
     [SerializeField] private Sprite damageScreen;
@@ -56,6 +58,7 @@ public class ScreenEffects : MonoBehaviour
     // -- DAMAGE --
     public void FlashDamage()
     {
-        Flash(damageScreen, 0.4f, 0.2f);
+        Flash(damageScreen, 0.3f, 0.2f);
+        impulseSource?.GenerateImpulse(0.15f);
     }
 }

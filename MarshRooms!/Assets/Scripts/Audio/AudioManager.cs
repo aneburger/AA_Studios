@@ -2,6 +2,8 @@
 // Access via AudioManager.Instance
 
 using UnityEngine;
+using System.Collections;
+using UnityEngine.Audio;
 
 public sealed class AudioManager : MonoBehaviour
 {
@@ -11,6 +13,9 @@ public sealed class AudioManager : MonoBehaviour
     [SerializeField] private AudioSource sfxSource;
     [SerializeField] private AudioSource musicSource;
     [SerializeField] private AudioClip musicClip; // TEMPORARY!
+
+    [Header("Mixer")]
+    [SerializeField] private AudioMixer audioMixer;
 
     // -- AWAKE --
     private void Awake()
@@ -102,6 +107,20 @@ public sealed class AudioManager : MonoBehaviour
         if (source == null) return;
         Destroy(source.gameObject);
         source = null;
+    }
+
+    // -- DAMPEN AUDIO --
+    public void DampenAudio(float duration)
+    {
+        StartCoroutine(DampenCoroutine(duration));
+    }
+
+    // -- DAMPEN COROUTINE --
+    private IEnumerator DampenCoroutine(float duration)
+    {
+        audioMixer.SetFloat("MasterCutoff", 800f);
+        yield return new WaitForSeconds(duration);
+        audioMixer.SetFloat("MasterCutoff", 22000f);
     }
 
 }
