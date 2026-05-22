@@ -3,15 +3,13 @@ using TopDown.Movement;
 
 public class Bullet : MonoBehaviour
 {
-    public float speed;
-    public float damage;
-    public float knockback;
-
-    // -- VFX --
-    public GameObject hitVFX;
-
+    // Bullet details
+    private float speed;
+    private float damage;
+    private float knockback;
+    private GameObject hitVFX;
     private Vector2 direction;
-    public int weaponSortingOrder;
+    private int weaponSortingOrder;
 
     public void SetDirection(Vector2 dir)
     {
@@ -23,6 +21,14 @@ public class Bullet : MonoBehaviour
     void Update()
     {
         transform.position += (Vector3)(direction * speed * Time.deltaTime);
+    }
+
+    public void setBullet(float speed, float damage, float knockback, GameObject hitVFX)
+    {
+       this.speed = speed;
+       this.damage = damage;
+       this.knockback = knockback;
+       this.hitVFX = hitVFX;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

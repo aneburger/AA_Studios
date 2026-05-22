@@ -128,7 +128,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 4308149926835442162}
   - {fileID: 4698166982508756797}
   - {fileID: 5395735851033162757}
   - {fileID: 7866796958824413751}
@@ -284,7 +283,7 @@ MonoBehaviour:
   onTakeDamage:
     m_PersistentCalls:
       m_Calls: []
-  healthBar: {fileID: 4231396693802100234}
+  healthBar: {fileID: 7413680353662796778}
   hurtClip: {fileID: 0}
   hurtVolume: 0
 --- !u!1 &1474284981994161219
@@ -320,6 +319,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 7463520488446096402}
   - {fileID: 7190313226069261513}
   m_Father: {fileID: 208003371081328597}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -600,6 +600,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Shadow
       objectReference: {fileID: 0}
+    - target: {fileID: 1525218423229736197, guid: fe02030257054c548a0a8f1e09f2f665, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 4750130110337884741, guid: fe02030257054c548a0a8f1e09f2f665, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.034
@@ -642,15 +646,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5163916380359555627, guid: fe02030257054c548a0a8f1e09f2f665, type: 3}
       propertyPath: m_Color.b
-      value: 0.37254903
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5163916380359555627, guid: fe02030257054c548a0a8f1e09f2f665, type: 3}
       propertyPath: m_Color.g
-      value: 0.37254903
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5163916380359555627, guid: fe02030257054c548a0a8f1e09f2f665, type: 3}
       propertyPath: m_Color.r
-      value: 0.37254903
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -662,13 +666,13 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4750130110337884741, guid: fe02030257054c548a0a8f1e09f2f665, type: 3}
   m_PrefabInstance: {fileID: 2459745927262707340}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &3676925540415327517
+--- !u!1001 &8024657605660993789
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 208003371081328597}
+    m_TransformParent: {fileID: 4698166982508756797}
     m_Modifications:
     - target: {fileID: 634602670860180719, guid: d10a319c85c09cd4aa88037a9112cab5, type: 3}
       propertyPath: m_LocalPosition.x
@@ -688,15 +692,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 634602670860180719, guid: d10a319c85c09cd4aa88037a9112cab5, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 634602670860180719, guid: d10a319c85c09cd4aa88037a9112cab5, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 634602670860180719, guid: d10a319c85c09cd4aa88037a9112cab5, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 634602670860180719, guid: d10a319c85c09cd4aa88037a9112cab5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -719,10 +723,10 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d10a319c85c09cd4aa88037a9112cab5, type: 3}
---- !u!114 &4231396693802100234 stripped
+--- !u!114 &7413680353662796778 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 702526993082772247, guid: d10a319c85c09cd4aa88037a9112cab5, type: 3}
-  m_PrefabInstance: {fileID: 3676925540415327517}
+  m_PrefabInstance: {fileID: 8024657605660993789}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
@@ -730,8 +734,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96298e16c6196e947a49d2a67ea65097, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyHealthBar
---- !u!4 &4308149926835442162 stripped
+--- !u!4 &7463520488446096402 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 634602670860180719, guid: d10a319c85c09cd4aa88037a9112cab5, type: 3}
-  m_PrefabInstance: {fileID: 3676925540415327517}
+  m_PrefabInstance: {fileID: 8024657605660993789}
   m_PrefabAsset: {fileID: 0}
