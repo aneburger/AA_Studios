@@ -45,7 +45,10 @@ public abstract class BaseHealth : MonoBehaviour
 
         currentHealth -= amount;
         onTakeDamage?.Invoke();
-        anim?.SetTrigger("TakeDamage");
+
+        if (!IsDead())
+            anim?.SetTrigger("TakeDamage");
+        
         OnHitEffect();
 
         if (IsDead())
