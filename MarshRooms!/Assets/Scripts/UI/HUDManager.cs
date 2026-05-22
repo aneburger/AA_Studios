@@ -5,12 +5,19 @@ public class HUDManager : MonoBehaviour
 {
     public static HUDManager Instance { get; private set; }
 
+    [Header("Health")]
     [SerializeField] private Image[] heartImages;
     [SerializeField] private Sprite fullHeartSprite;
     [SerializeField] private Sprite threeQuarterHeartSprite;
     [SerializeField] private Sprite halfHeartSprite;
     [SerializeField] private Sprite quarterHeartSprite;
     [SerializeField] private Sprite emptyHeartSprite;
+
+    [Header("Weapon")]
+    [SerializeField] private Image weaponDisplayImage;
+
+    [Header("Menu")]
+    [SerializeField] private GameObject menuPanel;
 
     private void Awake()
     {
@@ -60,5 +67,29 @@ public class HUDManager : MonoBehaviour
                 heartImages[i].enabled = false;
             }
         }
+    }
+
+    // -- UPDATE WEAPON DISPLAY --
+    public void UpdateWeaponDisplay(WeaponData weapon)
+    {
+        if (weaponDisplayImage != null)
+        {
+            if (weapon != null && weapon.hudSprite != null)
+            {
+                weaponDisplayImage.sprite = weapon.hudSprite;
+                weaponDisplayImage.enabled = true;
+            }
+            else
+            {
+                weaponDisplayImage.enabled = false;
+            }
+        }
+    }
+
+    // -- CLOSE MENU --
+    public void CloseMenu()
+    {
+        if (menuPanel != null)
+            menuPanel.SetActive(false);
     }
 }

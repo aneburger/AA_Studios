@@ -174,6 +174,18 @@ public class PlayerWeaponSlot : MonoBehaviour
         if (slots[currentSlot] == null) return;
         shooter.EquipWeapon(slots[currentSlot]);
         shooter.SetAmmo(ammo[currentSlot]);
+
+        // Update HUD with current weapon sprite
+        UpdateWeaponDisplay();
+    }
+
+    // -- UPDATE WEAPON DISPLAY --
+    private void UpdateWeaponDisplay()
+    {
+        if (HUDManager.Instance != null && slots[currentSlot] != null)
+        {
+            HUDManager.Instance.UpdateWeaponDisplay(slots[currentSlot]);
+        }
     }
 
     // -- SKIP EMPTY SLOTS --
