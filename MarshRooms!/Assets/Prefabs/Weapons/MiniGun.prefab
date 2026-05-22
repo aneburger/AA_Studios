@@ -47,6 +47,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WeaponPickup
   weaponData: {fileID: 11400000, guid: 5c8b1284f5406064ab49882cef48850c, type: 2}
+  indicatorPrefab: {fileID: 8410597211866493476, guid: 95f9ec2cea20e1d4eb8645ec57fb8e8e, type: 3}
+  indicatorHeight: 2
+  ammo: -1
 --- !u!212 &4335018509098030027
 SpriteRenderer:
   serializedVersion: 2
@@ -73,7 +76,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: a4ef1c1ccbdda4b49874513e0384adf6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -144,7 +147,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.8125, y: 0.5625}
+    oldSize: {x: 0.875, y: 0.6875}
     newSize: {x: 1.25, y: 0.6875}
     adaptiveTilingThreshold: 0.5
     drawMode: 0

@@ -5,9 +5,9 @@ using UnityEngine;
 public class EnemyHealthBar : MonoBehaviour
 {
     [SerializeField] private SpriteRenderer fill;
-    [SerializeField] private Color fullColor = Color.green;
-    [SerializeField] private Color halfColor = new Color(1f, 0.5f, 0f);
-    [SerializeField] private Color lowColor = Color.red;
+    [SerializeField] private Color fullColor;
+    [SerializeField] private Color halfColor;
+    [SerializeField] private Color lowColor;
 
     private Vector3 originalScale;
 

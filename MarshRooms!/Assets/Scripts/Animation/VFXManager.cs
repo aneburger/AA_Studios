@@ -11,6 +11,9 @@ public class VFXManager : MonoBehaviour
     [SerializeField] private GameObject dustWalkPrefab;
     [SerializeField] private GameObject dodgeDustPrefab;
 
+    [Header("Enemy Prefabs")]
+    [SerializeField] private GameObject enemyExplosionPrefab;
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -34,6 +37,13 @@ public class VFXManager : MonoBehaviour
     {
         if (dodgeDustPrefab == null) return;
         Instantiate(dodgeDustPrefab, position, Quaternion.identity);
+    }
+
+    // -- SPAWN ENEMY EXPLOSION --
+    public void SpawnEnemyExplosion(Vector2 position)
+    {
+        if (enemyExplosionPrefab == null) return;
+        Instantiate(enemyExplosionPrefab, position, Quaternion.identity);
     }
 
     // -- SPAWN VFX SIMPLE -- (General VFX)

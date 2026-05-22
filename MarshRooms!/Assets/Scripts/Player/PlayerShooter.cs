@@ -64,4 +64,13 @@ public class PlayerShooter : BaseShooter
     {
         isShooting = false;
     }
+
+    public void SetSleeping(bool sleeping)
+    {
+        if (weaponSprite != null)
+            weaponSprite.enabled = !sleeping && IsArmed;
+        
+        if (weaponAimer != null)
+            weaponAimer.enabled = !sleeping && IsArmed;
+    }
 }

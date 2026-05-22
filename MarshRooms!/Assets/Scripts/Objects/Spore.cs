@@ -97,6 +97,8 @@ public class Spore : MonoBehaviour
         StopAllCoroutines();
         Destroy(gameObject);
         AudioManager.Instance.PlaySFXWithPitch(sporeCollectClip, sporeCollectVolume, 0.1f);
+
+        //COUNT THE SPORES HERE I THINK
     }
 
     // -- LIFETIME TIMER --

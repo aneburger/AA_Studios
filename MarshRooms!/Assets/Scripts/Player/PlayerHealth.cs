@@ -36,6 +36,9 @@ public class PlayerHealth : BaseHealth
     {
         base.Awake();
         mover = GetComponent<PlayerMover>();
+
+        // Update HUD on start
+        UpdateHUD();
     }
 
     // -- SET INVINCIBILITY -- 
@@ -46,8 +49,8 @@ public class PlayerHealth : BaseHealth
         // Delay speed when invincible
         if (mover != null)
         {
-            mover.SetSpeed(value ? mover.OriginalSpeed * 0.7f : mover.OriginalSpeed);
-            mover.DirectionalAnimator.SetAnimationSpeed(value ? 0.7f : 1f);
+            mover.SetSpeed(value ? mover.OriginalSpeed * 0.5f : mover.OriginalSpeed);
+            mover.DirectionalAnimator.SetAnimationSpeed(value ? 0.5f : 1f);
         }
 
         gameObject.layer = LayerMask.NameToLayer(value ? "PlayerInvincible" : "Player");
@@ -62,6 +65,7 @@ public class PlayerHealth : BaseHealth
 
         damageCooldownTimer = damageCooldown;
         base.TakeDamage(amount);
+        UpdateHUD();
     }
 
     // -- DIE -- 
@@ -80,13 +84,24 @@ public class PlayerHealth : BaseHealth
         return damageCooldownTimer > 0f || isInvincible;
     }
 
+    // -- UPDATE HUD --
+    private void UpdateHUD()
+    {
+        if (HUDManager.Instance != null)
+        {
+            HUDManager.Instance.UpdateHealthDisplay((int)currentHealth, (int)maxHealth);
+        }
+    }
+
     // -- HIT EFFECT --
     protected override void OnHitEffect()
     {
         if (IsDead()) return;
-
+        
+        ScreenEffects.Instance.FlashDamage();
         AudioManager.Instance.PlaySFXWithPitch(hurtClip, hurtVolume);
         StartCoroutine(Flicker());
+        AudioManager.Instance.DampenAudio(1f);
     }
 
     // -- FLICKER --
@@ -96,6 +111,13 @@ public class PlayerHealth : BaseHealth
         yield return new WaitForSeconds(0.2f);
 
         SpriteRenderer[] renderers = GetComponentsInChildren<SpriteRenderer>();
+        float[] originalAlphas = new float[renderers.Length];
+
+        for (int i = 0; i < renderers.Length; i++)
+        {
+            originalAlphas[i] = renderers[i].color.a;
+        }
+
         float elapsed = 0f;
 
         while (elapsed < damageCooldown)
@@ -105,23 +127,23 @@ public class PlayerHealth : BaseHealth
             // Toggle between transparent and opaque
             float alpha = Mathf.PingPong(elapsed, flickerInterval) < flickerInterval / 2f ? 0f : 1f;
 
-            foreach (var sr in renderers)
+            for (int i = 0; i < renderers.Length; i++)
             {
-                Color c = sr.color;
-                c.a = alpha;
-                sr.color = c;
+                Color c = renderers[i].color;
+                c.a = originalAlphas[i] * alpha;
+                renderers[i].color = c;
             }
 
             yield return new WaitForSeconds(flickerInterval);
             elapsed += flickerInterval;
         }
 
-        // Restore full opacity
-        foreach (var sr in renderers)
+        // Restore original opacity
+        for (int i = 0; i < renderers.Length; i++)
         {
-            Color c = sr.color;
-            c.a = 1f;
-            sr.color = c;
+            Color c = renderers[i].color;
+            c.a = originalAlphas[i];
+            renderers[i].color = c;
         }
     }
 }

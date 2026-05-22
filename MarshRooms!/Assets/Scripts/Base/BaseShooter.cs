@@ -26,8 +26,11 @@ public abstract class BaseShooter : MonoBehaviour
     private Coroutine squishCoroutine;
     private Vector3 defaultScale;
     private bool isFirstEquip = true;
-    
-     // -- AWAKE --
+
+    // -1 means infinite ammo
+    private int currentAmmo = -1;
+
+    // -- AWAKE --
     protected virtual void Awake()
     {
         if (weaponSprite != null)
@@ -60,7 +63,10 @@ public abstract class BaseShooter : MonoBehaviour
     // -- SHOOT --
     public void Shoot()
     {
+        
+        // Check if ammo left and weapon is equipped
         if (currentWeapon == null) return;
+        if (!UseAmmo()) return;
 
         Vector2 direction = GetShootDirection();
 
@@ -118,5 +124,25 @@ public abstract class BaseShooter : MonoBehaviour
         weaponTransform.localScale = new Vector3(defaultScale.x * 0.7f, defaultScale.y * 1.2f, 1f);
         yield return new WaitForSeconds(0.05f);
         weaponTransform.localScale = defaultScale;
+    }
+
+    // -- SET AMMO --
+    public void SetAmmo(int ammo)
+    {
+        currentAmmo = ammo;
+    }
+
+    // -- GET AMMO --
+    public int GetAmmo() => currentAmmo;
+
+    // -- USE AMMO --
+    public bool UseAmmo()
+    {   
+        // return true if there is ammo left, and false if not
+        if (currentAmmo == -1) return true; // Check for infinite ammo
+        if (currentAmmo <= 0) return false;
+
+        currentAmmo--;
+        return true;
     }
 }

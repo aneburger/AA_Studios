@@ -47,6 +47,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WeaponPickup
   weaponData: {fileID: 11400000, guid: f82ad5183ec6c7a47ad9d1644203f41d, type: 2}
+  outlineColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  outlineThickness: 1
 --- !u!212 &4335018509098030027
 SpriteRenderer:
   serializedVersion: 2
@@ -73,7 +75,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: a4ef1c1ccbdda4b49874513e0384adf6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
