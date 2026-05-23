@@ -49,6 +49,7 @@ public class EnemyHealth : BaseHealth
     protected override void Die()
     {
         base.Die();
+        EnemyManager.Instance.UnregisterEnemy(gameObject);
         VFXManager.Instance.SpawnEnemyExplosion(transform.position);
         SpawnSpores();
         Destroy(gameObject);

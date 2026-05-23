@@ -12,6 +12,7 @@ public class EnemyController : MonoBehaviour
     private EnemyMover mover;
     private WeaponAimer weaponAimer;
     private EnemyHealth health;
+    private Animator anim;
 
     public EnemyData Data => enemyData;
 
@@ -22,7 +23,9 @@ public class EnemyController : MonoBehaviour
         mover = GetComponent<EnemyMover>();
         shooter = GetComponent<EnemyShooter>();
         health = GetComponent<EnemyHealth>();
+        anim = GetComponentInChildren<Animator>();
         mover.SetSpeed(enemyData.moveSpeed);
+
     }
 
     // -- START--
@@ -30,6 +33,7 @@ public class EnemyController : MonoBehaviour
     {
         InitialiseWeapon();
         health.Initialise(enemyData.maxHealth);
+        EnemyManager.Instance.RegisterEnemy(gameObject);
     }
 
     // -- CONTACT DAMAGE --
@@ -57,6 +61,12 @@ public class EnemyController : MonoBehaviour
         if (enemyData.weapon == null) return;
 
         shooter.EquipWeapon(enemyData.weapon);
+    }
+
+    // -- PLAY SPAWN ANIMATION ---
+    public void PlaySpawnAnimation()
+    {
+        anim?.SetTrigger("Spawn");
     }
 
 
