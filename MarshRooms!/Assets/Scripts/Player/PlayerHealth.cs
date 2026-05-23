@@ -2,6 +2,7 @@
 
 using UnityEngine;
 using System.Collections;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 using TopDown.Movement;
@@ -21,6 +22,11 @@ public class PlayerHealth : BaseHealth
 
     public static event System.Action OnPlayerDeath;
 
+    private Coroutine flickerCoroutine;
+    private SpriteRenderer playerRenderer;
+
+    private PlayerShooter shooter;
+
     // References
     private PlayerMover mover;
 
@@ -36,8 +42,17 @@ public class PlayerHealth : BaseHealth
     {
         base.Awake();
         mover = GetComponent<PlayerMover>();
+<<<<<<< HEAD
 
         // Update HUD on start
+=======
+        shooter = GetComponent<PlayerShooter>();
+        playerRenderer = transform.Find("Visuals").GetComponent<SpriteRenderer>();
+    }
+    
+    private void Start()
+    {
+>>>>>>> d05c446b07518eebdda8097d6d614177895d3270
         UpdateHUD();
     }
 
@@ -59,13 +74,14 @@ public class PlayerHealth : BaseHealth
     // -- TAKE DAMAGE -- 
     public override void TakeDamage(float amount)
     {   
-        // Check if invinsible or on cooldown
+        if (IsDead()) return;
         if (isInvincible) return;
         if (damageCooldownTimer > 0f) return;
 
         damageCooldownTimer = damageCooldown;
         base.TakeDamage(amount);
         UpdateHUD();
+<<<<<<< HEAD
     }
 
     // -- DIE -- 
@@ -76,6 +92,8 @@ public class PlayerHealth : BaseHealth
         gameObject.SetActive(false);
 
         SceneManager.LoadScene("Floor_01");
+=======
+>>>>>>> d05c446b07518eebdda8097d6d614177895d3270
     }
 
     // -- IS ON COOLDOWN -- 
@@ -100,8 +118,10 @@ public class PlayerHealth : BaseHealth
         
         ScreenEffects.Instance.FlashDamage();
         AudioManager.Instance.PlaySFXWithPitch(hurtClip, hurtVolume);
-        StartCoroutine(Flicker());
         AudioManager.Instance.DampenAudio(1f);
+
+        if (flickerCoroutine != null) StopCoroutine(flickerCoroutine);
+        flickerCoroutine = StartCoroutine(Flicker());
     }
 
     // -- FLICKER --
@@ -110,40 +130,62 @@ public class PlayerHealth : BaseHealth
         // Wait for hurt animation
         yield return new WaitForSeconds(0.2f);
 
-        SpriteRenderer[] renderers = GetComponentsInChildren<SpriteRenderer>();
-        float[] originalAlphas = new float[renderers.Length];
-
-        for (int i = 0; i < renderers.Length; i++)
-        {
-            originalAlphas[i] = renderers[i].color.a;
-        }
-
         float elapsed = 0f;
 
         while (elapsed < damageCooldown)
         {
-            if (IsDead()) yield break;
-
-            // Toggle between transparent and opaque
-            float alpha = Mathf.PingPong(elapsed, flickerInterval) < flickerInterval / 2f ? 0f : 1f;
-
-            for (int i = 0; i < renderers.Length; i++)
+            if (IsDead())
             {
-                Color c = renderers[i].color;
-                c.a = originalAlphas[i] * alpha;
-                renderers[i].color = c;
+                playerRenderer.color = Color.white;
+                yield break;
             }
+
+            float alpha = Mathf.PingPong(elapsed, flickerInterval) < flickerInterval / 2f ? 0f : 1f;
+            Color c = playerRenderer.color;
+            c.a = alpha;
+            playerRenderer.color = c;
 
             yield return new WaitForSeconds(flickerInterval);
             elapsed += flickerInterval;
         }
 
-        // Restore original opacity
-        for (int i = 0; i < renderers.Length; i++)
-        {
-            Color c = renderers[i].color;
-            c.a = originalAlphas[i];
-            renderers[i].color = c;
-        }
+        // Restore full opacity
+        Color restored = playerRenderer.color;
+        restored.a = 1f;
+        playerRenderer.color = restored;
+        flickerCoroutine = null;
     }
+
+        // -- DIE -- 
+        protected override void Die()
+        {
+            base.Die();
+            OnPlayerDeath?.Invoke();
+
+            AudioManager.Instance.StopRunningSFX();
+
+            // Disable input and physics
+            GetComponent<PlayerInput>().enabled = false;
+            GetComponent<Rigidbody2D>().linearVelocity = Vector2.zero;
+            GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+            shooter.HideWeapon(true);
+
+            anim.SetTrigger("Die");
+            StartCoroutine(DeathSequence());
+        }
+
+        private IEnumerator DeathSequence()
+        {
+            // Wait for death animation to finish
+            yield return new WaitForSeconds(5f);
+            
+            gameObject.SetActive(false);
+            SceneManager.LoadScene("Floor_01");
+        }
+
+        // -- ON DISABLE --
+        private void OnDisable()
+        {
+            AudioManager.Instance.StopRunningSFX();
+        }
 }

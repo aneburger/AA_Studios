@@ -1,5 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+<<<<<<< HEAD
 --- !u!1 &876893665204374485
 GameObject:
   m_ObjectHideFlags: 0
@@ -342,6 +343,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+=======
+>>>>>>> d05c446b07518eebdda8097d6d614177895d3270
 --- !u!1 &2397826842930233728
 GameObject:
   m_ObjectHideFlags: 0
@@ -374,10 +377,17 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 773438527757138718}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+<<<<<<< HEAD
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 22, y: -22}
   m_SizeDelta: {x: 25, y: 21}
+=======
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -938, y: 518}
+  m_SizeDelta: {x: -1895, y: -1059}
+>>>>>>> d05c446b07518eebdda8097d6d614177895d3270
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2050612866902008646
 CanvasRenderer:
@@ -417,6 +427,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+<<<<<<< HEAD
 --- !u!1 &2570530235563732583
 GameObject:
   m_ObjectHideFlags: 0
@@ -912,6 +923,8 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+=======
+>>>>>>> d05c446b07518eebdda8097d6d614177895d3270
 --- !u!1 &4642042758943472317
 GameObject:
   m_ObjectHideFlags: 0
@@ -946,7 +959,10 @@ RectTransform:
   - {fileID: 7372894972530564746}
   - {fileID: 8178309613282787587}
   - {fileID: 2429315871866405692}
+<<<<<<< HEAD
   - {fileID: 1096108149786721748}
+=======
+>>>>>>> d05c446b07518eebdda8097d6d614177895d3270
   m_Father: {fileID: 4213776439523262826}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -966,7 +982,11 @@ Canvas:
   m_RenderMode: 0
   m_Camera: {fileID: 0}
   m_PlaneDistance: 100
+<<<<<<< HEAD
   m_PixelPerfect: 0
+=======
+  m_PixelPerfect: 1
+>>>>>>> d05c446b07518eebdda8097d6d614177895d3270
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
@@ -989,10 +1009,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.CanvasScaler
+<<<<<<< HEAD
   m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 16
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 480, y: 270}
+=======
+  m_UiScaleMode: 0
+  m_ReferencePixelsPerUnit: 16
+  m_ScaleFactor: 1
+  m_ReferenceResolution: {x: 800, y: 600}
+>>>>>>> d05c446b07518eebdda8097d6d614177895d3270
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
@@ -1017,6 +1044,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+<<<<<<< HEAD
 --- !u!1 &4692794298775127284
 GameObject:
   m_ObjectHideFlags: 0
@@ -1096,6 +1124,8 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+=======
+>>>>>>> d05c446b07518eebdda8097d6d614177895d3270
 --- !u!1 &5153826750083695670
 GameObject:
   m_ObjectHideFlags: 0
@@ -1128,10 +1158,17 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 773438527757138718}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+<<<<<<< HEAD
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 80, y: -22}
   m_SizeDelta: {x: 25, y: 21}
+=======
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -880, y: 518}
+  m_SizeDelta: {x: -1895, y: -1059}
+>>>>>>> d05c446b07518eebdda8097d6d614177895d3270
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7075504054949712311
 CanvasRenderer:
@@ -1171,6 +1208,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+<<<<<<< HEAD
 --- !u!1 &5663500194674425525
 GameObject:
   m_ObjectHideFlags: 0
@@ -1291,6 +1329,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+=======
+>>>>>>> d05c446b07518eebdda8097d6d614177895d3270
 --- !u!1 &6574501687492635648
 GameObject:
   m_ObjectHideFlags: 0
@@ -1301,8 +1341,11 @@ GameObject:
   m_Component:
   - component: {fileID: 4213776439523262826}
   - component: {fileID: 1238122410063141772}
+<<<<<<< HEAD
   - component: {fileID: 4999050700265929242}
   - component: {fileID: 737196469133649300}
+=======
+>>>>>>> d05c446b07518eebdda8097d6d614177895d3270
   m_Layer: 0
   m_Name: HUD
   m_TagString: Untagged
@@ -1324,8 +1367,11 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 773438527757138718}
+<<<<<<< HEAD
   - {fileID: 790396950007128825}
   - {fileID: 3288651726912253431}
+=======
+>>>>>>> d05c446b07518eebdda8097d6d614177895d3270
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1238122410063141772
@@ -1349,6 +1395,7 @@ MonoBehaviour:
   halfHeartSprite: {fileID: 93778340501690522, guid: 5f9bf17b29654af4d89b9116b7fce4db, type: 3}
   quarterHeartSprite: {fileID: 4240810419965305341, guid: 32657ec567c88dd4589d50293df8a0bf, type: 3}
   emptyHeartSprite: {fileID: 0}
+<<<<<<< HEAD
   weaponDisplayImage: {fileID: 3065754962572422013}
   menuPanel: {fileID: 0}
 --- !u!114 &4999050700265929242
@@ -1457,6 +1504,8 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+=======
+>>>>>>> d05c446b07518eebdda8097d6d614177895d3270
 --- !u!1 &7872731463990317427
 GameObject:
   m_ObjectHideFlags: 0
@@ -1489,10 +1538,17 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 773438527757138718}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+<<<<<<< HEAD
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 51, y: -22}
   m_SizeDelta: {x: 25, y: 21}
+=======
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -909, y: 518}
+  m_SizeDelta: {x: -1895, y: -1059}
+>>>>>>> d05c446b07518eebdda8097d6d614177895d3270
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2539690641683772083
 CanvasRenderer:
@@ -1532,6 +1588,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+<<<<<<< HEAD
 --- !u!1 &8695352047445309424
 GameObject:
   m_ObjectHideFlags: 0
@@ -1607,3 +1664,5 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+=======
+>>>>>>> d05c446b07518eebdda8097d6d614177895d3270

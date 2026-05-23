@@ -37,7 +37,6 @@ namespace TopDown.Movement
         private Animator anim;
         private PlayerHealth playerHealth;
         private PlayerWeaponSlot weaponSlot;
-        private AudioSource runningAudioSource;
 
         private Vector2 lastDirection = Vector2.down;
         private Vector2 lastDustPosition;
@@ -48,8 +47,6 @@ namespace TopDown.Movement
 
         private float scrollCooldown = 0.35f;
         private float scrollCooldownTimer;
-
-        private AudioSource runningSFX;
 
         // -- AWAKE --
         protected override void Awake()
@@ -79,14 +76,14 @@ namespace TopDown.Movement
                     }
 
                     // When moving starts
-                    AudioManager.Instance.PlayLoopingSFX(ref runningSFX, runningClip, runningVolume, 2.0f);
+                    AudioManager.Instance.StartRunningSFX(runningClip, runningVolume, 2.0f);
                 }
                 else
                 {
                     lastDustPosition = transform.position;
 
                     // When moving stops
-                    AudioManager.Instance.StopLoopingSFX(ref runningSFX);
+                    AudioManager.Instance.StopRunningSFX();
                 }
 
                 anim.SetBool("isWalking", isMoving);
@@ -107,7 +104,7 @@ namespace TopDown.Movement
                     // Wake up
                     isSleeping = false;
                     anim.SetBool("isSleeping", false);
-                    shooter.SetSleeping(false);
+                    shooter.HideWeapon(false);
                 }
             }
             else
@@ -118,7 +115,7 @@ namespace TopDown.Movement
                     // Sleep
                     isSleeping = true;
                     anim.SetBool("isSleeping", true);
-                    shooter.SetSleeping(true);
+                    shooter.HideWeapon(true);
                 }
             }
 
@@ -180,10 +177,12 @@ namespace TopDown.Movement
         private IEnumerator Dodge()
         {
             isDodging = true;
+            shooter.HideWeapon(true);
             anim.SetTrigger("Dodge");
+            AudioManager.Instance.PlaySFX(dodgeClip, dodgeVolume);
 
             // Stop running audio when dodging:
-            AudioManager.Instance.StopLoopingSFX(ref runningSFX);
+            AudioManager.Instance.StopRunningSFX();
 
             // Determine dodge direction
             Vector2 dodgeDirection;
@@ -193,8 +192,6 @@ namespace TopDown.Movement
                 dodgeDirection = aim.AimDirection.normalized;
             else
                 dodgeDirection = lastDirection.normalized;
-
-            AudioManager.Instance.PlaySFX(dodgeClip, dodgeVolume);
 
             playerHealth.SetInvincible(true);
             body.AddForce(dodgeDirection * dodgeForce, ForceMode2D.Impulse);
@@ -208,6 +205,7 @@ namespace TopDown.Movement
 
             // Stop dodging
             isDodging = false;
+            shooter.HideWeapon(false);
             dodgeCooldownTimer = dodgeCooldown;
 
             // Slow down speed slightly after dodging

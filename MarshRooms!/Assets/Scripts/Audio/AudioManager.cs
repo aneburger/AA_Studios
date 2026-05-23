@@ -17,6 +17,8 @@ public sealed class AudioManager : MonoBehaviour
     [Header("Mixer")]
     [SerializeField] private AudioMixer audioMixer;
 
+    private AudioSource runningSFX;
+
     // -- AWAKE --
     private void Awake()
     {
@@ -107,6 +109,19 @@ public sealed class AudioManager : MonoBehaviour
         if (source == null) return;
         Destroy(source.gameObject);
         source = null;
+    }
+
+    // -- START RUNNING SFX --
+    public void StartRunningSFX(AudioClip clip, float volume, float pitch)
+    {
+        if (runningSFX != null) return;
+        PlayLoopingSFX(ref runningSFX, clip, volume, pitch);
+    }
+
+    // -- STOP RUNNING SFX --
+    public void StopRunningSFX()
+    {
+        StopLoopingSFX(ref runningSFX);
     }
 
     // -- DAMPEN AUDIO --
