@@ -1,0 +1,57 @@
+// Handles enemy spawning and tracking
+
+using UnityEngine;
+using System.Collections.Generic;
+
+public class EnemyManager : MonoBehaviour
+{
+    public static EnemyManager Instance { get; private set; }
+
+    private List<GameObject> activeEnemies = new List<GameObject>();
+
+    // When all enemies are dead
+    public static event System.Action OnAllEnemiesDead;
+
+    // -- AWAKE --
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+    }
+
+    // -- SPAWN ENEMY --
+    public GameObject SpawnEnemy(GameObject enemyPrefab, Vector2 position)
+    {
+        GameObject enemy = Instantiate(enemyPrefab, position, Quaternion.identity);
+        enemy.GetComponent<EnemyController>()?.PlaySpawnAnimation();
+        RegisterEnemy(enemy);
+        return enemy;
+    }
+
+    // -- REGISTER ENEMY --
+    public void RegisterEnemy(GameObject enemy)
+    {
+        if (!activeEnemies.Contains(enemy))
+            activeEnemies.Add(enemy);
+    }
+
+    // -- UNREGISTER ENEMY -- called when an enemy dies
+    public void UnregisterEnemy(GameObject enemy)
+    {
+        activeEnemies.Remove(enemy);
+
+        if (activeEnemies.Count == 0)
+            OnAllEnemiesDead?.Invoke();
+    }
+
+    // -- GET ACTIVE ENEMY COUNT --
+    public int GetActiveEnemyCount()
+    {
+        return activeEnemies.Count;
+    } 
+}
