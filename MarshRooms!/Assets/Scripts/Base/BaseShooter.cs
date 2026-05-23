@@ -74,13 +74,8 @@ public abstract class BaseShooter : MonoBehaviour
         Bullet b = bullet.GetComponent<Bullet>();
         
         b.SetDirection(direction);
-
-        // Pass weapon data to bullet
-        b.damage = currentWeapon.damage;
-        b.speed = currentWeapon.bulletSpeed;
-        b.knockback = currentWeapon.hitKnockback;
-        b.hitVFX = currentWeapon.hitPrefab;
-        b.weaponSortingOrder = weaponSprite.sortingOrder;
+        b.setBullet(currentWeapon.bulletSpeed, currentWeapon.damage, currentWeapon.hitKnockback, currentWeapon.hitPrefab);
+        
         OnShootEffects(direction);
     }
 
@@ -99,7 +94,7 @@ public abstract class BaseShooter : MonoBehaviour
 
         // Squish weapon sprite
         if (squishCoroutine != null) StopCoroutine(squishCoroutine);
-        squishCoroutine = StartCoroutine(SquishWeapon());
+            squishCoroutine = StartCoroutine(SquishWeapon());
     }
 
     // -- SHOW / HIDE WEAPON --

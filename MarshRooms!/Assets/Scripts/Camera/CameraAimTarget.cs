@@ -4,33 +4,34 @@ using UnityEngine.InputSystem;
 public class CameraAimTarget : MonoBehaviour
 {
     [SerializeField] private Transform player;
-    [SerializeField] private float aimDistance = 2f;
-    [SerializeField] private float deadZoneRadius = 1f;
+    [SerializeField] private float aimDistance;
+    [SerializeField] private float smoothSpeed;
+    [SerializeField] private float maxOffset;
+    [SerializeField] private float deadZoneRadius;
 
-    private Vector3 velocity;
     private Camera cam;
+    private Vector2 currentPos;
 
     // -- AWAKE --
     private void Awake()
     {
         cam = Camera.main;
+        currentPos = player.position;
     }
 
     // -- UPDATE --
     private void Update()
     {
-        Vector2 mouseScreen = Mouse.current.position.ReadValue();
-        Vector2 mouseWorld = cam.ScreenToWorldPoint(mouseScreen);
+        Vector2 mouseWorld = cam.ScreenToWorldPoint(Mouse.current.position.ReadValue());
         Vector2 toMouse = mouseWorld - (Vector2)player.position;
+
         float distance = toMouse.magnitude;
+        float adjustedDistance = Mathf.Max(0f, distance - deadZoneRadius);
+        float clampedDistance = Mathf.Clamp(adjustedDistance / maxOffset, 0f, 1f);
+        float curvedDistance = Mathf.Pow(clampedDistance, 1.5f);
 
-        if (distance < deadZoneRadius)
-        {
-            transform.position = player.position;
-            return;
-        }
-
-        Vector2 offset = Vector2.ClampMagnitude(toMouse, aimDistance);
-        transform.position = (Vector2)player.position + offset;
+        Vector2 targetPos = (Vector2)player.position + toMouse.normalized * curvedDistance * aimDistance;
+        currentPos = Vector2.Lerp(currentPos, targetPos, Time.deltaTime * smoothSpeed);
+        transform.position = currentPos;
     }
 }

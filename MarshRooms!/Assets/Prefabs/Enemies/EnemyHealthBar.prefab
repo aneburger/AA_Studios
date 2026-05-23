@@ -77,8 +77,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: -1306409397
-  m_SortingLayer: 3
+  m_SortingLayerID: -2032867123
+  m_SortingLayer: 4
   m_SortingOrder: 50
   m_MaskInteraction: 0
   m_Sprite: {fileID: 1854298583623055371, guid: 9ce3e5b67f39d27408697255b87d330b, type: 3}
@@ -102,6 +102,7 @@ GameObject:
   - component: {fileID: 634602670860180719}
   - component: {fileID: 702526993082772247}
   - component: {fileID: -7192900063087935849}
+  - component: {fileID: -4310678930577282076}
   m_Layer: 0
   m_Name: EnemyHealthBar
   m_TagString: Untagged
@@ -187,8 +188,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -2032867123
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 0}
@@ -201,6 +202,19 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 0
   m_SpriteSortPoint: 0
+--- !u!114 &-4310678930577282076
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6553418807101348367}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ac5e3cd19a51ae48bb2450ecd5ba10d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpriteYSorter
+  sortingOffset: 0
 --- !u!1 &7252505922208549954
 GameObject:
   m_ObjectHideFlags: 0
@@ -278,8 +292,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: -1306409397
-  m_SortingLayer: 3
+  m_SortingLayerID: -2032867123
+  m_SortingLayer: 4
   m_SortingOrder: 100
   m_MaskInteraction: 0
   m_Sprite: {fileID: -7241359036461100288, guid: 9ce3e5b67f39d27408697255b87d330b, type: 3}
