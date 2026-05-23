@@ -211,8 +211,8 @@ namespace TopDown.Movement
             // Slow down speed slightly after dodging
             float originalSpeed = moveSpeed;
 
-            moveSpeed *= 0.6f;
-            SetAnimationSpeed(0.6f);
+            moveSpeed *= 0.4f;
+            SetAnimationSpeed(0.6f); 
 
             yield return new WaitForSeconds(dodgeCooldown);
 

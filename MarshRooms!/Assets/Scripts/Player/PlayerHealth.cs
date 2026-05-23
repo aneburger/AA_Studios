@@ -63,7 +63,7 @@ public class PlayerHealth : BaseHealth
         // Delay speed when invincible
         if (mover != null)
         {
-            mover.SetSpeed(value ? mover.OriginalSpeed * 0.5f : mover.OriginalSpeed);
+            mover.SetSpeed(value ? mover.OriginalSpeed * 0.3f : mover.OriginalSpeed);
             mover.DirectionalAnimator.SetAnimationSpeed(value ? 0.5f : 1f);
         }
 
@@ -174,6 +174,7 @@ public class PlayerHealth : BaseHealth
         // -- ON DISABLE --
         private void OnDisable()
         {
-            AudioManager.Instance.StopRunningSFX();
+            if (AudioManager.Instance != null)
+                AudioManager.Instance.StopRunningSFX();
         }
 }

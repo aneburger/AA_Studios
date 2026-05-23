@@ -64,13 +64,4 @@ public class PlayerShooter : BaseShooter
     {
         isShooting = false;
     }
-
-    public void HideWeapon(bool hidden)
-    {
-        if (weaponSprite != null)
-            weaponSprite.enabled = !hidden && IsArmed;
-        
-        if (weaponAimer != null)
-            weaponAimer.enabled = !hidden && IsArmed;
-    }
 }

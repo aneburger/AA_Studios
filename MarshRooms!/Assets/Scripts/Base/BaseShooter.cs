@@ -19,13 +19,17 @@ public abstract class BaseShooter : MonoBehaviour
     [Header("Audio")]
     [SerializeField] private AudioClip equipClip;
     [Range(0f, 1f)] public float equipVolume;
+    [SerializeField] private AudioClip emptyClip;
+    [Range(0f, 1f)] public float emptyVolume;
 
     public bool IsArmed => currentWeapon != null;
     protected float nextFireTime = 0f;
 
     private Coroutine squishCoroutine;
     private Vector3 defaultScale;
+    
     private bool isFirstEquip = true;
+    private bool weaponHidden = false;
 
     // -1 means infinite ammo
     private int currentAmmo = -1;
@@ -63,19 +67,19 @@ public abstract class BaseShooter : MonoBehaviour
     // -- SHOOT --
     public void Shoot()
     {
-        
-        // Check if ammo left and weapon is equipped
         if (currentWeapon == null) return;
-        if (!UseAmmo()) return;
+        
+        if (!UseAmmo())
+        {
+            OnEmptyShootEffetcs();
+            return;
+        }
 
         Vector2 direction = GetShootDirection();
-
         GameObject bullet = Instantiate(currentWeapon.bulletPrefab, firePoint.position, Quaternion.identity);
         Bullet b = bullet.GetComponent<Bullet>();
-        
         b.SetDirection(direction);
         b.setBullet(currentWeapon.bulletSpeed, currentWeapon.damage, currentWeapon.hitKnockback, currentWeapon.hitPrefab);
-        
         OnShootEffects(direction);
     }
 
@@ -97,17 +101,27 @@ public abstract class BaseShooter : MonoBehaviour
             squishCoroutine = StartCoroutine(SquishWeapon());
     }
 
+    // -- EMPTY SHOOT EFFECTS --
+    protected virtual void OnEmptyShootEffetcs()
+    {
+        // Half strength recoil
+        weaponAimer?.ApplyRecoil(currentWeapon.recoilAmount * 0.5f, currentWeapon.recoilDecay);
+
+        // Empty click sound
+        AudioManager.Instance.PlaySFX(emptyClip, emptyVolume);
+    }
+
     // -- SHOW / HIDE WEAPON --
     protected void UpdateWeaponVisuals()
     {
         if (weaponSprite != null)
         {
-            weaponSprite.enabled = IsArmed;
+            weaponSprite.enabled = IsArmed && !weaponHidden;
             if (IsArmed) weaponSprite.sprite = currentWeapon.sprite;
         }
 
-        if (weaponAimer != null) weaponAimer.enabled = IsArmed;
-        
+        if (weaponAimer != null) 
+            weaponAimer.enabled = IsArmed && !weaponHidden;
     }
 
     // -- SQUISH --
@@ -139,5 +153,17 @@ public abstract class BaseShooter : MonoBehaviour
 
         currentAmmo--;
         return true;
+    }
+
+    // -- HIDE WEAPON --
+    public void HideWeapon(bool hidden)
+    {
+        weaponHidden = hidden;
+        
+        if (weaponSprite != null)
+            weaponSprite.enabled = !hidden && IsArmed;
+        
+        if (weaponAimer != null)
+            weaponAimer.enabled = !hidden && IsArmed;
     }
 }

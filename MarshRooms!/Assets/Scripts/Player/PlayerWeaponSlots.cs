@@ -1,5 +1,4 @@
 // Manages player weapon slots
-// Max 3 weapons, scroll to switch, E to pickup
 
 using UnityEngine;
 using System.Collections.Generic;
@@ -116,9 +115,13 @@ public class PlayerWeaponSlot : MonoBehaviour
         if (slots[slot] == null) return;
         if (slots[slot].pickupPrefab == null) return;
 
-        GameObject dropped = Instantiate(slots[slot].pickupPrefab, transform.position, Quaternion.identity);
+        Vector2 dropPos = transform.position;
+        RoomManager room = FindObjectOfType<RoomManager>();
+        if (room != null)
+            dropPos = room.GetSafeDropPosition(dropPos);
+
+        GameObject dropped = Instantiate(slots[slot].pickupPrefab, dropPos, Quaternion.identity);
         
-        // Pass remaining ammo to the pickup
         WeaponPickup pickup = dropped.GetComponent<WeaponPickup>();
         if (pickup != null)
             pickup.ammo = ammo[slot];

@@ -1,46 +1,61 @@
 // Central hub for the enemy, read EnemyData andd initialises components
 
 using UnityEngine;
+using System.Collections;
 using TopDown.Movement;
 
 public class EnemyController : MonoBehaviour
 {
+    [Header("Settings")]
     [SerializeField] private EnemyData enemyData;
-    [SerializeField] private Transform weaponPivot;
-    
+    [SerializeField] private float spawnDuration = 1.5f;
+
     private EnemyShooter shooter;
     private EnemyMover mover;
-    private WeaponAimer weaponAimer;
     private EnemyHealth health;
     private Animator anim;
+    private EnemyAI ai;
 
     public EnemyData Data => enemyData;
+    public bool IsSpawning { get; private set; }
+
+    private bool shouldSpawnAnimate = false;
 
     // -- AWAKE --
     private void Awake()
     {
-        // Initialise componenets
         mover = GetComponent<EnemyMover>();
         shooter = GetComponent<EnemyShooter>();
         health = GetComponent<EnemyHealth>();
         anim = GetComponentInChildren<Animator>();
+        ai = GetComponent<EnemyAI>();
         mover.SetSpeed(enemyData.moveSpeed);
-
     }
 
-    // -- START--
+    // -- START --
     private void Start()
     {
         InitialiseWeapon();
         health.Initialise(enemyData.maxHealth);
         EnemyManager.Instance.RegisterEnemy(gameObject);
+
+        if (shouldSpawnAnimate)
+        {
+            shooter?.HideWeapon(true);
+            StartCoroutine(SpawnAnimation());
+        }
+        else
+        {
+            shooter?.HideWeapon(false);
+        }
     }
 
     // -- CONTACT DAMAGE --
     private void OnTriggerStay2D(Collider2D collision)
     {
-        PlayerHealth playerHealth = collision.GetComponentInParent<PlayerHealth>();
+        if (IsSpawning) return;
 
+        PlayerHealth playerHealth = collision.GetComponentInParent<PlayerHealth>();
         if (playerHealth == null) return;
         if (playerHealth.IsOnCooldown()) return;
 
@@ -57,17 +72,29 @@ public class EnemyController : MonoBehaviour
     // -- INITIALISE WEAPON --
     private void InitialiseWeapon()
     {
-        if (enemyData == null) return;
-        if (enemyData.weapon == null) return;
-
+        if (enemyData == null || enemyData.weapon == null) return;
         shooter.EquipWeapon(enemyData.weapon);
     }
 
-    // -- PLAY SPAWN ANIMATION ---
-    public void PlaySpawnAnimation()
+    // -- SET SHOULD SPAWN ANIMATE --
+    public void SetShouldSpawnAnimate()
     {
-        anim?.SetTrigger("Spawn");
+        shouldSpawnAnimate = true;
     }
 
+    // -- SPAWN ANIMATION --
+    private IEnumerator SpawnAnimation()
+    {
+        IsSpawning = true;
+        if (ai != null) ai.enabled = false;
+        if (mover != null) mover.enabled = false;
 
+        anim?.SetTrigger("Spawn");
+        yield return new WaitForSeconds(spawnDuration);
+
+        shooter?.HideWeapon(false);
+        if (ai != null) ai.enabled = true;
+        if (mover != null) mover.enabled = true;
+        IsSpawning = false;
+    }
 }

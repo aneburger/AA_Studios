@@ -19,7 +19,16 @@ public class EnemyData : ScriptableObject
     public float detectionRange;
     public float attackRange;
 
+    [System.Serializable]
+    public class WeaponDrop
+    {
+        public GameObject weaponPickupPrefab;
+        [Range(0f, 1f)] public float dropChance;
+    }
+
     [Header("Drops")]
+    public WeaponDrop[] possibleWeaponDrops;
     public int maxSporeDrops;
     public GameObject sporePrefab;
+
 }

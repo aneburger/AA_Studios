@@ -15,21 +15,16 @@ public class EnemyShooter : BaseShooter
     // -- GET SHOOT DIRECTION --
     protected override Vector2 GetShootDirection()
     {
-        if (weaponAimer != null)
-            return weaponAimer.AimDirection;
-
-        return Vector2.right;
+        return weaponAimer != null ? weaponAimer.AimDirection : Vector2.right;
     }
 
     // -- SHOOT --
     public void TryShoot()
     {
         if (!IsArmed) return;
+        if (Time.time < nextFireTime) return;
 
-        if (Time.time >= nextFireTime)
-        {
-            Shoot();
-            nextFireTime = Time.time + currentWeapon.fireRate;
-        }
+        Shoot();
+        nextFireTime = Time.time + currentWeapon.fireRate;
     }
 }

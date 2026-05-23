@@ -24,17 +24,27 @@ public class EnemyHealth : BaseHealth
         EnemyController controller = GetComponent<EnemyController>();
         if (controller == null) return;
 
+        RoomManager room = FindObjectOfType<RoomManager>();
+
         int amount = Random.Range(0, controller.Data.maxSporeDrops + 1);
         for (int i = 0; i < amount; i++)
         {
             Vector2 offset = Random.insideUnitCircle * 0.5f;
-            Instantiate(controller.Data.sporePrefab, (Vector2)transform.position + offset, Quaternion.identity);
+            Vector2 spawnPos = (Vector2)transform.position + offset;
+
+            if (room != null)
+                spawnPos = room.GetSafeDropPosition(spawnPos);
+
+            Instantiate(controller.Data.sporePrefab, spawnPos, Quaternion.identity);
         }
     }
     
     // -- TAKE DAMAGE --
     public override void TakeDamage(float amount)
     {
+        EnemyController controller = GetComponent<EnemyController>();
+        if (controller != null && controller.IsSpawning) return;
+
         base.TakeDamage(amount);
         healthBar?.UpdateHealth(currentHealth, maxHealth);
     }
@@ -51,6 +61,19 @@ public class EnemyHealth : BaseHealth
         base.Die();
         EnemyManager.Instance.UnregisterEnemy(gameObject);
         VFXManager.Instance.SpawnEnemyExplosion(transform.position);
+
+        EnemyController controller = GetComponent<EnemyController>();
+        if (controller != null && controller.Data.possibleWeaponDrops.Length > 0)
+        {
+            RoomManager room = FindObjectOfType<RoomManager>();
+            if (room != null)
+            {
+                // Pick a random weapon from the possible drops
+                EnemyData.WeaponDrop drop = controller.Data.possibleWeaponDrops[Random.Range(0, controller.Data.possibleWeaponDrops.Length)];
+                room.TryDropWeapon(transform.position, drop.weaponPickupPrefab, drop.dropChance);
+            }
+        }
+
         SpawnSpores();
         Destroy(gameObject);
     }

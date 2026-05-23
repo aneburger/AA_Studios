@@ -9,7 +9,6 @@ public class EnemyManager : MonoBehaviour
 
     private List<GameObject> activeEnemies = new List<GameObject>();
 
-    // When all enemies are dead
     public static event System.Action OnAllEnemiesDead;
 
     // -- AWAKE --
@@ -28,7 +27,7 @@ public class EnemyManager : MonoBehaviour
     public GameObject SpawnEnemy(GameObject enemyPrefab, Vector2 position)
     {
         GameObject enemy = Instantiate(enemyPrefab, position, Quaternion.identity);
-        enemy.GetComponent<EnemyController>()?.PlaySpawnAnimation();
+        enemy.GetComponent<EnemyController>()?.SetShouldSpawnAnimate();
         RegisterEnemy(enemy);
         return enemy;
     }
@@ -44,7 +43,6 @@ public class EnemyManager : MonoBehaviour
     public void UnregisterEnemy(GameObject enemy)
     {
         activeEnemies.Remove(enemy);
-
         if (activeEnemies.Count == 0)
             OnAllEnemiesDead?.Invoke();
     }
