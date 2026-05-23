@@ -25,6 +25,7 @@ public class EnemyController : MonoBehaviour
         health = GetComponent<EnemyHealth>();
         anim = GetComponentInChildren<Animator>();
         mover.SetSpeed(enemyData.moveSpeed);
+
     }
 
     // -- START--
@@ -62,7 +63,7 @@ public class EnemyController : MonoBehaviour
         shooter.EquipWeapon(enemyData.weapon);
     }
 
-    // -- PLAY SPAWN ANIMATION --
+    // -- PLAY SPAWN ANIMATION ---
     public void PlaySpawnAnimation()
     {
         anim?.SetTrigger("Spawn");
