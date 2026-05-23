@@ -83,16 +83,6 @@ public class PlayerHealth : BaseHealth
 
     }
 
-    // -- DIE -- 
-    protected override void Die()
-    {
-        base.Die();
-        OnPlayerDeath?.Invoke();
-        gameObject.SetActive(false);
-
-        SceneManager.LoadScene("Floor_01");
-
-    }
 
     // -- IS ON COOLDOWN -- 
     public bool IsOnCooldown()
