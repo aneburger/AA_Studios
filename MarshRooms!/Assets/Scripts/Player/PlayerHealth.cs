@@ -42,17 +42,16 @@ public class PlayerHealth : BaseHealth
     {
         base.Awake();
         mover = GetComponent<PlayerMover>();
-<<<<<<< HEAD
+
 
         // Update HUD on start
-=======
+
         shooter = GetComponent<PlayerShooter>();
         playerRenderer = transform.Find("Visuals").GetComponent<SpriteRenderer>();
     }
     
     private void Start()
     {
->>>>>>> d05c446b07518eebdda8097d6d614177895d3270
         UpdateHUD();
     }
 
@@ -81,7 +80,7 @@ public class PlayerHealth : BaseHealth
         damageCooldownTimer = damageCooldown;
         base.TakeDamage(amount);
         UpdateHUD();
-<<<<<<< HEAD
+
     }
 
     // -- DIE -- 
@@ -92,8 +91,7 @@ public class PlayerHealth : BaseHealth
         gameObject.SetActive(false);
 
         SceneManager.LoadScene("Floor_01");
-=======
->>>>>>> d05c446b07518eebdda8097d6d614177895d3270
+
     }
 
     // -- IS ON COOLDOWN -- 
