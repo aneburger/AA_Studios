@@ -5283,7 +5283,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 8.4375
+  orthographic size: 13.133179
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -16448,11 +16448,43 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3498200045359678933, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4991149228030264838, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
       propertyPath: m_PreserveAspect
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5227668294910895540, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
+      propertyPath: m_text
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5227668294910895540, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
+      propertyPath: m_fontSize
+      value: 14.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 5227668294910895540, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 8c50dd7efc991974f8ca677ed6ea585e, type: 2}
+    - target: {fileID: 5227668294910895540, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
+      propertyPath: m_fontStyle
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5227668294910895540, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 14.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 5227668294910895540, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 3266179434483730398, guid: 8c50dd7efc991974f8ca677ed6ea585e, type: 2}
+    - target: {fileID: 5227668294910895540, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
+      propertyPath: m_characterSpacing
+      value: 4.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 5227668294910895540, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7085789729006638418, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
       propertyPath: m_Name
