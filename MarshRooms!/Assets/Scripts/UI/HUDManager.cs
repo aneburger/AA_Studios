@@ -16,6 +16,9 @@ public class HUDManager : MonoBehaviour
     [Header("Spores")]
     [SerializeField] private SporeBar sporeBar;
 
+    [Header("Ammo")]
+    [SerializeField] private AmmoDisplay ammoDisplay;
+
     [Header("Weapon")]
     [SerializeField] private Image weaponDisplayImage;
 

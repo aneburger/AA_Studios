@@ -25,6 +25,7 @@ public class WeaponData : ScriptableObject
     [Header("Visuals")]
     public Sprite sprite;
     public Sprite hudSprite;
+    public Sprite ammoDisplaySprite;
 
     [Header("Audio")]
     public AudioClip shootClip;

@@ -14,7 +14,7 @@ public abstract class BaseShooter : MonoBehaviour
     [SerializeField] protected SpriteRenderer weaponSprite;
 
     [Header("Weapon")]
-    [SerializeField] protected WeaponData currentWeapon;
+    [SerializeField] public WeaponData currentWeapon; // changed from protected to public for access in AmmoDisplay.cs
 
     [Header("Audio")]
     [SerializeField] private AudioClip equipClip;
