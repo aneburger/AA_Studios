@@ -25,6 +25,8 @@ namespace TopDown.Movement
         [Header("Audio")]
         [SerializeField] private AudioClip dodgeClip;
         [Range(0f, 1f)] public float dodgeVolume;
+        [SerializeField] private AudioClip dodgeFallClip;
+        [Range(0f, 1f)] public float dodgeFallVolume;
         [SerializeField] private AudioClip runningClip;
         [Range(0f, 1f)] public float runningVolume;
 
@@ -180,6 +182,7 @@ namespace TopDown.Movement
             shooter.HideWeapon(true);
             anim.SetTrigger("Dodge");
             AudioManager.Instance.PlaySFX(dodgeClip, dodgeVolume);
+            
 
             // Stop running audio when dodging:
             AudioManager.Instance.StopRunningSFX();
@@ -196,6 +199,8 @@ namespace TopDown.Movement
             playerHealth.SetInvincible(true);
             body.AddForce(dodgeDirection * dodgeForce, ForceMode2D.Impulse);
             yield return new WaitForSeconds(dodgeDuration * (5f / 6f)); // Invinsible for the first 4 frames
+
+            AudioManager.Instance.PlaySFXWithPitch(dodgeFallClip, dodgeFallVolume, 0.1f);
 
             playerHealth.SetInvincible(false);
             yield return new WaitForSeconds(dodgeDuration * (1f / 6f)); // Vulnerable for the last 2 frames

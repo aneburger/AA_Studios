@@ -11,6 +11,8 @@ public class EnemyHealth : BaseHealth
     [Header("Audio")]
     [SerializeField] private AudioClip hurtClip;
     [Range(0f, 1f)] public float hurtVolume;
+    [SerializeField] private AudioClip dieClip;
+    [Range(0f, 1f)] public float dieVolume;
 
     // -- AWAKE --
     protected override void Awake()
@@ -52,7 +54,7 @@ public class EnemyHealth : BaseHealth
     // -- HIT EFFECT --
     protected override void OnHitEffect()
     {
-        AudioManager.Instance.PlaySFX(hurtClip, hurtVolume);
+        AudioManager.Instance.PlaySFXWithPitch(hurtClip, hurtVolume, 0.1f);
     }
 
     // -- DIE --
@@ -61,6 +63,7 @@ public class EnemyHealth : BaseHealth
         base.Die();
         EnemyManager.Instance.UnregisterEnemy(gameObject);
         VFXManager.Instance.SpawnEnemyExplosion(transform.position);
+        AudioManager.Instance.PlaySFX(dieClip, dieVolume);
 
         EnemyController controller = GetComponent<EnemyController>();
         if (controller != null && controller.Data.possibleWeaponDrops.Length > 0)

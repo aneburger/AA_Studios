@@ -10,6 +10,10 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private EnemyData enemyData;
     [SerializeField] private float spawnDuration = 1.5f;
 
+    [Header("Audio")]
+    [SerializeField] private AudioClip spawnClip;
+    [Range(0f, 1f)] public float spawnVolume;
+
     private EnemyShooter shooter;
     private EnemyMover mover;
     private EnemyHealth health;
@@ -85,6 +89,8 @@ public class EnemyController : MonoBehaviour
     // -- SPAWN ANIMATION --
     private IEnumerator SpawnAnimation()
     {
+        AudioManager.Instance.PlaySFXWithPitch(spawnClip, spawnVolume, 0.1f);
+
         IsSpawning = true;
         if (ai != null) ai.enabled = false;
         if (mover != null) mover.enabled = false;

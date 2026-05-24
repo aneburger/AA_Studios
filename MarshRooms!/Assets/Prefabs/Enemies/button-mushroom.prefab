@@ -233,6 +233,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyController
   enemyData: {fileID: 11400000, guid: e6038059f0ab4b24fb8aeaa9f91d11cb, type: 2}
   spawnDuration: 1.5
+  spawnClip: {fileID: 8300000, guid: fd719a68106daa84a832ce2f492ac83f, type: 3}
+  spawnVolume: 0.8
 --- !u!114 &7585961510317227088
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -286,8 +288,10 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   healthBar: {fileID: 7413680353662796778}
-  hurtClip: {fileID: 0}
-  hurtVolume: 0
+  hurtClip: {fileID: 8300000, guid: 3ef1eef1e125ae04ca5e0053211ce2c1, type: 3}
+  hurtVolume: 0.4
+  dieClip: {fileID: 8300000, guid: 5c1dac0c7bd55dd4586461332171fc96, type: 3}
+  dieVolume: 1
 --- !u!1 &1474284981994161219
 GameObject:
   m_ObjectHideFlags: 0

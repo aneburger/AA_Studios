@@ -7,7 +7,7 @@ using System.Collections.Generic;
 public class RoomManager : MonoBehaviour
 {   
     [Header("Settings")]
-    [SerializeField] private float spawnDelay = 1f;
+    [SerializeField] private float spawnDelay = 2f;
     [SerializeField] private float spawnIntervalMin = 0.2f;
     [SerializeField] private float spawnIntervalMax = 0.6f;
 

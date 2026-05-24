@@ -41,7 +41,7 @@ public sealed class AudioManager : MonoBehaviour
     }
 
     // -- PLAY MUSIC --
-    public void PlayMusic(AudioClip clip, float volume = 0.5f)
+    public void PlayMusic(AudioClip clip, float volume = 0.4f)
     {
         if (clip == null || musicSource.clip == clip) return;
         musicSource.clip = clip;

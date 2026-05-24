@@ -16,6 +16,8 @@ public class PlayerHealth : BaseHealth
     [Header("Audio")]
     [SerializeField] private AudioClip hurtClip;
     [Range(0f, 1f)] public float hurtVolume;
+    [SerializeField] private AudioClip dieClip;
+    [Range(0f, 1f)] public float dieVolume;
 
     private float damageCooldownTimer;
     private bool isInvincible = false;
@@ -151,6 +153,8 @@ public class PlayerHealth : BaseHealth
             OnPlayerDeath?.Invoke();
 
             AudioManager.Instance.StopRunningSFX();
+            AudioManager.Instance.StopMusic();
+            AudioManager.Instance.PlaySFX(dieClip, dieVolume);
 
             // Disable input and physics
             GetComponent<PlayerInput>().enabled = false;
@@ -165,7 +169,7 @@ public class PlayerHealth : BaseHealth
         private IEnumerator DeathSequence()
         {
             // Wait for death animation to finish
-            yield return new WaitForSeconds(5f);
+            yield return new WaitForSeconds(4f);
             
             gameObject.SetActive(false);
             SceneManager.LoadScene("Floor_01");
