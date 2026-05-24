@@ -95,10 +95,13 @@ public class Spore : MonoBehaviour
     private void Collect()
     {
         StopAllCoroutines();
+
+        // notify SporeManager to count spore
+        if (SporeManager.Instance != null)
+            SporeManager.Instance.CollectSpore();
+
         Destroy(gameObject);
         AudioManager.Instance.PlaySFXWithPitch(sporeCollectClip, sporeCollectVolume, 0.1f);
-
-        //COUNT THE SPORES HERE I THINK
     }
 
     // -- LIFETIME TIMER --

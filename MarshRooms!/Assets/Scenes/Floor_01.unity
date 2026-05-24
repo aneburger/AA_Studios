@@ -745,17 +745,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bd75858fa210f7e489e73e6e432aa86c, type: 3}
---- !u!114 &299850603 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5412567612862326570, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
-  m_PrefabInstance: {fileID: 3537630140295722637}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
 --- !u!1001 &313158797
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5292,7 +5281,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 8.4375
+  orthographic size: 13.133179
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -6583,11 +6572,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9dd4fa7122095964ab53544fb04bb88e, type: 3}
---- !u!1 &956606575 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8638467323655141032, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
-  m_PrefabInstance: {fileID: 3537630140295722637}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &957820127
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8042,6 +8026,51 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2166477703874850487, guid: bd9ceb45f015b1e46a336fe3c98caff4, type: 3}
   m_PrefabInstance: {fileID: 612718846}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1251095354
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1251095356}
+  - component: {fileID: 1251095355}
+  m_Layer: 0
+  m_Name: SporeManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1251095355
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1251095354}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fbf2358bf6b7364a9ec0d3f3770b157, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SporeManager
+  meterConfig: {fileID: 11400000, guid: 6628942d7fb8e6445ac28f3edcfa22f8, type: 2}
+--- !u!4 &1251095356
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1251095354}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 393.13535, y: 192.47287, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1252290244
 GameObject:
   m_ObjectHideFlags: 0
@@ -8791,17 +8820,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9fc4ca1abe7be83499b814cbd8e58f3a, type: 3}
---- !u!114 &1485011851 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7113475482070070732, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
-  m_PrefabInstance: {fileID: 3537630140295722637}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
 --- !u!4 &1497098071 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2166477703874850487, guid: bd9ceb45f015b1e46a336fe3c98caff4, type: 3}
@@ -16414,30 +16432,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3225524358858379386, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -71.5
+      objectReference: {fileID: 0}
     - target: {fileID: 3498200045359678933, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
       propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4991149228030264838, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
+      propertyPath: m_PreserveAspect
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7085789729006638418, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
       propertyPath: m_Name
       value: HUD
       objectReference: {fileID: 0}
-    - target: {fileID: 7461425882493315119, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8785102966773636811, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
-      propertyPath: controlsButton
-      value: 
-      objectReference: {fileID: 1485011851}
-    - target: {fileID: 8785102966773636811, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
-      propertyPath: controlsMenuPanel
-      value: 
-      objectReference: {fileID: 956606575}
-    - target: {fileID: 8785102966773636811, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
-      propertyPath: closeControlsButton
-      value: 
-      objectReference: {fileID: 299850603}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -16519,3 +16529,4 @@ SceneRoots:
   - {fileID: 1651084093}
   - {fileID: 1288310428}
   - {fileID: 3537630140295722637}
+  - {fileID: 1251095356}

@@ -13,6 +13,9 @@ public class HUDManager : MonoBehaviour
     [SerializeField] private Sprite quarterHeartSprite;
     [SerializeField] private Sprite emptyHeartSprite;
 
+    [Header("Spores")]
+    [SerializeField] private SporeBar sporeBar;
+
     [Header("Weapon")]
     [SerializeField] private Image weaponDisplayImage;
 

@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c45b8603194f853468dcd1f4688047e9, type: 3}
+  m_Name: SporeMeterConfig
+  m_EditorClassIdentifier: Assembly-CSharp::SporeMeterConfig
+  sporeCapacity: 10
+  fullColor: {r: 0.17924517, g: 1, b: 0.77969223, a: 1}
+  halfColor: {r: 0.5524029, g: 0.9924528, b: 0.82658786, a: 1}
+  lowColor: {r: 0.70220715, g: 0.9924528, b: 0.88427037, a: 1}
+  fillSmoothSpeed: 5
