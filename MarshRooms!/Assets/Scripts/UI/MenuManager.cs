@@ -49,6 +49,8 @@ public class MenuManager : MonoBehaviour
     {
         Debug.Log("Starting game...");
 
+        AudioManager.Instance.PlayMusic(AudioManager.Instance.musicClip);
+
         // Resume time
         Time.timeScale = 1f;
 

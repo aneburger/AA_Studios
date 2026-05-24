@@ -54,26 +54,36 @@ public class EnemyHealth : BaseHealth
     // -- HIT EFFECT --
     protected override void OnHitEffect()
     {
-        AudioManager.Instance.PlaySFXWithPitch(hurtClip, hurtVolume, 0.1f);
+        if (IsDead()) return;
+        AudioManager.Instance.PlaySFXWithPitch(hurtClip, hurtVolume, 0.2f);
     }
 
     // -- DIE --
     protected override void Die()
     {
         base.Die();
+        AudioManager.Instance.PlaySFX(dieClip, dieVolume);
         EnemyManager.Instance.UnregisterEnemy(gameObject);
         VFXManager.Instance.SpawnEnemyExplosion(transform.position);
-        AudioManager.Instance.PlaySFX(dieClip, dieVolume);
 
         EnemyController controller = GetComponent<EnemyController>();
-        if (controller != null && controller.Data.possibleWeaponDrops.Length > 0)
+        RoomManager room = FindObjectOfType<RoomManager>();
+
+         if (controller != null)
         {
-            RoomManager room = FindObjectOfType<RoomManager>();
-            if (room != null)
+            // Weapon drop
+            if (controller.Data.possibleWeaponDrops.Length > 0 && room != null)
             {
-                // Pick a random weapon from the possible drops
                 EnemyData.WeaponDrop drop = controller.Data.possibleWeaponDrops[Random.Range(0, controller.Data.possibleWeaponDrops.Length)];
                 room.TryDropWeapon(transform.position, drop.weaponPickupPrefab, drop.dropChance);
+            }
+
+            // Health drop
+            if (controller.Data.healthPickupPrefab != null && Random.value <= controller.Data.healthDropChance)
+            {
+                Vector2 offset = Random.insideUnitCircle * 0.8f;
+                Vector2 safePos = room != null ? room.GetSafeDropPosition((Vector2)transform.position + offset) : (Vector2)transform.position + offset;
+                Instantiate(controller.Data.healthPickupPrefab, safePos, Quaternion.identity);
             }
         }
 

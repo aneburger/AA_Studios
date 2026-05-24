@@ -34,4 +34,22 @@ public class CameraAimTarget : MonoBehaviour
         currentPos = Vector2.Lerp(currentPos, targetPos, Time.deltaTime * smoothSpeed);
         transform.position = currentPos;
     }
+
+    // -- ON ENABLE --
+    private void OnEnable()
+    {
+        PlayerHealth.OnPlayerDeath += HandlePlayerDeath;
+    }
+
+    // -- ON DISABLE --
+    private void OnDisable()
+    {
+        PlayerHealth.OnPlayerDeath -= HandlePlayerDeath;
+    }
+
+    // -- HANDLE PLAYER DEATH --
+    private void HandlePlayerDeath()
+    {
+        enabled = false;
+    }
 }

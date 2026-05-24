@@ -12,6 +12,7 @@ public class PauseMenuManager : MonoBehaviour
     [SerializeField] private Button controlsButton;
     [SerializeField] private Button closeControlsButton;
     [SerializeField] private Button quitButton;
+    [SerializeField] private PlayerInput playerInput;
 
     private bool isPaused = false;
     private InputAction escapeAction;
@@ -84,6 +85,13 @@ public class PauseMenuManager : MonoBehaviour
         isPaused = true;
         Time.timeScale = 0f;
 
+        // Lower music volume
+        AudioManager.Instance.SetMusicVolume(0.1f);
+
+        // Disable player controls
+        if (playerInput != null) playerInput.enabled = false;
+        if (pauseMenuPanel != null) pauseMenuPanel.SetActive(true);
+
         if (pauseMenuPanel != null)
             pauseMenuPanel.SetActive(true);
     }
@@ -95,6 +103,13 @@ public class PauseMenuManager : MonoBehaviour
 
         isPaused = false;
         Time.timeScale = 1f;
+
+        // Volume back to normal
+        AudioManager.Instance.SetMusicVolume(0.5f);
+
+        // Enable player controls
+        if (playerInput != null) playerInput.enabled = true;
+        if (pauseMenuPanel != null) pauseMenuPanel.SetActive(false);
 
         if (pauseMenuPanel != null)
             pauseMenuPanel.SetActive(false);

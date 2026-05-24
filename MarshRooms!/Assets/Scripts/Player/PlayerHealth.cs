@@ -18,6 +18,8 @@ public class PlayerHealth : BaseHealth
     [Range(0f, 1f)] public float hurtVolume;
     [SerializeField] private AudioClip dieClip;
     [Range(0f, 1f)] public float dieVolume;
+    [SerializeField] private AudioClip healClip;
+    [Range(0f, 1f)] public float healVolume;
 
     private float damageCooldownTimer;
     private bool isInvincible = false;
@@ -85,6 +87,16 @@ public class PlayerHealth : BaseHealth
 
     }
 
+    // -- HEAL --
+    public void Heal(int amount)
+    {
+        if (IsDead()) return;
+
+        AudioManager.Instance.PlaySFXWithPitch(healClip, healVolume, 0.1f);
+        currentHealth = Mathf.Min(currentHealth + amount, maxHealth);
+        anim.SetTrigger("Heal");
+        UpdateHUD();
+    }
 
     // -- IS ON COOLDOWN -- 
     public bool IsOnCooldown()
@@ -107,7 +119,7 @@ public class PlayerHealth : BaseHealth
         if (IsDead()) return;
         
         ScreenEffects.Instance.FlashDamage();
-        AudioManager.Instance.PlaySFXWithPitch(hurtClip, hurtVolume);
+        AudioManager.Instance.PlaySFXWithPitch(hurtClip, hurtVolume, 0.1f);
         AudioManager.Instance.DampenAudio(1f);
 
         if (flickerCoroutine != null) StopCoroutine(flickerCoroutine);

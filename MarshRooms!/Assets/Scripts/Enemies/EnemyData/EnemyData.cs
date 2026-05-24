@@ -26,9 +26,14 @@ public class EnemyData : ScriptableObject
         [Range(0f, 1f)] public float dropChance;
     }
 
-    [Header("Drops")]
+    [Header("Weapon Drop")]
     public WeaponDrop[] possibleWeaponDrops;
+
+    [Header("Spore Drop")]
     public int maxSporeDrops;
     public GameObject sporePrefab;
 
+    [Header("Health Drop")]
+    public GameObject healthPickupPrefab;
+    [Range(0f, 1f)] public float healthDropChance;
 }

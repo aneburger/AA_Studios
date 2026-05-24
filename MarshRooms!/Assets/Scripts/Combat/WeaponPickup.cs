@@ -28,6 +28,7 @@ public class WeaponPickup : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         col = GetComponent<Collider2D>();
         mpb = new MaterialPropertyBlock();
+        spriteRenderer.sortingOrder = -1000;
         SetOutline(false);
 
         if (indicatorPrefab != null)

@@ -12,7 +12,7 @@ public sealed class AudioManager : MonoBehaviour
     [Header("Sources")]
     [SerializeField] private AudioSource sfxSource;
     [SerializeField] private AudioSource musicSource;
-    [SerializeField] private AudioClip musicClip; // TEMPORARY!
+    [SerializeField] public AudioClip musicClip; // TEMPORARY - this should not be public I am just lazy :) Ill fix later
 
     [Header("Mixer")]
     [SerializeField] private AudioMixer audioMixer;
@@ -30,7 +30,6 @@ public sealed class AudioManager : MonoBehaviour
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
-        PlayMusic(musicClip);  // TEMPORARY!
     }
 
     // -- PLAY SFX --
@@ -41,7 +40,7 @@ public sealed class AudioManager : MonoBehaviour
     }
 
     // -- PLAY MUSIC --
-    public void PlayMusic(AudioClip clip, float volume = 0.4f)
+    public void PlayMusic(AudioClip clip, float volume = 0.5f)
     {
         if (clip == null || musicSource.clip == clip) return;
         musicSource.clip = clip;
