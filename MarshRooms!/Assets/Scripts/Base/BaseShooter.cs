@@ -77,9 +77,9 @@ public abstract class BaseShooter : MonoBehaviour
 
         Vector2 direction = GetShootDirection();
         GameObject bullet = Instantiate(currentWeapon.bulletPrefab, firePoint.position, Quaternion.identity);
-        Bullet b = bullet.GetComponent<Bullet>();
+        BaseBullet b = bullet.GetComponent<BaseBullet>();
         b.SetDirection(direction);
-        b.setBullet(currentWeapon.bulletSpeed, currentWeapon.damage, currentWeapon.hitKnockback, currentWeapon.hitPrefab);
+        b.SetBullet(currentWeapon.bulletSpeed, currentWeapon.damage, currentWeapon.hitKnockback, currentWeapon.hitPrefab, weaponSprite.sortingOrder);
         OnShootEffects(direction);
     }
 

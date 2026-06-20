@@ -14,6 +14,10 @@ public class VFXManager : MonoBehaviour
     [Header("Enemy Prefabs")]
     [SerializeField] private GameObject enemyExplosionPrefab;
 
+    [Header("Damage Numbers")]
+    [SerializeField] private DamageNumber damageNumberPrefab;
+    [SerializeField] private Canvas worldCanvas;
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -78,5 +82,17 @@ public class VFXManager : MonoBehaviour
         SpriteRenderer sr = vfx.GetComponent<SpriteRenderer>();
         if (sr != null)
             sr.sortingOrder = sortingOrder;
+    }
+
+    // -- SPAWN DAMAGE NUMBER --
+    public void SpawnDamageNumber(float amount, Vector2 position)
+    {
+        Debug.Log($"SpawnDamageNumber called. Prefab null? {damageNumberPrefab == null}. Canvas null? {worldCanvas == null}");
+        
+        if (damageNumberPrefab == null) return;
+
+        Vector2 offset = Random.insideUnitCircle * 0.6f;
+        DamageNumber number = Instantiate(damageNumberPrefab, (Vector2)position + offset, Quaternion.identity, worldCanvas.transform);
+        number.SetDamage(amount);
     }
 }

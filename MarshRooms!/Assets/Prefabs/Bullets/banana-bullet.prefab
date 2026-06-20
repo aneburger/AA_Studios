@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 6097866240677807103}
   - component: {fileID: 5717465801929208006}
   - component: {fileID: 1194510614602569093}
-  - component: {fileID: 43877468385842577}
+  - component: {fileID: 4564129673586533209}
+  - component: {fileID: 4472710118913368873}
   m_Layer: 11
   m_Name: banana-bullet
   m_TagString: Untagged
@@ -84,12 +85,12 @@ SpriteRenderer:
   m_SortingLayer: 4
   m_SortingOrder: 1
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 1253643494702695746, guid: e1707cda5622ef744b18e4e7e672ffab, type: 3}
+  m_Sprite: {fileID: -4983721108374671077, guid: c8bf951d7d4dd1e4193fd3b06bc70eb0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.875, y: 0.5625}
+  m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -157,7 +158,7 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: -0.22, y: 0}
   m_Radius: 0.25
---- !u!114 &43877468385842577
+--- !u!114 &4564129673586533209
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -166,11 +167,42 @@ MonoBehaviour:
   m_GameObject: {fileID: 6894130498819508759}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0c3dd22c4a9b0924b8be593f7593d16d, type: 3}
+  m_Script: {fileID: 11500000, guid: e67c9694886ef764dbc5750dc9e278a1, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Bullet
-  speed: 0
-  damage: 0
-  knockback: 0
-  hitVFX: {fileID: 0}
-  weaponSortingOrder: 0
+  m_EditorClassIdentifier: Assembly-CSharp::BananaBullet
+  rotationSpeed: 0
+  splashRadius: 2.2
+  splashDamageMultiplier: 0.5
+  maxRange: 8
+  splatSprites:
+  - {fileID: -7905663524377662597, guid: 24eb5746f98972542805ce9af991a7c6, type: 3}
+  - {fileID: 7220928588772206736, guid: 24eb5746f98972542805ce9af991a7c6, type: 3}
+  - {fileID: 1452793652301989788, guid: 24eb5746f98972542805ce9af991a7c6, type: 3}
+  minSplats: 2
+  maxSplats: 4
+  splatRadius: 1.8
+  splatLifetime: 2.2
+  splashClip: {fileID: 8300000, guid: 44eae1f247505ce4f8256034026955b5, type: 3}
+  splashVolume: 0.5
+--- !u!95 &4472710118913368873
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6894130498819508759}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 7b8bac8400cc10c4cbf3d3acc1b19361, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

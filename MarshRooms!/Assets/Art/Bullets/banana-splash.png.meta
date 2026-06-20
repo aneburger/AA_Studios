@@ -1,13 +1,16 @@
 fileFormatVersion: 2
-guid: aca0a8c9efa5ed148ad94cc6e88b6784
+guid: 24eb5746f98972542805ce9af991a7c6
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -5522526206291636345
-    second: interaction-indicator_0
+      213: -7905663524377662597
+    second: banana-splash_0
   - first:
-      213: -7159033145416904399
-    second: interaction-indicator_1
+      213: 7220928588772206736
+    second: banana-splash_1
+  - first:
+      213: 1452793652301989788
+    second: banana-splash_2
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -116,23 +119,67 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: interaction-indicator_0
+      name: banana-splash_0
       rect:
         serializedVersion: 2
-        x: 3
-        y: 3
-        width: 14
-        height: 13
-      alignment: 9
-      pivot: {x: 0.49647257, y: 0.025166182}
+        x: 0
+        y: 0
+        width: 19
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 78f833bccab0c53b0800000000000000
-      internalID: -5522526206291636345
+      spriteID: b7be4bb19e0794290800000000000000
+      internalID: -7905663524377662597
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: banana-splash_1
+      rect:
+        serializedVersion: 2
+        x: 19
+        y: 0
+        width: 19
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 098ea3a1b44e53460800000000000000
+      internalID: 7220928588772206736
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: banana-splash_2
+      rect:
+        serializedVersion: 2
+        x: 38
+        y: 0
+        width: 19
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c970769212c592410800000000000000
+      internalID: 1452793652301989788
       vertices: []
       indices: 
       edges: []
@@ -141,7 +188,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: ed2b88f30dbe4864ca575945dfe12e31
+    spriteID: 4484fbdb73b40824badd788142f4c981
     internalID: 0
     vertices: []
     indices: 
@@ -149,10 +196,13 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries: []
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":19.0,"y":16.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      interaction-indicator_0: -5522526206291636345
-      interaction-indicator_1: -7159033145416904399
+      banana-splash_0: -7905663524377662597
+      banana-splash_1: 7220928588772206736
+      banana-splash_2: 1452793652301989788
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

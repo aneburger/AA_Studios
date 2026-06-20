@@ -1,15 +1,19 @@
+// Base class for all types of bullets
+
 using UnityEngine;
 using TopDown.Movement;
 
-public class Bullet : MonoBehaviour
+public class BaseBullet : MonoBehaviour
 {
     // Bullet details
-    private float speed;
-    private float damage;
-    private float knockback;
-    private GameObject hitVFX;
-    private Vector2 direction;
-    private int weaponSortingOrder;
+    protected float speed;
+    protected float damage;
+    protected float knockback;
+    protected GameObject hitVFX;
+    protected Vector2 direction;
+    protected int weaponSortingOrder;
+
+    protected virtual void Start() { }
 
     public void SetDirection(Vector2 dir)
     {
@@ -18,20 +22,21 @@ public class Bullet : MonoBehaviour
         transform.rotation = Quaternion.Euler(0f, 0f, angle);
     }
 
-    void Update()
-    {
-        transform.position += (Vector3)(direction * speed * Time.deltaTime);
-    }
-
-    public void setBullet(float speed, float damage, float knockback, GameObject hitVFX)
+    public void SetBullet(float speed, float damage, float knockback, GameObject hitVFX, int sortingOrder)
     {
        this.speed = speed;
        this.damage = damage;
        this.knockback = knockback;
        this.hitVFX = hitVFX;
+       this.weaponSortingOrder = sortingOrder;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    protected virtual void Update()
+    {
+        transform.position += (Vector3)(direction * speed * Time.deltaTime);
+    }
+
+    protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
         BaseHealth health = collision.GetComponentInParent<BaseHealth>();
 
@@ -48,4 +53,6 @@ public class Bullet : MonoBehaviour
         VFXManager.Instance.SpawnHitVFX(hitVFX, transform.position, weaponSortingOrder);
         Destroy(gameObject);
     }
+
+    protected virtual void OnHit() {}
 }

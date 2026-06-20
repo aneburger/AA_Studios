@@ -1,10 +1,19 @@
 fileFormatVersion: 2
-guid: e1707cda5622ef744b18e4e7e672ffab
+guid: c8bf951d7d4dd1e4193fd3b06bc70eb0
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 1253643494702695746
-    second: banana-bullet_0
+      213: -4983721108374671077
+    second: b_0
+  - first:
+      213: 3196824093557900982
+    second: b_1
+  - first:
+      213: -4879954894816282055
+    second: b_2
+  - first:
+      213: 4191292972665968950
+    second: b_3
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -120,16 +129,82 @@ TextureImporter:
         y: 0
         width: 16
         height: 16
-      alignment: 9
-      pivot: {x: 0.42760578, y: 0.46573135}
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 245cbb8cd16d56110800000000000000
-      internalID: 1253643494702695746
+      spriteID: b1136bb8e0446dab0800000000000000
+      internalID: -4983721108374671077
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: banana-bullet_1
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6b6cde953966d5c20800000000000000
+      internalID: 3196824093557900982
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: banana-bullet_2
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 93afb86d0eae64cb0800000000000000
+      internalID: -4879954894816282055
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: banana-bullet_3
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 639985190c67a2a30800000000000000
+      internalID: 4191292972665968950
       vertices: []
       indices: 
       edges: []
@@ -138,7 +213,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 870e8919e15e2d8439421de3ffccf188
+    spriteID: 133eddb3b44144040b5acd39f3afce3a
     internalID: 0
     vertices: []
     indices: 
@@ -148,9 +223,12 @@ TextureImporter:
     spriteCustomMetadata:
       entries:
       - key: SpriteEditor.SliceSettings
-        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":16.0,"y":16.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      banana-bullet_0: 1253643494702695746
+      banana-bullet_0: -4983721108374671077
+      banana-bullet_1: 3196824093557900982
+      banana-bullet_2: -4879954894816282055
+      banana-bullet_3: 4191292972665968950
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

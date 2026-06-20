@@ -47,7 +47,6 @@ public class MenuManager : MonoBehaviour
     // -- START GAME --
     private void OnStartGame()
     {
-        Debug.Log("Starting game...");
 
         AudioManager.Instance.PlayMusic(AudioManager.Instance.musicClip);
 

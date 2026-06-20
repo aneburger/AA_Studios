@@ -49,6 +49,19 @@ public class EnemyHealth : BaseHealth
 
         base.TakeDamage(amount);
         healthBar?.UpdateHealth(currentHealth, maxHealth);
+
+        Vector2 topPosition = GetTopPosition();
+        VFXManager.Instance.SpawnDamageNumber(amount * 10, topPosition);
+    }
+
+     // -- TOP POSITION --
+    private Vector2 GetTopPosition()
+    {
+        SpriteRenderer sr = GetComponentInChildren<SpriteRenderer>();
+        if (sr != null)
+            return new Vector2(transform.position.x, sr.bounds.max.y);
+
+        return transform.position;
     }
 
     // -- HIT EFFECT --
