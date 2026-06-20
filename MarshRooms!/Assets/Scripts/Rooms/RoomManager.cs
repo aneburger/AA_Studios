@@ -40,6 +40,8 @@ public class RoomManager : MonoBehaviour
 
     private Transform player;
 
+    public static event System.Action OnRoomCleared;
+
     [System.Serializable]
     public class EnemyEntry
     {
@@ -72,8 +74,8 @@ public class RoomManager : MonoBehaviour
 
         if (currentWave >= waves.Length)
         {
-            Debug.Log("Room cleared!");
             EnemyManager.OnAllEnemiesDead -= OnWaveCleared;
+            OnRoomCleared?.Invoke();
             return;
         }
 
