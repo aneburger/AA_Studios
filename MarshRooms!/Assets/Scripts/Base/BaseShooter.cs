@@ -47,7 +47,12 @@ public abstract class BaseShooter : MonoBehaviour
         if (firePoint == null) return transform.position;
         if (currentWeapon == null) return firePoint.position;
 
-        return firePoint.position + firePoint.TransformDirection(currentWeapon.firePointOffset);
+        Vector2 offset = currentWeapon.firePointOffset;
+
+        if (currentWeapon.flipOffsetOnAimFlip && weaponAimer != null && weaponAimer.AimDirection.x < 0f)
+            offset.y = -offset.y;
+
+        return firePoint.position + firePoint.TransformDirection(offset);
     }
 
     // -- EQUIP WEAPON --

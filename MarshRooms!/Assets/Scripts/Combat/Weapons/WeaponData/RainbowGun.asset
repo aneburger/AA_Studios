@@ -22,7 +22,8 @@ MonoBehaviour:
   damage: 5
   bulletSpeed: 15
   maxAmmo: 40
-  firePointOffset: {x: 0, y: -0.2}
+  firePointOffset: {x: 0, y: 0.2}
+  flipOffsetOnAimFlip: 1
   sprite: {fileID: 1306517108130304039, guid: 3e09dbcf5c1feb94a8cec943ad1f812a, type: 3}
   hudSprite: {fileID: 0}
   ammoDisplaySprite: {fileID: 0}

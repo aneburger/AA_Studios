@@ -24,6 +24,7 @@ public class WeaponData : ScriptableObject
 
     [Header("Aim")]
     public Vector2 firePointOffset;
+    public bool flipOffsetOnAimFlip = false;
 
     [Header("Visuals")]
     public Sprite sprite;
