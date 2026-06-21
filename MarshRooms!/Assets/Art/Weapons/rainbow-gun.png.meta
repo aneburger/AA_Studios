@@ -1,13 +1,10 @@
 fileFormatVersion: 2
-guid: 279dae0c7e464bf499d3a94af3a2c1ac
+guid: 3e09dbcf5c1feb94a8cec943ad1f812a
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -4089106483628794212
-    second: yellow-flash_0
-  - first:
-      213: 3671371758608459362
-    second: yellow-flash_1
+      213: 1306517108130304039
+    second: RainbowGun_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -116,111 +113,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: orange-flash_0
+      name: rainbow-gun_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 16
-        height: 16
-      alignment: 9
-      pivot: {x: 0.3, y: 0.5}
+        x: 1
+        y: 1
+        width: 19
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: c9e1f8271539047c0800000000000000
-      internalID: -4089106483628794212
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: orange-flash_1
-      rect:
-        serializedVersion: 2
-        x: 16
-        y: 0
-        width: 16
-        height: 16
-      alignment: 9
-      pivot: {x: 0.3, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 2662246a92553f230800000000000000
-      internalID: 3671371758608459362
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: orange-flash_2
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 0
-        width: 16
-        height: 16
-      alignment: 9
-      pivot: {x: 0.3, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: c2a1a93d8b7a2904cbfc57cdbaff9d17
-      internalID: 321889731
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: orange-flash_3
-      rect:
-        serializedVersion: 2
-        x: 48
-        y: 0
-        width: 16
-        height: 16
-      alignment: 9
-      pivot: {x: 0.3, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 36621274848dfec47bebffa212ee07e1
-      internalID: 2019743493
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: orange-flash_4
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 0
-        width: 16
-        height: 16
-      alignment: 9
-      pivot: {x: 0.3, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2310f24e9d2e53d408de89623abe2aee
-      internalID: -1531449880
+      spriteID: 720d31b336ea12210800000000000000
+      internalID: 1306517108130304039
       vertices: []
       indices: 
       edges: []
@@ -229,7 +138,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 170d944128d2544499a5cf69b8f9c3bb
+    spriteID: 8ed1b631fbbf8434dab8edeb8df7f06c
     internalID: 0
     vertices: []
     indices: 
@@ -237,15 +146,9 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries:
-      - key: SpriteEditor.SliceSettings
-        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":16.0,"y":16.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.30000001192092898,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":9,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
+      entries: []
     nameFileIdTable:
-      orange-flash_0: -4089106483628794212
-      orange-flash_1: 3671371758608459362
-      orange-flash_2: 321889731
-      orange-flash_3: 2019743493
-      orange-flash_4: -1531449880
+      rainbow-gun_0: 1306517108130304039
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

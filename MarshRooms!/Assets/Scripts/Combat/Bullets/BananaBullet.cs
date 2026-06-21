@@ -107,6 +107,7 @@ public class BananaBullet : BaseBullet
             fade.Setup(splatLifetime, 0.5f);
         }
 
+        VFXManager.Instance.SpawnHitVFX(hitVFX, transform.position, weaponSortingOrder);
         Destroy(gameObject);
     }
 }

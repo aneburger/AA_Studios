@@ -14,12 +14,12 @@ public abstract class BaseShooter : MonoBehaviour
     [SerializeField] protected SpriteRenderer weaponSprite;
 
     [Header("Weapon")]
-    [SerializeField] public WeaponData currentWeapon; // changed from protected to public for access in AmmoDisplay.cs
+    [SerializeField] public WeaponData currentWeapon;
 
     [Header("Audio")]
     [SerializeField] private AudioClip equipClip;
     [Range(0f, 1f)] public float equipVolume;
-    [SerializeField] private AudioClip emptyClip;
+    [SerializeField] private AudioClip emptyClip; 
     [Range(0f, 1f)] public float emptyVolume;
 
     public bool IsArmed => currentWeapon != null;
@@ -34,11 +34,20 @@ public abstract class BaseShooter : MonoBehaviour
     // -1 means infinite ammo
     private int currentAmmo = -1;
 
-    // -- AWAKE --
+     // -- AWAKE --
     protected virtual void Awake()
     {
         if (weaponSprite != null)
             defaultScale = weaponSprite.transform.localScale;
+    }
+
+    // -- GET FIRE POSITION --
+    protected Vector3 GetFirePosition()
+    {
+        if (firePoint == null) return transform.position;
+        if (currentWeapon == null) return firePoint.position;
+
+        return firePoint.position + firePoint.TransformDirection(currentWeapon.firePointOffset);
     }
 
     // -- EQUIP WEAPON --
@@ -76,9 +85,12 @@ public abstract class BaseShooter : MonoBehaviour
         }
 
         Vector2 direction = GetShootDirection();
-        GameObject bullet = Instantiate(currentWeapon.bulletPrefab, firePoint.position, Quaternion.identity);
+        Vector3 spawnPosition = GetFirePosition();
+
+        GameObject bullet = Instantiate(currentWeapon.bulletPrefab, spawnPosition, Quaternion.identity);
         BaseBullet b = bullet.GetComponent<BaseBullet>();
         b.SetDirection(direction);
+        b.SetAimOrigin(firePoint.position);
         b.SetBullet(currentWeapon.bulletSpeed, currentWeapon.damage, currentWeapon.hitKnockback, currentWeapon.hitPrefab, weaponSprite.sortingOrder);
         OnShootEffects(direction);
     }
@@ -94,7 +106,7 @@ public abstract class BaseShooter : MonoBehaviour
 
         // Spawn muzzle flash VFX
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        VFXManager.Instance.SpawnMuzzleFlash(currentWeapon.muzzleFlashPrefab, firePoint.position, angle, weaponSprite.sortingOrder);
+        VFXManager.Instance.SpawnMuzzleFlash(currentWeapon.muzzleFlashPrefab, GetFirePosition(), angle, weaponSprite.sortingOrder);
 
         // Squish weapon sprite
         if (squishCoroutine != null) StopCoroutine(squishCoroutine);
@@ -165,5 +177,12 @@ public abstract class BaseShooter : MonoBehaviour
         
         if (weaponAimer != null)
             weaponAimer.enabled = !hidden && IsArmed;
+    }
+
+     // -- GIZMOS --
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawSphere(GetFirePosition(), 0.05f);
     }
 }

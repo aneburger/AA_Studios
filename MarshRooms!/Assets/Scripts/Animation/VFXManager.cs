@@ -86,9 +86,7 @@ public class VFXManager : MonoBehaviour
 
     // -- SPAWN DAMAGE NUMBER --
     public void SpawnDamageNumber(float amount, Vector2 position)
-    {
-        Debug.Log($"SpawnDamageNumber called. Prefab null? {damageNumberPrefab == null}. Canvas null? {worldCanvas == null}");
-        
+    {   
         if (damageNumberPrefab == null) return;
 
         Vector2 offset = Random.insideUnitCircle * 0.6f;

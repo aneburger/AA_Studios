@@ -12,6 +12,7 @@ public class BaseBullet : MonoBehaviour
     protected GameObject hitVFX;
     protected Vector2 direction;
     protected int weaponSortingOrder;
+    protected Vector2 aimOrigin;
 
     protected virtual void Start() { }
 
@@ -20,6 +21,11 @@ public class BaseBullet : MonoBehaviour
         direction = dir.normalized;
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(0f, 0f, angle);
+    }
+
+    public void SetAimOrigin(Vector2 origin)
+    {
+        aimOrigin = origin;
     }
 
     public void SetBullet(float speed, float damage, float knockback, GameObject hitVFX, int sortingOrder)

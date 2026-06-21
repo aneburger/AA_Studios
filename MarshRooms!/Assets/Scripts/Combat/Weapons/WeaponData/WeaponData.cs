@@ -22,6 +22,9 @@ public class WeaponData : ScriptableObject
     public float bulletSpeed;
     public int maxAmmo;
 
+    [Header("Aim")]
+    public Vector2 firePointOffset;
+
     [Header("Visuals")]
     public Sprite sprite;
     public Sprite hudSprite;

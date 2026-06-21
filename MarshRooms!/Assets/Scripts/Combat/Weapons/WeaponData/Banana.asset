@@ -19,9 +19,9 @@ MonoBehaviour:
   muzzleFlashPrefab: {fileID: 0}
   pickupPrefab: {fileID: 1303430737314922756, guid: 8b6717c7fcf618d48a9c81e5c6d876de, type: 3}
   fireRate: 0.45
-  damage: 2
+  damage: 2.5
   bulletSpeed: 15
-  maxAmmo: 80
+  maxAmmo: 30
   sprite: {fileID: -1325218693181487552, guid: ca18fef1eef6fa340b8f8060816ba3d0, type: 3}
   hudSprite: {fileID: 1651271307760532655, guid: 625a816c2277ab44e9b8e1968416b767, type: 3}
   ammoDisplaySprite: {fileID: -2835615992889241634, guid: 3407f53d47c927047b45b9bd49ffa238, type: 3}
@@ -29,6 +29,6 @@ MonoBehaviour:
   shootVolume: 0.6
   shakeForce: 0.08
   knockbackForce: 3
-  hitKnockback: 6
-  recoilAmount: 30
+  hitKnockback: 5
+  recoilAmount: -30
   recoilDecay: 10

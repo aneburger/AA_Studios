@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36776f04a1ca3d8449b04b532f7a016e, type: 3}
+  m_Name: RainbowGun
+  m_EditorClassIdentifier: Assembly-CSharp::WeaponData
+  gunName: Mini Gun
+  bulletPrefab: {fileID: 6894130498819508759, guid: 356eece9d2824b745a9fdf6d25bab327, type: 3}
+  shellsPrefab: {fileID: 0}
+  hitPrefab: {fileID: 4081999799842582576, guid: c904ccd69bb38fb4e835b6a03e41e4dd, type: 3}
+  muzzleFlashPrefab: {fileID: 4081999799842582576, guid: 893aa449535d16b4e86e1b0f03a14358, type: 3}
+  pickupPrefab: {fileID: 1303430737314922756, guid: ad297751ddca1854da2564903476b9a4, type: 3}
+  fireRate: 0.65
+  damage: 5
+  bulletSpeed: 15
+  maxAmmo: 40
+  firePointOffset: {x: 0, y: -0.2}
+  sprite: {fileID: 1306517108130304039, guid: 3e09dbcf5c1feb94a8cec943ad1f812a, type: 3}
+  hudSprite: {fileID: 0}
+  ammoDisplaySprite: {fileID: 0}
+  shootClip: {fileID: 8300000, guid: 7999fbf05fd575343bbafb1caf493afd, type: 3}
+  shootVolume: 0.76
+  shakeForce: 0.1
+  knockbackForce: 10
+  hitKnockback: 7
+  recoilAmount: -15
+  recoilDecay: 15
