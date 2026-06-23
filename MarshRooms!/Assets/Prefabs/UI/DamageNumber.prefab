@@ -197,4 +197,7 @@ MonoBehaviour:
   text: {fileID: 5485375973911890271}
   lifetime: 0.8
   riseSpeed: 1
-  fadeSpeed: 2
+  minDamageForScale: 10
+  maxDamageForScale: 70
+  minScale: 0.8
+  maxScale: 1.3

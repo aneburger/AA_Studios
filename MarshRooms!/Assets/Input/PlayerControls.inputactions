@@ -34,6 +34,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "Mutate",
+                    "type": "Button",
+                    "id": "bd11a1b1-694f-4293-a88e-ea64da47bca3",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Pickup",
                     "type": "Button",
                     "id": "24f6f0f6-0441-4a8d-a67d-15fcd6fdd3cd",
@@ -149,6 +158,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Shoot",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "96b6d674-0fc5-489b-b95a-fcfa59ac51ef",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Mutate",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

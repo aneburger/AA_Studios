@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class SporeManager : MonoBehaviour
 {
@@ -6,61 +7,84 @@ public class SporeManager : MonoBehaviour
 
     [SerializeField] private SporeMeterConfig meterConfig;
 
+    [Header("Mutated State")]
+    [SerializeField] private float mutatedDuration = 6f;
+
     private int currentSpores = 0;
     private int maxSpores;
+    private bool isMutated = false;
+    private float mutatedTimeRemaining = 0f;
 
-    // Event for UI updates
+    // Spore count event
     public delegate void SporeCountChangedDelegate(int current, int max);
     public event SporeCountChangedDelegate OnSporeCountChanged;
 
+    // Mutated state events
+    public event System.Action OnMutatedActivated;
+    public event System.Action OnMutatedEnded;
+    public event System.Action<float> OnMutatedDrainTick;
+
+    public bool IsMutated => isMutated;
+
+    // -- AWAKE --
     private void Awake()
     {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
-
+        if (Instance != null && Instance != this) { Destroy(gameObject); return; }
         Instance = this;
 
-        if (meterConfig != null)
-            maxSpores = meterConfig.sporeCapacity;
-        else
-            maxSpores = 10; // default
+        maxSpores = meterConfig != null ? meterConfig.sporeCapacity : 10;
+    }
+
+    // -- UPDATE --
+    private void Update()
+    {
+        if (!isMutated) return;
+
+        mutatedTimeRemaining -= Time.deltaTime;
+        OnMutatedDrainTick?.Invoke(mutatedTimeRemaining / mutatedDuration);
+
+        if (mutatedTimeRemaining <= 0f)
+            EndMutatedState();
     }
 
     // -- COLLECT SPORE --
     public void CollectSpore()
     {
-        if (currentSpores < maxSpores)
-        {
-            currentSpores++;
-            OnSporeCountChanged?.Invoke(currentSpores, maxSpores);
+        if (isMutated) return;
+        if (currentSpores >= maxSpores) return;
 
-            // Check if meter is full
-            if (currentSpores >= maxSpores)
-                OnSporesMeterFull();
-        }
+        currentSpores++;
+        OnSporeCountChanged?.Invoke(currentSpores, maxSpores);
     }
 
-    // -- ON SPORES METER FULL --
-    private void OnSporesMeterFull()
+    // -- TRY ACTIVATE --
+    public void TryActivateMutatedState()
     {
-        Debug.Log("spore meter is full");
+        if (isMutated || currentSpores < maxSpores) return;
 
-        // Mega spore power upgrade (or something like that) will go here 
+        isMutated = true;
+        mutatedTimeRemaining = mutatedDuration;
+        currentSpores = 0;
+        OnMutatedActivated?.Invoke();
     }
 
-    // -- GET CURRENT SPORES --
-    public int GetCurrentSpores() => currentSpores;
+    // -- END MUTATED STATE --
+    private void EndMutatedState()
+    {
+        isMutated = false;
+        mutatedTimeRemaining = 0f;
+        OnMutatedEnded?.Invoke();
+    }
 
-    // -- GET MAX SPORES --
-    public int GetMaxSpores() => maxSpores;
-
-    // -- RESET SPORES (for new levels) --
+    // -- RESET (new level) --
     public void ResetSpores()
     {
+        if (isMutated) EndMutatedState();
         currentSpores = 0;
         OnSporeCountChanged?.Invoke(currentSpores, maxSpores);
     }
+
+    public int GetCurrentSpores() => currentSpores;
+    public int GetMaxSpores() => maxSpores;
+    public float GetMutatedDuration() => mutatedDuration;
 }

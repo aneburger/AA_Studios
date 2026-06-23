@@ -6,16 +6,24 @@ public class RainbowBullet : BaseBullet
     [Header("Laser Settings")]
     [SerializeField] private float maxRange = 10f;
 
+    [Header("Mutated Settings")]
+    [SerializeField] private float mutatedRangeMultiplier = 1.5f;
+    [SerializeField] private float mutatedDamageMultiplier = 1.5f;
+
     protected override void Start()
     {
         base.Start();
 
-        int layerMask = Physics2D.GetLayerCollisionMask(gameObject.layer);
+        bool mutated = SporeManager.Instance != null && SporeManager.Instance.IsMutated;
 
-        RaycastHit2D[] hits = Physics2D.RaycastAll(aimOrigin, direction, maxRange, layerMask);
+        float currentRange = mutated ? maxRange * mutatedRangeMultiplier : maxRange;
+        float currentDamage = mutated ? damage * mutatedDamageMultiplier : damage;
+
+        int layerMask = Physics2D.GetLayerCollisionMask(gameObject.layer);
+        RaycastHit2D[] hits = Physics2D.RaycastAll(aimOrigin, direction, currentRange, layerMask);
         System.Array.Sort(hits, (a, b) => a.distance.CompareTo(b.distance));
 
-        float beamLength = maxRange;
+        float beamLength = currentRange;
 
         foreach (var hit in hits)
         {
@@ -23,11 +31,15 @@ public class RainbowBullet : BaseBullet
 
             if (health != null)
             {
-                health.TakeDamage(damage);
-
+                health.TakeDamage(currentDamage);
+                
                 BaseMover mover = hit.collider.GetComponentInParent<BaseMover>();
                 if (mover != null)
                     mover.ApplyKnockback(direction * knockback);
+
+                if (isInfected) TryApplyInfection(hit.collider);
+
+                VFXManager.Instance.SpawnHitVFX(hitVFX, hit.point, weaponSortingOrder);
             }
             else
             {

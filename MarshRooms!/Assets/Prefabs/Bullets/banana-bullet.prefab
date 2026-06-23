@@ -171,7 +171,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BananaBullet
   rotationSpeed: 0
-  splashRadius: 2.2
+  splashRadius: 2.3
   splashDamageMultiplier: 0.5
   maxRange: 8
   splatSprites:
@@ -184,6 +184,8 @@ MonoBehaviour:
   splatLifetime: 2.2
   splashClip: {fileID: 8300000, guid: 44eae1f247505ce4f8256034026955b5, type: 3}
   splashVolume: 0.5
+  mutatedSplashRadiusMultiplier: 1.5
+  mutatedSplatMultiplier: 2
 --- !u!95 &4472710118913368873
 Animator:
   serializedVersion: 7

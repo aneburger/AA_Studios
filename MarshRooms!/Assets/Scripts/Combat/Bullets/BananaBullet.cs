@@ -5,16 +5,16 @@ public class BananaBullet : BaseBullet
 {
     [Header("Banana Settings")]
     [SerializeField] private float rotationSpeed;
-    [SerializeField] private float splashRadius = 1.5f;
-    [SerializeField] private float splashDamageMultiplier = 0.5f;
-    [SerializeField] private float maxRange = 8f;
+    [SerializeField] private float splashRadius;
+    [SerializeField] private float splashDamageMultiplier;
+    [SerializeField] private float maxRange;
 
     [Header("Splat VFX")]
     [SerializeField] private Sprite[] splatSprites;
-    [SerializeField] private int minSplats = 3;
-    [SerializeField] private int maxSplats = 6;
-    [SerializeField] private float splatRadius = 0.5f;
-    [SerializeField] private float splatLifetime = 3f;
+    [SerializeField] private int minSplats;
+    [SerializeField] private int maxSplats;
+    [SerializeField] private float splatRadius;
+    [SerializeField] private float splatLifetime;
 
     [Header("Audio")]
     [SerializeField] private AudioClip splashClip;
@@ -22,6 +22,10 @@ public class BananaBullet : BaseBullet
 
     [Header("Drop Zone")]
     private RoomDropZone dropZone;
+
+    [Header("Mutated Settings")]
+    [SerializeField] private float mutatedSplashRadiusMultiplier;
+    [SerializeField] private int mutatedSplatMultiplier;
 
     private float rotationDirection;
     private Vector2 spawnPosition;
@@ -65,23 +69,30 @@ public class BananaBullet : BaseBullet
 
     private void Splash()
     {
-        // Play splash sound effect
         AudioManager.Instance.PlaySFXWithPitch(splashClip, splashVolume, 0.1f);
+
+        bool mutated = SporeManager.Instance != null && SporeManager.Instance.IsMutated;
+
+        float currentSplashRadius = mutated ? splashRadius * mutatedSplashRadiusMultiplier : splashRadius;
+        int currentMinSplats = mutated ? minSplats * mutatedSplatMultiplier : minSplats;
+        int currentMaxSplats = mutated ? maxSplats * mutatedSplatMultiplier : maxSplats;
 
         Vector2 splashCenter = dropZone != null 
             ? dropZone.GetSafeDropPosition(transform.position) 
             : (Vector2)transform.position;
 
-        Collider2D[] hits = Physics2D.OverlapCircleAll(splashCenter, splashRadius);
+        Collider2D[] hits = Physics2D.OverlapCircleAll(splashCenter, currentSplashRadius);
         foreach (var hit in hits)
         {
             EnemyHealth health = hit.GetComponentInParent<EnemyHealth>();
             if (health != null)
+            {
                 health.TakeDamage(damage * splashDamageMultiplier);
+                if (isInfected) TryApplyInfection(hit);
+            }
         }
 
-        // Spawn floor splats
-        int splatCount = Random.Range(minSplats, maxSplats + 1);
+        int splatCount = Random.Range(currentMinSplats, currentMaxSplats + 1);
         for (int i = 0; i < splatCount; i++)
         {
             Vector2 offset = Random.insideUnitCircle * splatRadius;

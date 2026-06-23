@@ -31,6 +31,8 @@ public abstract class BaseShooter : MonoBehaviour
     private bool isFirstEquip = true;
     private bool weaponHidden = false;
 
+    private float bulletSpeedMultiplier = 1f;
+
     // -1 means infinite ammo
     private int currentAmmo = -1;
 
@@ -39,6 +41,12 @@ public abstract class BaseShooter : MonoBehaviour
     {
         if (weaponSprite != null)
             defaultScale = weaponSprite.transform.localScale;
+    }
+
+    // -- BULLET SPEED MULTIPLIER --
+    public void SetBulletSpeedMultiplier(float multiplier)
+    {
+        bulletSpeedMultiplier = multiplier;
     }
 
     // -- GET FIRE POSITION --
@@ -79,14 +87,14 @@ public abstract class BaseShooter : MonoBehaviour
     protected abstract Vector2 GetShootDirection();
 
     // -- SHOOT --
-    public void Shoot()
+    public BaseBullet Shoot(Color? tint = null)
     {
-        if (currentWeapon == null) return;
+        if (currentWeapon == null) return null;
         
         if (!UseAmmo())
         {
             OnEmptyShootEffetcs();
-            return;
+            return null;
         }
 
         Vector2 direction = GetShootDirection();
@@ -96,8 +104,10 @@ public abstract class BaseShooter : MonoBehaviour
         BaseBullet b = bullet.GetComponent<BaseBullet>();
         b.SetDirection(direction);
         b.SetAimOrigin(firePoint.position);
-        b.SetBullet(currentWeapon.bulletSpeed, currentWeapon.damage, currentWeapon.hitKnockback, currentWeapon.hitPrefab, weaponSprite.sortingOrder);
+        b.SetBullet(currentWeapon.bulletSpeed * bulletSpeedMultiplier, currentWeapon.damage, currentWeapon.hitKnockback, currentWeapon.hitPrefab, weaponSprite.sortingOrder);
+        
         OnShootEffects(direction);
+        return b;
     }
 
     // -- SHOOT EFFECTS --

@@ -17,6 +17,8 @@ public class PlayerShooter : BaseShooter
 
     private bool isShooting = false;
 
+    private float fireRateMultiplier = 1f;
+
     // -- START --
     private void Start()
     {
@@ -31,9 +33,18 @@ public class PlayerShooter : BaseShooter
 
         if (isShooting && Time.time >= nextFireTime)
         {
-            Shoot();
-            nextFireTime = Time.time + currentWeapon.fireRate;
+            BaseBullet bullet = Shoot();
+            if (bullet != null && SporeManager.Instance.IsMutated)
+                bullet.SetInfected(true);
+
+            nextFireTime = Time.time + (currentWeapon.fireRate * fireRateMultiplier);
         }
+    }
+
+    // -- SET FIRE RATE --
+    public void SetFireRateMultiplier(float multiplier)
+    {
+        fireRateMultiplier = multiplier;
     }
 
     // -- GET SHOOT DIRECTION --
