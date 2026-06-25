@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36776f04a1ca3d8449b04b532f7a016e, type: 3}
   m_Name: RainbowGun
   m_EditorClassIdentifier: Assembly-CSharp::WeaponData
-  gunName: Mini Gun
+  gunName: Rainbow Laser
   bulletPrefab: {fileID: 6894130498819508759, guid: 356eece9d2824b745a9fdf6d25bab327, type: 3}
   shellsPrefab: {fileID: 0}
   hitPrefab: {fileID: 4081999799842582576, guid: a1a081b6f887bac44b78da706df05dc0, type: 3}
@@ -24,12 +24,14 @@ MonoBehaviour:
   maxAmmo: 40
   firePointOffset: {x: 0, y: 0.2}
   flipOffsetOnAimFlip: 1
+  bulletCount: 1
+  spreadAngle: 5
   sprite: {fileID: 1306517108130304039, guid: 3e09dbcf5c1feb94a8cec943ad1f812a, type: 3}
   hudSprite: {fileID: 0}
   ammoDisplaySprite: {fileID: 0}
   shootClip: {fileID: 8300000, guid: 7999fbf05fd575343bbafb1caf493afd, type: 3}
   shootVolume: 0.76
-  shakeForce: 0.1
+  shakeForce: 0.2
   knockbackForce: 10
   hitKnockback: 7
   recoilAmount: -15

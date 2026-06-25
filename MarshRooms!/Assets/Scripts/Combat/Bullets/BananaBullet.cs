@@ -88,7 +88,6 @@ public class BananaBullet : BaseBullet
             if (health != null)
             {
                 health.TakeDamage(damage * splashDamageMultiplier);
-                if (isInfected) TryApplyInfection(hit);
             }
         }
 

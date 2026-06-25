@@ -85,6 +85,7 @@ public class PlayerHealth : BaseHealth
         base.TakeDamage(amount);
         UpdateHUD();
 
+        ScreenEffects.Instance.SetLowHealth(currentHealth / maxHealth <= 0.3f);
     }
 
     // -- HEAL --
@@ -96,6 +97,8 @@ public class PlayerHealth : BaseHealth
         currentHealth = Mathf.Min(currentHealth + amount, maxHealth);
         anim.SetTrigger("Heal");
         UpdateHUD();
+
+        ScreenEffects.Instance.SetLowHealth(currentHealth / maxHealth <= 0.3f);
     }
 
     // -- IS ON COOLDOWN -- 

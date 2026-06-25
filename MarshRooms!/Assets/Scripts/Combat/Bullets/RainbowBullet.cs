@@ -37,8 +37,6 @@ public class RainbowBullet : BaseBullet
                 if (mover != null)
                     mover.ApplyKnockback(direction * knockback);
 
-                if (isInfected) TryApplyInfection(hit.collider);
-
                 VFXManager.Instance.SpawnHitVFX(hitVFX, hit.point, weaponSortingOrder);
             }
             else

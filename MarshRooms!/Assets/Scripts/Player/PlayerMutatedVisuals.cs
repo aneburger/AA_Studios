@@ -20,13 +20,13 @@ public class PlayerMutatedVisuals : MonoBehaviour
 
     private void OnActivated()
     {
-        if (sporeLight == null) return;
-        sporeLight.enabled = true;
+        if (sporeLight != null) sporeLight.enabled = true;
+        ScreenEffects.Instance.ShowMutatedVignette();
     }
 
     private void OnEnded()
     {
-        if (sporeLight == null) return;
-        sporeLight.enabled = false;
+        if (sporeLight != null) sporeLight.enabled = false;
+        ScreenEffects.Instance.HideMutatedVignette();
     }
 }

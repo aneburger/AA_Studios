@@ -26,6 +26,10 @@ public class WeaponData : ScriptableObject
     public Vector2 firePointOffset;
     public bool flipOffsetOnAimFlip = false;
 
+    [Header("Spread")]
+    public int bulletCount = 1;
+    public float spreadAngle = 15f;
+
     [Header("Visuals")]
     public Sprite sprite;
     public Sprite hudSprite;

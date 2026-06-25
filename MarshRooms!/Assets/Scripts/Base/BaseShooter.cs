@@ -87,10 +87,10 @@ public abstract class BaseShooter : MonoBehaviour
     protected abstract Vector2 GetShootDirection();
 
     // -- SHOOT --
-    public BaseBullet Shoot(Color? tint = null)
+    public BaseBullet Shoot()
     {
         if (currentWeapon == null) return null;
-        
+
         if (!UseAmmo())
         {
             OnEmptyShootEffetcs();
@@ -100,14 +100,35 @@ public abstract class BaseShooter : MonoBehaviour
         Vector2 direction = GetShootDirection();
         Vector3 spawnPosition = GetFirePosition();
 
-        GameObject bullet = Instantiate(currentWeapon.bulletPrefab, spawnPosition, Quaternion.identity);
-        BaseBullet b = bullet.GetComponent<BaseBullet>();
-        b.SetDirection(direction);
-        b.SetAimOrigin(firePoint.position);
-        b.SetBullet(currentWeapon.bulletSpeed * bulletSpeedMultiplier, currentWeapon.damage, currentWeapon.hitKnockback, currentWeapon.hitPrefab, weaponSprite.sortingOrder);
-        
+        BaseBullet lastBullet = null;
+
+        int count = currentWeapon.bulletCount;
+        float spread = currentWeapon.spreadAngle;
+        float startAngle = -(spread * (count - 1) / 2f);
+
+        for (int i = 0; i < count; i++)
+        {
+            float angle = startAngle + spread * i;
+            Vector2 spreadDirection = RotateVector(direction, angle);
+
+            GameObject bullet = Instantiate(currentWeapon.bulletPrefab, spawnPosition, Quaternion.identity);
+            BaseBullet b = bullet.GetComponent<BaseBullet>();
+            b.SetDirection(spreadDirection);
+            b.SetAimOrigin(firePoint.position);
+            b.SetBullet(currentWeapon.bulletSpeed * bulletSpeedMultiplier, currentWeapon.damage, currentWeapon.hitKnockback, currentWeapon.hitPrefab, weaponSprite.sortingOrder);
+            lastBullet = b;
+        }
+
         OnShootEffects(direction);
-        return b;
+        return lastBullet;
+    }
+
+    private Vector2 RotateVector(Vector2 v, float degrees)
+    {
+        float rad = degrees * Mathf.Deg2Rad;
+        float cos = Mathf.Cos(rad);
+        float sin = Mathf.Sin(rad);
+        return new Vector2(v.x * cos - v.y * sin, v.x * sin + v.y * cos);
     }
 
     // -- SHOOT EFFECTS --

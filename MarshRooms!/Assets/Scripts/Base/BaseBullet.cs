@@ -14,14 +14,7 @@ public class BaseBullet : MonoBehaviour
     protected int weaponSortingOrder;
     protected Vector2 aimOrigin;
 
-    protected bool isInfected = false;
-
     protected virtual void Start() { }
-
-    public void SetInfected(bool infected)
-    {
-        isInfected = infected;
-    }
 
     public void SetDirection(Vector2 dir)
     {
@@ -60,42 +53,10 @@ public class BaseBullet : MonoBehaviour
             BaseMover mover = collision.GetComponentInParent<BaseMover>();
             if (mover != null)
                 mover.ApplyKnockback(direction * knockback);
-
-            // Apply infection if infected bullet hits an enemy
-            if (isInfected)
-            {
-                EnemyMover enemyMover = collision.GetComponentInParent<EnemyMover>();
-                EnemyShooter enemyShooter = collision.GetComponentInParent<EnemyShooter>();
-
-                if (enemyMover != null || enemyShooter != null)
-                {
-                    SporeInfection infection = collision.GetComponentInParent<SporeInfection>();
-                    if (infection == null)
-                        infection = collision.GetComponentInParent<Transform>().gameObject.AddComponent<SporeInfection>();
-
-                    infection.Apply(enemyMover, enemyShooter);
-                }
-            }
         }
 
         VFXManager.Instance.SpawnHitVFX(hitVFX, transform.position, weaponSortingOrder);
         Destroy(gameObject);
-    }
-
-    protected void TryApplyInfection(Collider2D collision)
-    {
-        if (!isInfected) return;
-
-        EnemyMover enemyMover = collision.GetComponentInParent<EnemyMover>();
-        EnemyShooter enemyShooter = collision.GetComponentInParent<EnemyShooter>();
-
-        if (enemyMover == null && enemyShooter == null) return;
-
-        SporeInfection infection = collision.GetComponentInParent<SporeInfection>();
-        if (infection == null)
-            infection = collision.GetComponentInParent<Transform>().gameObject.AddComponent<SporeInfection>();
-
-        infection.Apply(enemyMover, enemyShooter);
     }
 
     protected virtual void OnHit() {}

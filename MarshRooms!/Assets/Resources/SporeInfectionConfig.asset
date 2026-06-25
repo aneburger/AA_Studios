@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d02072834e07394c89e0ac6f258fb30, type: 3}
   m_Name: SporeInfectionConfig
   m_EditorClassIdentifier: Assembly-CSharp::SporeInfectionConfig
-  duration: 2.5
-  speedMultiplier: 0.7
+  duration: 2.4
+  speedMultiplier: 0.6
   bulletSpeedMultiplier: 0.5
-  tickDamage: 2
-  tickInterval: 0.5
-  infectedTint: {r: 0.4, g: 1, b: 0.4, a: 1}
+  tickDamage: 0.7
+  tickInterval: 0.7
+  infectedTint: {r: 0.21568628, g: 0.5803922, b: 0.43137255, a: 1}

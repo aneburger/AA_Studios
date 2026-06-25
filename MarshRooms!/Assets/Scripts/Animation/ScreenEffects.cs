@@ -8,33 +8,63 @@ public class ScreenEffects : MonoBehaviour
 
     [Header("References")]
     [SerializeField] private Image flashImage;
+    [SerializeField] private Image vignetteImage;
     [SerializeField] private CinemachineImpulseSource impulseSource;
 
     [Header("Sprites")]
     [SerializeField] private Sprite damageScreen;
+    [SerializeField] private Sprite mutatedScreen;
+
+    [Header("Settings")]
+    [SerializeField] private float vignetteFadeSpeed = 2f;
+    [SerializeField] private float lowHealthPulseSpeed = 2f;
+    [SerializeField] private float lowHealthMaxAlpha = 0.5f;
+    [SerializeField] private float mutatedVignetteAlpha = 0.4f;
+
+    public Sprite MutatedScreen => mutatedScreen;
 
     private float flashTimer = 0f;
     private float flashDuration = 0f;
     private float flashAlpha = 0f;
 
+    private float vignetteTargetAlpha = 0f;
+    private float vignetteCurrentAlpha = 0f;
+
+    private bool isLowHealth = false;
+    private bool isMutated = false;
+    private float pulseTimer = 0f;
+
     // -- AWAKE --
     private void Awake()
     {
         Instance = this;
-        SetAlpha(0f);
+        SetFlashAlpha(0f);
+        SetVignetteAlpha(0f);
     }
 
     // -- UPDATE --
     private void Update()
     {
-        if (flashTimer <= 0f) return;
+        // Flash fade
+        if (flashTimer > 0f)
+        {
+            flashTimer -= Time.deltaTime;
+            float alpha = Mathf.Lerp(0f, flashAlpha, flashTimer / flashDuration);
+            SetFlashAlpha(alpha);
+            if (flashTimer <= 0f) SetFlashAlpha(0f);
+        }
 
-        flashTimer -= Time.deltaTime;
-        float alpha = Mathf.Lerp(0f, flashAlpha, flashTimer / flashDuration);
-        SetAlpha(alpha);
+        // Low health pulse
+        if (isLowHealth && !isMutated)
+        {
+            pulseTimer += Time.deltaTime * lowHealthPulseSpeed;
+            float pulseAlpha = (Mathf.Sin(pulseTimer) + 1f) / 2f * lowHealthMaxAlpha;
+            vignetteTargetAlpha = pulseAlpha;
+        }
 
-        if (flashTimer <= 0f)
-            SetAlpha(0f);
+        // Vignette smooth fade
+        vignetteCurrentAlpha = Mathf.Lerp(vignetteCurrentAlpha, vignetteTargetAlpha, vignetteFadeSpeed * Time.deltaTime);
+        SetVignetteAlpha(vignetteCurrentAlpha);
     }
 
     // -- FLASH --
@@ -44,15 +74,7 @@ public class ScreenEffects : MonoBehaviour
         flashAlpha = alpha;
         flashDuration = duration;
         flashTimer = duration;
-        SetAlpha(alpha);
-    }
-
-    // -- SET ALPHA --
-    private void SetAlpha(float alpha)
-    {
-        Color c = flashImage.color;
-        c.a = alpha;
-        flashImage.color = c;
+        SetFlashAlpha(alpha);
     }
 
     // -- DAMAGE --
@@ -60,5 +82,58 @@ public class ScreenEffects : MonoBehaviour
     {
         Flash(damageScreen, 0.3f, 0.2f);
         impulseSource?.GenerateImpulse(0.15f);
+    }
+
+    // -- SHOW MUTATED VIGNETTE --
+    public void ShowMutatedVignette()
+    {
+        isMutated = true;
+        vignetteImage.sprite = mutatedScreen;
+        vignetteTargetAlpha = 0.1f;
+    }
+
+    // -- HIDE MUTATED VIGNETTE --
+    public void HideMutatedVignette()
+    {
+        isMutated = false;
+        vignetteTargetAlpha = 0f;
+
+        if (isLowHealth)
+        {
+            vignetteImage.sprite = damageScreen;
+            pulseTimer = 0f;
+        }
+    }
+
+    // -- SET LOW HEALTH --
+    public void SetLowHealth(bool low)
+    {
+        isLowHealth = low;
+
+        if (low && !isMutated)
+        {
+            vignetteImage.sprite = damageScreen;
+            pulseTimer = 0f;
+        }
+        else if (!low && !isMutated)
+        {
+            vignetteTargetAlpha = 0f;
+        }
+    }
+
+    // -- SET FLASH ALPHA --
+    private void SetFlashAlpha(float alpha)
+    {
+        Color c = flashImage.color;
+        c.a = alpha;
+        flashImage.color = c;
+    }
+
+    // -- SET VIGNETTE ALPHA --
+    private void SetVignetteAlpha(float alpha)
+    {
+        Color c = vignetteImage.color;
+        c.a = alpha;
+        vignetteImage.color = c;
     }
 }

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4335018509098030027}
   - component: {fileID: 2765967550098509236}
   m_Layer: 10
-  m_Name: RainbowGun
+  m_Name: Spore-Blaster
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13b096589fb396d47a2fc316fa7a799e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WeaponPickup
-  weaponData: {fileID: 11400000, guid: 38cd2185404d569428038c5ace32c6bd, type: 2}
+  weaponData: {fileID: 11400000, guid: 2532a4cced05a6d46867c183a006290d, type: 2}
   indicatorPrefab: {fileID: 8410597211866493476, guid: 95f9ec2cea20e1d4eb8645ec57fb8e8e, type: 3}
   indicatorHeight: 1.3
   ammo: -1
@@ -99,7 +99,7 @@ SpriteRenderer:
   m_SortingLayer: 3
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 1306517108130304039, guid: 3e09dbcf5c1feb94a8cec943ad1f812a, type: 3}
+  m_Sprite: {fileID: -7310361649043192752, guid: 116a95a09137fb844a5e255ac1534143, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -143,15 +143,15 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.01, y: 0.01}
+  m_Offset: {x: 0, y: -0.0021535754}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.1875, y: 0.875}
+    oldSize: {x: 1.125, y: 0.625}
     newSize: {x: 1.25, y: 0.6875}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1.16, y: 0.84}
+  m_Size: {x: 1.61, y: 1.1}
   m_EdgeRadius: 0

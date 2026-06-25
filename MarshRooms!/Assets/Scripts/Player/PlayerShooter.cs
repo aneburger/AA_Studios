@@ -34,9 +34,6 @@ public class PlayerShooter : BaseShooter
         if (isShooting && Time.time >= nextFireTime)
         {
             BaseBullet bullet = Shoot();
-            if (bullet != null && SporeManager.Instance.IsMutated)
-                bullet.SetInfected(true);
-
             nextFireTime = Time.time + (currentWeapon.fireRate * fireRateMultiplier);
         }
     }
