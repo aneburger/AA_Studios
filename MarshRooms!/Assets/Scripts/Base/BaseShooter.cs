@@ -31,6 +31,8 @@ public abstract class BaseShooter : MonoBehaviour
     private bool isFirstEquip = true;
     private bool weaponHidden = false;
 
+    private int wallMask;
+
     private float bulletSpeedMultiplier = 1f;
 
     // -1 means infinite ammo
@@ -41,6 +43,8 @@ public abstract class BaseShooter : MonoBehaviour
     {
         if (weaponSprite != null)
             defaultScale = weaponSprite.transform.localScale;
+
+        wallMask = LayerMask.GetMask("Walls");
     }
 
     // -- BULLET SPEED MULTIPLIER --
@@ -112,6 +116,18 @@ public abstract class BaseShooter : MonoBehaviour
             Vector2 spreadDirection = RotateVector(direction, angle);
 
             GameObject bullet = Instantiate(currentWeapon.bulletPrefab, spawnPosition, Quaternion.identity);
+
+            Vector2 shootDir = (spawnPosition - transform.position).normalized;
+            Vector2 castStart = (Vector2)transform.position + shootDir * 0.3f;
+
+            RaycastHit2D wallHit = Physics2D.CircleCast(castStart, 0.05f, shootDir, Vector2.Distance(castStart, spawnPosition), wallMask );
+
+            if (wallHit.collider != null)
+            {
+                Destroy(bullet);
+                continue;
+            }
+
             BaseBullet b = bullet.GetComponent<BaseBullet>();
             b.SetDirection(spreadDirection);
             b.SetAimOrigin(firePoint.position);

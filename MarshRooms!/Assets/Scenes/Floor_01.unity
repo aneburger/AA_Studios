@@ -1185,7 +1185,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0.56}
+  m_Offset: {x: 0, y: 0.58377314}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0}
@@ -1195,7 +1195,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.99, y: 0.58}
+  m_Size: {x: 0.99, y: 0.78260803}
   m_EdgeRadius: 0
 --- !u!50 &319489610
 Rigidbody2D:
@@ -1816,7 +1816,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MusicPlayer
   sfxSource: {fileID: 1618620133}
   musicSource: {fileID: 1670491739}
-  musicClip: {fileID: 8300000, guid: aa636bd0038e1a14f89e6b5bbde7f5d3, type: 3}
+  musicClip: {fileID: 8300000, guid: b35782aeaab70614ab5237db63f8c4ec, type: 3}
   audioMixer: {fileID: 24100000, guid: 52248c1612452cc4581a68f10b852298, type: 2}
 --- !u!4 &395473942
 Transform:
@@ -2101,7 +2101,7 @@ GameObject:
   - component: {fileID: 413686393}
   - component: {fileID: 413686392}
   - component: {fileID: 413686391}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Walls
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4616,7 +4616,7 @@ CompositeCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_GeometryType: 0
+  m_GeometryType: 1
   m_GenerationType: 0
   m_EdgeRadius: 0
   m_ColliderPaths:
@@ -5401,7 +5401,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 8.4375
+  orthographic size: 13.133179
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -6017,7 +6017,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.000061035156, y: -0.10498047}
+  m_AnchoredPosition: {x: 0, y: -0.10498047}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &634142669
