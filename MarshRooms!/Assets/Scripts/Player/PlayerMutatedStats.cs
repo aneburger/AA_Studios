@@ -29,15 +29,13 @@ public class PlayerMutatedStats : MonoBehaviour
 
     private void OnActivated()
     {
-        originalSpeed = mover.OriginalSpeed;
-
-        mover.SetSpeed(originalSpeed * speedMultiplier);
+        mover.SetSpeedMultiplier(speedMultiplier);
         shooter.SetFireRateMultiplier(fireRateMultiplier);
     }
 
     private void OnEnded()
     {
-        mover.SetSpeed(originalSpeed);
+        mover.SetSpeedMultiplier(1f);
         shooter.SetFireRateMultiplier(1f);
     }
 }

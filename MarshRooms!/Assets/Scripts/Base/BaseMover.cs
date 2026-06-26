@@ -21,6 +21,8 @@ namespace TopDown.Movement
 
         private Vector2 knockbackVelocity;
 
+        private float speedMultiplier = 1f;
+
         // -- AWAKE --
         protected virtual void Awake()
         {
@@ -39,6 +41,12 @@ namespace TopDown.Movement
         public void SetSpeed(float speed)
         {
             moveSpeed = speed;
+        }
+        
+        // -- SET SPEED MULTIPLIER --
+        public void SetSpeedMultiplier(float multiplier)
+        {
+            speedMultiplier = multiplier;
         }
 
         // -- SET ANIMATION SPEED --
@@ -76,7 +84,7 @@ namespace TopDown.Movement
         protected virtual void FixedUpdate()
         {
             knockbackVelocity = Vector2.Lerp(knockbackVelocity, Vector2.zero, 0.3f);
-            body.linearVelocity = (moveInput * moveSpeed) + knockbackVelocity;
+            body.linearVelocity = (moveInput * moveSpeed * speedMultiplier) + knockbackVelocity;
 
             if (moveInput.sqrMagnitude > 0.01f)
                 lastMoveDirection = moveInput;

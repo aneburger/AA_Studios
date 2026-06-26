@@ -28,6 +28,7 @@ public class PlayerHealth : BaseHealth
 
     private Coroutine flickerCoroutine;
     private SpriteRenderer playerRenderer;
+    private PlayerMutatedVisuals mutatedVisuals;
 
     private PlayerShooter shooter;
 
@@ -46,7 +47,7 @@ public class PlayerHealth : BaseHealth
     {
         base.Awake();
         mover = GetComponent<PlayerMover>();
-
+        mutatedVisuals = GetComponent<PlayerMutatedVisuals>();
 
         // Update HUD on start
 
@@ -150,6 +151,8 @@ public class PlayerHealth : BaseHealth
             c.a = alpha;
             playerRenderer.color = c;
 
+            mutatedVisuals?.SetOutlineAndLightVisible(alpha > 0f);
+
             yield return new WaitForSeconds(flickerInterval);
             elapsed += flickerInterval;
         }
@@ -158,6 +161,11 @@ public class PlayerHealth : BaseHealth
         Color restored = playerRenderer.color;
         restored.a = 1f;
         playerRenderer.color = restored;
+
+        // Restore outline and light
+        if (SporeManager.Instance.IsMutated)
+            mutatedVisuals?.SetOutlineAndLightVisible(true);
+
         flickerCoroutine = null;
     }
 
@@ -170,6 +178,9 @@ public class PlayerHealth : BaseHealth
             AudioManager.Instance.StopRunningSFX();
             AudioManager.Instance.StopMusic();
             AudioManager.Instance.PlaySFX(dieClip, dieVolume);
+
+            if (SporeManager.Instance.IsMutated)
+                mutatedVisuals?.SetOutlineAndLightVisible(false);
 
             // Disable input and physics
             GetComponent<PlayerInput>().enabled = false;
