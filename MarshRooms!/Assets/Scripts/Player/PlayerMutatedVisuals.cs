@@ -10,6 +10,9 @@ public class PlayerMutatedVisuals : MonoBehaviour
     [SerializeField] private Color mutatedOutlineColor = new Color(0.4f, 1f, 0.4f);
     [SerializeField] private float outlineThickness = 1f;
 
+    [Header("Particles")]
+    [SerializeField] private ParticleSystem mutatedTrail;
+
     private static readonly int OutlineEnabledID = Shader.PropertyToID("_OutlineEnabled");
     private static readonly int OutlineColorID = Shader.PropertyToID("_OutlineColor");
     private static readonly int OutlineThicknessID = Shader.PropertyToID("_OutlineThickness");
@@ -20,8 +23,6 @@ public class PlayerMutatedVisuals : MonoBehaviour
     private void Awake()
     {
         mpb = new MaterialPropertyBlock();
-
-        // Grab only the renderers we want
         playerRenderers = System.Array.FindAll(
             GetComponentsInChildren<SpriteRenderer>(),
             sr => sr.gameObject.name != "PlayerShadow"
@@ -44,16 +45,30 @@ public class PlayerMutatedVisuals : MonoBehaviour
 
     private void OnActivated()
     {
-        if (sporeLight != null) sporeLight.enabled = true;
+        SetEffectsVisible(true);
         ScreenEffects.Instance.ShowMutatedVignette();
-        SetOutline(true);
     }
 
     private void OnEnded()
     {
-        if (sporeLight != null) sporeLight.enabled = false;
+        SetEffectsVisible(false);
         ScreenEffects.Instance.HideMutatedVignette();
-        SetOutline(false);
+    }
+
+    // -- SET ALL EFFECTS VISIBLE --
+    public void SetEffectsVisible(bool visible)
+    {
+        if (!visible && !SporeManager.Instance.IsMutated && visible != false) return;
+
+        if (sporeLight != null) sporeLight.enabled = visible;
+
+        if (mutatedTrail != null)
+        {
+            if (visible) mutatedTrail.Play();
+            else mutatedTrail.Stop();
+        }
+
+        SetOutline(visible);
     }
 
     private void SetOutline(bool enabled)
@@ -66,13 +81,5 @@ public class PlayerMutatedVisuals : MonoBehaviour
             mpb.SetColor(OutlineColorID, mutatedOutlineColor);
             sr.SetPropertyBlock(mpb);
         }
-    }
-
-    public void SetOutlineAndLightVisible(bool visible)
-    {
-        if (!SporeManager.Instance.IsMutated) return;
-        
-        if (sporeLight != null) sporeLight.enabled = visible;
-        SetOutline(visible);
     }
 }

@@ -151,7 +151,7 @@ public class PlayerHealth : BaseHealth
             c.a = alpha;
             playerRenderer.color = c;
 
-            mutatedVisuals?.SetOutlineAndLightVisible(alpha > 0f);
+            mutatedVisuals?.SetEffectsVisible(alpha > 0f);
 
             yield return new WaitForSeconds(flickerInterval);
             elapsed += flickerInterval;
@@ -164,47 +164,47 @@ public class PlayerHealth : BaseHealth
 
         // Restore outline and light
         if (SporeManager.Instance.IsMutated)
-            mutatedVisuals?.SetOutlineAndLightVisible(true);
+            mutatedVisuals?.SetEffectsVisible(true);
 
         flickerCoroutine = null;
     }
 
-        // -- DIE -- 
-        protected override void Die()
-        {
-            base.Die();
-            OnPlayerDeath?.Invoke();
+    // -- DIE -- 
+    protected override void Die()
+    {
+        base.Die();
+        OnPlayerDeath?.Invoke();
 
+        AudioManager.Instance.StopRunningSFX();
+        AudioManager.Instance.StopMusic();
+        AudioManager.Instance.PlaySFX(dieClip, dieVolume);
+
+        if (SporeManager.Instance.IsMutated)
+            mutatedVisuals?.SetEffectsVisible(false);
+
+        // Disable input and physics
+        GetComponent<PlayerInput>().enabled = false;
+        GetComponent<Rigidbody2D>().linearVelocity = Vector2.zero;
+        GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+        shooter.HideWeapon(true);
+
+        anim.SetTrigger("Die");
+        StartCoroutine(DeathSequence());
+    }
+
+    private IEnumerator DeathSequence()
+    {
+        // Wait for death animation to finish
+        yield return new WaitForSeconds(4f);
+        
+        gameObject.SetActive(false);
+        SceneManager.LoadScene("Floor_01");
+    }
+
+    // -- ON DISABLE --
+    private void OnDisable()
+    {
+        if (AudioManager.Instance != null)
             AudioManager.Instance.StopRunningSFX();
-            AudioManager.Instance.StopMusic();
-            AudioManager.Instance.PlaySFX(dieClip, dieVolume);
-
-            if (SporeManager.Instance.IsMutated)
-                mutatedVisuals?.SetOutlineAndLightVisible(false);
-
-            // Disable input and physics
-            GetComponent<PlayerInput>().enabled = false;
-            GetComponent<Rigidbody2D>().linearVelocity = Vector2.zero;
-            GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
-            shooter.HideWeapon(true);
-
-            anim.SetTrigger("Die");
-            StartCoroutine(DeathSequence());
-        }
-
-        private IEnumerator DeathSequence()
-        {
-            // Wait for death animation to finish
-            yield return new WaitForSeconds(4f);
-            
-            gameObject.SetActive(false);
-            SceneManager.LoadScene("Floor_01");
-        }
-
-        // -- ON DISABLE --
-        private void OnDisable()
-        {
-            if (AudioManager.Instance != null)
-                AudioManager.Instance.StopRunningSFX();
-        }
+    }
 }

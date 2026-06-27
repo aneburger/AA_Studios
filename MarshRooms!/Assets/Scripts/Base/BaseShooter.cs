@@ -118,7 +118,8 @@ public abstract class BaseShooter : MonoBehaviour
             GameObject bullet = Instantiate(currentWeapon.bulletPrefab, spawnPosition, Quaternion.identity);
 
             Vector2 shootDir = (spawnPosition - transform.position).normalized;
-            Vector2 castStart = (Vector2)transform.position + shootDir * 0.3f;
+            float castOffset = GetComponent<Collider2D>().bounds.extents.magnitude + 0.1f;
+            Vector2 castStart = (Vector2)transform.position + shootDir * castOffset;
 
             RaycastHit2D wallHit = Physics2D.CircleCast(castStart, 0.05f, shootDir, Vector2.Distance(castStart, spawnPosition), wallMask );
 
