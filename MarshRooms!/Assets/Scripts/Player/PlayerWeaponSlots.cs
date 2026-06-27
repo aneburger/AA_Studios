@@ -15,7 +15,8 @@ public class PlayerWeaponSlot : MonoBehaviour
     private int[] ammo;
     private WeaponData[] slots;
     private int currentSlot = 0;
-    
+
+    public event System.Action<WeaponData> OnWeaponChanged;
     private List<WeaponPickup> nearbyPickups = new List<WeaponPickup>();
     
     // -- AWAKE --
@@ -177,8 +178,7 @@ public class PlayerWeaponSlot : MonoBehaviour
         if (slots[currentSlot] == null) return;
         shooter.EquipWeapon(slots[currentSlot]);
         shooter.SetAmmo(ammo[currentSlot]);
-
-        // Update HUD with current weapon sprite
+        OnWeaponChanged?.Invoke(slots[currentSlot]);
         UpdateWeaponDisplay();
     }
 

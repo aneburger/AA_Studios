@@ -13,15 +13,11 @@ public class ScreenEffects : MonoBehaviour
 
     [Header("Sprites")]
     [SerializeField] private Sprite damageScreen;
-    [SerializeField] private Sprite mutatedScreen;
 
     [Header("Settings")]
     [SerializeField] private float vignetteFadeSpeed = 2f;
     [SerializeField] private float lowHealthPulseSpeed = 2f;
     [SerializeField] private float lowHealthMaxAlpha = 0.5f;
-    [SerializeField] private float mutatedVignetteAlpha = 0.4f;
-
-    public Sprite MutatedScreen => mutatedScreen;
 
     private float flashTimer = 0f;
     private float flashDuration = 0f;
@@ -31,7 +27,6 @@ public class ScreenEffects : MonoBehaviour
     private float vignetteCurrentAlpha = 0f;
 
     private bool isLowHealth = false;
-    private bool isMutated = false;
     private float pulseTimer = 0f;
 
     // -- AWAKE --
@@ -55,7 +50,7 @@ public class ScreenEffects : MonoBehaviour
         }
 
         // Low health pulse
-        if (isLowHealth && !isMutated)
+        if (isLowHealth)
         {
             pulseTimer += Time.deltaTime * lowHealthPulseSpeed;
             float pulseAlpha = (Mathf.Sin(pulseTimer) + 1f) / 2f * lowHealthMaxAlpha;
@@ -84,38 +79,17 @@ public class ScreenEffects : MonoBehaviour
         impulseSource?.GenerateImpulse(0.15f);
     }
 
-    // -- SHOW MUTATED VIGNETTE --
-    public void ShowMutatedVignette()
-    {
-        isMutated = true;
-        vignetteImage.sprite = mutatedScreen;
-        vignetteTargetAlpha = 0.1f;
-    }
-
-    // -- HIDE MUTATED VIGNETTE --
-    public void HideMutatedVignette()
-    {
-        isMutated = false;
-        vignetteTargetAlpha = 0f;
-
-        if (isLowHealth)
-        {
-            vignetteImage.sprite = damageScreen;
-            pulseTimer = 0f;
-        }
-    }
-
     // -- SET LOW HEALTH --
     public void SetLowHealth(bool low)
     {
         isLowHealth = low;
 
-        if (low && !isMutated)
+        if (low)
         {
             vignetteImage.sprite = damageScreen;
             pulseTimer = 0f;
         }
-        else if (!low && !isMutated)
+        else
         {
             vignetteTargetAlpha = 0f;
         }

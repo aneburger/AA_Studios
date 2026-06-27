@@ -34,6 +34,10 @@ public class PlayerShooter : BaseShooter
         if (isShooting && Time.time >= nextFireTime)
         {
             BaseBullet bullet = Shoot();
+            if (bullet != null && SporeManager.Instance.IsMutated)
+            {
+                GetComponent<PlayerMutatedVisuals>()?.PlayShootBurst(GetFirePosition());
+            }
             nextFireTime = Time.time + (currentWeapon.fireRate * fireRateMultiplier);
         }
     }
@@ -54,7 +58,7 @@ public class PlayerShooter : BaseShooter
     protected override void OnShootEffects(Vector2 direction)
     {
         base.OnShootEffects(direction);
-        impulseSource?.GenerateImpulse(currentWeapon.shakeForce);
+        impulseSource?.GenerateImpulse(currentWeapon.shakeForce * shakeMultiplier);
     }
 
     // -- SHOOT INPUT --

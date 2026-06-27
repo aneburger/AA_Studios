@@ -20,6 +20,10 @@ public class SporeBullet : BaseBullet
     [SerializeField] private AudioClip explodeClip;
     [Range(0f, 1f)] public float explodeVolume;
 
+    [Header("Mutated Settings")]
+    [SerializeField] private float mutatedRadiusMultiplier = 1.8f;
+    [SerializeField] private float mutatedTickDamageMultiplier = 2f;
+
     private Vector2 spawnPosition;
     private bool hasExploded = false;
 
@@ -59,11 +63,11 @@ public class SporeBullet : BaseBullet
         if (hasExploded) return;
         hasExploded = true;
 
-        ContactFilter2D filter = new ContactFilter2D();
-        filter.SetLayerMask(LayerMask.GetMask("EnemyPhysics"));
-        filter.useTriggers = true;
+        bool mutated = SporeManager.Instance != null && SporeManager.Instance.IsMutated;
+        float currentRadius = mutated ? explosionRadius * mutatedRadiusMultiplier : explosionRadius;
+        float currentTickDamage = mutated ? tickDamage * mutatedTickDamageMultiplier : tickDamage;
 
-        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, explosionRadius, LayerMask.GetMask("EnemyPhysics"));
+        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, currentRadius, LayerMask.GetMask("EnemyPhysics"));
         foreach (var hit in hits)
         {
             EnemyHealth health = hit.GetComponentInParent<EnemyHealth>();
@@ -73,7 +77,7 @@ public class SporeBullet : BaseBullet
                 if (tick == null)
                     tick = hit.GetComponentInParent<Transform>().gameObject.AddComponent<SporeTick>();
 
-                tick.Apply(tickDamage, tickInterval, tickDuration, poisonTint);
+                tick.Apply(currentTickDamage, tickInterval, tickDuration, poisonTint);
             }
         }
 

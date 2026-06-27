@@ -34,6 +34,10 @@ public abstract class BaseShooter : MonoBehaviour
     private int wallMask;
 
     private float bulletSpeedMultiplier = 1f;
+    protected float shakeMultiplier = 1f;
+
+    private int bulletCountOverride = -1;
+    private float spreadAngleOverride = -1f;
 
     // -1 means infinite ammo
     private int currentAmmo = -1;
@@ -51,6 +55,12 @@ public abstract class BaseShooter : MonoBehaviour
     public void SetBulletSpeedMultiplier(float multiplier)
     {
         bulletSpeedMultiplier = multiplier;
+    }
+
+    // -- SHAKE MULTIPLIER --
+    public void SetShakeMultiplier(float multiplier)
+    {
+        shakeMultiplier = multiplier;
     }
 
     // -- GET FIRE POSITION --
@@ -106,8 +116,8 @@ public abstract class BaseShooter : MonoBehaviour
 
         BaseBullet lastBullet = null;
 
-        int count = currentWeapon.bulletCount;
-        float spread = currentWeapon.spreadAngle;
+        int count = bulletCountOverride > 0 ? bulletCountOverride : currentWeapon.bulletCount;
+        float spread = spreadAngleOverride >= 0 ? spreadAngleOverride : currentWeapon.spreadAngle;
         float startAngle = -(spread * (count - 1) / 2f);
 
         for (int i = 0; i < count; i++)
@@ -232,7 +242,19 @@ public abstract class BaseShooter : MonoBehaviour
             weaponAimer.enabled = !hidden && IsArmed;
     }
 
-     // -- GIZMOS --
+    public void SetBulletOverrides(int count, float spread)
+    {
+        bulletCountOverride = count;
+        spreadAngleOverride = spread;
+    }
+
+    public void ClearBulletOverrides()
+    {
+        bulletCountOverride = -1;
+        spreadAngleOverride = -1f;
+    }
+
+    // -- GIZMOS --
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;

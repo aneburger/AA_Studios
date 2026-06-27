@@ -80,8 +80,6 @@ public class PauseMenuManager : MonoBehaviour
     // -- PAUSE GAME --
     private void OnPauseGame()
     {
-        Debug.Log("Game paused...");
-
         isPaused = true;
         Time.timeScale = 0f;
 
@@ -118,8 +116,6 @@ public class PauseMenuManager : MonoBehaviour
     // -- OPEN CONTROLS --
     private void OnOpenControls()
     {
-        Debug.Log("Opening controls menu from pause...");
-
         //controlsMenuSource = MenuSource.Pause;
 
         if (pauseMenuPanel != null)
@@ -132,8 +128,6 @@ public class PauseMenuManager : MonoBehaviour
     // -- CLOSE CONTROLS --
     private void OnCloseControls()
     {
-        Debug.Log("Closing controls menu...");
-
         if (controlsMenuPanel != null)
             controlsMenuPanel.SetActive(false);
 
@@ -144,7 +138,6 @@ public class PauseMenuManager : MonoBehaviour
     // -- RESTART GAME --
     private void OnRestartGame()
     {
-        Debug.Log("Restarting game...");
 
         // Resume time before reloading
         Time.timeScale = 1f;
@@ -156,15 +149,14 @@ public class PauseMenuManager : MonoBehaviour
     // -- QUIT GAME --
     private void OnQuitGame()
     {
-        Debug.Log("Quitting to desktop...");
 
         // Resume time before quitting
         Time.timeScale = 1f;
 
-#if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
-#else
-            Application.Quit();
-#endif
+        #if UNITY_EDITOR
+                UnityEditor.EditorApplication.isPlaying = false;
+        #else
+                    Application.Quit();
+        #endif
     }
 }

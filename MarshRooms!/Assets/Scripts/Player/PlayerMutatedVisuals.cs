@@ -12,6 +12,7 @@ public class PlayerMutatedVisuals : MonoBehaviour
 
     [Header("Particles")]
     [SerializeField] private ParticleSystem mutatedTrail;
+    [SerializeField] private ParticleSystem mutatedShootBurst;
 
     private static readonly int OutlineEnabledID = Shader.PropertyToID("_OutlineEnabled");
     private static readonly int OutlineColorID = Shader.PropertyToID("_OutlineColor");
@@ -46,19 +47,17 @@ public class PlayerMutatedVisuals : MonoBehaviour
     private void OnActivated()
     {
         SetEffectsVisible(true);
-        ScreenEffects.Instance.ShowMutatedVignette();
     }
 
     private void OnEnded()
     {
         SetEffectsVisible(false);
-        ScreenEffects.Instance.HideMutatedVignette();
     }
 
     // -- SET ALL EFFECTS VISIBLE --
     public void SetEffectsVisible(bool visible)
     {
-        if (!visible && !SporeManager.Instance.IsMutated && visible != false) return;
+        if (visible && !SporeManager.Instance.IsMutated) return;
 
         if (sporeLight != null) sporeLight.enabled = visible;
 
@@ -81,5 +80,12 @@ public class PlayerMutatedVisuals : MonoBehaviour
             mpb.SetColor(OutlineColorID, mutatedOutlineColor);
             sr.SetPropertyBlock(mpb);
         }
+    }
+
+    public void PlayShootBurst(Vector3 position)
+    {
+        if (mutatedShootBurst == null) return;
+        mutatedShootBurst.transform.position = position;
+        mutatedShootBurst.Play();
     }
 }
