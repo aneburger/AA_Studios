@@ -1,5 +1,7 @@
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
+using System.Collections;
+using Unity.Cinemachine;
 
 public class PlayerMutatedVisuals : MonoBehaviour
 {
@@ -13,6 +15,28 @@ public class PlayerMutatedVisuals : MonoBehaviour
     [Header("Particles")]
     [SerializeField] private ParticleSystem mutatedTrail;
     [SerializeField] private ParticleSystem mutatedShootBurst;
+
+    [Header("Flicker Settings")]
+    [SerializeField] private float flickerThreshold = 0.25f;
+    [SerializeField] private float flickerInterval = 0.1f;
+
+    [Header("Activation Effects")]
+    [SerializeField] private GameObject activationVFX;
+    [SerializeField] private ParticleSystem activationBurst;
+    [SerializeField] private Sprite greenFlashSprite;
+    [SerializeField] private CinemachineImpulseSource impulseSource;
+    [SerializeField] private float shakeForce = 0.5f;
+    [SerializeField] private float freezeDuration = 0.15f;
+    [SerializeField] private float freezeTimeScale = 0.05f;
+
+    [Header("Audio")]
+    [SerializeField] private AudioClip activationClip;
+    [Range(0f, 1f)] public float activationVolume;
+    [SerializeField] private AudioClip deactivationClip;
+    [Range(0f, 1f)] public float deactivationVolume;
+
+    private Coroutine flickerCoroutine;
+    private bool isFlickering = false;
 
     private static readonly int OutlineEnabledID = Shader.PropertyToID("_OutlineEnabled");
     private static readonly int OutlineColorID = Shader.PropertyToID("_OutlineColor");
@@ -35,6 +59,7 @@ public class PlayerMutatedVisuals : MonoBehaviour
     {
         SporeManager.Instance.OnMutatedActivated += OnActivated;
         SporeManager.Instance.OnMutatedEnded += OnEnded;
+        SporeManager.Instance.OnMutatedDrainTick += OnDrainTick;
     }
 
     private void OnDisable()
@@ -42,16 +67,24 @@ public class PlayerMutatedVisuals : MonoBehaviour
         if (SporeManager.Instance == null) return;
         SporeManager.Instance.OnMutatedActivated -= OnActivated;
         SporeManager.Instance.OnMutatedEnded -= OnEnded;
-    }
-
-    private void OnActivated()
-    {
-        SetEffectsVisible(true);
+        SporeManager.Instance.OnMutatedDrainTick -= OnDrainTick;
     }
 
     private void OnEnded()
     {
+        isFlickering = false;
+        if (flickerCoroutine != null) StopCoroutine(flickerCoroutine);
         SetEffectsVisible(false);
+        AudioManager.Instance.PlaySFXWithPitch(deactivationClip, deactivationVolume, 0.1f);
+        if (activationBurst != null)
+            activationBurst.Play();
+    }
+
+    private void OnActivated()
+    {
+        isFlickering = false;
+        SetEffectsVisible(true);
+        StartCoroutine(ActivationSequence());
     }
 
     // -- SET ALL EFFECTS VISIBLE --
@@ -87,5 +120,53 @@ public class PlayerMutatedVisuals : MonoBehaviour
         if (mutatedShootBurst == null) return;
         mutatedShootBurst.transform.position = position;
         mutatedShootBurst.Play();
+    }
+
+    private void OnDrainTick(float normalizedRemaining)
+    {
+        if (normalizedRemaining <= flickerThreshold && !isFlickering)
+        {
+            isFlickering = true;
+            flickerCoroutine = StartCoroutine(FlickerRoutine());
+        }
+    }
+
+    private IEnumerator FlickerRoutine()
+    {
+        while (SporeManager.Instance.IsMutated)
+        {
+            SetOutline(false);
+            if (sporeLight != null) sporeLight.enabled = false;
+            yield return new WaitForSeconds(flickerInterval);
+
+            SetOutline(true);
+            if (sporeLight != null) sporeLight.enabled = true;
+            yield return new WaitForSeconds(flickerInterval);
+        }
+    }
+
+    private IEnumerator ActivationSequence()
+    {
+        // Screen shake
+        impulseSource?.GenerateImpulse(shakeForce);
+
+        // Green flash
+        ScreenEffects.Instance.Flash(greenFlashSprite, 0.5f, 0.15f);
+
+        // Sound
+        AudioManager.Instance.PlaySFXWithPitch(activationClip, activationVolume, 0.1f);
+
+        // Spawn explosion VFX at player position
+        if (activationVFX != null)
+            Instantiate(activationVFX, transform.position, Quaternion.identity);
+
+        // Activation burst particles
+        if (activationBurst != null)
+            activationBurst.Play();
+
+        // Freeze moment
+        Time.timeScale = freezeTimeScale;
+        yield return new WaitForSecondsRealtime(freezeDuration);
+        Time.timeScale = 1f;
     }
 }
