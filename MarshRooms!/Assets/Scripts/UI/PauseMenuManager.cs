@@ -63,6 +63,10 @@ public class PauseMenuManager : MonoBehaviour
     // -- HANDLE ESCAPE PRESSED --
     private void HandleEscapePressed()
     {
+        // Don't toggle pause when dialouge is active
+        if (DialogueManager.Instance != null && DialogueManager.Instance.IsRunning)
+            return;
+
         // If controls menu is open, close it first
         if (controlsMenuPanel != null && controlsMenuPanel.activeInHierarchy)
         {

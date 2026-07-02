@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: TestSequence
+  m_EditorClassIdentifier: Assembly-CSharp::DialogueSequence
+  lines:
+  - speakerName: Marsh
+    portrait: {fileID: -1935660055921275390, guid: 3c2eaad55c7bd4b40b4809976b75f692, type: 3}
+    text: I am tired please work <shake>pleeease</shake>
+    voiceClip: {fileID: 8300000, guid: d18e8ca6f92695c459ca1d6fcc86ebdb, type: 3}
+    typewriterSpeedOverride: 0
+  - speakerName: Morf
+    portrait: {fileID: 1255196378, guid: 930f189b637cdb9428638cdb303bd379, type: 3}
+    text: <bold>Hello</bold>  <wave>poo</wave>
+    voiceClip: {fileID: 8300000, guid: d18e8ca6f92695c459ca1d6fcc86ebdb, type: 3}
+    typewriterSpeedOverride: 0
