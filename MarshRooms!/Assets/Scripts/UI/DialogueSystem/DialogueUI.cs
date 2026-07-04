@@ -3,7 +3,7 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-  using UnityEngine.InputSystem;
+using UnityEngine.InputSystem;
 
 public class DialogueUI : MonoBehaviour
 {
@@ -14,11 +14,18 @@ public class DialogueUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI nameText;
     [SerializeField] private TextMeshProUGUI dialogueText;
     [SerializeField] private GameObject continueIndicator;
+    [SerializeField] private CanvasGroup dimOverlay;
+    [SerializeField] private PortraitTalkAnimator portraitTalkAnimator;
+
+    [Header("Dim Overlay Settings")]
+    [SerializeField] private float dimFadeDuration = 0.25f;
+    [SerializeField] private float dimMaxAlpha = 0.55f;
 
     [Header("Typewriter Settings")]
     [SerializeField] private float defaultCharsPerSecond = 30f;
     [SerializeField] private AudioClip defaultTypingSound;
     [SerializeField] private float typingSoundInterval = 0.08f;
+    [SerializeField] private float typingPitchVariation = 0.1f;
 
     private DialogueTextEffects textEffects;
     private AudioSource audioSource;
@@ -30,6 +37,7 @@ public class DialogueUI : MonoBehaviour
     private Action onCompleteCallback;
 
     private Coroutine typewriterCoroutine;
+    private Coroutine dimFadeCoroutine;
 
     private void Awake()
     {
@@ -41,6 +49,14 @@ public class DialogueUI : MonoBehaviour
 
         audioSource.playOnAwake = false;
         dialoguePanel.SetActive(false);
+        portraitImage.gameObject.SetActive(false);
+
+        if (dimOverlay != null)
+        {
+            dimOverlay.alpha = 0f;
+            dimOverlay.gameObject.SetActive(false);
+            dimOverlay.blocksRaycasts = false;
+        }
     }
 
     private void Update()
@@ -80,6 +96,12 @@ public class DialogueUI : MonoBehaviour
         dialoguePanel.SetActive(true);
         continueIndicator.SetActive(false);
 
+        if (dimOverlay != null)
+        {
+            dimOverlay.gameObject.SetActive(true);
+            dimOverlay.alpha = dimMaxAlpha;
+        }
+
         ShowLine(currentLineIndex);
     }
 
@@ -94,9 +116,9 @@ public class DialogueUI : MonoBehaviour
         DialogueLine line = currentSequence.lines[index];
 
         // Portrait
-        if (line.portrait != null)
+        if (line.portrait != null || line.talkingPortrait != null)
         {
-            portraitImage.sprite = line.portrait;
+            portraitImage.sprite = line.talkingPortrait != null ? line.talkingPortrait : line.portrait;
             portraitImage.gameObject.SetActive(true);
         }
         else
@@ -142,6 +164,8 @@ public class DialogueUI : MonoBehaviour
         skipRequested = false;
         continueIndicator.SetActive(false);
 
+        portraitTalkAnimator?.SetTalking(true);
+
         dialogueText.text = "";
         dialogueText.maxVisibleCharacters = 0;
         dialogueText.text = fullText;
@@ -166,7 +190,7 @@ public class DialogueUI : MonoBehaviour
             typingSoundTimer -= interval;
             if (typingSoundTimer <= 0f && defaultTypingSound != null && i < totalChars)
             {
-                audioSource.PlayOneShot(defaultTypingSound);
+                AudioManager.Instance.PlaySFXWithPitch(defaultTypingSound, 1f, typingPitchVariation);
                 typingSoundTimer = typingSoundInterval;
             }
 
@@ -175,6 +199,12 @@ public class DialogueUI : MonoBehaviour
 
         isTyping = false;
         skipRequested = false;
+
+        portraitTalkAnimator?.SetTalking(false);
+
+        if (line.portrait != null) 
+            portraitImage.sprite = line.portrait;
+
         continueIndicator.SetActive(true);
     }
 
@@ -203,7 +233,39 @@ public class DialogueUI : MonoBehaviour
 
         textEffects?.ClearEffects();
         dialoguePanel.SetActive(false);
+        portraitImage.gameObject.SetActive(false);
+        FadeDim(false);
         currentSequence = null;
         onCompleteCallback?.Invoke();
+    }
+
+    private void FadeDim(bool show)
+    {
+        if (dimOverlay == null) return;
+
+        if (dimFadeCoroutine != null)
+            StopCoroutine(dimFadeCoroutine);
+
+        if (show) dimOverlay.gameObject.SetActive(true);
+        dimFadeCoroutine = StartCoroutine(FadeDimRoutine(show));
+    }
+
+    private IEnumerator FadeDimRoutine(bool show)
+    {
+        float start = dimOverlay.alpha;
+        float end = show ? dimMaxAlpha : 0f;
+        float t = 0f;
+
+        while (t < dimFadeDuration)
+        {
+            t += Time.unscaledDeltaTime;
+            dimOverlay.alpha = Mathf.Lerp(start, end, t / dimFadeDuration);
+            yield return null;
+        }
+
+        dimOverlay.alpha = end;
+
+        if (!show)
+            dimOverlay.gameObject.SetActive(false);
     }
 }

@@ -147,8 +147,8 @@ namespace TopDown.Movement
         public void OnDodge(InputAction.CallbackContext context)
         {
             if (!context.started) return;
+            if (DialogueManager.Instance != null && DialogueManager.Instance.IsRunning) return;
 
-            // Cannot Dodge when standing still
             if (!isDodging && dodgeCooldownTimer <= 0f && moveInput.sqrMagnitude > 0.01f)
                 StartCoroutine(Dodge());
         }
@@ -157,8 +157,8 @@ namespace TopDown.Movement
         // -- SCROLL INPUT --
         public void OnScroll(InputAction.CallbackContext context)
         {
-
             if (!context.performed) return;
+            if (DialogueManager.Instance != null && DialogueManager.Instance.IsRunning) return;
             if (scrollCooldownTimer > 0f) return;
 
             float scroll = context.ReadValue<float>();
@@ -172,6 +172,7 @@ namespace TopDown.Movement
         public void OnInteract(InputAction.CallbackContext context)
         {
             if (!context.started) return;
+            if (DialogueManager.Instance != null && DialogueManager.Instance.IsRunning) return; // <-- add
             weaponSlot.PickupWeapon();
         }
 

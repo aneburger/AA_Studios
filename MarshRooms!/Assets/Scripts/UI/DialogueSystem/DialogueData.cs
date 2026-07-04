@@ -8,9 +8,12 @@ public class DialogueLine
     [Header("Visual Settings")]
     [Tooltip("Name displayed in the nameplate. Leave empty to hide nameplate.")] 
     public string speakerName; 
-    
-    [Tooltip("Portrait sprite shown for this line. Can be null.")] 
+
+    [Tooltip("Portrait shown while text is fully displayed / idle.")] 
     public Sprite portrait; 
+
+    [Tooltip("Portrait shown while text is typing (mouth-open/talking pose). Falls back to 'portrait' if left empty.")]
+    public Sprite talkingPortrait; 
 
     [Header("Content")]
     [Tooltip("The dialogue text. Supports <wave>, <shake>, <b> tags.")] 
