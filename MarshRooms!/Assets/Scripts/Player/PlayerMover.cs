@@ -18,6 +18,7 @@ namespace TopDown.Movement
         [SerializeField] private float dodgeForce;
         [SerializeField] private float dodgeDuration;
         [SerializeField] private float dodgeCooldown;
+        [SerializeField] private float stationaryDodgeForceMultiplier;
 
         [Header("VFX Settings")]
         [SerializeField] private float dustDistance;
@@ -149,11 +150,10 @@ namespace TopDown.Movement
             if (!context.started) return;
             if (DialogueManager.Instance != null && DialogueManager.Instance.IsRunning) return;
 
-            if (!isDodging && dodgeCooldownTimer <= 0f && moveInput.sqrMagnitude > 0.01f)
+            if (!isDodging && dodgeCooldownTimer <= 0f)
                 StartCoroutine(Dodge());
         }
 
-        
         // -- SCROLL INPUT --
         public void OnScroll(InputAction.CallbackContext context)
         {
@@ -172,7 +172,7 @@ namespace TopDown.Movement
         public void OnInteract(InputAction.CallbackContext context)
         {
             if (!context.started) return;
-            if (DialogueManager.Instance != null && DialogueManager.Instance.IsRunning) return; // <-- add
+            if (DialogueManager.Instance != null && DialogueManager.Instance.IsRunning) return;
             weaponSlot.PickupWeapon();
         }
 
@@ -183,13 +183,14 @@ namespace TopDown.Movement
             shooter.HideWeapon(true);
             anim.SetTrigger("Dodge");
             AudioManager.Instance.PlaySFX(dodgeClip, dodgeVolume);
-            
 
             // Stop running audio when dodging:
             AudioManager.Instance.StopRunningSFX();
 
             // Determine dodge direction
             Vector2 dodgeDirection;
+            bool wasStandingStill = moveInput.sqrMagnitude <= 0.01f;
+
             if (moveInput.sqrMagnitude > 0.01f)
                 dodgeDirection = moveInput.normalized;
             else if (shooter.IsArmed)
@@ -197,14 +198,18 @@ namespace TopDown.Movement
             else
                 dodgeDirection = lastDirection.normalized;
 
+            float appliedForce = wasStandingStill
+                ? dodgeForce * stationaryDodgeForceMultiplier
+                : dodgeForce;
+
             playerHealth.SetInvincible(true);
-            body.AddForce(dodgeDirection * dodgeForce, ForceMode2D.Impulse);
-            yield return new WaitForSeconds(dodgeDuration * (5f / 6f)); // Invinsible for the first 4 frames
+            body.AddForce(dodgeDirection * appliedForce, ForceMode2D.Impulse);
+            yield return new WaitForSeconds(dodgeDuration * (5f / 6f)); // Invinsible for the first 5 frames
 
             AudioManager.Instance.PlaySFXWithPitch(dodgeFallClip, dodgeFallVolume, 0.1f);
 
             playerHealth.SetInvincible(false);
-            yield return new WaitForSeconds(dodgeDuration * (1f / 6f)); // Vulnerable for the last 2 frames
+            yield return new WaitForSeconds(dodgeDuration * (1f / 6f)); // Vulnerable for the last 1 frames
 
             // Spawn dust cloud after landing dodge
             VFXManager.Instance.SpawnDodgeDust(transform.position);

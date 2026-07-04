@@ -1076,6 +1076,7 @@ MonoBehaviour:
   dodgeForce: 9
   dodgeDuration: 0.25
   dodgeCooldown: 0.25
+  stationaryDodgeForceMultiplier: 1.4
   dustDistance: 3
   dodgeClip: {fileID: 8300000, guid: d5e454f6514e0974eb5a29576bf2c883, type: 3}
   dodgeVolume: 0.6
@@ -5687,7 +5688,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 8.4375
+  orthographic size: 10.020833
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -33034,7 +33035,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3225524358858379386, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 39.7
+      value: 39.69995
       objectReference: {fileID: 0}
     - target: {fileID: 3228137088543572634, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
       propertyPath: fullHeartSprite
