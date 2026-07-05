@@ -16,7 +16,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 6894130498819508759, guid: 9ab4e2f5c7bd5b94f8b9a790ce4ca601, type: 3}
   shellsPrefab: {fileID: 0}
   hitPrefab: {fileID: 4081999799842582576, guid: 9223993810704a64baf6fc20725813ba, type: 3}
-  muzzleFlashPrefab: {fileID: 0}
+  muzzleFlashPrefab: {fileID: 4081999799842582576, guid: fffbe85e55d35fc40a4c778c6597b252, type: 3}
   pickupPrefab: {fileID: 1303430737314922756, guid: 8b6717c7fcf618d48a9c81e5c6d876de, type: 3}
   fireRate: 0.7
   damage: 2.5
@@ -24,6 +24,8 @@ MonoBehaviour:
   maxAmmo: 30
   firePointOffset: {x: 0, y: 0}
   flipOffsetOnAimFlip: 0
+  bulletCount: 1
+  spreadAngle: 15
   sprite: {fileID: -1325218693181487552, guid: ca18fef1eef6fa340b8f8060816ba3d0, type: 3}
   hudSprite: {fileID: 1651271307760532655, guid: 625a816c2277ab44e9b8e1968416b767, type: 3}
   ammoDisplaySprite: {fileID: -2835615992889241634, guid: 3407f53d47c927047b45b9bd49ffa238, type: 3}

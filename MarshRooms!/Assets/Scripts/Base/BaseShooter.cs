@@ -39,6 +39,8 @@ public abstract class BaseShooter : MonoBehaviour
     private int bulletCountOverride = -1;
     private float spreadAngleOverride = -1f;
 
+    private Collider2D playerCollider;
+
     // -1 means infinite ammo
     private int currentAmmo = -1;
 
@@ -49,6 +51,7 @@ public abstract class BaseShooter : MonoBehaviour
             defaultScale = weaponSprite.transform.localScale;
 
         wallMask = LayerMask.GetMask("Walls");
+        playerCollider = GetComponent<Collider2D>();
     }
 
     // -- BULLET SPEED MULTIPLIER --
@@ -120,25 +123,31 @@ public abstract class BaseShooter : MonoBehaviour
         float spread = spreadAngleOverride >= 0 ? spreadAngleOverride : currentWeapon.spreadAngle;
         float startAngle = -(spread * (count - 1) / 2f);
 
+        Vector2 origin = playerCollider.bounds.center;
+        Vector2 colliderExtents = playerCollider.bounds.extents;
+        float totalDistance = Vector2.Distance(origin, spawnPosition);
+
         for (int i = 0; i < count; i++)
         {
             float angle = startAngle + spread * i;
             Vector2 spreadDirection = RotateVector(direction, angle);
 
-            GameObject bullet = Instantiate(currentWeapon.bulletPrefab, spawnPosition, Quaternion.identity);
+            float tx = Mathf.Abs(spreadDirection.x) > 0.0001f ? colliderExtents.x / Mathf.Abs(spreadDirection.x) : float.MaxValue;
+            float ty = Mathf.Abs(spreadDirection.y) > 0.0001f ? colliderExtents.y / Mathf.Abs(spreadDirection.y) : float.MaxValue;
+            float edgeDistance = Mathf.Min(tx, ty);
 
-            Vector2 shootDir = (spawnPosition - transform.position).normalized;
-            float castOffset = GetComponent<Collider2D>().bounds.extents.magnitude + 0.1f;
-            Vector2 castStart = (Vector2)transform.position + shootDir * castOffset;
+            Vector2 castOrigin = origin + spreadDirection * edgeDistance;
+            float remainingDistance = Mathf.Max(0f, totalDistance - edgeDistance);
 
-            RaycastHit2D wallHit = Physics2D.CircleCast(castStart, 0.05f, shootDir, Vector2.Distance(castStart, spawnPosition), wallMask );
+            RaycastHit2D wallHit = Physics2D.CircleCast(castOrigin, 0.05f, spreadDirection, remainingDistance, wallMask);
 
             if (wallHit.collider != null)
-            {
-                Destroy(bullet);
                 continue;
-            }
 
+            if (Physics2D.OverlapPoint(spawnPosition, wallMask) != null)
+                continue;
+
+            GameObject bullet = Instantiate(currentWeapon.bulletPrefab, spawnPosition, Quaternion.identity);
             BaseBullet b = bullet.GetComponent<BaseBullet>();
             b.SetDirection(spreadDirection);
             b.SetAimOrigin(firePoint.position);

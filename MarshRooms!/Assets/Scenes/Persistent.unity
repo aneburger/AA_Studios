@@ -1331,7 +1331,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b3c51b6a6814b34fa10fbb56daf12a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelLoader
-  firstLevelScene: Floor_01
+  firstLevelScene: Tutorial
 --- !u!4 &516416402
 Transform:
   m_ObjectHideFlags: 0
@@ -1455,7 +1455,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 10.020833
+  orthographic size: 13.133179
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
