@@ -140,7 +140,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c72aebdf07ac052468f29b97cf3d40d2
+      spriteID: de63b52cb6255ba4cb630d608b9b10bb
       internalID: 489131105263499118
       vertices: []
       indices: 
@@ -162,7 +162,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 466d322cbbcfb0d449bd1f0d04cba5a5
+      spriteID: 364ef02d039aa3144801fbfa112d7a62
       internalID: 1321694086
       vertices: []
       indices: 
@@ -184,7 +184,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2774264b5fa9c2f4090241e322cc928a
+      spriteID: 4b70cc83067b0e64c914f7807b37f06b
       internalID: -535476346164356153
       vertices: []
       indices: 
@@ -206,7 +206,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 00db552ab74d7c74e9aa1cc3103bf8e3
+      spriteID: 46f5a6361efe5d1459f64f6bdd2c041c
       internalID: -608029893
       vertices: []
       indices: 
@@ -228,7 +228,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f6ec2af312213c24085e3022c094752e
+      spriteID: 1d3e868a270076b45ba387737852ad5d
       internalID: 7708686034511047167
       vertices: []
       indices: 
@@ -238,9 +238,9 @@ TextureImporter:
       name: tutorial-furniture_5
       rect:
         serializedVersion: 2
-        x: 136
+        x: 135
         y: 92
-        width: 33
+        width: 35
         height: 30
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -250,7 +250,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c381dd291e39c89499e3ffd26eb44203
+      spriteID: 5cf91876dc99e564dae7e4d77d3b2c82
       internalID: -565004952
       vertices: []
       indices: 
@@ -272,7 +272,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e682a01e339057a4f9548ed3bd0bd49d
+      spriteID: 322239ada4c950e45b3a5649ed42cf4d
       internalID: -910810257
       vertices: []
       indices: 
@@ -280,6 +280,28 @@ TextureImporter:
       weights: []
     - serializedVersion: 2
       name: tutorial-furniture_7
+      rect:
+        serializedVersion: 2
+        x: 196
+        y: 107
+        width: 15
+        height: 15
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6f0d10f5d471d9649bffbef247cc2bde
+      internalID: 867058052
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tutorial-furniture_8
       rect:
         serializedVersion: 2
         x: 115
@@ -294,14 +316,58 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 38b204e9378795c48a297132b0b63dbf
-      internalID: 867058052
+      spriteID: cc75a04b484f3474aaa706033ecfc75f
+      internalID: -763619653
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tutorial-furniture_8
+      name: tutorial-furniture_9
+      rect:
+        serializedVersion: 2
+        x: 176
+        y: 87
+        width: 18
+        height: 17
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 888c68cc4467b0c47b2d9b4bce2b0036
+      internalID: 1389658117
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tutorial-furniture_10
+      rect:
+        serializedVersion: 2
+        x: 198
+        y: 91
+        width: 13
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b6b8139c2e247ed4f8e1e4ce38a6b2c4
+      internalID: -834861175
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tutorial-furniture_
       rect:
         serializedVersion: 2
         x: 9
@@ -316,14 +382,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6b884bea793e7d940b2b41d70542c237
-      internalID: -763619653
+      spriteID: 15cb7652f7a643746a89f3d621078b9c
+      internalID: -1020027503
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tutorial-furniture_9
+      name: tutorial-furniture_12
       rect:
         serializedVersion: 2
         x: 38
@@ -338,14 +404,36 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ba23e73cfc9d42e44b9f78ece39bc0e7
-      internalID: 1389658117
+      spriteID: 692e31596507c7642a5ae57c1ea5062b
+      internalID: 2012367535
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tutorial-furniture_10
+      name: tutorial-furniture_13
+      rect:
+        serializedVersion: 2
+        x: 66
+        y: 78
+        width: 11
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 59c0d39c1204a3e4dac22b743c05a900
+      internalID: 406788242
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tutorial-furniture_14
       rect:
         serializedVersion: 2
         x: 115
@@ -360,8 +448,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 095c48a8953e8f04ba5e49ca6b73d914
-      internalID: -834861175
+      spriteID: 369759b230d9b064ebba5f9dcdcf9f6d
+      internalID: -447403364
       vertices: []
       indices: 
       edges: []
@@ -382,18 +470,18 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 27023ec54b2224d4799c3c951c331ffb
-      internalID: -1020027503
+      spriteID: 87d8f051e9bfc634fbe1d2d97a39eceb
+      internalID: -1215225104
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tutorial-furniture_12
+      name: tutorial-furniture_16
       rect:
         serializedVersion: 2
-        x: 144
-        y: 77
+        x: 148
+        y: 76
         width: 16
         height: 12
       alignment: 0
@@ -404,14 +492,36 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3176f3833df422548813bc66512d58e1
-      internalID: 2012367535
+      spriteID: 7564abac9cc94e747803d63904a2aed7
+      internalID: -410373637
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tutorial-furniture_13
+      name: tutorial-furniture_17
+      rect:
+        serializedVersion: 2
+        x: 178
+        y: 65
+        width: 25
+        height: 15
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bb15e04f280cb704190cbb278ea35ece
+      internalID: 2085976292
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tutorial-furniture_18
       rect:
         serializedVersion: 2
         x: 4
@@ -426,14 +536,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a1493f4db76d47b40b50ee04d59aa211
-      internalID: 406788242
+      spriteID: 519c50bb66425d94d8be5b436d19145e
+      internalID: 595361086
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tutorial-furniture_14
+      name: tutorial-furniture_19
       rect:
         serializedVersion: 2
         x: 69
@@ -448,14 +558,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6e43b0b50ba4bff4c83f2b6ef14ccec9
-      internalID: -447403364
+      spriteID: d26db2096980d184daa9b2491a9f1f53
+      internalID: -2000625298
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tutorial-furniture_15
+      name: tutorial-furniture_20
       rect:
         serializedVersion: 2
         x: 104
@@ -470,20 +580,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e37ad46fa3f696b4ab152ecbe668caca
-      internalID: -1215225104
+      spriteID: 62ed84e948b81a34cbecf52b6dc8ee5b
+      internalID: -178340464
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tutorial-furniture_16
+      name: tutorial-furniture_21
       rect:
         serializedVersion: 2
         x: 133
-        y: 47
+        y: 46
         width: 37
-        height: 22
+        height: 23
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -492,14 +602,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 390691f981269664db8ff6eabe71f9dd
-      internalID: -410373637
+      spriteID: 4d9d6609be5186b43beb0de09065a008
+      internalID: -1062849511
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tutorial-furniture_17
+      name: tutorial-furniture_22
       rect:
         serializedVersion: 2
         x: 52
@@ -514,14 +624,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4cd33a733549a3c4f9eae09ebaddc833
-      internalID: 2085976292
+      spriteID: 445ebc92f27081042a13734718a28591
+      internalID: -2112476520
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tutorial-furniture_18
+      name: tutorial-furniture_23
       rect:
         serializedVersion: 2
         x: 105
@@ -536,20 +646,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 60ccd304240ed584ea0832cc074fbfe0
-      internalID: 595361086
+      spriteID: e4eda2cc2938bc14d943eea90397744c
+      internalID: -2066895547
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tutorial-furniture_19
+      name: tutorial-furniture_24
       rect:
         serializedVersion: 2
-        x: 105
-        y: 1
-        width: 16
-        height: 33
+        x: 136
+        y: 2
+        width: 33
+        height: 43
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -558,8 +668,118 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 51b33753e5bda0c44a0702605926c65a
-      internalID: -2000625298
+      spriteID: 5737776b3286fd743ad4e4d638a4911f
+      internalID: 629035254
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tutorial-furniture_25
+      rect:
+        serializedVersion: 2
+        x: 106
+        y: 1
+        width: 15
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6a085c03ef4859549ac6db407aab529e
+      internalID: 1001153666
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tutorial-furniture_15
+      rect:
+        serializedVersion: 2
+        x: 182
+        y: 4
+        width: 53
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 22319bb66b375ab40953a55072a7ce72
+      internalID: 1054719931
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tutorial-furniture_26
+      rect:
+        serializedVersion: 2
+        x: 51
+        y: 46
+        width: 10
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d4dea3c1f4c32ae40b5552a8f9505eb3
+      internalID: -602731175
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tutorial-furniture_27
+      rect:
+        serializedVersion: 2
+        x: 212
+        y: 34
+        width: 26
+        height: 60
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aee938fae49119345b278051e0b7c7bc
+      internalID: -1750389253
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tutorial-furniture_28
+      rect:
+        serializedVersion: 2
+        x: 180
+        y: 35
+        width: 22
+        height: 21
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8939d72be3d429d489766ed8b410f6db
+      internalID: 2105169685
       vertices: []
       indices: 
       edges: []
@@ -578,23 +798,33 @@ TextureImporter:
     spriteCustomMetadata:
       entries:
       - key: SpriteEditor.SliceOnImport
-        value: True
+        value: False
       - key: SpriteEditor.SliceSettings
-        value: '{"sliceOnImport":true,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
+      tutorial-furniture_: -1020027503
       tutorial-furniture_0: 489131105263499118
       tutorial-furniture_1: 1321694086
       tutorial-furniture_10: -834861175
-      tutorial-furniture_11: -1020027503
+      tutorial-furniture_11: -1215225104
       tutorial-furniture_12: 2012367535
       tutorial-furniture_13: 406788242
       tutorial-furniture_14: -447403364
-      tutorial-furniture_15: -1215225104
+      tutorial-furniture_15: 1054719931
       tutorial-furniture_16: -410373637
       tutorial-furniture_17: 2085976292
       tutorial-furniture_18: 595361086
       tutorial-furniture_19: -2000625298
       tutorial-furniture_2: -535476346164356153
+      tutorial-furniture_20: -178340464
+      tutorial-furniture_21: -1062849511
+      tutorial-furniture_22: -2112476520
+      tutorial-furniture_23: -2066895547
+      tutorial-furniture_24: 629035254
+      tutorial-furniture_25: 1001153666
+      tutorial-furniture_26: -602731175
+      tutorial-furniture_27: -1750389253
+      tutorial-furniture_28: 2105169685
       tutorial-furniture_3: -608029893
       tutorial-furniture_4: 7708686034511047167
       tutorial-furniture_5: -565004952

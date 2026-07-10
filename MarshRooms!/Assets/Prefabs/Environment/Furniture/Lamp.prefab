@@ -99,7 +99,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LightFlicker
   flameSprite: {fileID: 0}
   breathSpeed: 1
-  breathIntensityAmount: 0.08
+  breathIntensityAmount: 0.06
   breathScaleAmount: 0.03
   flickerIntervalMin: 3
   flickerIntervalMax: 8
@@ -118,6 +118,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4894960337328450534}
   - component: {fileID: 1462306644581915625}
+  - component: {fileID: 2824964769644001177}
   m_Layer: 0
   m_Name: Lamp
   m_TagString: Untagged
@@ -190,7 +191,7 @@ SpriteRenderer:
   m_SortingLayer: 3
   m_SortingOrder: 1
   m_MaskInteraction: 0
-  m_Sprite: {fileID: -834861175, guid: bfb5bb853aadc464ea2c6f91d826d204, type: 3}
+  m_Sprite: {fileID: -447403364, guid: bfb5bb853aadc464ea2c6f91d826d204, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -200,3 +201,16 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &2824964769644001177
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8961339221828360066}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ac5e3cd19a51ae48bb2450ecd5ba10d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpriteYSorter
+  sortingOffset: 0
