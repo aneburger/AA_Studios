@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7174176281748561412}
   - component: {fileID: 7648309033922047929}
-  - component: {fileID: 2746420349723313144}
+  - component: {fileID: 5783755050553872308}
   m_Layer: 0
   m_Name: InteractionIndicator
   m_TagString: Untagged
@@ -92,7 +92,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
---- !u!114 &2746420349723313144
+--- !u!114 &5783755050553872308
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -101,8 +101,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 8410597211866493476}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 472b21d0de783df4d8c9fba9ce37b0a8, type: 3}
+  m_Script: {fileID: 11500000, guid: 028523598aa51ff4796d35bd1ceef5f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InteractIndicator
-  bobHeight: 0.1
-  bobSpeed: 3
+  bobHeight: 0.15
+  bobSpeed: 3.5

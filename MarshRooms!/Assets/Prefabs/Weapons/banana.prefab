@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1030860500392597893}
   - component: {fileID: 4335018509098030027}
   - component: {fileID: 2765967550098509236}
+  - component: {fileID: -2801322973310312403}
   m_Layer: 10
   m_Name: Banana
   m_TagString: Untagged
@@ -47,8 +48,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WeaponPickup
   weaponData: {fileID: 11400000, guid: ef97f664ca807e943b90ce66ecb5c46a, type: 2}
-  indicatorPrefab: {fileID: 8410597211866493476, guid: 95f9ec2cea20e1d4eb8645ec57fb8e8e, type: 3}
-  indicatorHeight: 1.3
   ammo: -1
 --- !u!212 &4335018509098030027
 SpriteRenderer:
@@ -155,3 +154,18 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1.61, y: 1.1}
   m_EdgeRadius: 0
+--- !u!114 &-2801322973310312403
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1303430737314922756}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17555ed2d2a63bc4285c85d2dbfb1192, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Interactable
+  indicatorPrefab: {fileID: 8410597211866493476, guid: 95f9ec2cea20e1d4eb8645ec57fb8e8e, type: 3}
+  indicatorHeight: 1.5
+  targetRenderer: {fileID: 0}

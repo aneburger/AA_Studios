@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.UI;
 using Unity.Cinemachine;
+using System.Collections;
+using System;
 
 public class ScreenEffects : MonoBehaviour
 {
@@ -9,6 +11,7 @@ public class ScreenEffects : MonoBehaviour
     [Header("References")]
     [SerializeField] private Image flashImage;
     [SerializeField] private Image vignetteImage;
+    [SerializeField] private Image fadeImage;
     [SerializeField] private CinemachineImpulseSource impulseSource;
 
     [Header("Sprites")]
@@ -109,5 +112,39 @@ public class ScreenEffects : MonoBehaviour
         Color c = vignetteImage.color;
         c.a = alpha;
         vignetteImage.color = c;
+    }
+
+    // -- FADE TO BLACK --
+    public void FadeToBlack(float duration, Action onComplete = null)
+    {
+        StartCoroutine(FadeCoroutine(0f, 1f, duration, onComplete));
+    }
+
+    // -- FADE FROM BLACK --
+    public void FadeFromBlack(float duration, Action onComplete = null)
+    {
+        StartCoroutine(FadeCoroutine(1f, 0f, duration, onComplete));
+    }
+
+    // -- FADE COROUTINE --
+    private IEnumerator FadeCoroutine(float from, float to, float duration, Action onComplete)
+    {
+        Color c = fadeImage.color;
+        float elapsed = 0f;
+        fadeImage.gameObject.SetActive(true);
+
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            c.a = Mathf.Lerp(from, to, elapsed / duration);
+            fadeImage.color = c;
+            yield return null;
+        }
+
+        c.a = to;
+        fadeImage.color = c;
+
+        if (to == 0f) fadeImage.gameObject.SetActive(false);
+        onComplete?.Invoke();
     }
 }

@@ -137,4 +137,48 @@ public sealed class AudioManager : MonoBehaviour
         audioMixer.SetFloat("MasterCutoff", 22000f);
     }
 
+    // -- FADE IN --
+    public void FadeInMusic(AudioClip clip, float duration, float targetVolume = 0.5f)
+    {
+        StartCoroutine(FadeInCoroutine(clip, duration, targetVolume));
+    }
+
+    // -- FADE OUT --
+    public void FadeOutMusic(float duration)
+    {
+        StartCoroutine(FadeOutCoroutine(duration));
+    }
+
+    // -- FADE IN COROUTINE --
+    private IEnumerator FadeInCoroutine(AudioClip clip, float duration, float targetVolume)
+    {
+        musicSource.clip = clip;
+        musicSource.volume = 0f;
+        musicSource.loop = true;
+        musicSource.Play();
+
+        float elapsed = 0f;
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            musicSource.volume = Mathf.Lerp(0f, targetVolume, elapsed / duration);
+            yield return null;
+        }
+        musicSource.volume = targetVolume;
+    }
+
+    // -- FADE OUT COROUTINE --
+    private IEnumerator FadeOutCoroutine(float duration)
+    {
+        float startVolume = musicSource.volume;
+        float elapsed = 0f;
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            musicSource.volume = Mathf.Lerp(startVolume, 0f, elapsed / duration);
+            yield return null;
+        }
+        musicSource.Stop();
+    }
+
 }

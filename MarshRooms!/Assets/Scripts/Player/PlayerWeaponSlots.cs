@@ -148,7 +148,7 @@ public class PlayerWeaponSlot : MonoBehaviour
     public void ClearNearbyPickup(WeaponPickup pickup)
     {
         nearbyPickups.Remove(pickup);
-        pickup.SetOutline(false);
+        pickup.GetComponent<Interactable>()?.SetOutline(false);
     }
 
     // -- GET NEAREST PICKUP --
