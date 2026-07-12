@@ -15,6 +15,8 @@ public class SporeManager : MonoBehaviour
     private bool isMutated = false;
     private float mutatedTimeRemaining = 0f;
 
+    public bool IsFull => currentSpores >= maxSpores;
+
     // Spore count event
     public delegate void SporeCountChangedDelegate(int current, int max);
     public event SporeCountChangedDelegate OnSporeCountChanged;
@@ -32,7 +34,13 @@ public class SporeManager : MonoBehaviour
         if (Instance != null && Instance != this) { Destroy(gameObject); return; }
         Instance = this;
 
-        maxSpores = meterConfig != null ? meterConfig.sporeCapacity : 10;
+        maxSpores = meterConfig != null ? meterConfig.sporeCapacity : 10; 
+
+        OnMutatedActivated += () => 
+        {
+            if (TutorialDirector.Instance != null)
+                TutorialDirector.Instance.OnMutateActivated();
+        };
     }
 
     // -- UPDATE --
@@ -81,6 +89,13 @@ public class SporeManager : MonoBehaviour
     {
         if (isMutated) EndMutatedState();
         currentSpores = 0;
+        OnSporeCountChanged?.Invoke(currentSpores, maxSpores);
+    }
+
+    // -- FILL TO MAX --
+    public void FillToMax()
+    {
+        currentSpores = maxSpores;
         OnSporeCountChanged?.Invoke(currentSpores, maxSpores);
     }
 

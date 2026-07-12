@@ -26,10 +26,14 @@ public class EnemyHealthBar : MonoBehaviour
         float t = current / max;
 
         fill.transform.localScale = new Vector3(originalScale.x * t, originalScale.y, 1f);
-    
+
         if (t > 0.5f)
             fill.color = Color.Lerp(halfColor, fullColor, (t - 0.5f) * 2f);
         else
             fill.color = Color.Lerp(lowColor, halfColor, t * 2f);
+
+        // Hide when empty
+        if (current <= 0)
+            gameObject.SetActive(false);
     }
 }

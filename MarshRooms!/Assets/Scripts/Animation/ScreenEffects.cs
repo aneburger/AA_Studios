@@ -38,6 +38,14 @@ public class ScreenEffects : MonoBehaviour
         Instance = this;
         SetFlashAlpha(0f);
         SetVignetteAlpha(0f);
+
+        if (fadeImage != null)
+        {
+            fadeImage.gameObject.SetActive(true);
+            Color c = fadeImage.color;
+            c.a = 1f;
+            fadeImage.color = c;
+        }
     }
 
     // -- UPDATE --

@@ -12,7 +12,9 @@ public class TextEffectRange
 public enum TextEffectType
 {
     Wave,
-    Shake
+    Shake,
+    Rainbow,
+    Pulse
 }
 
 public static class DialogueTextParser
@@ -21,7 +23,9 @@ public static class DialogueTextParser
     private static readonly Dictionary<string, TextEffectType> tagMap = new Dictionary<string, TextEffectType>
     {
         { "wave", TextEffectType.Wave },
-        { "shake", TextEffectType.Shake }
+        { "shake", TextEffectType.Shake },
+        { "rainbow", TextEffectType.Rainbow },
+        { "pulse",   TextEffectType.Pulse   }
     };
 
     public struct ParseResult
@@ -35,42 +39,80 @@ public static class DialogueTextParser
         var effectRanges = new List<TextEffectRange>();
         string text = rawText;
 
+        var allTags = new List<(int openIdx, int closeIdx, string tag, TextEffectType effectType)>();
+
         foreach (var kvp in tagMap)
         {
             string tag = kvp.Key;
             TextEffectType effectType = kvp.Value;
-
             string openTag = $"<{tag}>";
             string closeTag = $"</{tag}>";
 
+            int searchFrom = 0;
             while (true)
             {
-                int openIdx = text.IndexOf(openTag);
+                int openIdx = text.IndexOf(openTag, searchFrom);
                 if (openIdx < 0) break;
-
                 int closeIdx = text.IndexOf(closeTag, openIdx);
                 if (closeIdx < 0) break;
-
-                int contentStart = openIdx;
-                int contentLength = closeIdx - openIdx - openTag.Length;
-
-                text = text.Remove(closeIdx, closeTag.Length);
-                text = text.Remove(openIdx, openTag.Length);
-
-                effectRanges.Add(new TextEffectRange
-                {
-                    startIndex = contentStart,
-                    endIndex = contentStart + contentLength - 1,
-                    effectType = effectType
-                });
+                allTags.Add((openIdx, closeIdx, tag, effectType));
+                searchFrom = closeIdx + closeTag.Length;
             }
+        }
+
+        allTags.Sort((a, b) => a.openIdx.CompareTo(b.openIdx));
+
+        int totalRemoved = 0;
+        foreach (var (openIdx, closeIdx, tag, effectType) in allTags)
+        {
+            string openTag = $"<{tag}>";
+            string closeTag = $"</{tag}>";
+
+            int adjustedOpen  = openIdx  - totalRemoved;
+            int adjustedClose = closeIdx - totalRemoved;
+            int contentStart  = adjustedOpen;
+            int contentLength = adjustedClose - adjustedOpen - openTag.Length;
+
+            text = text.Remove(adjustedClose, closeTag.Length);
+            text = text.Remove(adjustedOpen,  openTag.Length);
+            totalRemoved += openTag.Length + closeTag.Length;
+
+            int tmpTagOffset = CountTMPTagCharsBefore(text, contentStart);
+
+            effectRanges.Add(new TextEffectRange
+            {
+                startIndex = contentStart - tmpTagOffset,
+                endIndex   = contentStart - tmpTagOffset + contentLength - 1,
+                effectType = effectType
+            });
         }
 
         return new ParseResult
         {
-            cleanText = text,
+            cleanText    = text,
             effectRanges = effectRanges
         };
+    }
+
+    private static int CountTMPTagCharsBefore(string text, int beforeIndex)
+    {
+        int count = 0;
+        int i = 0;
+        while (i < beforeIndex && i < text.Length)
+        {
+            if (text[i] == '<')
+            {
+                int closeAngle = text.IndexOf('>', i);
+                if (closeAngle > 0 && closeAngle < beforeIndex)
+                {
+                    count += closeAngle - i + 1;
+                    i = closeAngle + 1;
+                    continue;
+                }
+            }
+            i++;
+        }
+        return count;
     }
  
     public static List<TextEffectType> GetEffectsAt(int charIndex, List<TextEffectRange> ranges)

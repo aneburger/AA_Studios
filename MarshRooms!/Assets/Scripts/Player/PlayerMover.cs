@@ -32,8 +32,7 @@ namespace TopDown.Movement
         [Range(0f, 1f)] public float runningVolume;
 
         [Header("Sleep Settings")]
-        [SerializeField] private float sleepDelay = 30f
-        ;
+        [SerializeField] private float sleepDelay = 30f;
         private float inactivityTimer = 0f;
         private bool isSleeping = false;
 
@@ -174,6 +173,15 @@ namespace TopDown.Movement
             if (!context.started) return;
             if (DialogueManager.Instance != null && DialogueManager.Instance.IsRunning) return;
             weaponSlot.PickupWeapon();
+        }
+
+        // -- SET SLEEPING --
+        public void SetSleeping(bool sleeping)
+        {
+            isSleeping = sleeping;
+            anim.SetBool("isSleeping", sleeping);
+            shooter.HideWeapon(sleeping);
+            if (sleeping) inactivityTimer = sleepDelay;
         }
 
         // -- DODGE --
