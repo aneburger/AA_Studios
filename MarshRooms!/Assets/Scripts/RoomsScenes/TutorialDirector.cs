@@ -309,26 +309,34 @@ public class TutorialDirector : MonoBehaviour
         LockPlayer();
         yield return new WaitForSeconds(0.2f);
 
-        //First crash
+        // First door bang
         AudioManager.Instance?.PlaySFX(doorPoundClip, doorPoundVolume);
         for(int i = 0; i < 5; i++)
         {
             ScreenEffects.Instance?.ShakeScreen(0.1f);
             yield return new WaitForSeconds(0.2f);
         }
-        AudioManager.Instance?.FadeOutMusic(0.4f);
+        AudioManager.Instance?.FadeOutMusic(1f);
         
+        // What the shroom?
         yield return new WaitForSeconds(1f);
         yield return StartCoroutine(PlayDialogue(crashDialogue));
-        yield return new WaitForSeconds(0.8f);
-
-        AudioManager.Instance?.PlaySFX(crashBangClip, crashBangVolume);
-        ScreenEffects.Instance?.ShakeScreen(1f);
-        ScreenEffects.Instance?.FadeToBlack(0.35f);
-        yield return new WaitForSeconds(0.35f);
-
-        
         yield return new WaitForSeconds(1f);
+
+        // Second bang - fade to black
+        AudioManager.Instance?.PlaySFX(crashBangClip, crashBangVolume);
+        ScreenEffects.Instance?.ShakeScreen(0.7f);
+        ScreenEffects.Instance?.FadeToBlack(0.35f);
+        yield return new WaitForSeconds(1f);
+
+        SetWaveActive(wave1Enemies, true);
+
+        ScreenEffects.Instance?.FadeFromBlack(0.5f);
+        
+        AudioManager.Instance?.FadeInMusic(fightMusicClip, 2f, fightMusicVolume);
+
+        yield return StartCoroutine(WaitUntil(() => wave1Clear));
+
 
         /*
 
@@ -343,13 +351,6 @@ public class TutorialDirector : MonoBehaviour
 
         
     /*
-        // ── BEAT 8: CRASH - enemies burst in ─────────────────────────
-        AudioManager.Instance?.PlaySFX(crashBangClip);
-        // TODO: play door break animation / destroy door object
-        door?.SetActive(false);
-        yield return new WaitForSeconds(0.5f);
-        yield return StartCoroutine(PlayDialogue(enemyBurstDialogue));
-
         // Switch to fight music
         AudioManager.Instance?.FadeOutMusic(1f);
         yield return new WaitForSeconds(0.5f);
