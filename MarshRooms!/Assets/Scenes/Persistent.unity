@@ -1123,7 +1123,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 9e6935c92f5bf7843b1b850ae6ca09c2, type: 3}
   - {fileID: 8300000, guid: fd58f0110624d7b4e971c1233040a380, type: 3}
   - {fileID: 8300000, guid: 66af1d549f3f81b449c24c8e30e53bbd, type: 3}
-  footstepVolume: 0.3
+  footstepVolume: 0.2
 --- !u!4 &395473942
 Transform:
   m_ObjectHideFlags: 0
@@ -1161,7 +1161,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &400685274
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1551,7 +1551,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 10.020833
+  orthographic size: 8.4375
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -7266,7 +7266,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &946923462
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7280,7 +7280,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0.09019608, g: 0.03529412, b: 0.054901965, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

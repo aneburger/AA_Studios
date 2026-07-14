@@ -10,18 +10,27 @@ public class PlayerAimer : MonoBehaviour
     [SerializeField] private Transform aimOrigin;
     [SerializeField] private WeaponAimer weaponAimer;
 
+    private Vector2? aimOverride = null;
+
     public Vector2 AimDirection { get; private set; }
 
-    // -- Awake --
+    // -- AWAKE --
     private void Awake()
     {
         if (worldCamera == null)
             worldCamera = Camera.main;
     }
 
-    // -- Update --
+    // -- UPDATE --
     private void Update()
     {
+        if (aimOverride.HasValue)
+        {
+            AimDirection = aimOverride.Value;
+            weaponAimer?.SetAimDirection(AimDirection);
+            return;
+        }
+
         Vector2 mouseScreen = Mouse.current.position.ReadValue();
         Vector3 mouseWorld = worldCamera.ScreenToWorldPoint(mouseScreen);
 
@@ -32,8 +41,19 @@ public class PlayerAimer : MonoBehaviour
 
         if (weaponAimer != null)
             weaponAimer.SetAimDirection(AimDirection);
+    }
 
-        // -- DEBUG --
-        // Debug.DrawRay(aimOrigin.position, AimDirection * 2f, Color.red);
+    // -- SET AIM OVERRIDE --
+    public void SetAimOverride(Vector2 direction)
+    {
+        aimOverride = direction.normalized;
+        AimDirection = aimOverride.Value;
+        weaponAimer?.SetAimDirection(AimDirection);
+    }
+
+    // -- CLEAR AIM OVERRIDE --
+    public void ClearAimOverride()
+    {
+        aimOverride = null;
     }
 }

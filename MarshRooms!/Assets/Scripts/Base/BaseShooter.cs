@@ -155,7 +155,7 @@ public abstract class BaseShooter : MonoBehaviour
             BaseBullet b = bullet.GetComponent<BaseBullet>();
             b.SetDirection(spreadDirection);
             b.SetAimOrigin(firePoint.position);
-            b.SetBullet(currentWeapon.bulletSpeed * bulletSpeedMultiplier, currentWeapon.damage, currentWeapon.hitKnockback, currentWeapon.hitPrefab, weaponSprite.sortingOrder);
+            b.SetBullet(currentWeapon.bulletSpeed * bulletSpeedMultiplier, currentWeapon.damage, currentWeapon.hitKnockback, currentWeapon.hitPrefab, weaponSprite.sortingOrder, currentWeapon.wallHitClip, currentWeapon.wallHitVolume);
             lastBullet = b;
         }
 

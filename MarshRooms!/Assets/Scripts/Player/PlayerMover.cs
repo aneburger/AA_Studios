@@ -130,6 +130,12 @@ namespace TopDown.Movement
                 base.FixedUpdate();
         }
 
+        // -- FORCE IDLE ANIMATION --
+        public void ForceIdleAnimation()
+        {
+            anim.SetBool("isWalking", false);
+        }
+
         // -- MOVE INPUT --
         public void OnMove(InputAction.CallbackContext context)
         {

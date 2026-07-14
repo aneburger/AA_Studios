@@ -17,9 +17,11 @@ public class ToiletHealth : BaseHealth
     [Range(0f, 1f)] public float hurtVolume = 0.8f;
 
     [Header("Death")]
+    [SerializeField] private AudioClip explodeClip;
+    [Range(0f, 1f)] public float explodeVolume;
     [SerializeField] private AudioClip fixedClip;
-    [Range(0f, 1f)] public float fixedVolume = 1f;
-    [SerializeField] private float postDeathDelay = 1f;
+    [Range(0f, 1f)] public float fixedVolume;
+    [SerializeField] private float postDeathDelay = 0.8f;
 
     private Vector3 originalPosition;
     private bool isDying = false;
@@ -60,7 +62,11 @@ public class ToiletHealth : BaseHealth
     // -- HIT EFFECT --
     protected override void OnHitEffect()
     {
-        if (IsDead()) return;
+        if (IsDead())
+        {
+            AudioManager.Instance?.PlaySFXWithPitch(hurtClip, hurtVolume, 0.15f);
+            return;
+        } 
         AudioManager.Instance?.PlaySFXWithPitch(hurtClip, hurtVolume, 0.15f);
         anim?.SetTrigger("TakeDamage");
         StartCoroutine(ShakeRoutine());
@@ -88,7 +94,9 @@ public class ToiletHealth : BaseHealth
     private IEnumerator DeathRoutine()
     {
         VFXManager.Instance?.SpawnEnemyExplosion(GetTopPosition());
-        
+        AudioManager.Instance?.PlaySFX(explodeClip, explodeVolume);
+        yield return new WaitForSeconds(0.2f);
+
         anim?.SetBool("IsFixed", true);
         
         healthBar?.gameObject.SetActive(false);

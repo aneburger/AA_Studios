@@ -13,6 +13,8 @@ public class BaseBullet : MonoBehaviour
     protected Vector2 direction;
     protected int weaponSortingOrder;
     protected Vector2 aimOrigin;
+    protected AudioClip wallHitClip;
+    protected float wallHitVolume;
 
     protected virtual void Start() { }
 
@@ -28,13 +30,15 @@ public class BaseBullet : MonoBehaviour
         aimOrigin = origin;
     }
 
-    public void SetBullet(float speed, float damage, float knockback, GameObject hitVFX, int sortingOrder)
+    public void SetBullet(float speed, float damage, float knockback, GameObject hitVFX, int sortingOrder, AudioClip wallHitClip = null, float wallHitVolume = 0.7f)
     {
-       this.speed = speed;
-       this.damage = damage;
-       this.knockback = knockback;
-       this.hitVFX = hitVFX;
-       weaponSortingOrder = sortingOrder;
+        this.speed = speed;
+        this.damage = damage;
+        this.knockback = knockback;
+        this.hitVFX = hitVFX;
+        weaponSortingOrder = sortingOrder;
+        this.wallHitClip = wallHitClip;
+        this.wallHitVolume = wallHitVolume;
     }
 
     protected virtual void Update()
@@ -53,6 +57,10 @@ public class BaseBullet : MonoBehaviour
             BaseMover mover = collision.GetComponentInParent<BaseMover>();
             if (mover != null)
                 mover.ApplyKnockback(direction * knockback);
+        }
+        else
+        {
+            AudioManager.Instance?.PlaySFXWithPitch(wallHitClip, wallHitVolume, 0.1f);
         }
 
         VFXManager.Instance.SpawnHitVFX(hitVFX, transform.position, weaponSortingOrder);

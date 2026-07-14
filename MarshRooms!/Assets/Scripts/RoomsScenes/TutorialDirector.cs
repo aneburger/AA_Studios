@@ -36,6 +36,10 @@ public class TutorialDirector : MonoBehaviour
     [SerializeField] private Collider2D bedCollider;
     [SerializeField] private float walkOffBedSpeed;
 
+    [Header("Toilet Interact Positioning")]
+    [SerializeField] private Transform toiletInteractSpot;
+    [SerializeField] private float walkToToiletSpeed;
+
     // -- Scene Objects --
     [Header("Scene Objects")]
     [SerializeField] private ToiletHealth toiletHealth;
@@ -160,7 +164,6 @@ public class TutorialDirector : MonoBehaviour
             playerBaseMover = player.GetComponent<BaseMover>();
         }
         
-        // Hide everything that shouldn't be visible yet
         shootPrompt?.SetActive(false);
         //rightClickPrompt?.SetActive(false);
         //minigunPickup?.SetActive(false);
@@ -190,7 +193,7 @@ public class TutorialDirector : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
         // Fade in house music
-        AudioManager.Instance?.FadeInMusic(houseMusicClip, 0.5f);
+        AudioManager.Instance?.FadeInMusic(houseMusicClip, 2.5f, houseMusicVolume);
         yield return new WaitForSeconds(3f);
 
         // Wake up
@@ -209,8 +212,8 @@ public class TutorialDirector : MonoBehaviour
         if (playerInput != null) playerInput.enabled = true;
 
         // Slow movement for chill vibes, no dodging yet
-        playerBaseMover?.SetSpeed(playerBaseMover.OriginalSpeed * 0.7f);
-        playerBaseMover?.DirectionalAnimator?.SetAnimationSpeed(0.7f);
+        playerBaseMover?.SetSpeed(playerBaseMover.OriginalSpeed * 0.8f);
+        playerBaseMover?.DirectionalAnimator?.SetAnimationSpeed(0.8f);
         playerMover.canDodge = false;
 
         // ==== PART 2: WASD hint ====
@@ -250,6 +253,9 @@ public class TutorialDirector : MonoBehaviour
 
         // ==== PART 4: Interact with toilet - fail ====
         yield return StartCoroutine(WaitUntil(() => toiletInteracted));
+        yield return StartCoroutine(WalkToPoint(toiletInteractSpot));
+        playerAimer?.SetAimOverride(Vector2.up);
+
         yield return StartCoroutine(ToiletFailSfxSequence());
         yield return StartCoroutine(PlayDialogue(toiletFailDialogue));
 
@@ -259,6 +265,7 @@ public class TutorialDirector : MonoBehaviour
 
         // ==== PART 5: Teach shooting ====
         yield return StartCoroutine(PlayDialogue(toiletShootDialogue));
+        playerAimer?.ClearAimOverride();
         yield return new WaitForSeconds(0.4f);
 
         shootPrompt?.SetActive(true);
@@ -411,6 +418,27 @@ public class TutorialDirector : MonoBehaviour
 
         // Lock bed
         if (bedCollider != null) bedCollider.enabled = true;
+    }
+
+    // -- WALK TO POINT -- 
+    private IEnumerator WalkToPoint(Transform target)
+    {
+        if (playerMover != null) playerMover.enabled = true;
+
+        while (Vector2.Distance(playerTransform.position, target.position) > 0.05f)
+        {
+            Vector2 dir = ((Vector2)target.position - (Vector2)playerTransform.position).normalized;
+            playerBaseMover?.SetMoveInput(dir);
+            playerBaseMover?.SetFacingOverride(dir);
+            yield return null;
+        }
+
+        playerBaseMover?.SetMoveInput(Vector2.zero);
+        playerBaseMover?.ClearFacingOverride();
+        playerTransform.position = target.position;
+
+        playerBaseMover?.FaceDirection(Vector2.up);
+        playerMover?.ForceIdleAnimation();
     }
 
     // -- WASD HINT --
