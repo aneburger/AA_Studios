@@ -15,6 +15,7 @@ public class PauseMenuManager : MonoBehaviour
     [SerializeField] private PlayerInput playerInput;
 
     private bool isPaused = false;
+    private float volumeBeforePause = 1f;
     private InputAction escapeAction;
 
     //// Track which menu opened the controls panel
@@ -87,34 +88,22 @@ public class PauseMenuManager : MonoBehaviour
         isPaused = true;
         Time.timeScale = 0f;
 
-        // Lower music volume
-        AudioManager.Instance.SetMusicVolume(0.1f);
+        volumeBeforePause = AudioManager.Instance.GetMusicVolume();
+        AudioManager.Instance.SetMusicVolume(volumeBeforePause * 0.2f);
 
-        // Disable player controls
         if (playerInput != null) playerInput.enabled = false;
         if (pauseMenuPanel != null) pauseMenuPanel.SetActive(true);
-
-        if (pauseMenuPanel != null)
-            pauseMenuPanel.SetActive(true);
     }
 
-    // -- RESUME GAME --
     private void OnResumeGame()
     {
-        Debug.Log("Resuming game...");
-
         isPaused = false;
         Time.timeScale = 1f;
 
-        // Volume back to normal
-        AudioManager.Instance.SetMusicVolume(0.5f);
+        AudioManager.Instance.SetMusicVolume(volumeBeforePause);
 
-        // Enable player controls
         if (playerInput != null) playerInput.enabled = true;
         if (pauseMenuPanel != null) pauseMenuPanel.SetActive(false);
-
-        if (pauseMenuPanel != null)
-            pauseMenuPanel.SetActive(false);
     }
 
     // -- OPEN CONTROLS --

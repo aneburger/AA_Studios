@@ -17,6 +17,9 @@ public class MrBlobsInteractable : MonoBehaviour
         DialogueSequence toPlay = TutorialDirector.Instance.GetBlobsDialogue();
         if (toPlay != null)
             DialogueManager.Instance?.StartDialogue(toPlay);
+
+        if (TutorialDirector.Instance.CurrentStage == TutorialDirector.TutorialStage.PostToilet)
+            TutorialDirector.Instance.OnBlobsPostToiletInteracted();
     }
 
     private void OnDestroy()

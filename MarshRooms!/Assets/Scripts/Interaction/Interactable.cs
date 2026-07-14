@@ -44,9 +44,9 @@ public class Interactable : MonoBehaviour
     // -- PLAYER ENTERS RANGE --
     public void OnPlayerEnterRange()
     {
-        if (!enabled) return;
         PlayerInRange = true;
-        SetOutline(true);
+        if (enabled && !interactionLocked)
+            SetOutline(true);
     }
 
     // -- PLAYER EXITS RANGE --
@@ -94,5 +94,12 @@ public class Interactable : MonoBehaviour
     {
         OnPlayerExitRange();
         gameObject.SetActive(false);
+    }
+
+    // -- ON ENABLE --
+    private void OnEnable()
+    {
+        if (PlayerInRange && !interactionLocked)
+            SetOutline(true);
     }
 }

@@ -776,7 +776,7 @@ MonoBehaviour:
   shooter: {fileID: 319489605}
   weaponSlot: {fileID: 319489614}
   speedMultiplier: 1.35
-  fireRateMultiplier: 0.7
+  fireRateMultiplier: 0.8
   mutatedShakeMultiplier: 1.5
   laserMutatedBulletCount: 3
   laserMutatedSpread: 5
@@ -1015,7 +1015,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &364550351
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1551,7 +1551,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 8.4375
+  orthographic size: 13.4375
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2

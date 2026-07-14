@@ -22,6 +22,7 @@ public sealed class AudioManager : MonoBehaviour
     [SerializeField] private float footstepVolume = 0.5f;
 
     private AudioSource runningSFX;
+    public float GetMusicVolume() => musicSource.volume;
 
     // -- AWAKE --
     private void Awake()

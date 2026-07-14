@@ -1,0 +1,51 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: blobsPostToiletDialogue
+  m_EditorClassIdentifier: Assembly-CSharp::DialogueSequence
+  lines:
+  - speakerName: Marsh
+    portrait: {fileID: 5355775165517145425, guid: 96f423fd58af20743ab60c2815e095a2, type: 3}
+    talkingPortrait: {fileID: -1472452136, guid: 96f423fd58af20743ab60c2815e095a2, type: 3}
+    text: Phew glad that's sorted out. We almost had another <b>spore flood!</b>
+    voiceClip: {fileID: 0}
+    typewriterSpeedOverride: 0
+  - speakerName: Mr. Blobs
+    portrait: {fileID: 1017824340, guid: c829638a635bcaa45b342d27f05bca54, type: 3}
+    talkingPortrait: {fileID: 1212555847, guid: c829638a635bcaa45b342d27f05bca54, type: 3}
+    text: Meep. Mop!
+    voiceClip: {fileID: 0}
+    typewriterSpeedOverride: 15
+  - speakerName: Marsh
+    portrait: {fileID: -916550197, guid: 96f423fd58af20743ab60c2815e095a2, type: 3}
+    talkingPortrait: {fileID: -1472452136, guid: 96f423fd58af20743ab60c2815e095a2, type: 3}
+    text: Now we can spend some quality mushroom-on-snail time together!
+    voiceClip: {fileID: 0}
+    typewriterSpeedOverride: 0
+  - speakerName: Mr. Blobs
+    portrait: {fileID: 1017824340, guid: c829638a635bcaa45b342d27f05bca54, type: 3}
+    talkingPortrait: {fileID: -1224400765, guid: c829638a635bcaa45b342d27f05bca54, type: 3}
+    text: Barp. Baaarp!
+    voiceClip: {fileID: 0}
+    typewriterSpeedOverride: 15
+  - speakerName: Marsh
+    portrait: {fileID: -329717952, guid: 96f423fd58af20743ab60c2815e095a2, type: 3}
+    talkingPortrait: {fileID: -857384039, guid: 96f423fd58af20743ab60c2815e095a2, type: 3}
+    text: Ya know, your my bestest friend in the whole world!
+    voiceClip: {fileID: 0}
+    typewriterSpeedOverride: 0
+  - speakerName: Marsh
+    portrait: {fileID: -4332381428540570747, guid: 96f423fd58af20743ab60c2815e095a2, type: 3}
+    talkingPortrait: {fileID: -1126149774, guid: 96f423fd58af20743ab60c2815e095a2, type: 3}
+    text: It would really <b>SUCK</b> if anything ever happened to you...
+    voiceClip: {fileID: 0}
+    typewriterSpeedOverride: 0

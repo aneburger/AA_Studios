@@ -90,6 +90,12 @@ public class ScreenEffects : MonoBehaviour
         impulseSource?.GenerateImpulse(0.15f);
     }
 
+    // -- SCREEN SHAKE --
+    public void ShakeScreen(float force)
+    {
+        impulseSource?.GenerateImpulse(force);
+    }
+
     // -- SET LOW HEALTH --
     public void SetLowHealth(bool low)
     {

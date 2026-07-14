@@ -15,8 +15,7 @@ public class TutorialDirector : MonoBehaviour
     [SerializeField] private DialogueSequence toiletFailDialogue;
     [SerializeField] private DialogueSequence toiletShootDialogue;
     [SerializeField] private DialogueSequence toiletWinDialogue;
-    [SerializeField] private DialogueSequence breakfastDialogue;
-    [SerializeField] private DialogueSequence blobsDialogue;
+    [SerializeField] private DialogueSequence crashDialogue;
     [SerializeField] private DialogueSequence enemyBurstDialogue;
     [SerializeField] private DialogueSequence minigunDropDialogue;
     [SerializeField] private DialogueSequence sporeFirstDialogue;
@@ -40,18 +39,22 @@ public class TutorialDirector : MonoBehaviour
     [SerializeField] private Transform toiletInteractSpot;
     [SerializeField] private float walkToToiletSpeed;
 
+    [Header("Mr Blobs Positioning")]
+    [SerializeField] private Transform blobsMoveSpot;
+
     // -- Scene Objects --
-    [Header("Scene Objects")]
+    [Header("Refereces")]
     [SerializeField] private ToiletHealth toiletHealth;
     [SerializeField] private GameObject toilet;
     [SerializeField] private GameObject plungerPickup;
-    //[SerializeField] private GameObject door;
     [SerializeField] private GameObject mrBlobs;
+    [SerializeField] private Collider2D mrBlobsCollider;
     //[SerializeField] private GameObject evilChef;
 
     // -- Scene Objects --
     [Header("Interaction")]
     [SerializeField] private Interactable toiletInteractable;
+    [SerializeField] private Interactable mrBlobsInteractable;
 
     // ── Prompts ──────────────────────────────────────────────────────
     [Header("Prompts")]
@@ -75,15 +78,16 @@ public class TutorialDirector : MonoBehaviour
     [Header("Audio")]
     [SerializeField] private AudioClip houseMusicClip;
     [Range(0f, 1f)] public float houseMusicVolume;
-    [SerializeField] private AudioClip crashBangClip;
-    [Range(0f, 1f)] public float crashBangVolume;
     [SerializeField] private AudioClip toiletUnclogAttemptClip;
     [Range(0f, 1f)] public float toiletUnclogAttemptVolume;
     [SerializeField] private AudioClip triggerClickClip;
     [Range(0f, 1f)] public float triggerClickVolume;
-    [SerializeField] private AudioClip toiletFlushClip;
-    [Range(0f, 1f)] public float toiletFlushtVolume;
+    [SerializeField] private AudioClip crashBangClip;
+    [Range(0f, 1f)] public float crashBangVolume;
+    [SerializeField] private AudioClip doorPoundClip;
+    [Range(0f, 1f)] public float doorPoundVolume;
     [SerializeField] private AudioClip fightMusicClip;
+    [Range(0f, 1f)] public float fightMusicVolume;
 
     [Header("Toilet Fail SFX Timing")]
     [SerializeField] private float toiletSfxInitialPause = 0.4f;
@@ -94,7 +98,7 @@ public class TutorialDirector : MonoBehaviour
     [SerializeField] private float triggerClickPause = 0.5f;
     [SerializeField] private float triggerClickGap = 0.4f;
 
-    // -- References --
+    // -- Script References --
     private Transform playerTransform;
     private PlayerMover playerMover;
     private BaseMover playerBaseMover;
@@ -106,6 +110,7 @@ public class TutorialDirector : MonoBehaviour
     private bool plungerPickedUp = false;
     private bool toiletInteracted = false;
     private bool toiletDead = false;
+    private bool blobsPostToiletInteracted = false;
     private bool wave1Clear = false;
     private bool wave2Clear = false;
     private bool wave3Clear = false;
@@ -195,7 +200,7 @@ public class TutorialDirector : MonoBehaviour
         // Fade in house music
         AudioManager.Instance?.FadeInMusic(houseMusicClip, 2.5f, houseMusicVolume);
         yield return new WaitForSeconds(3f);
-
+        
         // Wake up
         playerMover?.SetSleeping(false);
         yield return new WaitForSeconds(1f);
@@ -205,7 +210,7 @@ public class TutorialDirector : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
         // Opening dialogue
-        yield return StartCoroutine(PlayDialogue(openingDialogue));
+        /*yield return StartCoroutine(PlayDialogue(openingDialogue));
 
         // Now let player move 
         if (playerMover != null) playerMover.enabled = true;
@@ -281,31 +286,63 @@ public class TutorialDirector : MonoBehaviour
 
         // ==== PART 6: Wait for toilet to die ====
         yield return StartCoroutine(WaitUntil(() => toiletDead));
-        yield return StartCoroutine(PlayDialogue(toiletWinDialogue));
+        yield return StartCoroutine(PlayDialogue(toiletWinDialogue));*/
 
+        //REMOVE this later!
+        if (playerMover != null) playerMover.enabled = true;
+        if (playerInput != null) playerInput.enabled = true;
+        if (playerAimer != null) playerAimer.enabled = true;
+        playerShooter?.SetCanShoot(true);
+        playerMover.canDodge = false;
+
+        // ==== PART 7: Mr Blobs Moves + Bonding dialogue with Blobs ====
+        CurrentStage = TutorialStage.PostToilet;
+        yield return new WaitForSeconds(0.5f);
+        yield return StartCoroutine(MoveMrBlobsToSpot(blobsMoveSpot, 5f));
+        yield return StartCoroutine(WaitUntil(() => blobsPostToiletInteracted));
+
+        // Lock player and no talking to Mr Blobs
+        mrBlobsInteractable?.SetInteractionLocked(true);
+        if (mrBlobsInteractable != null) mrBlobsInteractable.enabled = false;
+
+        // ==== PART 8: Crash — enemies burst in ====
+        LockPlayer();
+        yield return new WaitForSeconds(0.2f);
+
+        //First crash
+        AudioManager.Instance?.PlaySFX(doorPoundClip, doorPoundVolume);
+        for(int i = 0; i < 5; i++)
+        {
+            ScreenEffects.Instance?.ShakeScreen(0.1f);
+            yield return new WaitForSeconds(0.2f);
+        }
+        AudioManager.Instance?.FadeOutMusic(0.4f);
+        
+        yield return new WaitForSeconds(1f);
+        yield return StartCoroutine(PlayDialogue(crashDialogue));
+        yield return new WaitForSeconds(0.8f);
+
+        AudioManager.Instance?.PlaySFX(crashBangClip, crashBangVolume);
+        ScreenEffects.Instance?.ShakeScreen(1f);
+        ScreenEffects.Instance?.FadeToBlack(0.35f);
+        yield return new WaitForSeconds(0.35f);
+
+        
+        yield return new WaitForSeconds(1f);
+
+        /*
+
+        SetWaveActive(wave1Enemies, true);
+
+        ScreenEffects.Instance?.FadeFromBlack(0.35f);
+        AudioManager.Instance?.FadeInMusic(fightMusicClip, 0.5f, fightMusicVolume);
+
+        yield return StartCoroutine(WaitUntil(() => wave1Clear));*/
 
 
 
         
     /*
-
-    
-        // ── BEAT 5: Teach shooting ────────────────────────────────────
-        yield return StartCoroutine(PlayDialogue(toiletShootDialogue));
-        shootPrompt?.SetActive(true);
-        if (playerShooter != null) playerShooter.enabled = true;
-        shootingEnabled = true;
-        yield return new WaitForSeconds(1f);
-        shootPrompt?.SetActive(false);
-
-        // ── BEAT 6: Wait for toilet to die ────────────────────────────
-        yield return StartCoroutine(WaitUntil(() => toiletDead));
-        yield return StartCoroutine(PlayDialogue(toiletWinDialogue));
-
-        // ── BEAT 7: Breakfast / Mr Blobs bonding ─────────────────────
-        yield return StartCoroutine(PlayDialogue(breakfastDialogue));
-        yield return StartCoroutine(PlayDialogue(blobsDialogue));
-
         // ── BEAT 8: CRASH - enemies burst in ─────────────────────────
         AudioManager.Instance?.PlaySFX(crashBangClip);
         // TODO: play door break animation / destroy door object
@@ -471,6 +508,30 @@ public class TutorialDirector : MonoBehaviour
         }
     }
 
+    // -- MOVE MR BLOBS --
+    private IEnumerator MoveMrBlobsToSpot(Transform target, float duration)
+    {
+        if (mrBlobs == null || target == null) yield break;
+
+        mrBlobsInteractable?.SetInteractionLocked(true);
+        if (mrBlobsInteractable != null) mrBlobsInteractable.enabled = false;
+        if (mrBlobsCollider != null) mrBlobsCollider.enabled = false;
+
+        Vector3 start = mrBlobs.transform.position;
+        float t = 0f;
+        while (t < duration)
+        {
+            t += Time.deltaTime;
+            mrBlobs.transform.position = Vector3.Lerp(start, target.position, t / duration);
+            yield return null;
+        }
+        mrBlobs.transform.position = target.position;
+
+        mrBlobsInteractable?.SetInteractionLocked(false);
+        if (mrBlobsInteractable != null) mrBlobsInteractable.enabled = true;
+        if (mrBlobsCollider != null) mrBlobsCollider.enabled = true;
+    }
+
     // -- TOILET FAIL SFX SEQUENCE --
     private IEnumerator ToiletFailSfxSequence()
     {
@@ -534,12 +595,6 @@ public class TutorialDirector : MonoBehaviour
         };
     }
 
-
-
-
-
-
-
     // Waits until a condition is true, checking every frame
     private IEnumerator WaitUntil(System.Func<bool> condition)
     {
@@ -589,7 +644,8 @@ public class TutorialDirector : MonoBehaviour
     {   
         if (plungerPickedUp) return;
         plungerPickedUp = true;
-        CurrentStage = TutorialStage.ToiletBroken;              
+        //REMOVE this later!
+        //CurrentStage = TutorialStage.ToiletBroken;              
         if (toiletInteractable != null) toiletInteractable.enabled = true;
     }
 
@@ -600,8 +656,10 @@ public class TutorialDirector : MonoBehaviour
     }
 
     public void OnToiletShot() => shootingEnabled = true;
+    public void OnToiletDead() => toiletDead = true;
 
-    public void OnToiletDead()         => toiletDead = true;
+    public void OnBlobsPostToiletInteracted() => blobsPostToiletInteracted = true;
+
     public void OnWave1Clear()         => wave1Clear = true;
     public void OnWave2Clear()         => wave2Clear = true;
     public void OnWave3Clear()         => wave3Clear = true;
