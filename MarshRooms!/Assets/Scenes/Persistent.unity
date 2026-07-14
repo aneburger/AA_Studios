@@ -230,7 +230,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -119.9, y: 5}
+  m_AnchoredPosition: {x: -119.9, y: 8}
   m_SizeDelta: {x: 120, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &290956431
@@ -306,8 +306,8 @@ GameObject:
   - component: {fileID: 319489615}
   - component: {fileID: 319489616}
   - component: {fileID: 319489617}
-  - component: {fileID: 319489618}
   - component: {fileID: 319489619}
+  - component: {fileID: 319489620}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -385,8 +385,10 @@ MonoBehaviour:
   mover: {fileID: 319489607}
   weaponSprite: {fileID: 937699702}
   currentWeapon: {fileID: 0}
-  equipClip: {fileID: 8300000, guid: 189c5e4715089aa499ca6bc6c0a394b1, type: 3}
+  equipClip: {fileID: 8300000, guid: ef48c1139f378384ab529fb8ba81cd5d, type: 3}
   equipVolume: 0.8
+  pickupClip: {fileID: 8300000, guid: 065f0652539b7e84b815a36455ae1d1b, type: 3}
+  pickupVolume: 0.8
   emptyClip: {fileID: 8300000, guid: d18e8ca6f92695c459ca1d6fcc86ebdb, type: 3}
   emptyVolume: 0.8
   aim: {fileID: 319489606}
@@ -431,9 +433,8 @@ MonoBehaviour:
   dodgeVolume: 0.6
   dodgeFallClip: {fileID: 8300000, guid: 60efe6595da820240a58cf005ed278f7, type: 3}
   dodgeFallVolume: 0.9
-  runningClip: {fileID: 8300000, guid: 134f1f5e5486f52498e7a87e8bd5716e, type: 3}
-  runningVolume: 0.4
   sleepDelay: 20
+  canDodge: 1
 --- !u!114 &319489608
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -783,18 +784,6 @@ MonoBehaviour:
   sporeMutatedBulletCount: 5
   sporeMutatedSpread: 10
   sporeGunName: Spore Blaster
---- !u!114 &319489618
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 319489603}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 99d88dd1a96c824488b6a54611073729, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerDialogueInputBlocker
 --- !u!114 &319489619
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -807,6 +796,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f98e5526d597fb54781c1e8c88f761bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInteractor
+--- !u!114 &319489620
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 319489603}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de3172974955eb543a53f334763ff58d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerDialogueInputBlocker
 --- !u!1 &356983338
 GameObject:
   m_ObjectHideFlags: 0
@@ -1117,6 +1118,12 @@ MonoBehaviour:
   musicSource: {fileID: 1670491739}
   musicClip: {fileID: 0}
   audioMixer: {fileID: 24100000, guid: 52248c1612452cc4581a68f10b852298, type: 2}
+  footstepClips:
+  - {fileID: 8300000, guid: 2d9a1cf1cdfb4e34b8f7f42c7c9e9779, type: 3}
+  - {fileID: 8300000, guid: 9e6935c92f5bf7843b1b850ae6ca09c2, type: 3}
+  - {fileID: 8300000, guid: fd58f0110624d7b4e971c1233040a380, type: 3}
+  - {fileID: 8300000, guid: 66af1d549f3f81b449c24c8e30e53bbd, type: 3}
+  footstepVolume: 0.3
 --- !u!4 &395473942
 Transform:
   m_ObjectHideFlags: 0
@@ -1154,7 +1161,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &400685274
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7314,8 +7321,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 480, y: 270}
+  m_AnchoredPosition: {x: 10, y: -4}
+  m_SizeDelta: {x: 581.6, y: 276.6}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &946923465
 Canvas:
@@ -12579,9 +12586,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0591803957f4fc4d9096132528f3e44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DialogueTextEffects
-  waveAmplitude: 4
-  waveFrequency: 2
-  waveSpeed: 3
+  waveAmplitude: 2
+  waveFrequency: 1.8
+  waveSpeed: 2.8
   shakeIntensity: 1.5
   shakeSpeed: 25
   rainbowSpeed: 2

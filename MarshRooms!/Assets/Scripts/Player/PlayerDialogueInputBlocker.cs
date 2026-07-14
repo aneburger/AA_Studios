@@ -31,8 +31,6 @@ public class PlayerDialogueInputBlocker : MonoBehaviour
         if (mover != null) mover.enabled = false;
         if (shooter != null) shooter.enabled = false;
         if (aimer != null) aimer.enabled = false;
-
-        AudioManager.Instance.StopRunningSFX();
     }
 
     private void EnableInput()

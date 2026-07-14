@@ -32,7 +32,6 @@ public class DialogueTrigger : MonoBehaviour
 
     public void TriggerDialogue()
     {
-        Debug.Log("TriggerDialogue called");
         if (fireOnce && hasPlayed) return;
         if (DialogueManager.Instance == null) return;
         if (DialogueManager.Instance.IsRunning) return;

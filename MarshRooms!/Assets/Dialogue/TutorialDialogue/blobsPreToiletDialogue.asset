@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: blobsPreToiletDialogue
+  m_EditorClassIdentifier: Assembly-CSharp::DialogueSequence
+  lines:
+  - speakerName: Marsh
+    portrait: {fileID: -4332381428540570747, guid: 96f423fd58af20743ab60c2815e095a2, type: 3}
+    talkingPortrait: {fileID: -1126149774, guid: 96f423fd58af20743ab60c2815e095a2, type: 3}
+    text: I'm assuming you're <b>NOT</b> gonna help me with the toilet.
+    voiceClip: {fileID: 0}
+    typewriterSpeedOverride: 0
+  - speakerName: Mr. Blobs
+    portrait: {fileID: 166560441, guid: c829638a635bcaa45b342d27f05bca54, type: 3}
+    talkingPortrait: {fileID: 1138976220, guid: c829638a635bcaa45b342d27f05bca54, type: 3}
+    text: <shake><b>Nooooop.</b></shake>
+    voiceClip: {fileID: 0}
+    typewriterSpeedOverride: 10

@@ -16,6 +16,7 @@ public class PlayerShooter : BaseShooter
     [SerializeField] private PlayerMover playerMover;
 
     private bool isShooting = false;
+    private bool canShoot = false;
 
     private float fireRateMultiplier = 1f;
 
@@ -42,6 +43,13 @@ public class PlayerShooter : BaseShooter
         }
     }
 
+    // -- SET CAN SHOOT --
+    public void SetCanShoot(bool value)
+    {
+        canShoot = value;
+        if (!canShoot) isShooting = false;
+    }
+
     // -- SET FIRE RATE --
     public void SetFireRateMultiplier(float multiplier)
     {
@@ -63,7 +71,9 @@ public class PlayerShooter : BaseShooter
 
     // -- SHOOT INPUT --
     public void OnShoot(InputAction.CallbackContext context)
-    {
+    {   
+        if (!canShoot) return;
+        
         if (context.started && IsArmed && !playerMover.IsDodging)
             isShooting = true;
 

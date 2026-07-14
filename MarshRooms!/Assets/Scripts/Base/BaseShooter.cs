@@ -19,6 +19,8 @@ public abstract class BaseShooter : MonoBehaviour
     [Header("Audio")]
     [SerializeField] private AudioClip equipClip;
     [Range(0f, 1f)] public float equipVolume;
+    [SerializeField] private AudioClip pickupClip;
+    [Range(0f, 1f)] public float pickupVolume;
     [SerializeField] private AudioClip emptyClip; 
     [Range(0f, 1f)] public float emptyVolume;
 
@@ -81,20 +83,22 @@ public abstract class BaseShooter : MonoBehaviour
     }
 
     // -- EQUIP WEAPON --
-    public void EquipWeapon(WeaponData weapon)
-    {   
-        // Set current weapon
+    public void EquipWeapon(WeaponData weapon, bool isPickup = false)
+    {
         currentWeapon = weapon;
         nextFireTime = Time.time + 0.2f;
         UpdateWeaponVisuals();
 
-        if (!isFirstEquip)
+        if (isPickup)
         {
-            // Weapon equip effects
+            AudioManager.Instance.PlaySFXWithPitch(pickupClip, pickupVolume);
+        }
+        else if (!isFirstEquip)
+        {
             if (squishCoroutine != null) StopCoroutine(squishCoroutine);
             squishCoroutine = StartCoroutine(SquishWeapon());
             weaponAimer?.ApplyRecoil(currentWeapon.recoilAmount, currentWeapon.recoilDecay);
-            AudioManager.Instance.PlaySFX(equipClip, equipVolume);
+            AudioManager.Instance.PlaySFXWithPitch(equipClip, equipVolume);
         }
 
         isFirstEquip = false;

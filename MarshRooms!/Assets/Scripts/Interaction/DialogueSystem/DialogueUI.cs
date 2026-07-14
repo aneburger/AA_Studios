@@ -38,6 +38,7 @@ public class DialogueUI : MonoBehaviour
 
     private Coroutine typewriterCoroutine;
     private Coroutine dimFadeCoroutine;
+    private int openedFrame = -1;
 
     private void Awake()
     {
@@ -67,6 +68,8 @@ public class DialogueUI : MonoBehaviour
             return;
         }
 
+        if (Time.frameCount == openedFrame) return;
+
         bool advancePressed =
             (Mouse.current != null && (Mouse.current.leftButton.wasPressedThisFrame ||
                                         Mouse.current.rightButton.wasPressedThisFrame)) ||
@@ -92,6 +95,7 @@ public class DialogueUI : MonoBehaviour
         currentSequence = sequence;
         currentLineIndex = 0;
         onCompleteCallback = onComplete;
+        openedFrame = Time.frameCount;
 
         dialoguePanel.SetActive(true);
         continueIndicator.SetActive(false);
@@ -169,6 +173,9 @@ public class DialogueUI : MonoBehaviour
         dialogueText.text = "";
         dialogueText.maxVisibleCharacters = 0;
         dialogueText.text = fullText;
+
+        yield return null;
+
         dialogueText.ForceMeshUpdate();
 
         int totalChars = dialogueText.textInfo.characterCount;

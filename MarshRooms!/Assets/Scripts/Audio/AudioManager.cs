@@ -17,6 +17,10 @@ public sealed class AudioManager : MonoBehaviour
     [Header("Mixer")]
     [SerializeField] private AudioMixer audioMixer;
 
+    [Header("Footstep Sounds")]
+    [SerializeField] private AudioClip[] footstepClips;
+    [SerializeField] private float footstepVolume = 0.5f;
+
     private AudioSource runningSFX;
 
     // -- AWAKE --
@@ -110,17 +114,20 @@ public sealed class AudioManager : MonoBehaviour
         source = null;
     }
 
-    // -- START RUNNING SFX --
-    public void StartRunningSFX(AudioClip clip, float volume, float pitch)
+    // -- PLAY FOOTSTEP --
+    public void PlayFootstep()
     {
-        if (runningSFX != null) return;
-        PlayLoopingSFX(ref runningSFX, clip, volume, pitch);
+        if (footstepClips == null || footstepClips.Length == 0) return;
+        
+        AudioClip clip = footstepClips[Random.Range(0, footstepClips.Length)];
+        PlaySFXWithPitch(clip, footstepVolume, 0.1f);
     }
 
-    // -- STOP RUNNING SFX --
-    public void StopRunningSFX()
+    // -- SET RUNNING SFX PITCH --
+    public void SetRunningSFXPitch(float pitch)
     {
-        StopLoopingSFX(ref runningSFX);
+        if (runningSFX != null)
+            runningSFX.pitch = pitch;
     }
 
     // -- DAMPEN AUDIO --

@@ -6,6 +6,7 @@ public class WeaponPickup : MonoBehaviour
 {
     [Header("Weapon Data")]
     [SerializeField] public WeaponData weaponData;
+    [SerializeField] public bool setsAsDefault = false;
 
     public int ammo = -1;
 
@@ -46,6 +47,8 @@ public class WeaponPickup : MonoBehaviour
     {
         if (cachedWeaponSlot == null) return;
         cachedWeaponSlot.PickupWeapon();
+        if (setsAsDefault)
+            TutorialDirector.Instance?.OnPlungerPickedUp();
     }
 
     // -- ON DESTROY --

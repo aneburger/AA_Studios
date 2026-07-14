@@ -17,6 +17,7 @@ public class Interactable : MonoBehaviour
 
     private InteractIndicator indicator;
     private MaterialPropertyBlock mpb;
+    private bool interactionLocked = false;
 
     private static readonly int OutlineEnabledID   = Shader.PropertyToID("_OutlineEnabled");
     private static readonly int OutlineThicknessID = Shader.PropertyToID("_OutlineThickness");
@@ -43,6 +44,7 @@ public class Interactable : MonoBehaviour
     // -- PLAYER ENTERS RANGE --
     public void OnPlayerEnterRange()
     {
+        if (!enabled) return;
         PlayerInRange = true;
         SetOutline(true);
     }
@@ -54,10 +56,22 @@ public class Interactable : MonoBehaviour
         SetOutline(false);
     }
 
+    // -- SET INTERACTION --
+    public void SetInteractionLocked(bool locked)
+    {
+        interactionLocked = locked;
+
+        if (locked)
+            SetOutline(false);
+        else if (PlayerInRange)
+            SetOutline(true);
+    }
+
     // -- TRY INTERACT --
     public void TryInteract()
     {
-        if (!PlayerInRange) return;
+        if (!enabled) return;
+        if (!PlayerInRange || interactionLocked) return;
         OnInteract?.Invoke();
     }
 

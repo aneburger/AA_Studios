@@ -175,7 +175,6 @@ public class PlayerHealth : BaseHealth
         base.Die();
         OnPlayerDeath?.Invoke();
 
-        AudioManager.Instance.StopRunningSFX();
         AudioManager.Instance.StopMusic();
         AudioManager.Instance.PlaySFX(dieClip, dieVolume);
 
@@ -204,7 +203,6 @@ public class PlayerHealth : BaseHealth
     // -- ON DISABLE --
     private void OnDisable()
     {
-        if (AudioManager.Instance != null)
-            AudioManager.Instance.StopRunningSFX();
+        
     }
 }

@@ -23,6 +23,7 @@ public class ToiletHealth : BaseHealth
 
     private Vector3 originalPosition;
     private bool isDying = false;
+    private bool firstHit = false;
 
     // -- AWAKE --
     protected override void Awake()
@@ -48,6 +49,12 @@ public class ToiletHealth : BaseHealth
         // Damage numbers
         Vector2 topPos = GetTopPosition();
         VFXManager.Instance?.SpawnDamageNumber(amount * 10, topPos);
+
+        if (!firstHit)
+        {
+            firstHit = true;
+            TutorialDirector.Instance?.OnToiletShot();
+        }
     }
 
     // -- HIT EFFECT --
@@ -57,6 +64,13 @@ public class ToiletHealth : BaseHealth
         AudioManager.Instance?.PlaySFXWithPitch(hurtClip, hurtVolume, 0.15f);
         anim?.SetTrigger("TakeDamage");
         StartCoroutine(ShakeRoutine());
+    }
+
+    // -- HIT ANITMATION --
+    public void PlayHitAnimation()
+    {
+        if (IsDead()) return;
+        anim?.SetTrigger("TakeDamage");
     }
 
     // -- DIE --

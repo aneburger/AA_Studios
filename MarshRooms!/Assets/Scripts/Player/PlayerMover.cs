@@ -28,8 +28,6 @@ namespace TopDown.Movement
         [Range(0f, 1f)] public float dodgeVolume;
         [SerializeField] private AudioClip dodgeFallClip;
         [Range(0f, 1f)] public float dodgeFallVolume;
-        [SerializeField] private AudioClip runningClip;
-        [Range(0f, 1f)] public float runningVolume;
 
         [Header("Sleep Settings")]
         [SerializeField] private float sleepDelay = 30f;
@@ -45,6 +43,7 @@ namespace TopDown.Movement
 
         private float dodgeCooldownTimer;
         private bool isDodging;
+        public bool canDodge = true;
         public bool IsDodging => isDodging;
 
         private float scrollCooldown = 0.35f;
@@ -76,16 +75,10 @@ namespace TopDown.Movement
                         VFXManager.Instance.SpawnWalkDust(transform.position);
                         lastDustPosition = transform.position;
                     }
-
-                    // When moving starts
-                    AudioManager.Instance.StartRunningSFX(runningClip, runningVolume, 2.0f);
                 }
                 else
                 {
                     lastDustPosition = transform.position;
-
-                    // When moving stops
-                    AudioManager.Instance.StopRunningSFX();
                 }
 
                 anim.SetBool("isWalking", isMoving);
@@ -146,6 +139,7 @@ namespace TopDown.Movement
         // -- DODGE INPUT --
         public void OnDodge(InputAction.CallbackContext context)
         {
+            if(!canDodge) return;
             if (!context.started) return;
             if (DialogueManager.Instance != null && DialogueManager.Instance.IsRunning) return;
 
@@ -168,12 +162,7 @@ namespace TopDown.Movement
         }
 
         // -- INTERACT INPUT --
-        public void OnInteract(InputAction.CallbackContext context)
-        {
-            if (!context.started) return;
-            if (DialogueManager.Instance != null && DialogueManager.Instance.IsRunning) return;
-            weaponSlot.PickupWeapon();
-        }
+        public void OnInteract(InputAction.CallbackContext context){}
 
         // -- SET SLEEPING --
         public void SetSleeping(bool sleeping)
@@ -191,9 +180,6 @@ namespace TopDown.Movement
             shooter.HideWeapon(true);
             anim.SetTrigger("Dodge");
             AudioManager.Instance.PlaySFX(dodgeClip, dodgeVolume);
-
-            // Stop running audio when dodging:
-            AudioManager.Instance.StopRunningSFX();
 
             // Determine dodge direction
             Vector2 dodgeDirection;

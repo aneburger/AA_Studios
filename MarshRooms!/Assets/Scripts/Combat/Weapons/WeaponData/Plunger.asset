@@ -23,6 +23,9 @@ MonoBehaviour:
   bulletSpeed: 15
   maxAmmo: -1
   firePointOffset: {x: 0, y: -0.1}
+  flipOffsetOnAimFlip: 0
+  bulletCount: 1
+  spreadAngle: 15
   sprite: {fileID: -5603803822816017939, guid: a1ef06a7ec304f54dad6e229c4e389d9, type: 3}
   hudSprite: {fileID: -4325791456958072856, guid: c4c2e684b9f1e5e45a511db0c83c4560, type: 3}
   ammoDisplaySprite: {fileID: 8645119937084444054, guid: 0c6a9cca0aa0f2c4f9491a5cbd3eb0e4, type: 3}

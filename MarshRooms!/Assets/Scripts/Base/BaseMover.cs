@@ -60,6 +60,19 @@ namespace TopDown.Movement
         {
             facingOverride = direction.sqrMagnitude > 0.001f ? direction : (Vector2?)null;
         }
+
+        // -- SET MOVE INPUTv --
+        public void SetMoveInput(Vector2 input)
+        {
+            moveInput = input;
+        }
+
+        // -- STOP MOVEMENT IMMEDIATELY --
+        public void StopMovement()
+        {
+            moveInput = Vector2.zero;
+            body.linearVelocity = Vector2.zero;
+        }
         
         // -- CLEAR FACING --
         public void ClearFacingOverride()

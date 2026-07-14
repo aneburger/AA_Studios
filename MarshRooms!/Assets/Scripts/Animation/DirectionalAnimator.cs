@@ -29,6 +29,12 @@ public class DirectionalAnimator : MonoBehaviour
         anim.SetBool("isWalking", walking);
     }
 
+    // -- PLAY FOOTSTEP SOUND -- 
+    public void PlayFootstep()
+    {
+        AudioManager.Instance?.PlayFootstep();
+    }
+
     // -- SET ANIMATION SPEED --
     public void SetAnimationSpeed(float speed)
     {

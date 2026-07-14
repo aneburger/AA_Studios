@@ -7,9 +7,11 @@ using TopDown.Movement;
 
 public class TutorialDirector : MonoBehaviour
 {
-    // ── Dialogue Sequences ───────────────────────────────────────────
+    // -- Dialogue Sequences --
     [Header("Dialogue")]
     [SerializeField] private DialogueSequence openingDialogue;
+    [SerializeField] private DialogueSequence plungerPickupDialogue;
+
     [SerializeField] private DialogueSequence toiletFailDialogue;
     [SerializeField] private DialogueSequence toiletShootDialogue;
     [SerializeField] private DialogueSequence toiletWinDialogue;
@@ -24,18 +26,38 @@ public class TutorialDirector : MonoBehaviour
     [SerializeField] private DialogueSequence evilChefDialogue;
     [SerializeField] private DialogueSequence marsEndDialogue;
 
-    // ── Scene Objects ────────────────────────────────────────────────
+    [Header("Mr Blobs Dialogue")]
+    [SerializeField] private DialogueSequence blobsPreToiletDialogue;
+    [SerializeField] private DialogueSequence blobsToiletDialogue;
+    [SerializeField] private DialogueSequence blobsPostToiletDialogue;
+
+    [Header("Bed Setup")]
+    [SerializeField] private Transform bedExitPosition;
+    [SerializeField] private Collider2D bedCollider;
+    [SerializeField] private float walkOffBedSpeed;
+
+    // -- Scene Objects --
     [Header("Scene Objects")]
-    //[SerializeField] private GameObject wasdHint;               // WASD sprite on the floor
-    [SerializeField] private GameObject plungerPickup;          // the plunger interactable
-    [SerializeField] private GameObject toilet;                 // toilet enemy/dummy object
-    //[SerializeField] private GameObject door;                   // door enemies burst through
-    [SerializeField] private GameObject mrBlobs;                // snail object
-    //[SerializeField] private GameObject evilChef;              // evil chef prefab/object
+    [SerializeField] private ToiletHealth toiletHealth;
+    [SerializeField] private GameObject toilet;
+    [SerializeField] private GameObject plungerPickup;
+    //[SerializeField] private GameObject door;
+    [SerializeField] private GameObject mrBlobs;
+    //[SerializeField] private GameObject evilChef;
+
+    // -- Scene Objects --
+    [Header("Interaction")]
+    [SerializeField] private Interactable toiletInteractable;
 
     // ── Prompts ──────────────────────────────────────────────────────
     [Header("Prompts")]
-    [SerializeField] private GameObject shootPrompt;            // "left click to shoot" UI
+    [SerializeField] private GameObject wasdHint;
+    [SerializeField] private float wasdHintDelay = 3f;
+    [SerializeField] private SpriteFader wasdHintFader;
+
+    [SerializeField] private GameObject shootPrompt;
+    [SerializeField] private SpriteFader shootPromptFader;
+
     [SerializeField] private GameObject rightClickPrompt;       // "right click to mutate" UI
 
     // ── Enemy Waves ──────────────────────────────────────────────────
@@ -48,15 +70,33 @@ public class TutorialDirector : MonoBehaviour
     // ── Audio ────────────────────────────────────────────────────────
     [Header("Audio")]
     [SerializeField] private AudioClip houseMusicClip;
+    [Range(0f, 1f)] public float houseMusicVolume;
     [SerializeField] private AudioClip crashBangClip;
+    [Range(0f, 1f)] public float crashBangVolume;
+    [SerializeField] private AudioClip toiletUnclogAttemptClip;
+    [Range(0f, 1f)] public float toiletUnclogAttemptVolume;
+    [SerializeField] private AudioClip triggerClickClip;
+    [Range(0f, 1f)] public float triggerClickVolume;
     [SerializeField] private AudioClip toiletFlushClip;
+    [Range(0f, 1f)] public float toiletFlushtVolume;
     [SerializeField] private AudioClip fightMusicClip;
+
+    [Header("Toilet Fail SFX Timing")]
+    [SerializeField] private float toiletSfxInitialPause = 0.4f;
+    [SerializeField] private float toiletSfxMidPause = 0.5f;
+    [SerializeField] private float toiletSfxRapidInterval = 0.15f;
+
+    [Header("Trigger Discovery SFX Timing")]
+    [SerializeField] private float triggerClickPause = 0.5f;
+    [SerializeField] private float triggerClickGap = 0.4f;
 
     // -- References --
     private Transform playerTransform;
     private PlayerMover playerMover;
+    private BaseMover playerBaseMover;
     private PlayerShooter playerShooter;
     private PlayerInput playerInput;
+    private PlayerAimer playerAimer;
 
     // ── Internal State ───────────────────────────────────────────────
     private bool plungerPickedUp = false;
@@ -70,16 +110,24 @@ public class TutorialDirector : MonoBehaviour
     private bool sporeBarFull = false;
     private bool mutateActivated = false;
     private bool shootingEnabled = false;
+
     public static TutorialDirector Instance { get; private set; }
 
+    public enum TutorialStage
+    {
+        HouseExplore,
+        ToiletBroken,
+        PostToilet,
+        Combat
+    }
+
+    public TutorialStage CurrentStage { get; private set; } = TutorialStage.HouseExplore;
+
+    // -- AWAKE --
     private void Awake()
     {
         Instance = this;
-    }
 
-    // ── START ────────────────────────────────────────────────────────
-    private void Start()
-    {
         GameObject player = GameObject.FindWithTag("Player");
         if (player != null)
         {
@@ -87,16 +135,36 @@ public class TutorialDirector : MonoBehaviour
             playerMover = player.GetComponent<PlayerMover>();
             playerShooter = player.GetComponent<PlayerShooter>();
             playerInput = player.GetComponent<PlayerInput>();
+            playerBaseMover = player.GetComponent<BaseMover>();
+            playerAimer = player.GetComponent<PlayerAimer>();
+
+            if (playerInput != null) playerInput.enabled = false;
+            if (playerMover != null) playerMover.enabled = false;
+            if (playerShooter != null) playerShooter.enabled = false;
+        }
+    }
+
+    // -- START --
+    private void Start()
+    {   
+        toiletInteractable?.SetInteractionLocked(true);
+        if (toiletInteractable != null) toiletInteractable.enabled = false;
+
+        GameObject player = GameObject.FindWithTag("Player");
+        if (player != null)
+        {
+            playerTransform = player.transform;
+            playerMover = player.GetComponent<PlayerMover>();
+            playerShooter = player.GetComponent<PlayerShooter>();
+            playerInput = player.GetComponent<PlayerInput>();
+            playerBaseMover = player.GetComponent<BaseMover>();
         }
         
         // Hide everything that shouldn't be visible yet
-        //shootPrompt?.SetActive(false);
+        shootPrompt?.SetActive(false);
         //rightClickPrompt?.SetActive(false);
-        minigunPickup?.SetActive(false);
+        //minigunPickup?.SetActive(false);
         //evilChef?.SetActive(false);
-
-        // Disable shooting until taught
-        if (playerShooter != null) playerShooter.enabled = false;
 
         // Hide waves
         SetWaveActive(wave1Enemies, false);
@@ -106,56 +174,115 @@ public class TutorialDirector : MonoBehaviour
         StartCoroutine(RunTutorial());
     }
 
-    // -- MASTER SEQUENCE --
+    // ======================== MASTER SEQUENCE ========================
+
+    // -- RUN TUTORIAL --
     private IEnumerator RunTutorial()
     {  
         yield return null;
 
-        // PART 1: Intro dialogue
-
-        // No moving at start
-        if (playerInput != null) playerInput.enabled = false;
-        if (playerMover != null) playerMover.enabled = false;
-        if (playerShooter != null) playerShooter.enabled = false;
-
+        // ==== PART 1: Intro dialogue ====
+        
         playerMover?.SetSleeping(true);
 
         // Fade in from black
-        ScreenEffects.Instance?.FadeFromBlack(1.7f);
+        ScreenEffects.Instance?.FadeFromBlack(1.5f);
         yield return new WaitForSeconds(1f);
 
         // Fade in house music
-        AudioManager.Instance?.FadeInMusic(houseMusicClip, 1f);
-        yield return new WaitForSeconds(2.5f);
+        AudioManager.Instance?.FadeInMusic(houseMusicClip, 0.5f);
+        yield return new WaitForSeconds(3f);
 
-        // Wake marsh up
+        // Wake up
         playerMover?.SetSleeping(false);
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1f);
+
+        // Walk off bed
+        yield return StartCoroutine(WalkOffBed());
+        yield return new WaitForSeconds(1f);
 
         // Opening dialogue
         yield return StartCoroutine(PlayDialogue(openingDialogue));
 
-        // Now let player move
+        // Now let player move 
         if (playerMover != null) playerMover.enabled = true;
         if (playerInput != null) playerInput.enabled = true;
 
+        // Slow movement for chill vibes, no dodging yet
+        playerBaseMover?.SetSpeed(playerBaseMover.OriginalSpeed * 0.7f);
+        playerBaseMover?.DirectionalAnimator?.SetAnimationSpeed(0.7f);
+        playerMover.canDodge = false;
 
-        // PART 2: WASD hint
+        // ==== PART 2: WASD hint ====
+        Coroutine hintRoutine = StartCoroutine(WasdHintRoutine());
+
+        // Wait for player to actually move
+        yield return StartCoroutine(WaitForPlayerToMove());
+
+        // Stop hint routine first
+        StopCoroutine(hintRoutine);
+
+        // Only fade out if it was actually visible
+        if (wasdHintFader != null && wasdHintFader.gameObject.activeSelf)
+        {
+            wasdHintFader.FadeOut();
+            yield return new WaitForSeconds(0.3f);
+        }
+
+        // ==== PART 3: House exploration ====
+
+        // Next Dialogue stage
+        CurrentStage = TutorialStage.HouseExplore;
+
+        // Wait untl plunger is picked up
+        yield return StartCoroutine(WaitUntil(() => plungerPickedUp));
+
+        // Dialogue after plunger picked up
+        yield return new WaitForSeconds(0.3f);
+        yield return StartCoroutine(PlayDialogue(plungerPickupDialogue));
+        
+        // Player can't shoot yet
+        playerShooter?.SetCanShoot(false);
+
+        // Toilet is now interactable
+        toiletInteractable?.SetInteractionLocked(false);
+        CurrentStage = TutorialStage.ToiletBroken;
+
+        // ==== PART 4: Interact with toilet - fail ====
+        yield return StartCoroutine(WaitUntil(() => toiletInteracted));
+        yield return StartCoroutine(ToiletFailSfxSequence());
+        yield return StartCoroutine(PlayDialogue(toiletFailDialogue));
+
+        // Discover trigger
+        yield return StartCoroutine(TriggerClickSfxSequence());
+        if (toiletInteractable != null) toiletInteractable.enabled = false;
+
+        // ==== PART 5: Teach shooting ====
+        yield return StartCoroutine(PlayDialogue(toiletShootDialogue));
+        yield return new WaitForSeconds(0.4f);
+
+        shootPrompt?.SetActive(true);
+        shootPromptFader?.FadeIn();
+        playerShooter?.SetCanShoot(true);
+
+        // Wait until player lands a shot on the toilet
+        yield return StartCoroutine(WaitUntil(() => shootingEnabled));
+
+        shootPromptFader?.FadeOut();
+        yield return new WaitForSeconds(0.3f);
+        shootPrompt?.SetActive(false);
+
+        // ==== PART 6: Wait for toilet to die ====
+        yield return StartCoroutine(WaitUntil(() => toiletDead));
+        yield return StartCoroutine(PlayDialogue(toiletWinDialogue));
+
+
+
+
         
     /*
 
-        // ── BEAT 2: WASD hint ────────────────────────────────────────
-        wasdHint?.SetActive(true);
-        yield return StartCoroutine(WaitForPlayerToMove());
-        wasdHint?.SetActive(false);
-
-        // ── BEAT 3: Wait for plunger pickup ──────────────────────────
-        yield return StartCoroutine(WaitUntil(() => plungerPickedUp));
-
-        // ── BEAT 4: Player interacts with toilet (fails) ──────────────
-        yield return StartCoroutine(WaitUntil(() => toiletInteracted));
-        yield return StartCoroutine(PlayDialogue(toiletFailDialogue));
-
+    
         // ── BEAT 5: Teach shooting ────────────────────────────────────
         yield return StartCoroutine(PlayDialogue(toiletShootDialogue));
         shootPrompt?.SetActive(true);
@@ -238,11 +365,127 @@ public class TutorialDirector : MonoBehaviour
         });*/
     }
 
-    // ================================================================
-    //  HELPERS
-    // ================================================================
+    // ======================== HELPERS ========================
 
-    // Plays dialogue and waits for it to finish
+    // -- LOCK PLAYER --
+    private void LockPlayer()
+    {
+        playerBaseMover?.StopMovement();
+        if (playerInput != null) playerInput.enabled = false;
+        if (playerMover != null) playerMover.enabled = false;
+        if (playerAimer != null) playerAimer.enabled = false;
+    }
+
+    // -- UNLOCK PLAYER --
+    private void UnlockPlayer()
+    {
+        if (playerMover != null) playerMover.enabled = true;
+        if (playerInput != null) playerInput.enabled = true;
+        if (playerAimer != null) playerAimer.enabled = true;
+    }
+
+    // -- WALK OFF BED --
+    private IEnumerator WalkOffBed()
+    {
+        if (playerInput != null) playerInput.enabled = false;
+        if (playerMover != null) playerMover.enabled = true;
+
+        Vector2 direction = ((Vector2)bedExitPosition.position - 
+                            (Vector2)playerTransform.position).normalized;
+        
+        playerBaseMover?.SetMoveInput(direction);
+        playerBaseMover?.SetFacingOverride(direction);
+
+        while (Vector2.Distance(playerTransform.position, bedExitPosition.position) > 0.05f)
+        {
+            Vector2 dir = ((Vector2)bedExitPosition.position - (Vector2)playerTransform.position).normalized;
+            playerBaseMover?.SetMoveInput(dir);
+            playerBaseMover?.SetFacingOverride(dir);
+            yield return null;
+        }
+
+        // Stop moving
+        playerBaseMover?.SetMoveInput(Vector2.zero);
+        playerBaseMover?.ClearFacingOverride();
+        playerTransform.position = bedExitPosition.position;
+
+        // Lock bed
+        if (bedCollider != null) bedCollider.enabled = true;
+    }
+
+    // -- WASD HINT --
+    private IEnumerator WasdHintRoutine()
+    {
+        float timer = 0f;
+        bool hintVisible = false;
+
+        while (true)
+        {
+            bool isMoving = Keyboard.current.wKey.isPressed ||
+                            Keyboard.current.aKey.isPressed ||
+                            Keyboard.current.sKey.isPressed ||
+                            Keyboard.current.dKey.isPressed;
+
+            if (isMoving)
+            {
+                if (hintVisible) wasdHintFader?.FadeOut();
+                yield break;
+            }
+
+            timer += Time.deltaTime;
+            if (timer >= wasdHintDelay && !hintVisible)
+            {
+                hintVisible = true;
+                wasdHintFader?.FadeIn();
+            }
+
+            yield return null;
+        }
+    }
+
+    // -- TOILET FAIL SFX SEQUENCE --
+    private IEnumerator ToiletFailSfxSequence()
+    {
+        LockPlayer();
+        toiletInteractable?.SetInteractionLocked(true);
+
+        yield return new WaitForSeconds(toiletSfxInitialPause);
+
+        AudioManager.Instance?.PlaySFXWithPitch(toiletUnclogAttemptClip, toiletUnclogAttemptVolume, 0.1f);
+        toiletHealth?.PlayHitAnimation();
+        yield return new WaitForSeconds(toiletSfxMidPause);
+
+        AudioManager.Instance?.PlaySFXWithPitch(toiletUnclogAttemptClip, toiletUnclogAttemptVolume, 0.1f);
+        toiletHealth?.PlayHitAnimation();
+        yield return new WaitForSeconds(toiletSfxMidPause);
+
+        for (int i = 0; i < 3; i++)
+        {
+            AudioManager.Instance?.PlaySFXWithPitch(toiletUnclogAttemptClip, toiletUnclogAttemptVolume, 0.1f);
+            toiletHealth?.PlayHitAnimation();
+            yield return new WaitForSeconds(toiletSfxRapidInterval);
+        }
+
+        UnlockPlayer();
+    }
+
+    // -- TRIGGER DISCOVERY SFX SEQUENCE --
+    private IEnumerator TriggerClickSfxSequence()
+    {
+        LockPlayer();
+
+        yield return new WaitForSeconds(triggerClickPause);
+
+        AudioManager.Instance?.PlaySFXWithPitch(triggerClickClip, triggerClickVolume, 0.1f);
+        yield return new WaitForSeconds(triggerClickGap);
+
+        AudioManager.Instance?.PlaySFXWithPitch(triggerClickClip, triggerClickVolume, 0.1f);
+        yield return new WaitForSeconds(triggerClickGap);
+
+        UnlockPlayer();
+    }
+
+    // -- PLAY DIALOGUE --
     private IEnumerator PlayDialogue(DialogueSequence sequence)
     {
         if (sequence == null) yield break;
@@ -250,6 +493,24 @@ public class TutorialDirector : MonoBehaviour
         DialogueManager.Instance.StartDialogue(sequence, () => done = true);
         yield return new WaitUntil(() => done);
     }
+
+    // -- GET BLOBS DIALOGUE --
+    public DialogueSequence GetBlobsDialogue()
+    {
+        return CurrentStage switch
+        {
+            TutorialStage.HouseExplore => blobsPreToiletDialogue,
+            TutorialStage.ToiletBroken => blobsToiletDialogue,
+            TutorialStage.PostToilet   => blobsPostToiletDialogue,
+            _                          => null
+        };
+    }
+
+
+
+
+
+
 
     // Waits until a condition is true, checking every frame
     private IEnumerator WaitUntil(System.Func<bool> condition)
@@ -296,8 +557,22 @@ public class TutorialDirector : MonoBehaviour
     //  Call these from other scripts when events happen
     // ================================================================
 
-    public void OnPlungerPickedUp()    => plungerPickedUp = true;
-    public void OnToiletInteracted()   => toiletInteracted = true;
+    public void OnPlungerPickedUp()
+    {   
+        if (plungerPickedUp) return;
+        plungerPickedUp = true;
+        CurrentStage = TutorialStage.ToiletBroken;              
+        if (toiletInteractable != null) toiletInteractable.enabled = true;
+    }
+
+    public void OnToiletInteracted()
+    {
+        toiletInteracted = true;
+        toiletInteractable?.SetInteractionLocked(true);
+    }
+
+    public void OnToiletShot() => shootingEnabled = true;
+
     public void OnToiletDead()         => toiletDead = true;
     public void OnWave1Clear()         => wave1Clear = true;
     public void OnWave2Clear()         => wave2Clear = true;

@@ -74,6 +74,20 @@ public class PlayerWeaponSlot : MonoBehaviour
         WeaponData incoming = nearbyPickup.weaponData;
         int incomingAmmo = nearbyPickup.ammo == -1 ? incoming.maxAmmo : nearbyPickup.ammo;
 
+        // -- SETS AS DEFAULT WEAPON -- 
+        if (nearbyPickup.setsAsDefault)
+        {
+            SaveCurrentAmmo();
+            if (!DropWeapon(0)) return;
+
+            slots[0] = incoming;
+            ammo[0] = incomingAmmo;
+            nearbyPickup.Destroy();
+            currentSlot = 0;
+            EquipCurrentSlot(true);
+            return;
+        }
+
         // -- ALREADY CARRYING THIS WEAPON -- top up ammo instead of picking up
         for (int i = 1; i < slots.Length; i++)
         {
@@ -82,7 +96,7 @@ public class PlayerWeaponSlot : MonoBehaviour
             ammo[i] = Mathf.Min(ammo[i] + incomingAmmo, incoming.maxAmmo);
             nearbyPickup.Destroy();
             currentSlot = i;
-            EquipCurrentSlot();
+            EquipCurrentSlot(true);
             return;
         }
 
@@ -95,40 +109,47 @@ public class PlayerWeaponSlot : MonoBehaviour
             ammo[i]  = incomingAmmo;
             nearbyPickup.Destroy();
             currentSlot = i;
-            EquipCurrentSlot();
+            EquipCurrentSlot(true);
             return;
         }
 
         // -- INVENTORY FULL -- drop current weapon and replace with incoming
         int dropSlot = currentSlot == 0 ? 1 : currentSlot;
-        DropWeapon(dropSlot);
+        if (!DropWeapon(dropSlot)) return;
 
         slots[dropSlot] = incoming;
         ammo[dropSlot]  = incomingAmmo;
         nearbyPickup.Destroy();
         currentSlot = dropSlot;
-        EquipCurrentSlot();
+        EquipCurrentSlot(true);
     }
 
     // -- DROP WEAPON -- spawns pickup in world with remaining ammo
-    private void DropWeapon(int slot)
+    private bool DropWeapon(int slot)
     {
-        if (slots[slot] == null) return;
-        if (slots[slot].pickupPrefab == null) return;
+        if (slots[slot] == null) return true;
 
-        Vector2 dropPos = transform.position;
+        if (slots[slot].pickupPrefab == null)
+        {
+            return false;
+        }
+
+        Vector2 randomOffset = Random.insideUnitCircle * 0.6f;
+        Vector2 dropPos = (Vector2)transform.position + randomOffset;
+
         RoomManager room = FindObjectOfType<RoomManager>();
         if (room != null)
             dropPos = room.GetSafeDropPosition(dropPos);
 
         GameObject dropped = Instantiate(slots[slot].pickupPrefab, dropPos, Quaternion.identity);
-        
+
         WeaponPickup pickup = dropped.GetComponent<WeaponPickup>();
         if (pickup != null)
             pickup.ammo = ammo[slot];
 
         slots[slot] = null;
         ammo[slot]  = 0;
+        return true;
     }
 
     // -- SAVE CURRENT AMMO --
@@ -173,10 +194,10 @@ public class PlayerWeaponSlot : MonoBehaviour
     }
 
     // -- EQUIP CURRENT SLOT --
-    private void EquipCurrentSlot()
+    private void EquipCurrentSlot(bool isPickup = false)
     {
         if (slots[currentSlot] == null) return;
-        shooter.EquipWeapon(slots[currentSlot]);
+        shooter.EquipWeapon(slots[currentSlot], isPickup);
         shooter.SetAmmo(ammo[currentSlot]);
         OnWeaponChanged?.Invoke(slots[currentSlot]);
         UpdateWeaponDisplay();
