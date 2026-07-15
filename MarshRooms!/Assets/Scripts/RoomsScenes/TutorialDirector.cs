@@ -16,10 +16,9 @@ public class TutorialDirector : MonoBehaviour
     [SerializeField] private DialogueSequence toiletWinDialogue;
     [SerializeField] private DialogueSequence crashDialogue;
     [SerializeField] private DialogueSequence enemyBurstDialogue;
-
     [SerializeField] private DialogueSequence minigunDropDialogue;
-    [SerializeField] private DialogueSequence sporeFirstDialogue;
     [SerializeField] private DialogueSequence sporeFullDialogue;
+
     [SerializeField] private DialogueSequence wave3StartDialogue;
     [SerializeField] private DialogueSequence postWave3Dialogue;
     [SerializeField] private DialogueSequence evilChefDialogue;
@@ -56,15 +55,14 @@ public class TutorialDirector : MonoBehaviour
     // -- Prompts --
     [Header("Prompts")]
     [SerializeField] private GameObject wasdPrompt;
-    // This hint will show after player doesnt move for 3 seconds otherwise it never shows
     [SerializeField] private float wasdPromptDelay = 3f;  
     [SerializeField] private SpriteFader wasdPromptFader;
 
     [SerializeField] private GameObject shootPrompt;
     [SerializeField] private SpriteFader shootPromptFader;
 
-    [SerializeField] private GameObject mutatePrompt;
-    [SerializeField] private SpriteFader mutatePromptFader;
+    [SerializeField] private GameObject rightClickPrompt;
+    [SerializeField] private SpriteFader rightClickPromptFader;
 
     [SerializeField] private GameObject scrollPrompt;
     [SerializeField] private SpriteFader scrollPromptFader;
@@ -77,6 +75,13 @@ public class TutorialDirector : MonoBehaviour
     [Header("Ambush")]
     [SerializeField] private GameObject[] wave1Enemies;
     [SerializeField] private Transform[] wave1MoveSpots;
+
+    [SerializeField] private GameObject[] wave2Enemies;
+    [SerializeField] private GameObject[] wave3Enemies;
+
+    [Header("Wave Spawn Timing")]
+    [SerializeField] private float spawnStaggerMin = 0.4f;
+    [SerializeField] private float spawnStaggerMax = 0.9f;
 
     // ── Audio ────────────────────────────────────────────────────────
     [Header("Audio")]
@@ -109,6 +114,7 @@ public class TutorialDirector : MonoBehaviour
     private PlayerShooter playerShooter;
     private PlayerInput playerInput;
     private PlayerAimer playerAimer;
+    private PlayerSporeActivator playerSporeActivator;
 
     // -- Internal State --
     private bool plungerPickedUp = false;
@@ -121,7 +127,7 @@ public class TutorialDirector : MonoBehaviour
     private bool minigunPickedUp = false;
     private bool weaponScrolled = false;
     private bool playerDodged = false;
-    private bool sporeDropped = false;
+    private bool sporeCollectedThisWave = false;
     private bool sporeBarFull = false;
     private bool mutateActivated = false;
     private bool shootingEnabled = false;
@@ -153,6 +159,7 @@ public class TutorialDirector : MonoBehaviour
             playerInput = player.GetComponent<PlayerInput>();
             playerBaseMover = player.GetComponent<BaseMover>();
             playerAimer = player.GetComponent<PlayerAimer>();
+            playerSporeActivator = player.GetComponent<PlayerSporeActivator>();
 
             if (playerInput != null) playerInput.enabled = false;
             if (playerMover != null) playerMover.enabled = false;
@@ -174,19 +181,20 @@ public class TutorialDirector : MonoBehaviour
             playerShooter = player.GetComponent<PlayerShooter>();
             playerInput = player.GetComponent<PlayerInput>();
             playerBaseMover = player.GetComponent<BaseMover>();
+            playerSporeActivator = player.GetComponent<PlayerSporeActivator>();
         }
         
         shootPrompt?.SetActive(false);
         wasdPrompt?.SetActive(false);
         scrollPrompt?.SetActive(false);
         dodgePrompt?.SetActive(false);
-        mutatePrompt?.SetActive(false);
+        rightClickPrompt?.SetActive(false);
         minigunPickup?.SetActive(false);
         //evilChef?.SetActive(false);
 
         // Hide waves
         SetWaveActive(wave1Enemies, false);
-        //SetWaveActive(wave2Enemies, false);
+        SetWaveActive(wave2Enemies, false);
         //SetWaveActive(wave3Enemies, false);
 
         StartCoroutine(RunTutorial());
@@ -220,7 +228,7 @@ public class TutorialDirector : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
         // Opening dialogue
-        /*yield return StartCoroutine(PlayDialogue(openingDialogue));
+        yield return StartCoroutine(PlayDialogue(openingDialogue));
 
         // Now let player move 
         if (playerMover != null) playerMover.enabled = true;
@@ -229,6 +237,7 @@ public class TutorialDirector : MonoBehaviour
         // Slow movement for chill vibes, no dodging yet
         playerBaseMover?.SetSpeed(playerBaseMover.OriginalSpeed * 0.8f);
         playerBaseMover?.DirectionalAnimator?.SetAnimationSpeed(0.8f);
+        playerSporeActivator?.SetCanActivate(false);
         playerMover.canDodge = false;
 
         // ==== PART 2: WASD hint ====
@@ -296,14 +305,8 @@ public class TutorialDirector : MonoBehaviour
 
         // ==== PART 6: Wait for toilet to die ====
         yield return StartCoroutine(WaitUntil(() => toiletDead));
-        yield return StartCoroutine(PlayDialogue(toiletWinDialogue));*/
+        yield return StartCoroutine(PlayDialogue(toiletWinDialogue));
 
-        //REMOVE this later!
-        if (playerMover != null) playerMover.enabled = true;
-        if (playerInput != null) playerInput.enabled = true;
-        if (playerAimer != null) playerAimer.enabled = true;
-        playerShooter?.SetCanShoot(true);
-        playerMover.canDodge = false;
 
         // ==== PART 7: Mr Blobs Moves + Bonding dialogue with Blobs ====
         CurrentStage = TutorialStage.PostToilet;
@@ -352,32 +355,29 @@ public class TutorialDirector : MonoBehaviour
         // Enemy Dialogue
         yield return StartCoroutine(PlayDialogue(enemyBurstDialogue));
         
+        // Make HUD visible here
+
         // Restore full player speed/animation/dodge now that real combat begins
         playerBaseMover?.SetSpeed(playerBaseMover.OriginalSpeed);
         playerBaseMover?.DirectionalAnimator?.SetAnimationSpeed(1f);
         if (playerMover != null) playerMover.canDodge = true;
         UnlockPlayer();
         playerShooter?.SetCanShoot(true);
+        yield return new WaitForSeconds(0.1f); 
 
-        /*// Dodge hint appears (clears on actual dodge, or times out)
-        dodgePrompt?.SetActive(true);
-        dodgePromptFader?.FadeIn();
+        // Show dodge hint
+        StartCoroutine(DodgeHintRoutine());
 
-        yield return StartCoroutine(WaitForConditionOrTimeout(() => playerDodged, 6f));
-
-        dodgePromptFader?.FadeOut();
-        yield return new WaitForSeconds(0.3f);
-        dodgePrompt?.SetActive(false);*/ 
-
-        // NOW hand control to their AI + start the actual fight
+        // Hand control to their AI + start the actual fight
         yield return new WaitForSeconds(1f);
         foreach (var enemy in wave1Enemies)
         {
             EnemyAI ai = enemy?.GetComponent<EnemyAI>();
             if (ai != null) ai.enabled = true;
-            yield return new WaitForSeconds(0.2f);
+            yield return new WaitForSeconds(0.3f);
         }
 
+        // Wait for player to defeat wave
         yield return StartCoroutine(WaitUntil(() => wave1Clear));
 
         // ==== PART 10: Minigun drop + learn weapon switching ====
@@ -398,64 +398,80 @@ public class TutorialDirector : MonoBehaviour
         scrollPromptFader?.FadeIn();
 
         // Wait for player to scroll
-        yield return StartCoroutine(WaitUntil(() => weaponScrolled)); 
+        yield return StartCoroutine(WaitForConditionOrTimeout(() => weaponScrolled, 6f));
 
         scrollPromptFader?.FadeOut();
         yield return new WaitForSeconds(0.3f);
         scrollPrompt?.SetActive(false);
 
-        /*
+        yield return new WaitForSeconds(1f);
 
-    
+        // ==== PART 11: Wave 2 + spore teaching ====
 
-        // ── BEAT 10: Minigun drop + weapon switching ──────────────────
-        minigunPickup?.SetActive(true);
-        yield return StartCoroutine(PlayDialogue(minigunDropDialogue));
-        yield return StartCoroutine(WaitUntil(() => minigunPickedUp));
+        yield return StartCoroutine(SetWaveActiveStaggered(wave2Enemies, true));
+        SubscribeWaveClear(() => wave2Clear = true);
 
-        // ── BEAT 11: Wave 2 + spore teaching ─────────────────────────
-        SetWaveActive(wave2Enemies, true);
-
-        // Wait for first enemy kill to drop spores and trigger dialogue
-        yield return StartCoroutine(WaitUntil(() => sporeDropped));
-        yield return StartCoroutine(PlayDialogue(sporeFirstDialogue));
-
-        // Wait for wave 2 to clear and spore bar to be full
+        // Wait for wave 2 to clear
         yield return StartCoroutine(WaitUntil(() => wave2Clear));
-        yield return StartCoroutine(EnsureSporeBarFull());
-        yield return StartCoroutine(PlayDialogue(sporeFullDialogue));
 
-        // ── BEAT 12: Wave 3 + mutate teaching ────────────────────────
-        SetWaveActive(wave3Enemies, true);
+        sporeCollectedThisWave = SporeManager.Instance != null && SporeManager.Instance.IsFull;
+        SporeManager.Instance.OnSporeCountChanged += HandleSporeCountChanged;
+
+        // Wait for the player to pick up a spore, but don't wait forever if something goes wrong
+        yield return StartCoroutine(WaitForConditionOrTimeout(() => sporeCollectedThisWave, 8f));
+
+        SporeManager.Instance.OnSporeCountChanged -= HandleSporeCountChanged;
+
+        // Small beat, then fill + fire the reveal line
+        yield return new WaitForSeconds(0.3f);
+        SporeManager.Instance?.FillToMax();
+        yield return StartCoroutine(PlayDialogue(sporeFullDialogue));
+        yield return new WaitForSeconds(0.8f);
+
+        //  ==== Part 12: Wave 3 + mutate teaching ==== 
+        foreach (var enemy in wave3Enemies)
+            enemy?.GetComponent<EnemyController>()?.SetExternalAIControl(true);
+
+        LockPlayerKeepInput();
+
+        yield return StartCoroutine(SetWaveActiveStaggered(wave3Enemies, true));
+        SubscribeWaveClear(() => wave3Clear = true);
+
+        // Keep AI disabled so they just stand there, until mutation
+        foreach (var enemy in wave3Enemies)
+        {
+            EnemyAI ai = enemy?.GetComponent<EnemyAI>();
+            if (ai != null) ai.enabled = false;
+        }
+
         yield return StartCoroutine(PlayDialogue(wave3StartDialogue));
 
-        // Show right click prompt, wait for mutate activation
-        mutatePrompt?.SetActive(true);
+        playerSporeActivator?.SetCanActivate(true);
+        rightClickPrompt?.SetActive(true);
+        rightClickPromptFader?.FadeIn();
+
         yield return StartCoroutine(WaitUntil(() => mutateActivated));
-        mutatePrompt?.SetActive(false);
+
+        rightClickPromptFader?.FadeOut();
+        yield return new WaitForSeconds(0.3f);
+        rightClickPrompt?.SetActive(false);
+
+        UnlockPlayerFull();
+
+        // Mutation is live — release enemies and player together
+        foreach (var enemy in wave3Enemies)
+        {
+            EnemyAI ai = enemy?.GetComponent<EnemyAI>();
+            if (ai != null) ai.enabled = true;
+            yield return new WaitForSeconds(Random.Range(0.7f, 1.1f));
+        }
 
         yield return StartCoroutine(WaitUntil(() => wave3Clear));
 
-        // ── BEAT 13: Post-fight + evil chef ──────────────────────────
+        // -- Part 13: Post-fight + evil chef --
+        yield return new WaitForSeconds(4f);
         yield return StartCoroutine(PlayDialogue(postWave3Dialogue));
-
-        evilChef?.SetActive(true);
-        yield return new WaitForSeconds(0.5f);
-        yield return StartCoroutine(PlayDialogue(evilChefDialogue));
-
-        // Evil chef takes Mr Blobs
-        mrBlobs?.SetActive(false);
-        evilChef?.SetActive(false);
-
-        yield return StartCoroutine(PlayDialogue(marsEndDialogue));
-
-        // ── BEAT 14: Fade to level 1 ──────────────────────────────────
-        AudioManager.Instance?.FadeOutMusic(1.5f);
-        yield return new WaitForSeconds(0.5f);
-        ScreenEffects.Instance?.FadeToBlack(1.5f, () =>
-        {
-            UnityEngine.SceneManagement.SceneManager.LoadScene("Level1");
-        });*/
+        
     }
 
     // ======================== HELPERS ========================
@@ -475,6 +491,27 @@ public class TutorialDirector : MonoBehaviour
         if (playerMover != null) playerMover.enabled = true;
         if (playerInput != null) playerInput.enabled = true;
         if (playerAimer != null) playerAimer.enabled = true;
+    }
+
+    // -- PARTIAL LOCK --
+    private void LockPlayerKeepInput()
+    {
+        playerBaseMover?.StopMovement();
+        playerMover?.SetCanMove(false);
+        if (playerMover != null) playerMover.enabled = false;
+        if (playerAimer != null) playerAimer.enabled = false;
+        if (playerMover != null) playerMover.canDodge = false;
+        playerShooter?.SetCanShoot(false);
+    }
+
+    // -- PARTIAL UNLOCK --
+    private void UnlockPlayerFull()
+    {
+        if (playerMover != null) playerMover.enabled = true;
+        playerMover?.SetCanMove(true);
+        if (playerAimer != null) playerAimer.enabled = true;
+        if (playerMover != null) playerMover.canDodge = true;
+        playerShooter?.SetCanShoot(true);
     }
 
     // -- WALK OFF BED --
@@ -683,6 +720,23 @@ public class TutorialDirector : MonoBehaviour
         }
     }
 
+    // -- SET WAVE ACTIVE (STAGGERED) --
+    private IEnumerator SetWaveActiveStaggered(GameObject[] wave, bool spawnAnimate)
+    {
+        if (wave == null) yield break;
+
+        foreach (var enemy in wave)
+        {
+            if (enemy == null) continue;
+            if (spawnAnimate)
+                enemy.GetComponent<EnemyController>()?.SetShouldSpawnAnimate();
+            enemy.SetActive(true);
+
+            float delay = Random.Range(spawnStaggerMin, spawnStaggerMax);
+            yield return new WaitForSeconds(delay);
+        }
+    }
+
     // -- PLAY DIALOGUE --
     private IEnumerator PlayDialogue(DialogueSequence sequence)
     {
@@ -702,6 +756,19 @@ public class TutorialDirector : MonoBehaviour
             TutorialStage.PostToilet   => blobsPostToiletDialogue,
             _                          => null
         };
+    }
+
+    // -- DODGE HINT ROUTINE --
+    private IEnumerator DodgeHintRoutine()
+    {
+        dodgePrompt?.SetActive(true);
+        dodgePromptFader?.FadeIn();
+
+        yield return StartCoroutine(WaitForConditionOrTimeout(() => playerDodged || wave1Clear, 6f));
+
+        dodgePromptFader?.FadeOut();
+        yield return new WaitForSeconds(0.3f);
+        dodgePrompt?.SetActive(false);
     }
 
     // Waits until a condition is true, checking every frame
@@ -737,11 +804,16 @@ public class TutorialDirector : MonoBehaviour
     }
 
     // Activates or deactivates a wave of enemies
-    private void SetWaveActive(GameObject[] wave, bool active)
+    private void SetWaveActive(GameObject[] wave, bool active, bool spawnAnimate = false)
     {
         if (wave == null) return;
         foreach (var enemy in wave)
-            if (enemy != null) enemy.SetActive(active);
+        {
+            if (enemy == null) continue;
+            if (active && spawnAnimate)
+                enemy.GetComponent<EnemyController>()?.SetShouldSpawnAnimate();
+            enemy.SetActive(active);
+        }
     }
 
     // -- SUBSCRIBE WAVE CLEAR --
@@ -766,17 +838,21 @@ public class TutorialDirector : MonoBehaviour
         }
     }
 
+    private void HandleSporeCountChanged(int current, int max)
+    {
+        if (current > 0)
+            sporeCollectedThisWave = true;
+    }
+
     // ================================================================
     //  PUBLIC CALLBACKS
-    //  Call these from other scripts when events happen
     // ================================================================
 
     public void OnPlungerPickedUp()
     {   
         if (plungerPickedUp) return;
         plungerPickedUp = true;
-        //REMOVE this later!
-        //CurrentStage = TutorialStage.ToiletBroken;              
+        CurrentStage = TutorialStage.ToiletBroken;              
         if (toiletInteractable != null) toiletInteractable.enabled = true;
     }
 
@@ -792,7 +868,5 @@ public class TutorialDirector : MonoBehaviour
     public void OnWeaponScrolled() => weaponScrolled = true;
     public void OnPlayerDodged() => playerDodged = true;
     public void OnMinigunPickedUp()    => minigunPickedUp = true;
-
-    public void OnSporeDropped()       => sporeDropped = true;
     public void OnMutateActivated()    => mutateActivated = true;
 }

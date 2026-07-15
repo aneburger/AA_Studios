@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d396eeaa05b4f404ea49b1f5e4965776, type: 3}
+  m_Name: wave3StartDialogue
+  m_EditorClassIdentifier: Assembly-CSharp::DialogueSequence
+  lines:
+  - speakerName: Marsh
+    portrait: {fileID: -1126149774, guid: 96f423fd58af20743ab60c2815e095a2, type: 3}
+    talkingPortrait: {fileID: 2022291355, guid: 96f423fd58af20743ab60c2815e095a2, type: 3}
+    text: There are too many of them!
+    voiceClip: {fileID: 0}
+    typewriterSpeedOverride: 0
+  - speakerName: Marsh
+    portrait: {fileID: 690529435, guid: 96f423fd58af20743ab60c2815e095a2, type: 3}
+    talkingPortrait: {fileID: 1733841228, guid: 96f423fd58af20743ab60c2815e095a2, type: 3}
+    text: Wait, something feels <b><wave>weird</wave></b>
+    voiceClip: {fileID: 0}
+    typewriterSpeedOverride: 0

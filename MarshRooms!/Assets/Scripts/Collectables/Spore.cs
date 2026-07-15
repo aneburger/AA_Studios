@@ -21,6 +21,7 @@ public class Spore : MonoBehaviour
     [Header("Lifetime")]
     [SerializeField] private float lifetime = 8f;
     [SerializeField] private float flickerStart = 5f;
+    [SerializeField] private bool isPersistent = false;
 
     [Header("Audio")]
     [SerializeField] private AudioClip sporeCollectClip;
@@ -104,11 +105,15 @@ public class Spore : MonoBehaviour
         AudioManager.Instance.PlaySFXWithPitch(sporeCollectClip, sporeCollectVolume, 0.1f);
     }
 
+    public void SetPersistent(bool persistent) => isPersistent = persistent;
+
     // -- LIFETIME TIMER --
     private IEnumerator LifetimeTimer()
-    {
+    {   
         // Wait until flicker starts
         yield return new WaitForSeconds(flickerStart);
+        
+        if (isPersistent) yield break;
 
         // Flicker
         float elapsed = 0f;
@@ -117,6 +122,7 @@ public class Spore : MonoBehaviour
 
         while (elapsed < flickerDuration)
         {
+            if (isPersistent) yield break;
             sr.enabled = !sr.enabled;
             sporeLight.enabled = sr.enabled;
             yield return new WaitForSeconds(flickerInterval);

@@ -31,7 +31,10 @@ public class EnemyHealth : BaseHealth
 
         RoomManager room = FindObjectOfType<RoomManager>();
 
-        int amount = Random.Range(0, controller.Data.maxSporeDrops + 1);
+        int amount = controller.Data.guaranteesSporeDrop
+            ? Random.Range(1, controller.Data.maxSporeDrops + 1)
+            : Random.Range(0, controller.Data.maxSporeDrops + 1);
+
         for (int i = 0; i < amount; i++)
         {
             Vector2 offset = Random.insideUnitCircle * 0.5f;

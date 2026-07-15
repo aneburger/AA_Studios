@@ -43,8 +43,10 @@ namespace TopDown.Movement
 
         private float dodgeCooldownTimer;
         private bool isDodging;
-        public bool canDodge = true;
         public bool IsDodging => isDodging;
+
+        public bool canDodge = true;
+        private bool canMove = true;
 
         private float scrollCooldown = 0.35f;
         private float scrollCooldownTimer;
@@ -136,9 +138,17 @@ namespace TopDown.Movement
             anim.SetBool("isWalking", false);
         }
 
+        // -- SET CAN MOVE --
+        public void SetCanMove(bool value)
+        {
+            canMove = value;
+            if (!canMove) moveInput = Vector2.zero;
+        }
+
         // -- MOVE INPUT --
         public void OnMove(InputAction.CallbackContext context)
-        {
+        {   
+            if (!canMove) return;
             moveInput = context.ReadValue<Vector2>();
         }
 

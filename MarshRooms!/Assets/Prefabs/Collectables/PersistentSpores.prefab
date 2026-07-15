@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 172920589799118003}
   - component: {fileID: 2302781380950241632}
   m_Layer: 0
-  m_Name: Spores
+  m_Name: PersistentSpores
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -207,6 +207,6 @@ MonoBehaviour:
   groundY: 0
   lifetime: 15
   flickerStart: 11
-  isPersistent: 0
+  isPersistent: 1
   sporeCollectClip: {fileID: 8300000, guid: 7bb71f0d325ab214492cdff2a425731c, type: 3}
   sporeCollectVolume: 1

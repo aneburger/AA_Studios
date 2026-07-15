@@ -8,6 +8,7 @@ public class EnemyController : MonoBehaviour
 {
     [Header("Settings")]
     [SerializeField] private EnemyData enemyData;
+    [SerializeField] private bool externalAIControl = false;
     [SerializeField] private float spawnDuration = 1.5f;
 
     [Header("Audio")]
@@ -86,6 +87,8 @@ public class EnemyController : MonoBehaviour
         shouldSpawnAnimate = true;
     }
 
+    public void SetExternalAIControl(bool value) => externalAIControl = value;
+
     // -- SPAWN ANIMATION --
     private IEnumerator SpawnAnimation()
     {
@@ -99,8 +102,8 @@ public class EnemyController : MonoBehaviour
         yield return new WaitForSeconds(spawnDuration);
 
         shooter?.HideWeapon(false);
-        if (ai != null) ai.enabled = true;
         if (mover != null) mover.enabled = true;
+        if (!externalAIControl && ai != null) ai.enabled = true;
         IsSpawning = false;
     }
 }

@@ -32,6 +32,7 @@ public class EnemyData : ScriptableObject
     [Header("Spore Drop")]
     public int maxSporeDrops;
     public GameObject sporePrefab;
+    public bool guaranteesSporeDrop = false;
 
     [Header("Health Drop")]
     public GameObject healthPickupPrefab;
