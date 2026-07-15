@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d396eeaa05b4f404ea49b1f5e4965776, type: 3}
+  m_Name: enemyBurstDialogue
+  m_EditorClassIdentifier: Assembly-CSharp::DialogueSequence
+  lines:
+  - speakerName: Marsh
+    portrait: {fileID: 2022291355, guid: 96f423fd58af20743ab60c2815e095a2, type: 3}
+    talkingPortrait: {fileID: 2022291355, guid: 96f423fd58af20743ab60c2815e095a2, type: 3}
+    text: <b><shake>EEEEK!</shake></b> What are you doing in here?!
+    voiceClip: {fileID: 0}
+    typewriterSpeedOverride: 45
+  - speakerName: Evil
+    portrait: {fileID: 93778340501690522, guid: 5f9bf17b29654af4d89b9116b7fce4db, type: 3}
+    talkingPortrait: {fileID: 93778340501690522, guid: 5f9bf17b29654af4d89b9116b7fce4db, type: 3}
+    text: Hand over the <b>snail</b> kiddo.
+    voiceClip: {fileID: 0}
+    typewriterSpeedOverride: 0
+  - speakerName: Marsh
+    portrait: {fileID: 4452015905900111914, guid: 96f423fd58af20743ab60c2815e095a2, type: 3}
+    talkingPortrait: {fileID: -1870950988, guid: 96f423fd58af20743ab60c2815e095a2, type: 3}
+    text: '<b>NO!</b> Stay back, I''m warning you... '
+    voiceClip: {fileID: 0}
+    typewriterSpeedOverride: 0
+  - speakerName: Marsh
+    portrait: {fileID: 4452015905900111914, guid: 96f423fd58af20743ab60c2815e095a2, type: 3}
+    talkingPortrait: {fileID: -1870950988, guid: 96f423fd58af20743ab60c2815e095a2, type: 3}
+    text: 'I have a <b><shake>plunger</shake></b> and I''m not afraid to use it! '
+    voiceClip: {fileID: 0}
+    typewriterSpeedOverride: 0
+  - speakerName: Evil
+    portrait: {fileID: 93778340501690522, guid: 5f9bf17b29654af4d89b9116b7fce4db, type: 3}
+    talkingPortrait: {fileID: 93778340501690522, guid: 5f9bf17b29654af4d89b9116b7fce4db, type: 3}
+    text: You asked for it...
+    voiceClip: {fileID: 0}
+    typewriterSpeedOverride: 0

@@ -150,7 +150,10 @@ namespace TopDown.Movement
             if (DialogueManager.Instance != null && DialogueManager.Instance.IsRunning) return;
 
             if (!isDodging && dodgeCooldownTimer <= 0f)
+            {
                 StartCoroutine(Dodge());
+                TutorialDirector.Instance?.OnPlayerDodged();
+            }
         }
 
         // -- SCROLL INPUT --

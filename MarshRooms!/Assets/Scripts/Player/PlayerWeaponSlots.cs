@@ -48,6 +48,7 @@ public class PlayerWeaponSlot : MonoBehaviour
         currentSlot = newSlot;
 
         EquipCurrentSlot();
+        TutorialDirector.Instance?.OnWeaponScrolled();
     }
 
     // -- SCROLL DOWN --
@@ -61,6 +62,7 @@ public class PlayerWeaponSlot : MonoBehaviour
         currentSlot = newSlot;
         
         EquipCurrentSlot();
+        TutorialDirector.Instance?.OnWeaponScrolled();
     }
 
     // -- PICKUP --

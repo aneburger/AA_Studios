@@ -11,12 +11,12 @@ public class TutorialDirector : MonoBehaviour
     [Header("Dialogue")]
     [SerializeField] private DialogueSequence openingDialogue;
     [SerializeField] private DialogueSequence plungerPickupDialogue;
-
     [SerializeField] private DialogueSequence toiletFailDialogue;
     [SerializeField] private DialogueSequence toiletShootDialogue;
     [SerializeField] private DialogueSequence toiletWinDialogue;
     [SerializeField] private DialogueSequence crashDialogue;
     [SerializeField] private DialogueSequence enemyBurstDialogue;
+
     [SerializeField] private DialogueSequence minigunDropDialogue;
     [SerializeField] private DialogueSequence sporeFirstDialogue;
     [SerializeField] private DialogueSequence sporeFullDialogue;
@@ -30,49 +30,53 @@ public class TutorialDirector : MonoBehaviour
     [SerializeField] private DialogueSequence blobsToiletDialogue;
     [SerializeField] private DialogueSequence blobsPostToiletDialogue;
 
-    [Header("Bed Setup")]
+    [Header("Positioning")]
     [SerializeField] private Transform bedExitPosition;
     [SerializeField] private Collider2D bedCollider;
     [SerializeField] private float walkOffBedSpeed;
-
-    [Header("Toilet Interact Positioning")]
     [SerializeField] private Transform toiletInteractSpot;
     [SerializeField] private float walkToToiletSpeed;
-
-    [Header("Mr Blobs Positioning")]
     [SerializeField] private Transform blobsMoveSpot;
 
     // -- Scene Objects --
     [Header("Refereces")]
     [SerializeField] private ToiletHealth toiletHealth;
     [SerializeField] private GameObject toilet;
-    [SerializeField] private GameObject plungerPickup;
-    [SerializeField] private GameObject mrBlobs;
     [SerializeField] private Collider2D mrBlobsCollider;
-    //[SerializeField] private GameObject evilChef;
+    [SerializeField] private GameObject mrBlobs;
+    [SerializeField] private GameObject plungerPickup;
+    [SerializeField] private GameObject minigunPickup;
+    [SerializeField] private GameObject evilChef;
 
     // -- Scene Objects --
     [Header("Interaction")]
     [SerializeField] private Interactable toiletInteractable;
     [SerializeField] private Interactable mrBlobsInteractable;
 
-    // ── Prompts ──────────────────────────────────────────────────────
+    // -- Prompts --
     [Header("Prompts")]
-    [SerializeField] private GameObject wasdHint;
-    [SerializeField] private float wasdHintDelay = 3f;
-    [SerializeField] private SpriteFader wasdHintFader;
+    [SerializeField] private GameObject wasdPrompt;
+    // This hint will show after player doesnt move for 3 seconds otherwise it never shows
+    [SerializeField] private float wasdPromptDelay = 3f;  
+    [SerializeField] private SpriteFader wasdPromptFader;
 
     [SerializeField] private GameObject shootPrompt;
     [SerializeField] private SpriteFader shootPromptFader;
 
-    [SerializeField] private GameObject rightClickPrompt;       // "right click to mutate" UI
+    [SerializeField] private GameObject mutatePrompt;
+    [SerializeField] private SpriteFader mutatePromptFader;
 
-    // ── Enemy Waves ──────────────────────────────────────────────────
-    [Header("Enemy Waves")]
+    [SerializeField] private GameObject scrollPrompt;
+    [SerializeField] private SpriteFader scrollPromptFader;
+
+    [SerializeField] private GameObject dodgePrompt;
+    [SerializeField] private SpriteFader dodgePromptFader;
+
+    // -- Enemy Waves --
+
+    [Header("Ambush")]
     [SerializeField] private GameObject[] wave1Enemies;
-    [SerializeField] private GameObject[] wave2Enemies;
-    [SerializeField] private GameObject[] wave3Enemies;
-    [SerializeField] private GameObject minigunPickup;          // hardcoded minigun drop position
+    [SerializeField] private Transform[] wave1MoveSpots;
 
     // ── Audio ────────────────────────────────────────────────────────
     [Header("Audio")]
@@ -106,7 +110,7 @@ public class TutorialDirector : MonoBehaviour
     private PlayerInput playerInput;
     private PlayerAimer playerAimer;
 
-    // ── Internal State ───────────────────────────────────────────────
+    // -- Internal State --
     private bool plungerPickedUp = false;
     private bool toiletInteracted = false;
     private bool toiletDead = false;
@@ -115,11 +119,14 @@ public class TutorialDirector : MonoBehaviour
     private bool wave2Clear = false;
     private bool wave3Clear = false;
     private bool minigunPickedUp = false;
+    private bool weaponScrolled = false;
+    private bool playerDodged = false;
     private bool sporeDropped = false;
     private bool sporeBarFull = false;
     private bool mutateActivated = false;
     private bool shootingEnabled = false;
 
+    private Vector2 lastAmbushDeathPosition;
     public static TutorialDirector Instance { get; private set; }
 
     public enum TutorialStage
@@ -170,14 +177,17 @@ public class TutorialDirector : MonoBehaviour
         }
         
         shootPrompt?.SetActive(false);
-        //rightClickPrompt?.SetActive(false);
-        //minigunPickup?.SetActive(false);
+        wasdPrompt?.SetActive(false);
+        scrollPrompt?.SetActive(false);
+        dodgePrompt?.SetActive(false);
+        mutatePrompt?.SetActive(false);
+        minigunPickup?.SetActive(false);
         //evilChef?.SetActive(false);
 
         // Hide waves
         SetWaveActive(wave1Enemies, false);
-        SetWaveActive(wave2Enemies, false);
-        SetWaveActive(wave3Enemies, false);
+        //SetWaveActive(wave2Enemies, false);
+        //SetWaveActive(wave3Enemies, false);
 
         StartCoroutine(RunTutorial());
     }
@@ -231,9 +241,9 @@ public class TutorialDirector : MonoBehaviour
         StopCoroutine(hintRoutine);
 
         // Only fade out if it was actually visible
-        if (wasdHintFader != null && wasdHintFader.gameObject.activeSelf)
+        if (wasdPromptFader != null && wasdPromptFader.gameObject.activeSelf)
         {
-            wasdHintFader.FadeOut();
+            wasdPromptFader.FadeOut();
             yield return new WaitForSeconds(0.3f);
         }
 
@@ -300,7 +310,6 @@ public class TutorialDirector : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         yield return StartCoroutine(MoveMrBlobsToSpot(blobsMoveSpot, 5f));
         yield return StartCoroutine(WaitUntil(() => blobsPostToiletInteracted));
-
         // Lock player and no talking to Mr Blobs
         mrBlobsInteractable?.SetInteractionLocked(true);
         if (mrBlobsInteractable != null) mrBlobsInteractable.enabled = false;
@@ -314,7 +323,7 @@ public class TutorialDirector : MonoBehaviour
         for(int i = 0; i < 5; i++)
         {
             ScreenEffects.Instance?.ShakeScreen(0.1f);
-            yield return new WaitForSeconds(0.2f);
+            yield return new WaitForSeconds(0.25f);
         }
         AudioManager.Instance?.FadeOutMusic(1f);
         
@@ -329,36 +338,75 @@ public class TutorialDirector : MonoBehaviour
         ScreenEffects.Instance?.FadeToBlack(0.35f);
         yield return new WaitForSeconds(1f);
 
+        // ==== PART 9: Wave 1 ====
         SetWaveActive(wave1Enemies, true);
+        TrackAmbushDeaths(wave1Enemies);
+        SubscribeWaveClear(() => wave1Clear = true);
 
         ScreenEffects.Instance?.FadeFromBlack(0.5f);
-        
         AudioManager.Instance?.FadeInMusic(fightMusicClip, 2f, fightMusicVolume);
+        
+        // Enemies walk in
+        yield return StartCoroutine(MoveEnemiesToSpots(wave1Enemies, wave1MoveSpots));
+
+        // Enemy Dialogue
+        yield return StartCoroutine(PlayDialogue(enemyBurstDialogue));
+        
+        // Restore full player speed/animation/dodge now that real combat begins
+        playerBaseMover?.SetSpeed(playerBaseMover.OriginalSpeed);
+        playerBaseMover?.DirectionalAnimator?.SetAnimationSpeed(1f);
+        if (playerMover != null) playerMover.canDodge = true;
+        UnlockPlayer();
+        playerShooter?.SetCanShoot(true);
+
+        /*// Dodge hint appears (clears on actual dodge, or times out)
+        dodgePrompt?.SetActive(true);
+        dodgePromptFader?.FadeIn();
+
+        yield return StartCoroutine(WaitForConditionOrTimeout(() => playerDodged, 6f));
+
+        dodgePromptFader?.FadeOut();
+        yield return new WaitForSeconds(0.3f);
+        dodgePrompt?.SetActive(false);*/ 
+
+        // NOW hand control to their AI + start the actual fight
+        yield return new WaitForSeconds(1f);
+        foreach (var enemy in wave1Enemies)
+        {
+            EnemyAI ai = enemy?.GetComponent<EnemyAI>();
+            if (ai != null) ai.enabled = true;
+            yield return new WaitForSeconds(0.2f);
+        }
 
         yield return StartCoroutine(WaitUntil(() => wave1Clear));
 
+        // ==== PART 10: Minigun drop + learn weapon switching ====
+        
+        // Minigun drop (force to be at last position the enemy died)
+        if (minigunPickup != null)
+        {
+            minigunPickup.transform.position = lastAmbushDeathPosition;
+            minigunPickup.SetActive(true);
+        }
+
+        // Wait for player to pick up the weapon and then fire dialogue
+        yield return StartCoroutine(WaitUntil(() => minigunPickedUp));
+        yield return StartCoroutine(PlayDialogue(minigunDropDialogue));
+
+        // Show scroll hint, wait for weapon switch
+        scrollPrompt?.SetActive(true);
+        scrollPromptFader?.FadeIn();
+
+        // Wait for player to scroll
+        yield return StartCoroutine(WaitUntil(() => weaponScrolled)); 
+
+        scrollPromptFader?.FadeOut();
+        yield return new WaitForSeconds(0.3f);
+        scrollPrompt?.SetActive(false);
 
         /*
 
-        SetWaveActive(wave1Enemies, true);
-
-        ScreenEffects.Instance?.FadeFromBlack(0.35f);
-        AudioManager.Instance?.FadeInMusic(fightMusicClip, 0.5f, fightMusicVolume);
-
-        yield return StartCoroutine(WaitUntil(() => wave1Clear));*/
-
-
-
-        
-    /*
-        // Switch to fight music
-        AudioManager.Instance?.FadeOutMusic(1f);
-        yield return new WaitForSeconds(0.5f);
-        AudioManager.Instance?.FadeInMusic(fightMusicClip, 1f);
-
-        // ── BEAT 9: Wave 1 ────────────────────────────────────────────
-        SetWaveActive(wave1Enemies, true);
-        yield return StartCoroutine(WaitUntil(() => wave1Clear));
+    
 
         // ── BEAT 10: Minigun drop + weapon switching ──────────────────
         minigunPickup?.SetActive(true);
@@ -382,9 +430,9 @@ public class TutorialDirector : MonoBehaviour
         yield return StartCoroutine(PlayDialogue(wave3StartDialogue));
 
         // Show right click prompt, wait for mutate activation
-        rightClickPrompt?.SetActive(true);
+        mutatePrompt?.SetActive(true);
         yield return StartCoroutine(WaitUntil(() => mutateActivated));
-        rightClickPrompt?.SetActive(false);
+        mutatePrompt?.SetActive(false);
 
         yield return StartCoroutine(WaitUntil(() => wave3Clear));
 
@@ -494,15 +542,15 @@ public class TutorialDirector : MonoBehaviour
 
             if (isMoving)
             {
-                if (hintVisible) wasdHintFader?.FadeOut();
+                if (hintVisible) wasdPromptFader?.FadeOut();
                 yield break;
             }
 
             timer += Time.deltaTime;
-            if (timer >= wasdHintDelay && !hintVisible)
+            if (timer >= wasdPromptDelay && !hintVisible)
             {
                 hintVisible = true;
-                wasdHintFader?.FadeIn();
+                wasdPromptFader?.FadeIn();
             }
 
             yield return null;
@@ -531,6 +579,55 @@ public class TutorialDirector : MonoBehaviour
         mrBlobsInteractable?.SetInteractionLocked(false);
         if (mrBlobsInteractable != null) mrBlobsInteractable.enabled = true;
         if (mrBlobsCollider != null) mrBlobsCollider.enabled = true;
+    }
+
+    private IEnumerator MoveEnemiesToSpots(GameObject[] enemies, Transform[] spots)
+    {
+        EnemyMover[] movers = new EnemyMover[enemies.Length];
+
+        foreach (var enemy in enemies)
+        {
+            if (enemy == null) continue;
+            EnemyAI ai = enemy.GetComponent<EnemyAI>();
+            if (ai != null) ai.enabled = false;
+        }
+
+        for (int i = 0; i < enemies.Length; i++)
+        {
+            if (enemies[i] == null) continue;
+            movers[i] = enemies[i].GetComponent<EnemyMover>();
+            movers[i].SetSpeed(movers[i].OriginalSpeed * 2f);
+        }
+
+        bool[] arrived = new bool[enemies.Length];
+
+        while (true)
+        {
+            bool allArrived = true;
+
+            for (int i = 0; i < enemies.Length; i++)
+            {
+                if (arrived[i] || enemies[i] == null || spots[i] == null) continue;
+
+                Vector2 pos = enemies[i].transform.position;
+                Vector2 targetPos = spots[i].position;
+
+                if (Vector2.Distance(pos, targetPos) <= 0.1f)
+                {
+                    movers[i].Stop();
+                    movers[i].SetSpeed(movers[i].OriginalSpeed);
+                    arrived[i] = true;
+                }
+                else
+                {
+                    movers[i].Move((targetPos - pos).normalized);
+                    allArrived = false;
+                }
+            }
+
+            if (allArrived) break;
+            yield return null;
+        }
     }
 
     // -- TOILET FAIL SFX SEQUENCE --
@@ -573,6 +670,17 @@ public class TutorialDirector : MonoBehaviour
         yield return new WaitForSeconds(triggerClickGap);
 
         UnlockPlayer();
+    }
+
+    // -- TRACK LAST AMBUSH --
+    private void TrackAmbushDeaths(GameObject[] enemies)
+    {
+        foreach (var enemy in enemies)
+        {
+            EnemyHealth health = enemy?.GetComponent<EnemyHealth>();
+            if (health != null)
+                health.OnDied += (pos) => lastAmbushDeathPosition = pos;
+        }
     }
 
     // -- PLAY DIALOGUE --
@@ -636,6 +744,28 @@ public class TutorialDirector : MonoBehaviour
             if (enemy != null) enemy.SetActive(active);
     }
 
+    // -- SUBSCRIBE WAVE CLEAR --
+    private void SubscribeWaveClear(System.Action onClear)
+    {
+        void Handler()
+        {
+            EnemyManager.OnAllEnemiesDead -= Handler;
+            onClear();
+        }
+        EnemyManager.OnAllEnemiesDead += Handler;
+    }
+
+    // -- WAIT FOR CONDITION OR TIMEOUT --
+    private IEnumerator WaitForConditionOrTimeout(System.Func<bool> condition, float timeout)
+    {
+        float elapsed = 0f;
+        while (!condition() && elapsed < timeout)
+        {
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+    }
+
     // ================================================================
     //  PUBLIC CALLBACKS
     //  Call these from other scripts when events happen
@@ -658,13 +788,11 @@ public class TutorialDirector : MonoBehaviour
 
     public void OnToiletShot() => shootingEnabled = true;
     public void OnToiletDead() => toiletDead = true;
-
     public void OnBlobsPostToiletInteracted() => blobsPostToiletInteracted = true;
-
-    public void OnWave1Clear()         => wave1Clear = true;
-    public void OnWave2Clear()         => wave2Clear = true;
-    public void OnWave3Clear()         => wave3Clear = true;
+    public void OnWeaponScrolled() => weaponScrolled = true;
+    public void OnPlayerDodged() => playerDodged = true;
     public void OnMinigunPickedUp()    => minigunPickedUp = true;
+
     public void OnSporeDropped()       => sporeDropped = true;
     public void OnMutateActivated()    => mutateActivated = true;
 }

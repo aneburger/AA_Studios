@@ -21,14 +21,18 @@ MonoBehaviour:
   fireRate: 0.18
   damage: 3
   bulletSpeed: 20
-  maxAmmo: 60
+  maxAmmo: 100
   firePointOffset: {x: -0.2, y: -0.2}
   flipOffsetOnAimFlip: 0
+  bulletCount: 1
+  spreadAngle: 15
   sprite: {fileID: 93842847431156931, guid: a9180c833a9cd0c49a96c3739ada7813, type: 3}
   hudSprite: {fileID: -8886824557142895244, guid: ba6231fe329c7ec4f9f4879c2be6b126, type: 3}
   ammoDisplaySprite: {fileID: 574595805561559914, guid: 2149c4940b9e7e54a975f9815a4f1057, type: 3}
   shootClip: {fileID: 8300000, guid: c09db1515c718324198a268fa4d73974, type: 3}
   shootVolume: 0.7
+  wallHitClip: {fileID: 0}
+  wallHitVolume: 0.7
   shakeForce: 0.09
   knockbackForce: 3.8
   hitKnockback: 6

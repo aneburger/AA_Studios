@@ -2,6 +2,7 @@
 // Handles enemy death, despawn and drops
 
 using UnityEngine;
+using System.Collections;
 
 public class EnemyHealth : BaseHealth
 {   
@@ -13,6 +14,8 @@ public class EnemyHealth : BaseHealth
     [Range(0f, 1f)] public float hurtVolume;
     [SerializeField] private AudioClip dieClip;
     [Range(0f, 1f)] public float dieVolume;
+
+    public event System.Action<Vector2> OnDied;
 
     // -- AWAKE --
     protected override void Awake()
@@ -79,10 +82,12 @@ public class EnemyHealth : BaseHealth
         EnemyManager.Instance.UnregisterEnemy(gameObject);
         VFXManager.Instance.SpawnEnemyExplosion(transform.position);
 
+        OnDied?.Invoke(transform.position);
+
         EnemyController controller = GetComponent<EnemyController>();
         RoomManager room = FindObjectOfType<RoomManager>();
 
-         if (controller != null)
+        if (controller != null)
         {
             // Weapon drop
             if (controller.Data.possibleWeaponDrops.Length > 0 && room != null)
