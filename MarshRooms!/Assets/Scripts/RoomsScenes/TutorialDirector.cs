@@ -18,11 +18,11 @@ public class TutorialDirector : MonoBehaviour
     [SerializeField] private DialogueSequence enemyBurstDialogue;
     [SerializeField] private DialogueSequence minigunDropDialogue;
     [SerializeField] private DialogueSequence sporeFullDialogue;
-
     [SerializeField] private DialogueSequence wave3StartDialogue;
-    [SerializeField] private DialogueSequence postWave3Dialogue;
+    [SerializeField] private DialogueSequence postWave3Dialogue1;
+    [SerializeField] private DialogueSequence postWave3Dialogue2;
     [SerializeField] private DialogueSequence evilChefDialogue;
-    [SerializeField] private DialogueSequence marsEndDialogue;
+    [SerializeField] private DialogueSequence marshEndDialogue;
 
     [Header("Mr Blobs Dialogue")]
     [SerializeField] private DialogueSequence blobsPreToiletDialogue;
@@ -36,6 +36,8 @@ public class TutorialDirector : MonoBehaviour
     [SerializeField] private Transform toiletInteractSpot;
     [SerializeField] private float walkToToiletSpeed;
     [SerializeField] private Transform blobsMoveSpot;
+    [SerializeField] private Transform marshFinalSpot;
+    [SerializeField] private Transform[] chefPuffsMoveSpot;
 
     // -- Scene Objects --
     [Header("Refereces")]
@@ -43,9 +45,11 @@ public class TutorialDirector : MonoBehaviour
     [SerializeField] private GameObject toilet;
     [SerializeField] private Collider2D mrBlobsCollider;
     [SerializeField] private GameObject mrBlobs;
+    [SerializeField] private MrBlobsAnimator mrBlobsAnimator;
+    [SerializeField] private SpriteFader mrBlobsFader;
     [SerializeField] private GameObject plungerPickup;
     [SerializeField] private GameObject minigunPickup;
-    [SerializeField] private GameObject evilChef;
+    [SerializeField] private GameObject[] chefPuffs;
 
     // -- Scene Objects --
     [Header("Interaction")]
@@ -78,6 +82,7 @@ public class TutorialDirector : MonoBehaviour
 
     [SerializeField] private GameObject[] wave2Enemies;
     [SerializeField] private GameObject[] wave3Enemies;
+    [SerializeField] private GameObject[] wave4Enemies;
 
     [Header("Wave Spawn Timing")]
     [SerializeField] private float spawnStaggerMin = 0.4f;
@@ -124,6 +129,7 @@ public class TutorialDirector : MonoBehaviour
     private bool wave1Clear = false;
     private bool wave2Clear = false;
     private bool wave3Clear = false;
+    private bool wave4Clear = false;
     private bool minigunPickedUp = false;
     private bool weaponScrolled = false;
     private bool playerDodged = false;
@@ -195,7 +201,8 @@ public class TutorialDirector : MonoBehaviour
         // Hide waves
         SetWaveActive(wave1Enemies, false);
         SetWaveActive(wave2Enemies, false);
-        //SetWaveActive(wave3Enemies, false);
+        SetWaveActive(wave3Enemies, false);
+        SetWaveActive(wave4Enemies, false);
 
         StartCoroutine(RunTutorial());
     }
@@ -296,8 +303,8 @@ public class TutorialDirector : MonoBehaviour
         shootPromptFader?.FadeIn();
         playerShooter?.SetCanShoot(true);
 
-        // Wait until player lands a shot on the toilet
-        yield return StartCoroutine(WaitUntil(() => shootingEnabled));
+        // Wait until player lands a shot on the toilet or time out
+        yield return StartCoroutine(WaitForConditionOrTimeout(() => shootingEnabled, 6f));
 
         shootPromptFader?.FadeOut();
         yield return new WaitForSeconds(0.3f);
@@ -329,6 +336,9 @@ public class TutorialDirector : MonoBehaviour
             yield return new WaitForSeconds(0.25f);
         }
         AudioManager.Instance?.FadeOutMusic(1f);
+
+        mrBlobsAnimator.Hide();
+        yield return new WaitForSeconds(0.3f);
         
         // What the shroom?
         yield return new WaitForSeconds(1f);
@@ -364,7 +374,7 @@ public class TutorialDirector : MonoBehaviour
         UnlockPlayer();
         playerShooter?.SetCanShoot(true);
         yield return new WaitForSeconds(0.1f); 
-
+        
         // Show dodge hint
         StartCoroutine(DodgeHintRoutine());
 
@@ -374,7 +384,7 @@ public class TutorialDirector : MonoBehaviour
         {
             EnemyAI ai = enemy?.GetComponent<EnemyAI>();
             if (ai != null) ai.enabled = true;
-            yield return new WaitForSeconds(0.3f);
+            yield return new WaitForSeconds(Random.Range(0.4f, 1f));
         }
 
         // Wait for player to defeat wave
@@ -458,20 +468,76 @@ public class TutorialDirector : MonoBehaviour
 
         UnlockPlayerFull();
 
-        // Mutation is live — release enemies and player together
+        // Mutation is live release enemies and player together
         foreach (var enemy in wave3Enemies)
         {
             EnemyAI ai = enemy?.GetComponent<EnemyAI>();
             if (ai != null) ai.enabled = true;
-            yield return new WaitForSeconds(Random.Range(0.7f, 1.1f));
+            yield return new WaitForSeconds(Random.Range(0.8f, 1.3f));
         }
 
         yield return StartCoroutine(WaitUntil(() => wave3Clear));
 
+        yield return new WaitForSeconds(2f);
+        yield return StartCoroutine(SetWaveActiveStaggered(wave4Enemies, true));
+        SubscribeWaveClear(() => wave4Clear = true);
+        yield return StartCoroutine(WaitUntil(() => wave4Clear));
+
         // -- Part 13: Post-fight + evil chef --
         yield return new WaitForSeconds(4f);
-        yield return StartCoroutine(PlayDialogue(postWave3Dialogue));
+
+        LockPlayer();
+        yield return StartCoroutine(PlayDialogue(postWave3Dialogue1));
+
+        yield return new WaitForSeconds(1f);
+
+        yield return StartCoroutine(WalkToPoint(marshFinalSpot));
         
+        mrBlobsAnimator.Unhide();
+        yield return new WaitForSeconds(1f);
+
+        yield return StartCoroutine(PlayDialogue(postWave3Dialogue2));
+
+        yield return new WaitForSeconds(1f);
+        
+        // Spawn Cheff Puffs
+        yield return StartCoroutine(SetWaveActiveStaggered(chefPuffs, true));
+        yield return new WaitForSeconds(0.5f);
+
+        mrBlobsAnimator?.FlipFacing();
+        yield return new WaitForSeconds(0.2f);
+        mrBlobsAnimator.Hide();
+        yield return new WaitForSeconds(0.5f);
+        
+        // Steal snail
+        yield return StartCoroutine(MoveEnemiesToSpots(chefPuffs, chefPuffsMoveSpot));
+        mrBlobsFader?.FadeOut(0.2f);
+        yield return new WaitForSeconds(0.5f);
+
+        yield return StartCoroutine(PlayDialogue(evilChefDialogue));
+        yield return new WaitForSeconds(0.5f);
+        
+        // Despawn animation, then destroy
+        Animator chefAnim = chefPuffs[0]?.GetComponentInChildren<Animator>();
+        if (chefAnim != null)
+        {
+            chefAnim.SetTrigger("Despawn");
+            yield return new WaitForSeconds(1.2f);
+        }
+
+        if (chefPuffs[0] != null)
+            Destroy(chefPuffs[0]);
+
+        // -- Part 13: Final scene --
+        AudioManager.Instance?.FadeOutMusic(1.5f);
+        yield return new WaitForSeconds(1f);
+        yield return StartCoroutine(WalkToPoint(blobsMoveSpot));
+        yield return new WaitForSeconds(0.5f);
+
+        yield return StartCoroutine(PlayDialogue(marshEndDialogue));
+        
+        yield return new WaitForSeconds(0.5f);
+        ScreenEffects.Instance?.FadeToBlack(0.6f);
     }
 
     // ======================== HELPERS ========================
@@ -479,6 +545,8 @@ public class TutorialDirector : MonoBehaviour
     // -- LOCK PLAYER --
     private void LockPlayer()
     {
+        playerShooter.HideWeapon(true);
+        playerMover?.ForceIdleAnimation();
         playerBaseMover?.StopMovement();
         if (playerInput != null) playerInput.enabled = false;
         if (playerMover != null) playerMover.enabled = false;
@@ -487,7 +555,8 @@ public class TutorialDirector : MonoBehaviour
 
     // -- UNLOCK PLAYER --
     private void UnlockPlayer()
-    {
+    {   
+        playerShooter.HideWeapon(false);
         if (playerMover != null) playerMover.enabled = true;
         if (playerInput != null) playerInput.enabled = true;
         if (playerAimer != null) playerAimer.enabled = true;
@@ -495,7 +564,9 @@ public class TutorialDirector : MonoBehaviour
 
     // -- PARTIAL LOCK --
     private void LockPlayerKeepInput()
-    {
+    {   
+        playerShooter.HideWeapon(true);
+        playerMover?.ForceIdleAnimation();
         playerBaseMover?.StopMovement();
         playerMover?.SetCanMove(false);
         if (playerMover != null) playerMover.enabled = false;
@@ -507,6 +578,7 @@ public class TutorialDirector : MonoBehaviour
     // -- PARTIAL UNLOCK --
     private void UnlockPlayerFull()
     {
+        playerShooter.HideWeapon(false);
         if (playerMover != null) playerMover.enabled = true;
         playerMover?.SetCanMove(true);
         if (playerAimer != null) playerAimer.enabled = true;
@@ -544,15 +616,18 @@ public class TutorialDirector : MonoBehaviour
     }
 
     // -- WALK TO POINT -- 
-    private IEnumerator WalkToPoint(Transform target)
+    private IEnumerator WalkToPoint(Transform target, float timeout = 2f)
     {
         if (playerMover != null) playerMover.enabled = true;
 
-        while (Vector2.Distance(playerTransform.position, target.position) > 0.05f)
+        float elapsed = 0f;
+
+        while (Vector2.Distance(playerTransform.position, target.position) > 0.05f && elapsed < timeout)
         {
             Vector2 dir = ((Vector2)target.position - (Vector2)playerTransform.position).normalized;
             playerBaseMover?.SetMoveInput(dir);
             playerBaseMover?.SetFacingOverride(dir);
+            elapsed += Time.deltaTime;
             yield return null;
         }
 
@@ -671,22 +746,26 @@ public class TutorialDirector : MonoBehaviour
     private IEnumerator ToiletFailSfxSequence()
     {
         LockPlayer();
+        playerShooter.HideWeapon(false);
         toiletInteractable?.SetInteractionLocked(true);
 
         yield return new WaitForSeconds(toiletSfxInitialPause);
 
         AudioManager.Instance?.PlaySFXWithPitch(toiletUnclogAttemptClip, toiletUnclogAttemptVolume, 0.1f);
         toiletHealth?.PlayHitAnimation();
+        playerShooter.SquishEffect();
         yield return new WaitForSeconds(toiletSfxMidPause);
 
         AudioManager.Instance?.PlaySFXWithPitch(toiletUnclogAttemptClip, toiletUnclogAttemptVolume, 0.1f);
         toiletHealth?.PlayHitAnimation();
+        playerShooter.SquishEffect();
         yield return new WaitForSeconds(toiletSfxMidPause);
 
         for (int i = 0; i < 3; i++)
         {
             AudioManager.Instance?.PlaySFXWithPitch(toiletUnclogAttemptClip, toiletUnclogAttemptVolume, 0.1f);
             toiletHealth?.PlayHitAnimation();
+            playerShooter.SquishEffect();
             yield return new WaitForSeconds(toiletSfxRapidInterval);
         }
 
@@ -697,12 +776,12 @@ public class TutorialDirector : MonoBehaviour
     private IEnumerator TriggerClickSfxSequence()
     {
         LockPlayer();
-
+        playerShooter.HideWeapon(false);
         yield return new WaitForSeconds(triggerClickPause);
 
         AudioManager.Instance?.PlaySFXWithPitch(triggerClickClip, triggerClickVolume, 0.1f);
         yield return new WaitForSeconds(triggerClickGap);
-
+        
         AudioManager.Instance?.PlaySFXWithPitch(triggerClickClip, triggerClickVolume, 0.1f);
         yield return new WaitForSeconds(triggerClickGap);
 

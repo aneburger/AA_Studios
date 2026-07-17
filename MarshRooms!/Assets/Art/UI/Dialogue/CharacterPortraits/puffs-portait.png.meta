@@ -1,19 +1,19 @@
 fileFormatVersion: 2
-guid: 3f81287935404494182fa37923b0a4d6
+guid: 2da342deb6060304594530c431c490c0
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 215072633222415951
-    second: heartst_0
+      213: -6685546810934331548
+    second: puffs-portait_0
   - first:
-      213: 5306282920999767226
-    second: heartst_1
+      213: -8512850532406554754
+    second: puffs-portait_1
   - first:
-      213: -8220682135143895956
-    second: heartst_2
+      213: -3127762171316729299
+    second: puffs-portait_2
   - first:
-      213: 373692135132360324
-    second: heartst_3
+      213: -7808003101643997847
+    second: puffs-portait_3
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -122,13 +122,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: heartst_0
+      name: puffs-portait_0
       rect:
         serializedVersion: 2
-        x: 5
-        y: 5
-        width: 22
-        height: 19
+        x: 0
+        y: 0
+        width: 120
+        height: 120
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -137,20 +137,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: f464120ab671cf200800000000000000
-      internalID: 215072633222415951
+      spriteID: 4677305d89a2833a0800000000000000
+      internalID: -6685546810934331548
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: heartst_1
+      name: puffs-portait_1
       rect:
         serializedVersion: 2
-        x: 35
-        y: 5
-        width: 20
-        height: 19
+        x: 120
+        y: 0
+        width: 120
+        height: 120
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -159,20 +159,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: abcc9e7e334b3a940800000000000000
-      internalID: 5306282920999767226
+      spriteID: e7f89e53b874cd980800000000000000
+      internalID: -8512850532406554754
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: heartst_2
+      name: puffs-portait_2
       rect:
         serializedVersion: 2
-        x: 65
-        y: 5
-        width: 22
-        height: 19
+        x: 240
+        y: 0
+        width: 120
+        height: 120
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -181,20 +181,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: c6c295337254aed80800000000000000
-      internalID: -8220682135143895956
+      spriteID: d2a03c470e4f794d0800000000000000
+      internalID: -3127762171316729299
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: heartst_3
+      name: puffs-portait_3
       rect:
         serializedVersion: 2
-        x: 95
-        y: 5
-        width: 22
-        height: 19
+        x: 360
+        y: 0
+        width: 120
+        height: 120
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -203,8 +203,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 48eebe9540f9f2500800000000000000
-      internalID: 373692135132360324
+      spriteID: 96d7c513c8664a390800000000000000
+      internalID: -7808003101643997847
       vertices: []
       indices: 
       edges: []
@@ -213,7 +213,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 85397278c0c7bb044b8a77583c8e229c
+    spriteID: e3b3f65b951b37e4cbd2a3a31f52d02a
     internalID: 0
     vertices: []
     indices: 
@@ -223,12 +223,12 @@ TextureImporter:
     spriteCustomMetadata:
       entries:
       - key: SpriteEditor.SliceSettings
-        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":120.0,"y":120.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      heartst_0: 215072633222415951
-      heartst_1: 5306282920999767226
-      heartst_2: -8220682135143895956
-      heartst_3: 373692135132360324
+      puffs-portait_0: -6685546810934331548
+      puffs-portait_1: -8512850532406554754
+      puffs-portait_2: -3127762171316729299
+      puffs-portait_3: -7808003101643997847
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

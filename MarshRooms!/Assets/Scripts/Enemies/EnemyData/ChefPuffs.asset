@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6302092c942ee1644bc4027ea868e779, type: 3}
+  m_Name: ChefPuffs
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyData
+  maxHealth: 10
+  moveSpeed: 1.5
+  contactDamage: 1
+  contactKnockback: 5
+  weapon: {fileID: 0}
+  detectionRange: 12
+  attackRange: 8
+  possibleWeaponDrops:
+  - weaponPickupPrefab: {fileID: 1303430737314922756, guid: ecb11ea6b86a8244688f6cc913226356, type: 3}
+    dropChance: 0.3
+  - weaponPickupPrefab: {fileID: 1303430737314922756, guid: 8b6717c7fcf618d48a9c81e5c6d876de, type: 3}
+    dropChance: 0.3
+  maxSporeDrops: 5
+  sporePrefab: {fileID: 0}
+  guaranteesSporeDrop: 0
+  healthPickupPrefab: {fileID: 1002410625230129664, guid: 1dd3664c0f1e23b4182c58054280f391, type: 3}
+  healthDropChance: 0.12

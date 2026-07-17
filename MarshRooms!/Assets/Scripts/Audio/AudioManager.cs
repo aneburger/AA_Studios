@@ -12,7 +12,7 @@ public sealed class AudioManager : MonoBehaviour
     [Header("Sources")]
     [SerializeField] private AudioSource sfxSource;
     [SerializeField] private AudioSource musicSource;
-    [SerializeField] public AudioClip musicClip; // TEMPORARY - this should not be public I am just lazy :) Ill fix later
+    [SerializeField] public AudioClip musicClip;
 
     [Header("Mixer")]
     [SerializeField] private AudioMixer audioMixer;

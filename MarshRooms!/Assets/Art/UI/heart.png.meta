@@ -1,10 +1,19 @@
 fileFormatVersion: 2
-guid: e0d0789be4843b442810b66aa5b9a84b
+guid: 3f81287935404494182fa37923b0a4d6
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -205270267638800340
-    second: heart_0
+      213: 215072633222415951
+    second: heartst_0
+  - first:
+      213: 5306282920999767226
+    second: heartst_1
+  - first:
+      213: -8220682135143895956
+    second: heartst_2
+  - first:
+      213: 373692135132360324
+    second: heartst_3
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -96,27 +105,106 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: heart_0
+      name: heartst_0
       rect:
         serializedVersion: 2
-        x: 3
-        y: 4
-        width: 25
-        height: 21
+        x: 5
+        y: 5
+        width: 22
+        height: 19
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: c20a07677cbb62df0800000000000000
-      internalID: -205270267638800340
+      spriteID: f464120ab671cf200800000000000000
+      internalID: 215072633222415951
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: heartst_1
+      rect:
+        serializedVersion: 2
+        x: 35
+        y: 5
+        width: 20
+        height: 19
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: abcc9e7e334b3a940800000000000000
+      internalID: 5306282920999767226
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: heartst_2
+      rect:
+        serializedVersion: 2
+        x: 65
+        y: 5
+        width: 22
+        height: 19
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c6c295337254aed80800000000000000
+      internalID: -8220682135143895956
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: heartst_3
+      rect:
+        serializedVersion: 2
+        x: 95
+        y: 5
+        width: 22
+        height: 19
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 48eebe9540f9f2500800000000000000
+      internalID: 373692135132360324
       vertices: []
       indices: 
       edges: []
@@ -125,7 +213,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 85397278c0c7bb044b8a77583c8e229c
     internalID: 0
     vertices: []
     indices: 
@@ -133,9 +221,14 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries: []
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      heart_0: -205270267638800340
+      heartst_0: 215072633222415951
+      heartst_1: 5306282920999767226
+      heartst_2: -8220682135143895956
+      heartst_3: 373692135132360324
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

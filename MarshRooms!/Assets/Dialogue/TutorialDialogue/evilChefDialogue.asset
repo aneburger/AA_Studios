@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d396eeaa05b4f404ea49b1f5e4965776, type: 3}
+  m_Name: evilChefDialogue
+  m_EditorClassIdentifier: Assembly-CSharp::DialogueSequence
+  lines:
+  - speakerName: Chef Puffs
+    portrait: {fileID: -6685546810934331548, guid: 2da342deb6060304594530c431c490c0, type: 3}
+    talkingPortrait: {fileID: -3127762171316729299, guid: 2da342deb6060304594530c431c490c0, type: 3}
+    text: My apologies <i>petit champignon</i>.
+    voiceClip: {fileID: 0}
+    typewriterSpeedOverride: 0
+  - speakerName: Chef Puffs
+    portrait: {fileID: -6685546810934331548, guid: 2da342deb6060304594530c431c490c0, type: 3}
+    talkingPortrait: {fileID: -3127762171316729299, guid: 2da342deb6060304594530c431c490c0, type: 3}
+    text: <b>President Portobello</b> requires an exquisite Escargot tonight.
+    voiceClip: {fileID: 0}
+    typewriterSpeedOverride: 0
+  - speakerName: Marsh
+    portrait: {fileID: -1126149774, guid: 96f423fd58af20743ab60c2815e095a2, type: 3}
+    talkingPortrait: {fileID: 2022291355, guid: 96f423fd58af20743ab60c2815e095a2, type: 3}
+    text: <b><shake>Escargot</shake></b>? I don't know what THAT is but I don't like
+      it!
+    voiceClip: {fileID: 0}
+    typewriterSpeedOverride: 0
+  - speakerName: Chef Puffs
+    portrait: {fileID: -6685546810934331548, guid: 2da342deb6060304594530c431c490c0, type: 3}
+    talkingPortrait: {fileID: -8512850532406554754, guid: 2da342deb6060304594530c431c490c0, type: 3}
+    text: Ah, trust me... you do not want to know, <i>non</i>?
+    voiceClip: {fileID: 0}
+    typewriterSpeedOverride: 0
+  - speakerName: Chef Puffs
+    portrait: {fileID: -6685546810934331548, guid: 2da342deb6060304594530c431c490c0, type: 3}
+    talkingPortrait: {fileID: -7808003101643997847, guid: 2da342deb6060304594530c431c490c0, type: 3}
+    text: Nothing personal. <i>C'est la vie!</i>
+    voiceClip: {fileID: 0}
+    typewriterSpeedOverride: 0

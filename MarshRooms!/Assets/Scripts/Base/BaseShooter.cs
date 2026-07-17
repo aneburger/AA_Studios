@@ -199,6 +199,14 @@ public abstract class BaseShooter : MonoBehaviour
         AudioManager.Instance.PlaySFX(emptyClip, emptyVolume);
     }
 
+    // -- SQUISH EFFECT --
+    public virtual void SquishEffect()
+    {
+        // Squish weapon sprite
+        if (squishCoroutine != null) StopCoroutine(squishCoroutine);
+            squishCoroutine = StartCoroutine(SquishWeapon());
+    }
+
     // -- SHOW / HIDE WEAPON --
     protected void UpdateWeaponVisuals()
     {
