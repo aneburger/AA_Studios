@@ -55,6 +55,7 @@ public class PlayerHealth : BaseHealth
         playerRenderer = transform.Find("Visuals").GetComponent<SpriteRenderer>();
     }
     
+    // -- START -- 
     private void Start()
     {
         UpdateHUD();

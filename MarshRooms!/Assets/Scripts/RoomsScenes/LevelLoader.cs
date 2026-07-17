@@ -5,12 +5,18 @@ using System.Collections;
 public class LevelLoader : MonoBehaviour
 {
     public static LevelLoader Instance { get; private set; }
-
-    [Header("Startup")]
-    [SerializeField] private string firstLevelScene = "Tutorial";
-
-    private string currentLevelScene;
-
+ 
+    [Header("Scenes")]
+    [SerializeField] private string persistentScene = "Persistent";
+ 
+    [Header("Player")]
+    [SerializeField] private string playerTag = "Player";
+ 
+    [Header("Transition")]
+    [SerializeField] private float fadeDuration = 0.5f;
+ 
+    public string CurrentLevelScene { get; private set; }
+    
     // -- AWAKE --
     private void Awake()
     {
@@ -22,35 +28,85 @@ public class LevelLoader : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
     }
-
-    // -- START --
-    private void Start()
-    {
-        LoadLevel(firstLevelScene);
-    }
-
+    
     // -- LOAD LEVEL --
     public void LoadLevel(string sceneName)
     {
         StartCoroutine(LoadLevelRoutine(sceneName));
     }
-
-    private IEnumerator LoadLevelRoutine(string sceneName)
-    {
-        // Unload the previous level scene, if one is loaded
-        if (!string.IsNullOrEmpty(currentLevelScene))
-        {
-            yield return SceneManager.UnloadSceneAsync(currentLevelScene);
-        }
-
-        yield return SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
-        currentLevelScene = sceneName;
-    }
-
+    
     // -- RELOAD CURRENT LEVEL --
     public void ReloadCurrentLevel()
     {
-        if (!string.IsNullOrEmpty(currentLevelScene))
-            LoadLevel(currentLevelScene);
+        if (!string.IsNullOrEmpty(CurrentLevelScene))
+            LoadLevel(CurrentLevelScene);
+    }
+    
+    private IEnumerator LoadLevelRoutine(string sceneName)
+    {
+        ScreenEffects.Instance?.SetFadeImage();
+
+        if (!SceneManager.GetSceneByName(persistentScene).isLoaded)
+        {
+            yield return SceneManager.LoadSceneAsync(persistentScene, LoadSceneMode.Additive);
+        }
+ 
+        if (!string.IsNullOrEmpty(CurrentLevelScene))
+        {
+            yield return SceneManager.UnloadSceneAsync(CurrentLevelScene);
+        }
+ 
+        Scene loaded = default;
+        AsyncOperation op = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
+        yield return op;
+ 
+        CurrentLevelScene = sceneName;
+        loaded = SceneManager.GetSceneByName(sceneName);
+        if (loaded.IsValid())
+            SceneManager.SetActiveScene(loaded);
+ 
+        yield return null;
+ 
+        PositionPlayerAtSpawn();
+ 
+        yield return Fade(toBlack: false);
+    }
+    
+    private IEnumerator Fade(bool toBlack)
+    {
+        if (ScreenEffects.Instance == null || fadeDuration <= 0f)
+            yield break;
+ 
+        bool done = false;
+        void OnDone() => done = true;
+ 
+        if (toBlack)
+            ScreenEffects.Instance.FadeToBlack(fadeDuration, OnDone);
+        else
+            ScreenEffects.Instance.FadeFromBlack(fadeDuration, OnDone);
+ 
+        yield return new WaitUntil(() => done);
+    }
+ 
+    private void PositionPlayerAtSpawn()
+    {
+        GameObject player = GameObject.FindGameObjectWithTag(playerTag);
+        if (player == null)
+        {
+            Debug.LogWarning("LevelLoader: no player found to position (missing tag?).");
+            return;
+        }
+ 
+        SpawnPoint target = FindObjectOfType<SpawnPoint>();
+        if (target == null)
+        {
+            Debug.LogWarning($"LevelLoader: no SpawnPoint found in '{CurrentLevelScene}'.");
+            return;
+        }
+ 
+        player.transform.SetPositionAndRotation(target.transform.position, target.transform.rotation);
+ 
+        var rb2d = player.GetComponent<Rigidbody2D>();
+        if (rb2d != null) rb2d.linearVelocity = Vector2.zero;
     }
 }

@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -11,10 +10,7 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private Button controlsButton;
     [SerializeField] private Button closeControlsButton;
     [SerializeField] private Button quitButton;
-
-    //// Track which menu opened the controls panel
-    //private enum MenuSource { Main, Pause }
-    //private MenuSource controlsMenuSource = MenuSource.Main;
+    [SerializeField] private Button tutorialButton;
 
     private void Awake()
     {
@@ -32,7 +28,10 @@ public class MenuManager : MonoBehaviour
     private void Start()
     {
         if (startButton != null)
-            startButton.onClick.AddListener(OnStartGame);
+            startButton.onClick.AddListener(() => OnBeginGame("Floor_01"));
+
+        if (tutorialButton != null)
+            tutorialButton.onClick.AddListener(() => OnBeginGame("Tutorial"));
 
         if (controlsButton != null)
             controlsButton.onClick.AddListener(OnOpenControls);
@@ -44,10 +43,9 @@ public class MenuManager : MonoBehaviour
             quitButton.onClick.AddListener(OnQuitGame);
     }
 
-    // -- START GAME --
-    private void OnStartGame()
+    // -- BEGIN GAME --
+    private void OnBeginGame(string sceneName)
     {
-
         AudioManager.Instance.PlayMusic(AudioManager.Instance.musicClip);
 
         // Resume time
@@ -65,14 +63,14 @@ public class MenuManager : MonoBehaviour
 
         // Disable this script so ESC doesn't open main menu again
         gameObject.GetComponent<MenuManager>().enabled = false;
+
+        LevelLoader.Instance.LoadLevel(sceneName);
     }
 
     // -- OPEN CONTROLS --
     private void OnOpenControls()
     {
         Debug.Log("Opening controls menu...");
-
-        //controlsMenuSource = MenuSource.Main;
 
         if (menuPanel != null)
             menuPanel.SetActive(false);
@@ -104,7 +102,7 @@ public class MenuManager : MonoBehaviour
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 #else
-            Application.Quit();
+        Application.Quit();
 #endif
     }
 }

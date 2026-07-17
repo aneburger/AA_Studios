@@ -16,7 +16,7 @@ public class PlayerShooter : BaseShooter
     [SerializeField] private PlayerMover playerMover;
 
     private bool isShooting = false;
-    private bool canShoot = false;
+    private bool canShoot = true;
 
     private float fireRateMultiplier = 1f;
 

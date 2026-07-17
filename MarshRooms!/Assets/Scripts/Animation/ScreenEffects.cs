@@ -35,17 +35,18 @@ public class ScreenEffects : MonoBehaviour
     // -- AWAKE --
     private void Awake()
     {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
         Instance = this;
+        DontDestroyOnLoad(gameObject);
+
+        SetFadeImage();
+
         SetFlashAlpha(0f);
         SetVignetteAlpha(0f);
-
-        if (fadeImage != null)
-        {
-            fadeImage.gameObject.SetActive(true);
-            Color c = fadeImage.color;
-            c.a = 1f;
-            fadeImage.color = c;
-        }
     }
 
     // -- UPDATE --
@@ -71,6 +72,18 @@ public class ScreenEffects : MonoBehaviour
         // Vignette smooth fade
         vignetteCurrentAlpha = Mathf.Lerp(vignetteCurrentAlpha, vignetteTargetAlpha, vignetteFadeSpeed * Time.deltaTime);
         SetVignetteAlpha(vignetteCurrentAlpha);
+    }
+
+    // -- SET FADE IMAGE --
+    public void SetFadeImage()
+    {
+        if (fadeImage != null)
+        {
+            fadeImage.gameObject.SetActive(true);
+            Color c = fadeImage.color;
+            c.a = 1f;
+            fadeImage.color = c;
+        }
     }
 
     // -- FLASH --
@@ -147,9 +160,11 @@ public class ScreenEffects : MonoBehaviour
         float elapsed = 0f;
         fadeImage.gameObject.SetActive(true);
 
+        yield return null;
+
         while (elapsed < duration)
         {
-            elapsed += Time.deltaTime;
+            elapsed += Mathf.Min(Time.unscaledDeltaTime, 1f / 30f);
             c.a = Mathf.Lerp(from, to, elapsed / duration);
             fadeImage.color = c;
             yield return null;

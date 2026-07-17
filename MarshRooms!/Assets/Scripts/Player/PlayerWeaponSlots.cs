@@ -231,4 +231,26 @@ public class PlayerWeaponSlot : MonoBehaviour
             return null;
         return slots[slot];
     }
+
+    // -- HAS ANY WEAPON --
+    public bool HasAnyWeapon()
+    {
+        for (int i = 0; i < slots.Length; i++)
+        {
+            if (slots[i] != null) return true;
+        }
+        return false;
+    }
+
+    // -- GRANT WEAPON --
+    public void GrantWeapon(WeaponData weapon, int ammoAmount = -1)
+    {
+        if (weapon == null) return;
+        if (slots[0] != null) return;
+
+        slots[0] = weapon;
+        ammo[0] = ammoAmount == -1 ? weapon.maxAmmo : ammoAmount;
+        currentSlot = 0;
+        EquipCurrentSlot(true);
+    }
 }

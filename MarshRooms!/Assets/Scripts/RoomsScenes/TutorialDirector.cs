@@ -220,11 +220,8 @@ public class TutorialDirector : MonoBehaviour
         yield return null;
 
         // ==== PART 1: Intro dialogue ====
-        
         playerMover?.SetSleeping(true);
 
-        // Fade in from black
-        ScreenEffects.Instance?.FadeFromBlack(1.5f);
         yield return new WaitForSeconds(1f);
 
         // Fade in house music
@@ -250,6 +247,7 @@ public class TutorialDirector : MonoBehaviour
         playerBaseMover?.SetSpeed(playerBaseMover.OriginalSpeed * 0.8f);
         playerBaseMover?.DirectionalAnimator?.SetAnimationSpeed(0.8f);
         playerSporeActivator?.SetCanActivate(false);
+        playerShooter.SetCanShoot(false);
         playerMover.canDodge = false;
 
         // ==== PART 2: WASD hint ====
