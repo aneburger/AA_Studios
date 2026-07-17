@@ -202,17 +202,17 @@ public class PlayerWeaponSlot : MonoBehaviour
         shooter.EquipWeapon(slots[currentSlot], isPickup);
         shooter.SetAmmo(ammo[currentSlot]);
         OnWeaponChanged?.Invoke(slots[currentSlot]);
-        UpdateWeaponDisplay();
+        //UpdateWeaponDisplay();
     }
 
     // -- UPDATE WEAPON DISPLAY --
-    private void UpdateWeaponDisplay()
-    {
-        if (HUDManager.Instance != null && slots[currentSlot] != null)
-        {
-            HUDManager.Instance.UpdateWeaponDisplay(slots[currentSlot]);
-        }
-    }
+    //private void UpdateWeaponDisplay()
+    //{
+    //    if (HUDManager.Instance != null && slots[currentSlot] != null)
+    //    {
+    //        HUDManager.Instance.UpdateWeaponDisplay(slots[currentSlot]);
+    //    }
+    //}
 
     // -- SKIP EMPTY SLOTS --
     private void SkipEmptySlots(int direction, ref int slot)
@@ -222,5 +222,13 @@ public class PlayerWeaponSlot : MonoBehaviour
             if (slots[slot] != null) break;
             slot = (slot + direction + maxWeapons) % maxWeapons;
         }
+    }
+
+    // -- GET WEAPON AT SLOT --
+    public WeaponData GetWeaponAtSlot(int slot)
+    {
+        if (slot < 0 || slot >= slots.Length)
+            return null;
+        return slots[slot];
     }
 }

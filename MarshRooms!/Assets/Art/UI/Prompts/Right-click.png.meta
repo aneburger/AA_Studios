@@ -1,16 +1,19 @@
 fileFormatVersion: 2
-guid: df1662eddcb22e44d95148ede624d9e5
+guid: dc4927bf20b025245b22ef52fea30aed
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -5858099061022299432
-    second: Space_0
+      213: 4031930570136076339
+    second: Right-click_0
   - first:
-      213: -5100910793555767408
-    second: Space_1
+      213: -6978979320148619042
+    second: Right-click_1
   - first:
-      213: -4730890088344036595
-    second: Space_2
+      213: -7435037712383123870
+    second: Right-click_2
+  - first:
+      213: -5923238963833585854
+    second: Right-click_3
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -106,13 +109,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Space_0
+      name: Right-click_0
       rect:
         serializedVersion: 2
-        x: 1
-        y: 5
-        width: 47
-        height: 28
+        x: 2
+        y: 7
+        width: 69
+        height: 23
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -121,18 +124,40 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 8da67b801f9d3bea0800000000000000
-      internalID: -5858099061022299432
+      spriteID: 330cfffcd7b44f730800000000000000
+      internalID: 4031930570136076339
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Space_1
+      name: Right-click_1
       rect:
         serializedVersion: 2
-        x: 4
-        y: 6
+        x: 24
+        y: 17
+        width: 45
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ed09eb7d84fa52f90800000000000000
+      internalID: -6978979320148619042
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Right-click_2
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 8
         width: 11
         height: 10
       alignment: 0
@@ -143,20 +168,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 09f0727b8ace539b0800000000000000
-      internalID: -5100910793555767408
+      spriteID: 26e55c5d79071d890800000000000000
+      internalID: -7435037712383123870
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Space_2
+      name: Right-click_3
       rect:
         serializedVersion: 2
-        x: 17
-        y: 5
-        width: 28
-        height: 11
+        x: 36
+        y: 8
+        width: 32
+        height: 10
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -165,8 +190,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: d0b56dca780885eb0800000000000000
-      internalID: -4730890088344036595
+      spriteID: 24f32f88b8d6ccda0800000000000000
+      internalID: -5923238963833585854
       vertices: []
       indices: 
       edges: []
@@ -175,7 +200,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 1918be2682fdfeb4abae80833ea3d7fc
+    spriteID: 239b704de24ec994b83fd5589287823c
     internalID: 0
     vertices: []
     indices: 
@@ -185,9 +210,10 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Space_0: -5858099061022299432
-      Space_1: -5100910793555767408
-      Space_2: -4730890088344036595
+      Right-click_0: 4031930570136076339
+      Right-click_1: -6978979320148619042
+      Right-click_2: -7435037712383123870
+      Right-click_3: -5923238963833585854
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
