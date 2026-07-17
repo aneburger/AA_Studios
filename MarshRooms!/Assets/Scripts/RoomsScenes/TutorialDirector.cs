@@ -23,6 +23,7 @@ public class TutorialDirector : MonoBehaviour
     [SerializeField] private DialogueSequence postWave3Dialogue2;
     [SerializeField] private DialogueSequence evilChefDialogue;
     [SerializeField] private DialogueSequence marshEndDialogue;
+    [SerializeField] private DialogueSequence tutorialDeathDialogue;
 
     [Header("Mr Blobs Dialogue")]
     [SerializeField] private DialogueSequence blobsPreToiletDialogue;
@@ -119,6 +120,7 @@ public class TutorialDirector : MonoBehaviour
     private PlayerShooter playerShooter;
     private PlayerInput playerInput;
     private PlayerAimer playerAimer;
+    private PlayerHealth playerHealth;
     private PlayerSporeActivator playerSporeActivator;
 
     // -- Internal State --
@@ -943,6 +945,22 @@ public class TutorialDirector : MonoBehaviour
     {
         toiletInteracted = true;
         toiletInteractable?.SetInteractionLocked(true);
+    }
+
+    public void HandlePlayerDeath(PlayerHealth health)
+    {
+        StartCoroutine(TutorialDeathRoutine(health));
+    }
+
+    private IEnumerator TutorialDeathRoutine(PlayerHealth health)
+    {   
+        LockPlayer();
+        yield return new WaitForSeconds(1.5f);
+        yield return StartCoroutine(PlayDialogue(tutorialDeathDialogue));
+        yield return new WaitForSeconds(0.3f);
+        health.Revive();
+        yield return new WaitForSeconds(0.3f);
+        UnlockPlayer();
     }
 
     public void OnToiletShot() => shootingEnabled = true;

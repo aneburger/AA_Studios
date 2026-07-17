@@ -90,9 +90,9 @@ public class PlayerHealth : BaseHealth
     }
 
     // -- HEAL --
-    public void Heal(int amount)
+    public void Heal(float amount)
     {
-        if (IsDead()) return;
+        if (IsDead() && TutorialDirector.Instance == null) return;
 
         AudioManager.Instance.PlaySFXWithPitch(healClip, healVolume, 0.1f);
         currentHealth = Mathf.Min(currentHealth + amount, maxHealth);
@@ -169,9 +169,28 @@ public class PlayerHealth : BaseHealth
         flickerCoroutine = null;
     }
 
+    public void Revive()
+    {   
+        Heal(maxHealth);
+
+        anim.SetTrigger("Revive");
+        shooter.HideWeapon(false);
+
+        ScreenEffects.Instance?.SetLowHealth(false);
+    }
+
     // -- DIE -- 
     protected override void Die()
-    {
+    {   
+        // If player dies in tutorial
+        if (TutorialDirector.Instance != null)
+        {   
+            anim.SetTrigger("Die");
+            AudioManager.Instance.PlaySFX(dieClip, dieVolume);
+            TutorialDirector.Instance.HandlePlayerDeath(this);
+            return;
+        }
+
         base.Die();
         OnPlayerDeath?.Invoke();
 
