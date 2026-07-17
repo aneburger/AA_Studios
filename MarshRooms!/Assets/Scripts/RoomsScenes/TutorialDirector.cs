@@ -489,7 +489,7 @@ public class TutorialDirector : MonoBehaviour
         LockPlayer();
         yield return StartCoroutine(PlayDialogue(postWave3Dialogue1));
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.5f);
 
         yield return StartCoroutine(WalkToPoint(marshFinalSpot));
         
