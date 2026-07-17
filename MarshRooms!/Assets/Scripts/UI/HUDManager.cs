@@ -19,11 +19,17 @@ public class HUDManager : MonoBehaviour
     [Header("Ammo")]
     [SerializeField] private AmmoDisplay ammoDisplay;
 
-    [Header("Weapon")]
-    [SerializeField] private Image weaponDisplayImage;
+    [Header("Inventory")]
+    [SerializeField] private InventoryDisplay inventoryDisplay;
+
+    // [Header("Weapon")]
+    // [SerializeField] private Image weaponDisplayImage;
 
     [Header("Menu")]
     [SerializeField] private GameObject menuPanel;
+
+    [Header("HUD Elements")]
+    [SerializeField] private GameObject hudElements;
 
     private void Awake()
     {
@@ -75,22 +81,29 @@ public class HUDManager : MonoBehaviour
         }
     }
 
-    // -- UPDATE WEAPON DISPLAY --
-    public void UpdateWeaponDisplay(WeaponData weapon)
+    // -- SET HUD VISIBLE --
+    public void SetHUDVisible(bool visible)
     {
-        if (weaponDisplayImage != null)
-        {
-            if (weapon != null && weapon.hudSprite != null)
-            {
-                weaponDisplayImage.sprite = weapon.hudSprite;
-                weaponDisplayImage.enabled = true;
-            }
-            else
-            {
-                weaponDisplayImage.enabled = false;
-            }
-        }
+        if (hudElements != null)
+            hudElements.SetActive(visible);
     }
+
+    // -- UPDATE WEAPON DISPLAY --
+    //public void UpdateWeaponDisplay(WeaponData weapon)
+    //{
+    //    if (weaponDisplayImage != null)
+    //    {
+    //        if (weapon != null && weapon.hudSprite != null)
+    //        {
+    //            weaponDisplayImage.sprite = weapon.hudSprite;
+    //            weaponDisplayImage.enabled = true;
+    //        }
+    //        else
+    //        {
+    //            weaponDisplayImage.enabled = false;
+    //        }
+    //    }
+    //}
 
     // -- CLOSE MENU --
     public void CloseMenu()

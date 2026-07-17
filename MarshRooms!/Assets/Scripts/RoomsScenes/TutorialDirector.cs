@@ -204,6 +204,9 @@ public class TutorialDirector : MonoBehaviour
         SetWaveActive(wave3Enemies, false);
         SetWaveActive(wave4Enemies, false);
 
+        // hide HUD until fight begins
+        HUDManager.Instance?.SetHUDVisible(false);
+
         StartCoroutine(RunTutorial());
     }
 
@@ -364,8 +367,9 @@ public class TutorialDirector : MonoBehaviour
 
         // Enemy Dialogue
         yield return StartCoroutine(PlayDialogue(enemyBurstDialogue));
-        
+
         // Make HUD visible here
+        HUDManager.Instance?.SetHUDVisible(true);
 
         // Restore full player speed/animation/dodge now that real combat begins
         playerBaseMover?.SetSpeed(playerBaseMover.OriginalSpeed);

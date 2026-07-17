@@ -1,16 +1,13 @@
 fileFormatVersion: 2
-guid: df1662eddcb22e44d95148ede624d9e5
+guid: e42de4d2d320f22449278bfe444cbb0e
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -5858099061022299432
-    second: Space_0
+      213: 8077034256043577442
+    second: spore-count-empty 1_0
   - first:
-      213: -5100910793555767408
-    second: Space_1
-  - first:
-      213: -4730890088344036595
-    second: Space_2
+      213: -2227876622814630107
+    second: spore-count-empty 1_1
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -106,67 +103,45 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Space_0
+      name: spore-count-empty 1_0
       rect:
         serializedVersion: 2
-        x: 1
-        y: 5
-        width: 47
-        height: 28
+        x: 0
+        y: 11
+        width: 60
+        height: 18
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 8da67b801f9d3bea0800000000000000
-      internalID: -5858099061022299432
+      spriteID: 2609326acd3671070800000000000000
+      internalID: 8077034256043577442
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Space_1
+      name: spore-count-empty 1_1
       rect:
         serializedVersion: 2
-        x: 4
-        y: 6
-        width: 11
-        height: 10
+        x: 16
+        y: 3
+        width: 39
+        height: 6
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 09f0727b8ace539b0800000000000000
-      internalID: -5100910793555767408
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Space_2
-      rect:
-        serializedVersion: 2
-        x: 17
-        y: 5
-        width: 28
-        height: 11
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: d0b56dca780885eb0800000000000000
-      internalID: -4730890088344036595
+      spriteID: 52facbde30ef411e0800000000000000
+      internalID: -2227876622814630107
       vertices: []
       indices: 
       edges: []
@@ -175,7 +150,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 1918be2682fdfeb4abae80833ea3d7fc
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -185,9 +160,8 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Space_0: -5858099061022299432
-      Space_1: -5100910793555767408
-      Space_2: -4730890088344036595
+      spore-count-empty 1_0: 8077034256043577442
+      spore-count-empty 1_1: -2227876622814630107
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
