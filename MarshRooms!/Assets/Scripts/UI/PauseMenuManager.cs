@@ -142,12 +142,12 @@ public class PauseMenuManager : MonoBehaviour
     }
 
     // -- MAIN MENU --
-    private void OnMainMenu()
-    {
-        Time.timeScale = 1f;
+    //private void OnMainMenu()
+    //{
+    //    Time.timeScale = 1f;
 
-        LevelLoader.Instance.LoadLevel("Persistent");
-    }
+    //    LevelLoader.Instance.LoadLevel("Persistent");
+    //}
 
     // -- QUIT GAME --
     private void OnQuitGame()

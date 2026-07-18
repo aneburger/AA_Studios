@@ -44,7 +44,7 @@ public class InventoryDisplay : MonoBehaviour
 
             int slotIndex = currentDisplaySlot + displayIndex;
 
-            // wrap around if we go past slot 2
+            // wrap around if it goes past slot 2
             if (slotIndex >= 3)
                 slotIndex -= 3;
 
