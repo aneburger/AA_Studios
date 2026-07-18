@@ -1,22 +1,10 @@
 fileFormatVersion: 2
-guid: 6815948c4f32f8b40bb58a510da5a641
+guid: 8587d5130fe31994ab7266e8cc5e8f0f
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -4863336276314997047
-    second: inventory_0
-  - first:
-      213: -3860515135949180240
-    second: inventory_1
-  - first:
-      213: -6734734834790175173
-    second: inventory_2
-  - first:
-      213: -6618134905481563395
-    second: inventory_3
-  - first:
-      213: -3913403896141990040
-    second: inventory_4
+      213: 3044897396056791726
+    second: menu-button_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -49,7 +37,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -63,7 +51,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 16
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -87,7 +75,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -112,57 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: inventory_0
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 80
-        width: 30
-        height: 29
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 9ce39fa7c65f18cb0800000000000000
-      internalID: -4863336276314997047
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: inventory_1
-      rect:
-        serializedVersion: 2
-        x: 30
-        y: 88
-        width: 18
-        height: 13
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 0b2fabf00f1bc6ac0800000000000000
-      internalID: -3860515135949180240
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: inventory_2
+      name: menu-button_0
       rect:
         serializedVersion: 2
         x: 1
-        y: 32
+        y: 1
         width: 28
-        height: 49
+        height: 27
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -171,52 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: b3ee1e3995a6982a0800000000000000
-      internalID: -6734734834790175173
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: inventory_3
-      rect:
-        serializedVersion: 2
-        x: 30
-        y: 61
-        width: 18
-        height: 13
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: df2782b2e59a724a0800000000000000
-      internalID: -6618134905481563395
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: inventory_4
-      rect:
-        serializedVersion: 2
-        x: 30
-        y: 38
-        width: 18
-        height: 13
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 867b3dbf3ebc0b9c0800000000000000
-      internalID: -3913403896141990040
+      spriteID: eaa1a759c06a14a20800000000000000
+      internalID: 3044897396056791726
       vertices: []
       indices: 
       edges: []
@@ -235,11 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      inventory_0: -4863336276314997047
-      inventory_1: -3860515135949180240
-      inventory_2: -6734734834790175173
-      inventory_3: -6618134905481563395
-      inventory_4: -3913403896141990040
+      menu-button_0: 3044897396056791726
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

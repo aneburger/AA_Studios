@@ -12,15 +12,13 @@ public class PauseMenuManager : MonoBehaviour
     [SerializeField] private Button controlsButton;
     [SerializeField] private Button closeControlsButton;
     [SerializeField] private Button quitButton;
+    [SerializeField] private Button mainMenuButton;
     [SerializeField] private PlayerInput playerInput;
 
     private bool isPaused = false;
     private float volumeBeforePause = 1f;
     private InputAction escapeAction;
 
-    //// Track which menu opened the controls panel
-    //private enum MenuSource { Main, Pause }
-    //private MenuSource controlsMenuSource = MenuSource.Main;
 
     private void Awake()
     {
@@ -52,11 +50,13 @@ public class PauseMenuManager : MonoBehaviour
 
         if (quitButton != null)
             quitButton.onClick.AddListener(OnQuitGame);
+
+        //if (mainMenuButton != null)
+        //    mainMenuButton.onClick.AddListener(OnMainMenu);
     }
 
     private void OnDestroy()
     {
-        // Clean up the input action
         if (escapeAction != null)
             escapeAction.Dispose();
     }
@@ -64,18 +64,15 @@ public class PauseMenuManager : MonoBehaviour
     // -- HANDLE ESCAPE PRESSED --
     private void HandleEscapePressed()
     {
-        // Don't toggle pause when dialouge is active
         if (DialogueManager.Instance != null && DialogueManager.Instance.IsRunning)
             return;
 
-        // If controls menu is open, close it first
         if (controlsMenuPanel != null && controlsMenuPanel.activeInHierarchy)
         {
             OnCloseControls();
             return;
         }
 
-        // Otherwise toggle pause menu
         if (isPaused)
             OnResumeGame();
         else
@@ -135,9 +132,22 @@ public class PauseMenuManager : MonoBehaviour
         // Resume time before reloading
         Time.timeScale = 1f;
 
-        // Reload current scene
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        // Get the current active scene 
+        Scene currentScene = SceneManager.GetActiveScene();
+
+        if (currentScene.name != "Persistent")
+        {
+            SceneManager.UnloadSceneAsync(currentScene);
+        }
     }
+
+    // -- MAIN MENU --
+    //private void OnMainMenu()
+    //{
+    //    Time.timeScale = 1f;
+
+    //    LevelLoader.Instance.LoadLevel("Persistent");
+    //}
 
     // -- QUIT GAME --
     private void OnQuitGame()
