@@ -230,7 +230,6 @@ public class PlayerHealth : BaseHealth
         // Disable input and physics
         GetComponent<PlayerInput>().enabled = false;
         GetComponent<Rigidbody2D>().linearVelocity = Vector2.zero;
-        GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
         shooter.HideWeapon(true);
 
         anim.SetTrigger("Die");
@@ -240,7 +239,13 @@ public class PlayerHealth : BaseHealth
     private IEnumerator DeathSequence()
     {
         // Wait for death animation to finish
+        ScreenEffects.Instance.SetLowHealth(false); 
         yield return new WaitForSeconds(4f);
+
+        GetComponent<PlayerInput>().enabled = true;
+        shooter.HideWeapon(false);
+        mover.ForceIdleAnimation();
+    
         LevelLoader.Instance.ReloadCurrentLevel();
     }
 

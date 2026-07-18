@@ -50,6 +50,6 @@ public class CameraAimTarget : MonoBehaviour
     // -- HANDLE PLAYER DEATH --
     private void HandlePlayerDeath()
     {
-        enabled = false;
+        //enabled = false;
     }
 }

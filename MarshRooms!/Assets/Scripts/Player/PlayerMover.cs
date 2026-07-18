@@ -136,6 +136,7 @@ namespace TopDown.Movement
         public void ForceIdleAnimation()
         {
             anim.SetBool("isWalking", false);
+            anim.Play("IdleBlend", 0, 0f);
         }
 
         // -- SET CAN MOVE --

@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Text.RegularExpressions;
 using System.Collections;
 
 public class LevelLoader : MonoBehaviour
@@ -40,6 +41,22 @@ public class LevelLoader : MonoBehaviour
     {
         if (!string.IsNullOrEmpty(CurrentLevelScene))
             LoadLevel(CurrentLevelScene);
+    }
+
+    // -- GET CURRENT FLOOR NUMBER -- 
+    public int GetCurrentFloorNumber()
+    {
+        if (string.IsNullOrEmpty(CurrentLevelScene)) return 1;
+
+        string digits = System.Text.RegularExpressions.Regex.Match(CurrentLevelScene, @"\d+").Value;
+        return int.TryParse(digits, out int floorNum) ? floorNum : 1;
+    }
+
+    // -- GET NEXT FLOOR SCENE NAME --
+    public string GetNextFloorSceneName()
+    {
+        int nextFloor = GetCurrentFloorNumber() + 1;
+        return $"Floor_{nextFloor:D2}";
     }
     
     private IEnumerator LoadLevelRoutine(string sceneName)

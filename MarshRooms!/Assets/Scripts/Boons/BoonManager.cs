@@ -5,23 +5,21 @@ public class BoonManager : MonoBehaviour
 {
     public static BoonManager Instance { get; private set; }
 
-    public RunStats Stats { get; private set; } = new RunStats();
+    [Header("Boon Cards")]
+    [SerializeField] private List<BoonCardData> allBoonCards;
 
+    public RunStats Stats { get; private set; } = new RunStats();
     private Dictionary<string, int> ownedCounts = new Dictionary<string, int>();
 
-    private static readonly Dictionary<string, int> boonCaps = new Dictionary<string, int>
-    {
-        { "bonus_heart", 3 },
-        { "bonus_heart_full_heal", 3 },
-        { "dodge_damage_chance", 3 },
-        { "mutation_duration", 3 },
-        { "mutation_damage", 3 },
-        { "extra_bullet", 3 },
-        { "faster_spore_fill", 1 },
-        { "mushroom_bomb", 1 },
-    };
-
     public event System.Action<string> OnBoonApplied;
+
+    // Card rarity weight per floors
+    private static readonly (float normal, float rare, float epic)[] rarityWeightsByTier = new[]
+    {
+        (0.70f, 0.25f, 0.05f), // floors 1-2
+        (0.60f, 0.275f, 0.125f), // floors 3-4
+        (0.50f, 0.325f, 0.175f), // floors 5+
+    };
 
     // -- AWAKE --
     private void Awake()
@@ -31,25 +29,29 @@ public class BoonManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
+    // -- GET OWNED COUNT --
     public int GetOwnedCount(string boonId)
     {
         return ownedCounts.TryGetValue(boonId, out int count) ? count : 0;
     }
 
+    // -- CAN APPLY BOON --
     public bool CanApplyBoon(string boonId)
     {
-        if (!boonCaps.TryGetValue(boonId, out int cap)) return true;
-        return GetOwnedCount(boonId) < cap;
+        BoonCardData card = allBoonCards.Find(c => c.boonId == boonId);
+        if (card == null || card.maxCopies < 0) return true;
+        return GetOwnedCount(boonId) < card.maxCopies;
     }
 
     // -- APPLY BOON --
-   public void ApplyBoonById(string boonId)
+    public void ApplyBoonById(string boonId)
     {
         if (!CanApplyBoon(boonId))
         {
-            Debug.LogWarning($"BoonManager: '{boonId}' is already at its cap.");
+            Debug.LogWarning($"BoonManager: '{boonId}' is already at its cap, ignoring.");
             return;
         }
+
         ownedCounts.TryGetValue(boonId, out int current);
         ownedCounts[boonId] = current + 1;
 
@@ -64,42 +66,58 @@ public class BoonManager : MonoBehaviour
                 Stats.bonusMaxHearts++;
                 ApplyBonusHeart(healToFull: true);
                 break;
+
             case "health_drop_rate":
-                Stats.healthDropRateMultiplier += 0.5f;
+                Stats.healthDropRateMultiplier *= 2f;
                 break;
+
             case "heal_full_chance":
-                Stats.healToFullChance += 0.25f;
+                Stats.healToFullChance += 0.2f;
                 break;
+
             case "iframe_extension":
-                Stats.bonusIFrameDuration += 0.2f;
+                Stats.bonusIFrameDuration += 2f;
                 break;
+
             case "dodge_damage_chance":
                 Stats.dodgeDamageChance += 0.1f;
                 break;
+
             case "mutation_duration":
                 Stats.bonusMutationDuration += 2f;
                 break;
+
             case "mutation_damage":
-                Stats.mutationDamageBonus += 0.2f;
+                if (ownedCounts["mutation_damage"] == 1)
+                    Stats.mutationDamageBonus += 0.2f;
+                else
+                    Stats.mutationDamageBonus += 0.1f;
                 break;
+
             case "mushroom_bomb":
                 Stats.hasMushroomBomb = true;
                 break;
+
             case "faster_spore_fill":
                 Stats.sporeGainAmount += 1;
                 break;
+
             case "fire_rate":
-                Stats.permanentFireRateMultiplier += 0.2f;
+                Stats.permanentFireRateMultiplier += 0.15f;
                 break;
+
             case "crit_chance":
                 Stats.critChance += 0.1f;
                 break;
+
             case "overall_damage":
                 Stats.permanentDamageMultiplier += 0.15f;
                 break;
+
             case "extra_bullet":
                 Stats.permanentBulletCountBonus += 1;
                 break;
+
             default:
                 Debug.LogWarning($"BoonManager: unknown boonId '{boonId}'");
                 return;
@@ -109,6 +127,7 @@ public class BoonManager : MonoBehaviour
         OnBoonApplied?.Invoke(boonId);
     }
 
+    // -- APPLY BONUS HEART --
     private void ApplyBonusHeart(bool healToFull)
     {
         GameObject player = GameObject.FindGameObjectWithTag("Player");
@@ -120,5 +139,57 @@ public class BoonManager : MonoBehaviour
         PlayerHealth playerHealth = player.GetComponent<PlayerHealth>();
         if (playerHealth != null)
             playerHealth.IncreaseMaxHealth(4, healToFull: healToFull);
+    }
+
+    public List<BoonCardData> GetThreeCardOffers(int floorNumber)
+    {
+        List<BoonCardData> offers = new List<BoonCardData>();
+        List<BoonCardData> excluded = new List<BoonCardData>();
+
+        for (int i = 0; i < 3; i++)
+        {
+            BoonRarity rolledRarity = RollRarity(floorNumber);
+            BoonCardData card = PickCardOfRarity(rolledRarity, excluded);
+
+            if (card == null)
+            {
+                foreach (BoonRarity fallback in new[] { BoonRarity.Normal, BoonRarity.Rare, BoonRarity.Epic })
+                {
+                    card = PickCardOfRarity(fallback, excluded);
+                    if (card != null) break;
+                }
+            }
+
+            if (card != null)
+            {
+                offers.Add(card);
+                excluded.Add(card);
+            }
+        }
+
+        return offers;
+    }
+
+    private BoonRarity RollRarity(int floorNumber)
+    {
+        int tier = floorNumber <= 2 ? 0 : (floorNumber <= 4 ? 1 : 2);
+        var weights = rarityWeightsByTier[tier];
+
+        float roll = Random.value;
+        if (roll <= weights.normal) return BoonRarity.Normal;
+        if (roll <= weights.normal + weights.rare) return BoonRarity.Rare;
+        return BoonRarity.Epic;
+    }
+
+    private BoonCardData PickCardOfRarity(BoonRarity rarity, List<BoonCardData> excluded)
+    {
+        List<BoonCardData> candidates = allBoonCards.FindAll(c =>
+            c.rarity == rarity &&
+            !excluded.Contains(c) &&
+            CanApplyBoon(c.boonId)
+        );
+
+        if (candidates.Count == 0) return null;
+        return candidates[Random.Range(0, candidates.Count)];
     }
 }

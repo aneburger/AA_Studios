@@ -8,6 +8,7 @@ public class Interactable : MonoBehaviour
     [Header("Indicator")]
     [SerializeField] private GameObject indicatorPrefab;
     [SerializeField] private float indicatorHeight = 0.5f;
+    [SerializeField] private float indicatorHorizontalOffset = 0f;
 
     [Header("Outline")]
     [SerializeField] private SpriteRenderer targetRenderer;
@@ -34,9 +35,10 @@ public class Interactable : MonoBehaviour
         if (indicatorPrefab != null)
         {
             GameObject instance = Instantiate(indicatorPrefab, transform);
-            instance.transform.localPosition = new Vector3(0f, indicatorHeight, 0f);
+            Vector3 basePos = new Vector3(indicatorHorizontalOffset, indicatorHeight, 0f);
+            instance.transform.localPosition = basePos;
             indicator = instance.GetComponent<InteractIndicator>();
-            indicator.SetBasePosition(new Vector3(0f, indicatorHeight, 0f));
+            indicator.SetBasePosition(basePos);
             indicator.Hide();
         }
     }
