@@ -139,7 +139,7 @@ public class PlayerWeaponSlot : MonoBehaviour
         Vector2 randomOffset = Random.insideUnitCircle * 0.6f;
         Vector2 dropPos = (Vector2)transform.position + randomOffset;
 
-        RoomManager room = FindObjectOfType<RoomManager>();
+        RoomManager room = FindFirstObjectByType<RoomManager>();
         if (room != null)
             dropPos = room.GetSafeDropPosition(dropPos);
 

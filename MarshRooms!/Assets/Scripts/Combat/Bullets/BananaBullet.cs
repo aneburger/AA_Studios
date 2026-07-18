@@ -33,7 +33,7 @@ public class BananaBullet : BaseBullet
     protected override void Start()
     {
         base.Start();
-        dropZone = FindObjectOfType<RoomDropZone>();
+        dropZone = FindFirstObjectByType<RoomDropZone>();
 
         // Random spin direction and speed
         rotationDirection = Random.value > 0.5f ? 1f : -1f;

@@ -15,8 +15,8 @@ public class InventoryDisplay : MonoBehaviour
 
     private void Start()
     {
-        playerShooter = FindObjectOfType<PlayerShooter>();
-        weaponSlots = FindObjectOfType<PlayerWeaponSlot>();
+        playerShooter = FindFirstObjectByType<PlayerShooter>();
+        weaponSlots = FindFirstObjectByType<PlayerWeaponSlot>();
 
         HideAllInventorySlots();
     }

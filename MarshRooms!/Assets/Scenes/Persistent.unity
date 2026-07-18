@@ -302,12 +302,15 @@ GameObject:
   - component: {fileID: 319489606}
   - component: {fileID: 319489605}
   - component: {fileID: 319489614}
-  - component: {fileID: 319489604}
   - component: {fileID: 319489615}
   - component: {fileID: 319489616}
   - component: {fileID: 319489617}
+  - component: {fileID: 319489624}
   - component: {fileID: 319489619}
   - component: {fileID: 319489620}
+  - component: {fileID: 319489622}
+  - component: {fileID: 319489604}
+  - component: {fileID: 319489623}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -776,7 +779,7 @@ MonoBehaviour:
   shooter: {fileID: 319489605}
   weaponSlot: {fileID: 319489614}
   speedMultiplier: 1.35
-  fireRateMultiplier: 0.85
+  fireRateMultiplier: 1.3
   mutatedShakeMultiplier: 1.5
   laserMutatedBulletCount: 3
   laserMutatedSpread: 5
@@ -808,6 +811,48 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de3172974955eb543a53f334763ff58d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerDialogueInputBlocker
+--- !u!114 &319489622
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 319489603}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8ed0b11850145c4995dd76170bb2500, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.TestRunner::UnityEngine.TestTools.TestRunner.Callbacks.PlayerQuitHandler
+--- !u!114 &319489623
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 319489603}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 596dda84ed95b0646971de77fd7b2362, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MushroomBombEffect
+  explosionRadius: 5
+  explosionDamage: 9
+  explosionVFXPrefab: {fileID: 4081999799842582576, guid: 58ff3210537b77e43a7aece106f1672e, type: 3}
+  enemyMask:
+    serializedVersion: 2
+    m_Bits: 512
+--- !u!114 &319489624
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 319489603}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d6501af52d14e54a9f1510a26d98f5b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerBoonStats
 --- !u!1 &356983338
 GameObject:
   m_ObjectHideFlags: 0
@@ -1553,7 +1598,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 13.133179
+  orthographic size: 10.020833
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -12242,6 +12287,50 @@ Transform:
   - {fileID: 1844690407}
   m_Father: {fileID: 319489611}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1073522837
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1073522839}
+  - component: {fileID: 1073522838}
+  m_Layer: 6
+  m_Name: BoonManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1073522838
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1073522837}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 718a3c9e77ecb914ea32e060662728e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BoonManager
+--- !u!4 &1073522839
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1073522837}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 9.164869, y: -7.35, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1086796147
 GameObject:
   m_ObjectHideFlags: 0
@@ -18487,6 +18576,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 795500448375388433, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -58.900024
+      objectReference: {fileID: 0}
+    - target: {fileID: 795500448375388433, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -18.599976
+      objectReference: {fileID: 0}
     - target: {fileID: 4378696629242631385, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -18530,6 +18627,7 @@ SceneRoots:
   - {fileID: 400685277}
   - {fileID: 1086796151}
   - {fileID: 994808033}
+  - {fileID: 1073522839}
   - {fileID: 395473942}
   - {fileID: 1527244762}
   - {fileID: 1399008576}

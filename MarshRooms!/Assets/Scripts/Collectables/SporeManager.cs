@@ -17,6 +17,10 @@ public class SporeManager : MonoBehaviour
 
     public bool IsFull => currentSpores >= maxSpores;
 
+    // Bonus from boons
+    private float bonusMutatedDuration = 0f;
+    private int sporeGainAmount = 1;
+
     // Spore count event
     public delegate void SporeCountChangedDelegate(int current, int max);
     public event SporeCountChangedDelegate OnSporeCountChanged;
@@ -49,10 +53,22 @@ public class SporeManager : MonoBehaviour
         if (!isMutated) return;
 
         mutatedTimeRemaining -= Time.deltaTime;
-        OnMutatedDrainTick?.Invoke(mutatedTimeRemaining / mutatedDuration);
+        OnMutatedDrainTick?.Invoke(mutatedTimeRemaining / (mutatedDuration + bonusMutatedDuration));
 
         if (mutatedTimeRemaining <= 0f)
             EndMutatedState();
+    }
+
+    // -- SET BONUS MUTATED DURATION --
+    public void SetBonusMutatedDuration(float bonus)
+    {
+        bonusMutatedDuration = bonus;
+    }
+
+    // -- SET SPORE GAIN AMOUNT --
+    public void SetSporeGainAmount(int amount)
+    {
+        sporeGainAmount = amount;
     }
 
     // -- COLLECT SPORE --
@@ -61,7 +77,7 @@ public class SporeManager : MonoBehaviour
         if (isMutated) return;
         if (currentSpores >= maxSpores) return;
 
-        currentSpores++;
+        currentSpores = Mathf.Min(currentSpores + sporeGainAmount, maxSpores);
         OnSporeCountChanged?.Invoke(currentSpores, maxSpores);
     }
 
@@ -71,7 +87,7 @@ public class SporeManager : MonoBehaviour
         if (isMutated || currentSpores < maxSpores) return;
 
         isMutated = true;
-        mutatedTimeRemaining = mutatedDuration;
+        mutatedTimeRemaining = mutatedDuration + bonusMutatedDuration;
         currentSpores = 0;
         OnMutatedActivated?.Invoke();
     }

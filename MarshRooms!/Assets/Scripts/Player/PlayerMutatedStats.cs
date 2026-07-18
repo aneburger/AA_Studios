@@ -9,9 +9,9 @@ public class PlayerMutatedStats : MonoBehaviour
     [SerializeField] private PlayerWeaponSlot weaponSlot;
 
     [Header("Mutated Boosts")]
-    [SerializeField] private float speedMultiplier = 1.2f;
-    [SerializeField] private float fireRateMultiplier = 0.7f;
-    [SerializeField] private float mutatedShakeMultiplier = 1.5f;
+    [SerializeField] private float speedMultiplier;
+    [SerializeField] private float fireRateMultiplier;
+    [SerializeField] private float mutatedShakeMultiplier;
 
     [Header("Rainbow Laser Mutated")]
     [SerializeField] private int laserMutatedBulletCount = 3;
@@ -46,6 +46,7 @@ public class PlayerMutatedStats : MonoBehaviour
         mover.SetSpeedMultiplier(speedMultiplier);
         shooter.SetFireRateMultiplier(fireRateMultiplier);
         shooter.SetShakeMultiplier(mutatedShakeMultiplier);
+        shooter.SetDamageMultiplier(1f + BoonManager.Instance.Stats.mutationDamageBonus);
         ApplyWeaponOverrides();
     }
 
@@ -54,6 +55,7 @@ public class PlayerMutatedStats : MonoBehaviour
         mover.SetSpeedMultiplier(1f);
         shooter.SetFireRateMultiplier(1f);
         shooter.SetShakeMultiplier(1f);
+        shooter.SetDamageMultiplier(1f);
         shooter.ClearBulletOverrides();
     }
 

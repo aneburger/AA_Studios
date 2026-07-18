@@ -10,11 +10,29 @@ public class LevelEntryController : MonoBehaviour
         if (player == null) return;
 
         var weaponSlot = player.GetComponent<PlayerWeaponSlot>();
-        if (weaponSlot == null) return;
-
-        if (!weaponSlot.HasAnyWeapon() && defaultWeapon != null)
+        if (weaponSlot != null)
         {
-            weaponSlot.GrantWeapon(defaultWeapon);
+            if (!weaponSlot.HasAnyWeapon() && defaultWeapon != null)
+            {
+                weaponSlot.GrantWeapon(defaultWeapon);
+            }
+        }
+
+        TryHealToFull(player);
+    }
+
+    private void TryHealToFull(GameObject player)
+    {
+        if (BoonManager.Instance == null) return;
+
+        float chance = BoonManager.Instance.Stats.healToFullChance;
+        if (chance <= 0f) return;
+
+        if (Random.value <= chance)
+        {
+            PlayerHealth playerHealth = player.GetComponent<PlayerHealth>();
+            if (playerHealth != null)
+                playerHealth.Heal(playerHealth.GetMaxHealth());
         }
     }
 }

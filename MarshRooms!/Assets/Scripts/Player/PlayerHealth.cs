@@ -24,6 +24,9 @@ public class PlayerHealth : BaseHealth
     private float damageCooldownTimer;
     private bool isInvincible = false;
 
+    private float bonusIFrameDuration = 0f;
+    private float dodgeDamageChance = 0f;
+
     public static event System.Action OnPlayerDeath;
 
     private Coroutine flickerCoroutine;
@@ -60,6 +63,18 @@ public class PlayerHealth : BaseHealth
         UpdateHUD();
     }
 
+    // -- SET BONUS I-FRAME DURATION --
+    public void SetBonusIFrameDuration(float bonus)
+    {
+        bonusIFrameDuration = bonus;
+    }
+
+    // -- SET DODGE DAMAGE CHANCE --
+    public void SetDodgeDamageChance(float chance)
+    {
+        dodgeDamageChance = chance;
+    }
+
     // -- INCREASE MAX HEALTH --
     public override void IncreaseMaxHealth(float amount, bool healToFull = false)
     {
@@ -89,7 +104,11 @@ public class PlayerHealth : BaseHealth
         if (isInvincible) return;
         if (damageCooldownTimer > 0f) return;
 
-        damageCooldownTimer = damageCooldown;
+        // Change to not take damage
+        if (Random.value <= dodgeDamageChance)
+            return;
+
+        damageCooldownTimer = damageCooldown + bonusIFrameDuration;
         base.TakeDamage(amount);
         UpdateHUD();
 
@@ -144,8 +163,9 @@ public class PlayerHealth : BaseHealth
         yield return new WaitForSeconds(0.2f);
 
         float elapsed = 0f;
+        float totalDuration = damageCooldown + bonusIFrameDuration;
 
-        while (elapsed < damageCooldown)
+        while (elapsed < totalDuration)
         {
             if (IsDead())
             {
@@ -221,8 +241,6 @@ public class PlayerHealth : BaseHealth
     {
         // Wait for death animation to finish
         yield return new WaitForSeconds(4f);
-        
-        gameObject.SetActive(false);
         LevelLoader.Instance.ReloadCurrentLevel();
     }
 

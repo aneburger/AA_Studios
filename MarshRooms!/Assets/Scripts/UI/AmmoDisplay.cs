@@ -12,8 +12,8 @@ public class AmmoDisplay : MonoBehaviour
 
     private void Start()
     {
-        playerShooter = FindObjectOfType<PlayerShooter>();
-        weaponSlots = FindObjectOfType<PlayerWeaponSlot>();
+        playerShooter = FindFirstObjectByType<PlayerShooter>();
+        weaponSlots = FindFirstObjectByType<PlayerWeaponSlot>();
     }
 
     private void Update()

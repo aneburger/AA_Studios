@@ -99,7 +99,7 @@ public class LevelLoader : MonoBehaviour
             return;
         }
  
-        SpawnPoint target = FindObjectOfType<SpawnPoint>();
+        SpawnPoint target = FindFirstObjectByType<SpawnPoint>();
         if (target == null)
         {
             Debug.LogWarning($"LevelLoader: no SpawnPoint found in '{CurrentLevelScene}'.");

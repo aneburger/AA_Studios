@@ -136,7 +136,6 @@ public class TutorialDirector : MonoBehaviour
     private bool weaponScrolled = false;
     private bool playerDodged = false;
     private bool sporeCollectedThisWave = false;
-    private bool sporeBarFull = false;
     private bool mutateActivated = false;
     private bool shootingEnabled = false;
 
@@ -887,8 +886,6 @@ public class TutorialDirector : MonoBehaviour
             // Just fill it directly — tutorial should never leave player stuck
             SporeManager.Instance.FillToMax();
         }
-
-        sporeBarFull = true;
     }
 
     // Activates or deactivates a wave of enemies

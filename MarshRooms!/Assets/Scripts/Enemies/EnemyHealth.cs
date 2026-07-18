@@ -29,7 +29,7 @@ public class EnemyHealth : BaseHealth
         EnemyController controller = GetComponent<EnemyController>();
         if (controller == null) return;
 
-        RoomManager room = FindObjectOfType<RoomManager>();
+        RoomManager room = FindFirstObjectByType<RoomManager>();
 
         int amount = controller.Data.guaranteesSporeDrop
             ? Random.Range(1, controller.Data.maxSporeDrops + 1)
@@ -88,7 +88,7 @@ public class EnemyHealth : BaseHealth
         OnDied?.Invoke(transform.position);
 
         EnemyController controller = GetComponent<EnemyController>();
-        RoomManager room = FindObjectOfType<RoomManager>();
+        RoomManager room = FindFirstObjectByType<RoomManager>();
 
         if (controller != null)
         {
@@ -99,8 +99,12 @@ public class EnemyHealth : BaseHealth
                 room.TryDropWeapon(transform.position, drop.weaponPickupPrefab, drop.dropChance);
             }
 
-            // Health drop
-            if (controller.Data.healthPickupPrefab != null && Random.value <= controller.Data.healthDropChance)
+           // Health drop
+            float healthDropChance = controller.Data.healthDropChance * BoonManager.Instance.Stats.healthDropRateMultiplier;
+            float roll = Random.value;
+            bool willDrop = controller.Data.healthPickupPrefab != null && roll <= healthDropChance;
+
+            if (willDrop)
             {
                 Vector2 offset = Random.insideUnitCircle * 0.8f;
                 Vector2 safePos = room != null ? room.GetSafeDropPosition((Vector2)transform.position + offset) : (Vector2)transform.position + offset;

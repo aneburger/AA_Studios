@@ -37,7 +37,7 @@ public class PlayerShooter : BaseShooter
             {
                 GetComponent<PlayerMutatedVisuals>()?.PlayShootBurst(GetFirePosition());
             }
-           nextFireTime = Time.time + (currentWeapon.fireRate * GetFireRateMultiplier());
+           nextFireTime = Time.time + (currentWeapon.fireRate / GetFireRateMultiplier());
         }
     }
 
