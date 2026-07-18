@@ -38,17 +38,14 @@ public class InventoryDisplay : MonoBehaviour
             currentDisplaySlot = currentSlot;
         }
 
+        WeaponData[] displayWeapons = GetDisplayWeapons(currentDisplaySlot);
+
+        // display weapons in slots, filling from top
         for (int displayIndex = 0; displayIndex < inventorySlots.Length; displayIndex++)
         {
             if (inventorySlots[displayIndex] == null) continue;
 
-            int slotIndex = currentDisplaySlot + displayIndex;
-
-            // wrap around if it goes past slot 2
-            if (slotIndex >= 3)
-                slotIndex -= 3;
-
-            WeaponData weapon = weaponSlots.GetWeaponAtSlot(slotIndex);
+            WeaponData weapon = displayWeapons[displayIndex];
 
             if (weapon != null)
             {
@@ -60,6 +57,27 @@ public class InventoryDisplay : MonoBehaviour
                 inventorySlots[displayIndex].enabled = false;
             }
         }
+    }
+
+    // -- GET DISPLAY WEAPONS --
+    private WeaponData[] GetDisplayWeapons(int startSlot)
+    {
+        WeaponData[] displayWeapons = new WeaponData[3];
+        int displayIndex = 0;
+
+        for (int i = 0; i < 3 && displayIndex < 3; i++)
+        {
+            int slotIndex = (startSlot + i) % 3;
+            WeaponData weapon = weaponSlots.GetWeaponAtSlot(slotIndex);
+
+            if (weapon != null)
+            {
+                displayWeapons[displayIndex] = weapon;
+                displayIndex++;
+            }
+        }
+
+        return displayWeapons;
     }
 
     // -- GET CURRENT WEAPON SLOT --
