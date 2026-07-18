@@ -85,7 +85,6 @@ public class PlayerHealth : BaseHealth
     // -- TAKE DAMAGE -- 
     public override void TakeDamage(float amount)
     {   
-        IncreaseMaxHealth(4, healToFull:true);
         if (IsDead()) return;
         if (isInvincible) return;
         if (damageCooldownTimer > 0f) return;
