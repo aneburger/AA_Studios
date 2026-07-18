@@ -132,8 +132,13 @@ public class PauseMenuManager : MonoBehaviour
         // Resume time before reloading
         Time.timeScale = 1f;
 
-        // Reload current scene
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        // Get the current active scene 
+        Scene currentScene = SceneManager.GetActiveScene();
+
+        if (currentScene.name != "Persistent")
+        {
+            SceneManager.UnloadSceneAsync(currentScene);
+        }
     }
 
     // -- MAIN MENU --
