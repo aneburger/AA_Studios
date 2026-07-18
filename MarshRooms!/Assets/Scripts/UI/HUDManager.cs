@@ -6,7 +6,8 @@ public class HUDManager : MonoBehaviour
     public static HUDManager Instance { get; private set; }
 
     [Header("Health")]
-    [SerializeField] private Image[] heartImages;
+    [SerializeField] private Transform heartContainer;
+    [SerializeField] private Image heartPrefab;
     [SerializeField] private Sprite fullHeartSprite;
     [SerializeField] private Sprite threeQuarterHeartSprite;
     [SerializeField] private Sprite halfHeartSprite;
@@ -22,14 +23,13 @@ public class HUDManager : MonoBehaviour
     [Header("Inventory")]
     [SerializeField] private InventoryDisplay inventoryDisplay;
 
-    // [Header("Weapon")]
-    // [SerializeField] private Image weaponDisplayImage;
-
     [Header("Menu")]
     [SerializeField] private GameObject menuPanel;
 
     [Header("HUD Elements")]
     [SerializeField] private GameObject hudElements;
+
+    private Image[] heartImages;
 
     private void Awake()
     {
@@ -42,13 +42,56 @@ public class HUDManager : MonoBehaviour
         Instance = this;
     }
 
+    private void Start()
+    {
+        InitializeHearts(); // initialize heart display based on max health
+    }
+
+    // -- INITIALIZE HEARTS --
+    private void InitializeHearts()
+    {
+        if (heartContainer == null || heartPrefab == null)
+        {
+            Debug.LogError("HUDManager: heartContainer or heartPrefab is not assigned");
+            return;
+        }
+
+        // clear existing hearts
+        foreach (Transform child in heartContainer)
+        {
+            Destroy(child.gameObject);
+        }
+
+        // Get max health from player
+        PlayerHealth playerHealth = FindObjectOfType<PlayerHealth>();
+        if (playerHealth == null)
+        {
+            Debug.LogError("HUDManager: PlayerHealth not found in scene");
+            return;
+        }
+
+        int maxHealth = playerHealth.MaxHealth;
+        int maxHearts = Mathf.CeilToInt(maxHealth / 4f); // Each heart represents 4 HP
+
+        // creates heart images dynamically here
+        heartImages = new Image[maxHearts];
+        for (int i = 0; i < maxHearts; i++)
+        {
+            Image newHeart = Instantiate(heartPrefab, heartContainer);
+            heartImages[i] = newHeart;
+        }
+    }
+
     // -- UPDATE HEALTH DISPLAY --
     public void UpdateHealthDisplay(int currentHealth, int maxHealth)
     {
+        if (heartImages == null || heartImages.Length == 0)
+            InitializeHearts();
+
         int fullHearts = currentHealth / 4;
         int remainder = currentHealth % 4;
 
-        // Display full hearts
+        // display hearts
         for (int i = 0; i < heartImages.Length; i++)
         {
             if (i < fullHearts)
@@ -58,7 +101,6 @@ public class HUDManager : MonoBehaviour
             }
             else if (i == fullHearts && remainder > 0)
             {
-                // Display partial heart
                 switch (remainder)
                 {
                     case 3:
@@ -75,9 +117,20 @@ public class HUDManager : MonoBehaviour
             }
             else
             {
-                // Empty heart or hidden
-                heartImages[i].enabled = false;
+                heartImages[i].sprite = emptyHeartSprite;
+                heartImages[i].enabled = true;
             }
+        }
+    }
+
+    // -- REFRESH HEARTS  -- when max health changes
+    public void RefreshHearts()
+    {
+        PlayerHealth playerHealth = FindObjectOfType<PlayerHealth>();
+        if (playerHealth != null)
+        {
+            InitializeHearts();
+            UpdateHealthDisplay(playerHealth.CurrentHealth, playerHealth.MaxHealth);
         }
     }
 
@@ -87,23 +140,6 @@ public class HUDManager : MonoBehaviour
         if (hudElements != null)
             hudElements.SetActive(visible);
     }
-
-    // -- UPDATE WEAPON DISPLAY --
-    //public void UpdateWeaponDisplay(WeaponData weapon)
-    //{
-    //    if (weaponDisplayImage != null)
-    //    {
-    //        if (weapon != null && weapon.hudSprite != null)
-    //        {
-    //            weaponDisplayImage.sprite = weapon.hudSprite;
-    //            weaponDisplayImage.enabled = true;
-    //        }
-    //        else
-    //        {
-    //            weaponDisplayImage.enabled = false;
-    //        }
-    //    }
-    //}
 
     // -- CLOSE MENU --
     public void CloseMenu()

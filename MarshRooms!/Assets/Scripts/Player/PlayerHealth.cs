@@ -33,6 +33,9 @@ public class PlayerHealth : BaseHealth
     private SpriteRenderer playerRenderer;
     private PlayerMutatedVisuals mutatedVisuals;
 
+    public int MaxHealth => (int)maxHealth;
+    public int CurrentHealth => (int)currentHealth;
+
     // References
     private PlayerShooter shooter;
     private PlayerMover mover;
@@ -79,7 +82,8 @@ public class PlayerHealth : BaseHealth
     public override void IncreaseMaxHealth(float amount, bool healToFull = false)
     {
         base.IncreaseMaxHealth(amount, healToFull);
-        UpdateHUD();
+        //UpdateHUD();
+        HUDManager.Instance?.RefreshHearts();
     }
 
     // -- SET INVINCIBILITY -- 
@@ -142,6 +146,7 @@ public class PlayerHealth : BaseHealth
             HUDManager.Instance.UpdateHealthDisplay((int)currentHealth, (int)maxHealth);
         }
     }
+
 
     // -- HIT EFFECT --
     protected override void OnHitEffect()
