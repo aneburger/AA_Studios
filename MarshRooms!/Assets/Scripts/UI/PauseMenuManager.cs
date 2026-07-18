@@ -51,8 +51,8 @@ public class PauseMenuManager : MonoBehaviour
         if (quitButton != null)
             quitButton.onClick.AddListener(OnQuitGame);
 
-        if (mainMenuButton != null)
-            mainMenuButton.onClick.AddListener(OnMainMenu);
+        //if (mainMenuButton != null)
+        //    mainMenuButton.onClick.AddListener(OnMainMenu);
     }
 
     private void OnDestroy()
