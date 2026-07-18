@@ -6,14 +6,12 @@ public class InventoryDisplay : MonoBehaviour
     [Header("Inventory Container")]
     [SerializeField] private GameObject inventoryContainer;
 
-    [Header("Active Weapon Slot")]
-    [SerializeField] private Image activeWeaponSlot;
-
     [Header("Inventory Slots")]
     [SerializeField] private Image[] inventorySlots = new Image[3];
 
     private PlayerShooter playerShooter;
     private PlayerWeaponSlot weaponSlots;
+    private int currentDisplaySlot = 0;
 
     private void Start()
     {
@@ -33,33 +31,47 @@ public class InventoryDisplay : MonoBehaviour
     // -- UPDATE INVENTORY DISPLAY --
     private void UpdateInventoryDisplay()
     {
-        if (playerShooter.currentWeapon != null && activeWeaponSlot != null)
+        int currentSlot = GetCurrentWeaponSlot();
+
+        if (currentSlot != currentDisplaySlot)
         {
-            activeWeaponSlot.sprite = playerShooter.currentWeapon.hudSprite;
-            activeWeaponSlot.enabled = true;
-        }
-        else if (activeWeaponSlot != null)
-        {
-            activeWeaponSlot.enabled = false;
+            currentDisplaySlot = currentSlot;
         }
 
-        // update inventory slots for all weapons
-        for (int i = 0; i < inventorySlots.Length; i++)
+        for (int displayIndex = 0; displayIndex < inventorySlots.Length; displayIndex++)
         {
-            if (inventorySlots[i] == null) continue;
+            if (inventorySlots[displayIndex] == null) continue;
 
-            WeaponData weapon = weaponSlots.GetWeaponAtSlot(i);
+            int slotIndex = currentDisplaySlot + displayIndex;
+
+            // wrap around if we go past slot 2
+            if (slotIndex >= 3)
+                slotIndex -= 3;
+
+            WeaponData weapon = weaponSlots.GetWeaponAtSlot(slotIndex);
 
             if (weapon != null)
             {
-                inventorySlots[i].sprite = weapon.hudSprite;
-                inventorySlots[i].enabled = true;
+                inventorySlots[displayIndex].sprite = weapon.hudSprite;
+                inventorySlots[displayIndex].enabled = true;
             }
             else
             {
-                inventorySlots[i].enabled = false;
+                inventorySlots[displayIndex].enabled = false;
             }
         }
+    }
+
+    // -- GET CURRENT WEAPON SLOT --
+    private int GetCurrentWeaponSlot()
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            WeaponData weapon = weaponSlots.GetWeaponAtSlot(i);
+            if (weapon != null && weapon == playerShooter.currentWeapon)
+                return i;
+        }
+        return 0; 
     }
 
     // -- HIDE ALL INVENTORY SLOTS --
@@ -70,8 +82,5 @@ public class InventoryDisplay : MonoBehaviour
             if (slot != null)
                 slot.enabled = false;
         }
-
-        if (activeWeaponSlot != null)
-            activeWeaponSlot.enabled = false;
     }
 }
