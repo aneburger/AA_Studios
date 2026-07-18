@@ -30,9 +30,8 @@ public class PlayerHealth : BaseHealth
     private SpriteRenderer playerRenderer;
     private PlayerMutatedVisuals mutatedVisuals;
 
-    private PlayerShooter shooter;
-
     // References
+    private PlayerShooter shooter;
     private PlayerMover mover;
 
     // -- Update -- 
@@ -61,6 +60,13 @@ public class PlayerHealth : BaseHealth
         UpdateHUD();
     }
 
+    // -- INCREASE MAX HEALTH --
+    public override void IncreaseMaxHealth(float amount, bool healToFull = false)
+    {
+        base.IncreaseMaxHealth(amount, healToFull);
+        UpdateHUD();
+    }
+
     // -- SET INVINCIBILITY -- 
     public void SetInvincible(bool value)
     {
@@ -79,6 +85,7 @@ public class PlayerHealth : BaseHealth
     // -- TAKE DAMAGE -- 
     public override void TakeDamage(float amount)
     {   
+        IncreaseMaxHealth(4, healToFull:true);
         if (IsDead()) return;
         if (isInvincible) return;
         if (damageCooldownTimer > 0f) return;
@@ -217,7 +224,7 @@ public class PlayerHealth : BaseHealth
         yield return new WaitForSeconds(4f);
         
         gameObject.SetActive(false);
-        SceneManager.LoadScene("Floor_01");
+        LevelLoader.Instance.ReloadCurrentLevel();
     }
 
     // -- ON DISABLE --

@@ -68,7 +68,9 @@ public class LevelLoader : MonoBehaviour
         yield return null;
  
         PositionPlayerAtSpawn();
- 
+
+        if(sceneName == "Tutorial") yield break;
+        
         yield return Fade(toBlack: false);
     }
     

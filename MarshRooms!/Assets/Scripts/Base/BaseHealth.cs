@@ -32,6 +32,27 @@ public abstract class BaseHealth : MonoBehaviour
         currentHealth = maxHealth;
     }
 
+    // -- GET MAX HEALTH --
+    public float GetMaxHealth()
+    {
+        return maxHealth;
+    }
+
+    // -- GET CURRENT HEALTH --
+    public float GetCurrentHealth()
+    {
+        return currentHealth;
+    }
+
+    // -- INCREASE MAX HEALTH --
+    public virtual void IncreaseMaxHealth(float amount, bool healToFull = false)
+    {
+        maxHealth += amount;
+
+        if (healToFull)
+            currentHealth = maxHealth;
+    }
+
     // -- IS DEAD
     public bool IsDead()
     {

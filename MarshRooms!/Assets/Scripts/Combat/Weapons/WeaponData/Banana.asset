@@ -19,7 +19,8 @@ MonoBehaviour:
   muzzleFlashPrefab: {fileID: 4081999799842582576, guid: fffbe85e55d35fc40a4c778c6597b252, type: 3}
   pickupPrefab: {fileID: 1303430737314922756, guid: 8b6717c7fcf618d48a9c81e5c6d876de, type: 3}
   fireRate: 0.7
-  damage: 2.5
+  minDamage: 2
+  maxDamage: 3.5
   bulletSpeed: 15
   maxAmmo: 30
   firePointOffset: {x: 0, y: 0}

@@ -232,6 +232,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyController
   enemyData: {fileID: 11400000, guid: e6038059f0ab4b24fb8aeaa9f91d11cb, type: 2}
+  externalAIControl: 0
   spawnDuration: 1.5
   spawnClip: {fileID: 8300000, guid: fd719a68106daa84a832ce2f492ac83f, type: 3}
   spawnVolume: 0.8
@@ -254,6 +255,8 @@ MonoBehaviour:
   currentWeapon: {fileID: 11400000, guid: 83dbe672d81c88f449382074c1dd233d, type: 2}
   equipClip: {fileID: 0}
   equipVolume: 0
+  pickupClip: {fileID: 0}
+  pickupVolume: 0
   emptyClip: {fileID: 0}
   emptyVolume: 0
 --- !u!114 &662099414253420649
@@ -280,7 +283,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2846554c14e837e40ba449b64c14a845, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
-  maxHealth: 4
+  maxHealth: 5
   onDeath:
     m_PersistentCalls:
       m_Calls: []

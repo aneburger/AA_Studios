@@ -18,8 +18,6 @@ public class PlayerShooter : BaseShooter
     private bool isShooting = false;
     private bool canShoot = true;
 
-    private float fireRateMultiplier = 1f;
-
     // -- START --
     private void Start()
     {
@@ -39,7 +37,7 @@ public class PlayerShooter : BaseShooter
             {
                 GetComponent<PlayerMutatedVisuals>()?.PlayShootBurst(GetFirePosition());
             }
-            nextFireTime = Time.time + (currentWeapon.fireRate * fireRateMultiplier);
+           nextFireTime = Time.time + (currentWeapon.fireRate * GetFireRateMultiplier());
         }
     }
 
@@ -48,12 +46,6 @@ public class PlayerShooter : BaseShooter
     {
         canShoot = value;
         if (!canShoot) isShooting = false;
-    }
-
-    // -- SET FIRE RATE --
-    public void SetFireRateMultiplier(float multiplier)
-    {
-        fireRateMultiplier = multiplier;
     }
 
     // -- GET SHOOT DIRECTION --

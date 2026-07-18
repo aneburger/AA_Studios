@@ -222,6 +222,8 @@ public class TutorialDirector : MonoBehaviour
         // ==== PART 1: Intro dialogue ====
         playerMover?.SetSleeping(true);
 
+        // Fade in from black
+        ScreenEffects.Instance?.FadeFromBlack(1.5f);
         yield return new WaitForSeconds(1f);
 
         // Fade in house music
@@ -464,7 +466,7 @@ public class TutorialDirector : MonoBehaviour
         rightClickPrompt?.SetActive(true);
         rightClickPromptFader?.FadeIn();
 
-        yield return StartCoroutine(WaitUntil(() => mutateActivated));
+        yield return StartCoroutine(WaitForConditionOrTimeout(() => mutateActivated, 6f));
 
         rightClickPromptFader?.FadeOut();
         yield return new WaitForSeconds(0.3f);
@@ -542,6 +544,9 @@ public class TutorialDirector : MonoBehaviour
         
         yield return new WaitForSeconds(0.5f);
         ScreenEffects.Instance?.FadeToBlack(0.6f);
+        yield return new WaitForSeconds(2f);
+        UnlockPlayer();
+        LevelLoader.Instance.LoadLevel("Floor_01");
     }
 
     // ======================== HELPERS ========================

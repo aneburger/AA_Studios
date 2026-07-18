@@ -196,10 +196,10 @@ public class PlayerWeaponSlot : MonoBehaviour
     }
 
     // -- EQUIP CURRENT SLOT --
-    private void EquipCurrentSlot(bool isPickup = false)
+    private void EquipCurrentSlot(bool isPickup = false, bool playSound = true)
     {
         if (slots[currentSlot] == null) return;
-        shooter.EquipWeapon(slots[currentSlot], isPickup);
+        shooter.EquipWeapon(slots[currentSlot], isPickup, playSound);
         shooter.SetAmmo(ammo[currentSlot]);
         OnWeaponChanged?.Invoke(slots[currentSlot]);
         //UpdateWeaponDisplay();
@@ -251,6 +251,6 @@ public class PlayerWeaponSlot : MonoBehaviour
         slots[0] = weapon;
         ammo[0] = ammoAmount == -1 ? weapon.maxAmmo : ammoAmount;
         currentSlot = 0;
-        EquipCurrentSlot(true);
+        EquipCurrentSlot(true, false);
     }
 }

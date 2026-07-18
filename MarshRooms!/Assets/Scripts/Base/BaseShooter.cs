@@ -38,7 +38,18 @@ public abstract class BaseShooter : MonoBehaviour
     private float bulletSpeedMultiplier = 1f;
     protected float shakeMultiplier = 1f;
 
+    // Fire Rate Multipiers
+    private float permanentFireRateMultiplier = 1f;
+    private float temporaryFireRateMultiplier = 1f;
+
+    // Damage Multiplier
+    private float permanentDamageMultiplier = 1f;
+    private float temporaryDamageMultiplier = 1f;
+    private float critChance = 0f;
+
     private int bulletCountOverride = -1;
+    private int permanentBulletCountBonus = 0;
+
     private float spreadAngleOverride = -1f;
 
     private Collider2D playerCollider;
@@ -68,6 +79,54 @@ public abstract class BaseShooter : MonoBehaviour
         shakeMultiplier = multiplier;
     }
 
+    // -- SET FIRE RATE MULTIPLIER --
+    public void SetFireRateMultiplier(float multiplier)
+    {
+        temporaryFireRateMultiplier = multiplier;
+    }
+
+    // -- SET PERMANENT FIRE RATE MULTIPLIER --
+    public void SetPermanentFireRateMultiplier(float multiplier)
+    {
+        permanentFireRateMultiplier = multiplier;
+    }
+
+    // -- GET COMBINED FIRE RATE MULTIPLIER --
+    public float GetFireRateMultiplier()
+    {
+        return permanentFireRateMultiplier * temporaryFireRateMultiplier;
+    }
+
+    // -- SET DAMAGE MULTIPLIER --
+    public void SetDamageMultiplier(float multiplier)
+    {
+        temporaryDamageMultiplier = multiplier;
+    }
+
+    // -- SET PERMANENT DAMAGE MULTIPLIER --
+    public void SetPermanentDamageMultiplier(float multiplier)
+    {
+        permanentDamageMultiplier = multiplier;
+    }
+
+    // -- GET COMBINED DAMAGE MULTIPLIER --
+    public float GetDamageMultiplier()
+    {
+        return permanentDamageMultiplier * temporaryDamageMultiplier;
+    }
+
+    // -- SET CRIT CHANCE (boons) --
+    public void SetCritChance(float chance)
+    {
+        critChance = chance;
+    }
+
+    // -- SET PERMANENT BULLET COUNT BONUS --
+    public void SetPermanentBulletCountBonus(int bonus)
+    {
+        permanentBulletCountBonus = bonus;
+    }
+
     // -- GET FIRE POSITION --
     protected Vector3 GetFirePosition()
     {
@@ -83,7 +142,7 @@ public abstract class BaseShooter : MonoBehaviour
     }
 
     // -- EQUIP WEAPON --
-    public void EquipWeapon(WeaponData weapon, bool isPickup = false)
+    public void EquipWeapon(WeaponData weapon, bool isPickup = false, bool playSound = true)
     {
         currentWeapon = weapon;
         nextFireTime = Time.time + 0.2f;
@@ -91,7 +150,7 @@ public abstract class BaseShooter : MonoBehaviour
 
         if (isPickup)
         {
-            AudioManager.Instance.PlaySFXWithPitch(pickupClip, pickupVolume);
+            if (playSound) AudioManager.Instance.PlaySFXWithPitch(pickupClip, pickupVolume);
         }
         else if (!isFirstEquip)
         {
@@ -123,7 +182,7 @@ public abstract class BaseShooter : MonoBehaviour
 
         BaseBullet lastBullet = null;
 
-        int count = bulletCountOverride > 0 ? bulletCountOverride : currentWeapon.bulletCount;
+        int count = (bulletCountOverride > 0 ? bulletCountOverride : currentWeapon.bulletCount) + permanentBulletCountBonus;
         float spread = spreadAngleOverride >= 0 ? spreadAngleOverride : currentWeapon.spreadAngle;
         float startAngle = -(spread * (count - 1) / 2f);
 
@@ -151,11 +210,19 @@ public abstract class BaseShooter : MonoBehaviour
             if (Physics2D.OverlapPoint(spawnPosition, wallMask) != null)
                 continue;
 
+            // Roll a random damage
+            float rolledDamage = Random.Range(currentWeapon.minDamage, currentWeapon.maxDamage);
+            rolledDamage *= GetDamageMultiplier();
+
+            // Apply crit damage
+            if (Random.value <= critChance)
+                rolledDamage *= 2f;
+
             GameObject bullet = Instantiate(currentWeapon.bulletPrefab, spawnPosition, Quaternion.identity);
             BaseBullet b = bullet.GetComponent<BaseBullet>();
             b.SetDirection(spreadDirection);
             b.SetAimOrigin(firePoint.position);
-            b.SetBullet(currentWeapon.bulletSpeed * bulletSpeedMultiplier, currentWeapon.damage, currentWeapon.hitKnockback, currentWeapon.hitPrefab, weaponSprite.sortingOrder, currentWeapon.wallHitClip, currentWeapon.wallHitVolume);
+            b.SetBullet(currentWeapon.bulletSpeed * bulletSpeedMultiplier, rolledDamage, currentWeapon.hitKnockback, currentWeapon.hitPrefab, weaponSprite.sortingOrder, currentWeapon.wallHitClip, currentWeapon.wallHitVolume);
             lastBullet = b;
         }
 

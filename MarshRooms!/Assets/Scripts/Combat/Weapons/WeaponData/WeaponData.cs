@@ -18,7 +18,8 @@ public class WeaponData : ScriptableObject
 
     [Header("Firing")]
     public float fireRate;
-    public float damage;
+    public float minDamage;
+    public float maxDamage;
     public float bulletSpeed;
     public int maxAmmo;
 
@@ -28,7 +29,7 @@ public class WeaponData : ScriptableObject
 
     [Header("Spread")]
     public int bulletCount = 1;
-    public float spreadAngle = 15f;
+    public float spreadAngle;
 
     [Header("Visuals")]
     public Sprite sprite;
