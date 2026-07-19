@@ -166,6 +166,7 @@ public class TutorialDirector : MonoBehaviour
             playerInput = player.GetComponent<PlayerInput>();
             playerBaseMover = player.GetComponent<BaseMover>();
             playerAimer = player.GetComponent<PlayerAimer>();
+            playerHealth = player.GetComponent<PlayerHealth>();
             playerSporeActivator = player.GetComponent<PlayerSporeActivator>();
 
             if (playerInput != null) playerInput.enabled = false;
@@ -189,6 +190,7 @@ public class TutorialDirector : MonoBehaviour
             playerInput = player.GetComponent<PlayerInput>();
             playerBaseMover = player.GetComponent<BaseMover>();
             playerSporeActivator = player.GetComponent<PlayerSporeActivator>();
+            playerHealth = player.GetComponent<PlayerHealth>();
         }
         
         shootPrompt?.SetActive(false);
@@ -371,6 +373,7 @@ public class TutorialDirector : MonoBehaviour
 
         // Make HUD visible here
         HUDManager.Instance?.SetHUDVisible(true);
+        playerHealth.UpdateHUD();
 
         // Restore full player speed/animation/dodge now that real combat begins
         playerBaseMover?.SetSpeed(playerBaseMover.OriginalSpeed);
@@ -476,8 +479,11 @@ public class TutorialDirector : MonoBehaviour
         // Mutation is live release enemies and player together
         foreach (var enemy in wave3Enemies)
         {
-            EnemyAI ai = enemy?.GetComponent<EnemyAI>();
+            if (enemy == null) continue;
+
+            EnemyAI ai = enemy.GetComponent<EnemyAI>();
             if (ai != null) ai.enabled = true;
+
             yield return new WaitForSeconds(Random.Range(0.8f, 1.3f));
         }
 

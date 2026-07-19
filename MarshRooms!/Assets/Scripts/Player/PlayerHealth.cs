@@ -147,7 +147,7 @@ public class PlayerHealth : BaseHealth
     }
 
     // -- UPDATE HUD --
-    private void UpdateHUD()
+    public void UpdateHUD()
     {
         if (HUDManager.Instance != null)
         {
