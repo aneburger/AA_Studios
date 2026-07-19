@@ -72,6 +72,37 @@ public sealed class AudioManager : MonoBehaviour
         sfxSource.volume = volume;
     }
 
+    // -- FADE MUSIC VOLUME --
+    public void FadeMusicVolume(float targetVolume, float duration)
+    {
+        StartCoroutine(FadeVolumeCoroutine(targetVolume, duration));
+    }
+
+    private IEnumerator FadeVolumeCoroutine(float targetVolume, float duration)
+    {
+        float startVolume = musicSource.volume;
+        float elapsed = 0f;
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            musicSource.volume = Mathf.Lerp(startVolume, targetVolume, elapsed / duration);
+            yield return null;
+        }
+        musicSource.volume = targetVolume;
+    }
+
+    // -- CROSSFADE TO A NEW TRACK --
+    public void CrossfadeMusic(AudioClip newClip, float duration, float targetVolume = 0.5f)
+    {
+        StartCoroutine(CrossfadeCoroutine(newClip, duration, targetVolume));
+    }
+
+    private IEnumerator CrossfadeCoroutine(AudioClip newClip, float duration, float targetVolume)
+    {
+        yield return FadeOutCoroutine(duration);
+        yield return FadeInCoroutine(newClip, duration, targetVolume);
+    }
+
     // --------------------------- AUDIO EFFECTS ---------------------------------
 
     // -- PLAY SFX WITH PITCH VARIATION --

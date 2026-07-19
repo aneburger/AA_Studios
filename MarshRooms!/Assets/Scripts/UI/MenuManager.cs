@@ -91,6 +91,20 @@ public class MenuManager : MonoBehaviour
             menuPanel.SetActive(true);
     }
 
+    // -- REOPEN MENU --
+    public void ReopenMenu()
+    {
+        enabled = true;
+
+        Time.timeScale = 0f;
+
+        if (menuPanel != null)
+            menuPanel.SetActive(true);
+
+        if (controlsMenuPanel != null)
+            controlsMenuPanel.SetActive(false);
+    }
+
     // -- QUIT GAME --
     private void OnQuitGame()
     {

@@ -590,7 +590,6 @@ GameObject:
   - component: {fileID: 319489622}
   - component: {fileID: 319489604}
   - component: {fileID: 319489623}
-  - component: {fileID: 319489625}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -981,7 +980,7 @@ MonoBehaviour:
   damageCooldown: 0.5
   flickerInterval: 0.08
   hurtClip: {fileID: 8300000, guid: f26380b3bb13e1941bac300f4961c42e, type: 3}
-  hurtVolume: 1
+  hurtVolume: 0.7
   dieClip: {fileID: 8300000, guid: c5e89a8c5b1123b4fa08f52843d30f23, type: 3}
   dieVolume: 0.65
   healClip: {fileID: 8300000, guid: 5b3c449f1dfce654080b33e0fa2fd32a, type: 3}
@@ -1133,18 +1132,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d6501af52d14e54a9f1510a26d98f5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerBoonStats
---- !u!114 &319489625
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 319489603}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e3db6a80308e47548963f769d0cbceae, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::BoonDebugTester
 --- !u!1 &356983338
 GameObject:
   m_ObjectHideFlags: 0
@@ -2244,7 +2231,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 13.133179
+  orthographic size: 10.020833
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -13595,7 +13582,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SporeManager
   meterConfig: {fileID: 11400000, guid: 6628942d7fb8e6445ac28f3edcfa22f8, type: 2}
-  mutatedDuration: 10
+  mutatedDuration: 7
 --- !u!4 &1251095356
 Transform:
   m_ObjectHideFlags: 0
@@ -20732,7 +20719,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5448062030200764515, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -23.099998
+      value: -23.099976
       objectReference: {fileID: 0}
     - target: {fileID: 5950709055179995762, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
       propertyPath: m_Sprite
@@ -20756,7 +20743,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5950709055179995762, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5950709055179995762, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
       propertyPath: m_PreserveAspect

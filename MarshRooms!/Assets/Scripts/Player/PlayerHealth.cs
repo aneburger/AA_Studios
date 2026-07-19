@@ -132,6 +132,14 @@ public class PlayerHealth : BaseHealth
         ScreenEffects.Instance.SetLowHealth(currentHealth / maxHealth <= 0.3f);
     }
 
+    // -- RESET FOR RESPAWN --
+    public void ResetHealth()
+    {
+        currentHealth = maxHealth;
+        UpdateHUD();
+        ScreenEffects.Instance?.SetLowHealth(false);
+    }
+
     // -- IS ON COOLDOWN -- 
     public bool IsOnCooldown()
     {
@@ -243,15 +251,15 @@ public class PlayerHealth : BaseHealth
 
     private IEnumerator DeathSequence()
     {
-        // Wait for death animation to finish
-        ScreenEffects.Instance.SetLowHealth(false); 
         yield return new WaitForSeconds(4f);
+
+        LevelLoader.Instance.ReloadCurrentLevel();
 
         GetComponent<PlayerInput>().enabled = true;
         shooter.HideWeapon(false);
         mover.ForceIdleAnimation();
-    
-        LevelLoader.Instance.ReloadCurrentLevel();
+
+        ResetHealth();
     }
 
     // -- ON DISABLE --

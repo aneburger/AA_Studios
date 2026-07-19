@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 using System.Collections.Generic;
 
 public class Elevator : MonoBehaviour
@@ -6,14 +7,10 @@ public class Elevator : MonoBehaviour
     [SerializeField] private Interactable interactable;
 
     [Header("Audio")]
-    [SerializeField] private AudioClip elevatorDingClip;
-    [Range(0f, 1f)] public float elevatorDingClipVolume;
     [SerializeField] private AudioClip elevatorOpenClip;
     [Range(0f, 1f)] public float elevatorOpenClipVolume;
     [SerializeField] private AudioClip elevatorTuneClip;
     [Range(0f, 1f)] public float elevatorTuneClipVolume;
-    [SerializeField] private AudioClip elevatorEnterClip;
-    [Range(0f, 1f)] public float elevatorEnterClipVolume;
 
     private Animator anim;
     private bool isOpen = false;
@@ -21,6 +18,10 @@ public class Elevator : MonoBehaviour
     private void Awake()
     {
         anim = GetComponent<Animator>();
+    }
+
+    private void Start()
+    {
         interactable.SetInteractionLocked(true);
     }
 
@@ -38,12 +39,17 @@ public class Elevator : MonoBehaviour
 
     private void Open()
     {
+        StartCoroutine(OpenSequence());
+    }
+
+    private IEnumerator OpenSequence()
+    {
         isOpen = true;
-        //yield return new WaitForSeconds(1.5f);
-        // Play door opening sound
+        yield return new WaitForSeconds(1.5f);
+
+        AudioManager.Instance.PlaySFX(elevatorOpenClip, elevatorOpenClipVolume);
+        yield return new WaitForSeconds(0.2f);
         anim.SetTrigger("Open");
-        // Wait for animation to finish
-        // Play ding sound effect
         interactable.SetInteractionLocked(false);
     }
 
@@ -52,6 +58,7 @@ public class Elevator : MonoBehaviour
         if (!isOpen) return;
 
         interactable.SetInteractionLocked(true);
+        AudioManager.Instance.CrossfadeMusic(elevatorTuneClip, 0.5f, elevatorTuneClipVolume);
 
         int floorNumber = LevelLoader.Instance.GetCurrentFloorNumber();
         List<BoonCardData> offers = BoonManager.Instance.GetThreeCardOffers(floorNumber);
@@ -65,6 +72,15 @@ public class Elevator : MonoBehaviour
 
     private void ProceedToNextFloor()
     {
+        int currentFloor = LevelLoader.Instance.GetCurrentFloorNumber();
+
+        // TEMPORARY - we only have 3 levels for now..
+        if (currentFloor >= 3)
+        {
+            LevelLoader.Instance.ReturnToMainMenu();
+            return;
+        }
+
         string nextScene = LevelLoader.Instance.GetNextFloorSceneName();
         LevelLoader.Instance.LoadLevel(nextScene);
     }

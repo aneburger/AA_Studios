@@ -109,6 +109,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Elevator
   interactable: {fileID: 964109089948381293}
+  elevatorOpenClip: {fileID: 8300000, guid: 2b98e9abf7a725f4282c0e568291021d, type: 3}
+  elevatorOpenClipVolume: 0.45
+  elevatorTuneClip: {fileID: 8300000, guid: 00cb0a6d4df11c24aa1c9d2dcd937018, type: 3}
+  elevatorTuneClipVolume: 0.3
 --- !u!95 &6184881574497207776
 Animator:
   serializedVersion: 7

@@ -18,6 +18,12 @@ public class LevelEntryController : MonoBehaviour
             }
         }
 
+        if (LevelLoader.Instance.GetCurrentFloorNumber() == 1)
+        {
+            PlayerHealth playerHealth = player.GetComponent<PlayerHealth>();
+            playerHealth?.ResetHealth();
+        }
+
         TryHealToFull(player);
     }
 

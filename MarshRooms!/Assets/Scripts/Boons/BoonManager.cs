@@ -103,7 +103,7 @@ public class BoonManager : MonoBehaviour
                 break;
 
             case "fire_rate":
-                Stats.permanentFireRateMultiplier += 0.15f;
+                Stats.permanentFireRateMultiplier += 0.18f;
                 break;
 
             case "crit_chance":
@@ -123,7 +123,7 @@ public class BoonManager : MonoBehaviour
                 return;
         }
 
-        Debug.Log($"[BoonManager] Applied '{boonId}' (owned x{ownedCounts[boonId]})");
+        //.Log($"[BoonManager] Applied '{boonId}' (owned x{ownedCounts[boonId]})");
         OnBoonApplied?.Invoke(boonId);
     }
 

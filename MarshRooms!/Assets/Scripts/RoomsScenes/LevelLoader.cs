@@ -58,6 +58,28 @@ public class LevelLoader : MonoBehaviour
         int nextFloor = GetCurrentFloorNumber() + 1;
         return $"Floor_{nextFloor:D2}";
     }
+
+    // -- RETURN TO MAIN MENU --
+    public void ReturnToMainMenu()
+    {
+        Time.timeScale = 1f;
+
+        if (BoonManager.Instance != null)
+            Destroy(BoonManager.Instance.gameObject);
+
+        if (SporeManager.Instance != null)
+            Destroy(SporeManager.Instance.gameObject);
+
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        if (player != null)
+            Destroy(player);
+
+        AudioManager.Instance?.StopMusic();
+
+        CurrentLevelScene = null;
+
+        SceneManager.LoadScene(persistentScene, LoadSceneMode.Single);
+    }
     
     private IEnumerator LoadLevelRoutine(string sceneName)
     {

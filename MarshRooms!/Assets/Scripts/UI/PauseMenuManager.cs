@@ -51,8 +51,8 @@ public class PauseMenuManager : MonoBehaviour
         if (quitButton != null)
             quitButton.onClick.AddListener(OnQuitGame);
 
-        //if (mainMenuButton != null)
-        //    mainMenuButton.onClick.AddListener(OnMainMenu);
+        if (mainMenuButton != null)
+            mainMenuButton.onClick.AddListener(OnMainMenu);
     }
 
     private void OnDestroy()
@@ -84,6 +84,7 @@ public class PauseMenuManager : MonoBehaviour
     {
         isPaused = true;
         Time.timeScale = 0f;
+        FindPlayerShooter()?.SetCanShoot(false);
 
         volumeBeforePause = AudioManager.Instance.GetMusicVolume();
         AudioManager.Instance.SetMusicVolume(volumeBeforePause * 0.2f);
@@ -96,6 +97,7 @@ public class PauseMenuManager : MonoBehaviour
     {
         isPaused = false;
         Time.timeScale = 1f;
+        FindPlayerShooter()?.SetCanShoot(true);
 
         AudioManager.Instance.SetMusicVolume(volumeBeforePause);
 
@@ -142,12 +144,17 @@ public class PauseMenuManager : MonoBehaviour
     }
 
     // -- MAIN MENU --
-    //private void OnMainMenu()
-    //{
-    //    Time.timeScale = 1f;
-
-    //    LevelLoader.Instance.LoadLevel("Persistent");
-    //}
+    private void OnMainMenu()
+    {
+        LevelLoader.Instance.ReturnToMainMenu();
+    }
+    
+    // -- FIND SHOOTER --
+    private PlayerShooter FindPlayerShooter()
+    {
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        return player != null ? player.GetComponent<PlayerShooter>() : null;
+    }
 
     // -- QUIT GAME --
     private void OnQuitGame()
