@@ -18,6 +18,7 @@ public class BaseBullet : MonoBehaviour
 
     protected virtual void Start() { }
 
+    // -- SET DIRECTION --
     public void SetDirection(Vector2 dir)
     {
         direction = dir.normalized;
@@ -25,11 +26,13 @@ public class BaseBullet : MonoBehaviour
         transform.rotation = Quaternion.Euler(0f, 0f, angle);
     }
 
+    // -- AIM ORIGIN -- 
     public void SetAimOrigin(Vector2 origin)
     {
         aimOrigin = origin;
     }
 
+    // --  SET BULLET --
     public void SetBullet(float speed, float damage, float knockback, GameObject hitVFX, int sortingOrder, AudioClip wallHitClip = null, float wallHitVolume = 0.7f)
     {
         this.speed = speed;
@@ -41,11 +44,13 @@ public class BaseBullet : MonoBehaviour
         this.wallHitVolume = wallHitVolume;
     }
 
+    // -- UPDATE -- 
     protected virtual void Update()
     {
         transform.position += (Vector3)(direction * speed * Time.deltaTime);
     }
 
+    // -- BULLET HIT --
     protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
         BaseHealth health = collision.GetComponentInParent<BaseHealth>();
