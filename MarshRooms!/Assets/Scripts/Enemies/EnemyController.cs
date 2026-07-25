@@ -19,7 +19,7 @@ public class EnemyController : MonoBehaviour
     private EnemyMover mover;
     private EnemyHealth health;
     private Animator anim;
-    private EnemyAI ai;
+    private Behaviour aiBehaviour;
 
     public EnemyData Data => enemyData;
     public bool IsSpawning { get; private set; }
@@ -33,7 +33,7 @@ public class EnemyController : MonoBehaviour
         shooter = GetComponent<EnemyShooter>();
         health = GetComponent<EnemyHealth>();
         anim = GetComponentInChildren<Animator>();
-        ai = GetComponent<EnemyAI>();
+        aiBehaviour = GetComponent<IEnemyAI>() as Behaviour;
         mover.SetSpeed(enemyData.moveSpeed);
     }
 
@@ -95,7 +95,7 @@ public class EnemyController : MonoBehaviour
         AudioManager.Instance.PlaySFXWithPitch(spawnClip, spawnVolume, 0.1f);
 
         IsSpawning = true;
-        if (ai != null) ai.enabled = false;
+        if (aiBehaviour != null) aiBehaviour.enabled = false;
         if (mover != null) mover.enabled = false;
 
         anim?.SetTrigger("Spawn");
@@ -103,7 +103,7 @@ public class EnemyController : MonoBehaviour
 
         shooter?.HideWeapon(false);
         if (mover != null) mover.enabled = true;
-        if (!externalAIControl && ai != null) ai.enabled = true;
+        if (!externalAIControl && aiBehaviour != null) aiBehaviour.enabled = true;
         IsSpawning = false;
     }
 }

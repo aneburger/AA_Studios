@@ -15,6 +15,7 @@ public class EnemyAI : MonoBehaviour
     private EnemyShooter shooter;
     private WeaponAimer weaponAimer;
     private Transform player;
+    private EnemyPathing pathing;
 
     // -- AWAKE --
     private void Awake()
@@ -23,6 +24,7 @@ public class EnemyAI : MonoBehaviour
         mover = GetComponent<EnemyMover>();
         shooter = GetComponent<EnemyShooter>();
         weaponAimer = GetComponentInChildren<WeaponAimer>();
+        pathing = GetComponent<EnemyPathing>();
         player = GameObject.FindGameObjectWithTag("Player")?.transform;
     }
 
@@ -69,7 +71,12 @@ public class EnemyAI : MonoBehaviour
     private void HandleChase(float distance)
     {
         mover.ClearFacingOverride();
-        mover.Move(DirectionToPlayer());
+        
+        Vector2 direction = pathing != null 
+            ? pathing.GetDirectionToTarget(player.position) 
+            : DirectionToPlayer();
+        
+        mover.Move(direction);
 
         if (distance <= enemy.Data.attackRange)
             currentState = State.Attack;

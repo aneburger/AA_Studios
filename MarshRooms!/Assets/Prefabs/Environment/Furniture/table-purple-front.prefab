@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 1294754108840240841}
   - component: {fileID: 2913931087052249134}
   - component: {fileID: 2436089217909342434}
-  m_Layer: 0
+  - component: {fileID: 6476390255660361863}
+  m_Layer: 17
   m_Name: table-purple-front
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3277721076239429887}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -2.51, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -105,6 +106,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ac5e3cd19a51ae48bb2450ecd5ba10d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpriteYSorter
+  sortingOffset: 5
 --- !u!61 &2436089217909342434
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -143,7 +145,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0}
-    oldSize: {x: 2.3125, y: 1.4375}
+    oldSize: {x: 2.3125, y: 1.5625}
     newSize: {x: 2.3125, y: 1.4375}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -151,3 +153,19 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 2.09, y: 1.05}
   m_EdgeRadius: 0
+--- !u!114 &6476390255660361863
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3277721076239429887}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9809bf1345abc5648af68b3a82653f08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: NavMeshPlus::NavMeshPlus.Components.NavMeshModifier
+  m_OverrideArea: 1
+  m_Area: 1
+  m_IgnoreFromBuild: 0
+  m_AffectedAgents: ffffffff

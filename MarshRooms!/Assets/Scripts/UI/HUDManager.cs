@@ -63,7 +63,7 @@ public class HUDManager : MonoBehaviour
         }
 
         // Get max health from player
-        PlayerHealth playerHealth = FindObjectOfType<PlayerHealth>();
+        PlayerHealth playerHealth = FindFirstObjectByType<PlayerHealth>();
         if (playerHealth == null)
         {
             Debug.LogError("HUDManager: PlayerHealth not found in scene");
@@ -126,7 +126,7 @@ public class HUDManager : MonoBehaviour
     // -- REFRESH HEARTS  -- when max health changes
     public void RefreshHearts()
     {
-        PlayerHealth playerHealth = FindObjectOfType<PlayerHealth>();
+        PlayerHealth playerHealth = FindFirstObjectByType<PlayerHealth>();
         if (playerHealth != null)
         {
             InitializeHearts();

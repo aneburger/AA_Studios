@@ -381,17 +381,20 @@ public class TutorialDirector : MonoBehaviour
         if (playerMover != null) playerMover.canDodge = true;
         UnlockPlayer();
         playerShooter?.SetCanShoot(true);
-        yield return new WaitForSeconds(0.1f); 
+        yield return new WaitForSeconds(0.1f);
         
         // Show dodge hint
         StartCoroutine(DodgeHintRoutine());
 
         // Hand control to their AI + start the actual fight
-        yield return new WaitForSeconds(1f);
         foreach (var enemy in wave1Enemies)
         {
-            EnemyAI ai = enemy?.GetComponent<EnemyAI>();
-            if (ai != null) ai.enabled = true;
+            ButtonMushroomAI ai = enemy?.GetComponent<ButtonMushroomAI>();
+            if (ai != null)
+            {
+                ai.SkipSpawnGrace();
+                ai.enabled = true;
+            }
             yield return new WaitForSeconds(Random.Range(0.4f, 1f));
         }
 
@@ -458,7 +461,7 @@ public class TutorialDirector : MonoBehaviour
         // Keep AI disabled so they just stand there, until mutation
         foreach (var enemy in wave3Enemies)
         {
-            EnemyAI ai = enemy?.GetComponent<EnemyAI>();
+            ButtonMushroomAI ai = enemy?.GetComponent<ButtonMushroomAI>();
             if (ai != null) ai.enabled = false;
         }
 
@@ -481,7 +484,8 @@ public class TutorialDirector : MonoBehaviour
         {
             if (enemy == null) continue;
 
-            EnemyAI ai = enemy.GetComponent<EnemyAI>();
+            ButtonMushroomAI ai = enemy.GetComponent<ButtonMushroomAI>();
+            ai.SkipSpawnGrace();
             if (ai != null) ai.enabled = true;
 
             yield return new WaitForSeconds(Random.Range(0.8f, 1.3f));
@@ -626,13 +630,18 @@ public class TutorialDirector : MonoBehaviour
         playerTransform.position = bedExitPosition.position;
 
         // Lock bed
-        if (bedCollider != null) bedCollider.enabled = true;
+        if (bedCollider != null)
+        {
+            bedCollider.enabled = true;
+            bedCollider.excludeLayers = 0;
+        }
     }
 
     // -- WALK TO POINT -- 
     private IEnumerator WalkToPoint(Transform target, float timeout = 2f)
     {
         if (playerMover != null) playerMover.enabled = true;
+        if (playerAimer != null) playerAimer.enabled = false;
 
         float elapsed = 0f;
 
@@ -651,6 +660,7 @@ public class TutorialDirector : MonoBehaviour
 
         playerBaseMover?.FaceDirection(Vector2.up);
         playerMover?.ForceIdleAnimation();
+        if (playerAimer != null) playerAimer.enabled = true;
     }
 
     // -- WASD HINT --
@@ -714,8 +724,12 @@ public class TutorialDirector : MonoBehaviour
         foreach (var enemy in enemies)
         {
             if (enemy == null) continue;
-            EnemyAI ai = enemy.GetComponent<EnemyAI>();
+            
+            ButtonMushroomAI ai = enemy.GetComponent<ButtonMushroomAI>();
             if (ai != null) ai.enabled = false;
+
+            EnemyMover mover = enemy.GetComponent<EnemyMover>();
+            mover?.SetFacingOverride(Vector2.up);
         }
 
         for (int i = 0; i < enemies.Length; i++)

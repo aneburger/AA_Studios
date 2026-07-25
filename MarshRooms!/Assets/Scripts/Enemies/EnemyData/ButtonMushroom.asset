@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: ButtonMushroom
   m_EditorClassIdentifier: Assembly-CSharp::EnemyData
   maxHealth: 10
-  moveSpeed: 1.5
+  moveSpeed: 1.6
   contactDamage: 1
   contactKnockback: 5
   weapon: {fileID: 11400000, guid: 83dbe672d81c88f449382074c1dd233d, type: 2}
-  detectionRange: 12
-  attackRange: 8
+  detectionRange: 18
+  attackRange: 12
   possibleWeaponDrops:
   - weaponPickupPrefab: {fileID: 1303430737314922756, guid: ecb11ea6b86a8244688f6cc913226356, type: 3}
     dropChance: 0.2

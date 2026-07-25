@@ -10,6 +10,10 @@ namespace TopDown.Movement
     {
         [SerializeField] protected float moveSpeed;
         public float OriginalSpeed { get; private set; }
+
+        protected virtual bool UseFacingSmoothing => false;
+        [SerializeField] protected float facingSmoothSpeed = 10f;
+        private Vector2 smoothedFacing = Vector2.down;
         
         protected Rigidbody2D body { get; private set; }
         protected Vector2 moveInput { get; set; }
@@ -17,13 +21,13 @@ namespace TopDown.Movement
         public DirectionalAnimator DirectionalAnimator => directionalAnimator;
 
         protected Vector2 lastMoveDirection = Vector2.down;
-        private Vector2? facingOverride = null;
+        protected Vector2? facingOverride = null;
 
-        private Vector2 knockbackVelocity;
+        protected Vector2 knockbackVelocity;
 
         // Speed Multipiers
-        private float permanentSpeedMultiplier = 1f;
-        private float temporarySpeedMultiplier = 1f;
+        protected float permanentSpeedMultiplier = 1f;
+        protected float temporarySpeedMultiplier = 1f;
 
         // -- AWAKE --
         protected virtual void Awake()
@@ -110,7 +114,17 @@ namespace TopDown.Movement
             if (moveInput.sqrMagnitude > 0.01f)
                 lastMoveDirection = moveInput;
 
-            UpdateFacing(facingOverride ?? lastMoveDirection);
+            Vector2 targetFacing = facingOverride ?? lastMoveDirection;
+
+            if (UseFacingSmoothing)
+            {
+                smoothedFacing = Vector2.Lerp(smoothedFacing, targetFacing, 1f - Mathf.Exp(-facingSmoothSpeed * Time.fixedDeltaTime));
+                UpdateFacing(smoothedFacing);
+            }
+            else
+            {
+                UpdateFacing(targetFacing);
+            }
         }
     }
 }

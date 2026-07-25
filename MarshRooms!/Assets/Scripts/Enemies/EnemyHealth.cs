@@ -16,6 +16,7 @@ public class EnemyHealth : BaseHealth
     [Range(0f, 1f)] public float dieVolume;
 
     public event System.Action<Vector2> OnDied;
+    public event System.Action OnTookDamage;
 
     // -- AWAKE --
     protected override void Awake()
@@ -58,6 +59,9 @@ public class EnemyHealth : BaseHealth
 
         Vector2 topPosition = GetTopPosition();
         VFXManager.Instance.SpawnDamageNumber(amount * 10, topPosition);
+
+        if (!IsDead())
+            OnTookDamage?.Invoke();
     }
 
      // -- TOP POSITION --

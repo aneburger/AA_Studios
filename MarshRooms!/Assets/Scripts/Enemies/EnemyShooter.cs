@@ -25,6 +25,6 @@ public class EnemyShooter : BaseShooter
         if (Time.time < nextFireTime) return;
 
         Shoot();
-        nextFireTime = Time.time + currentWeapon.fireRate;
+        nextFireTime = Time.time + currentWeapon.fireRate * GetFireRateMultiplier();
     }
 }

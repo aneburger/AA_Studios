@@ -307,6 +307,12 @@ public abstract class BaseShooter : MonoBehaviour
     // -- GET AMMO --
     public int GetAmmo() => currentAmmo;
 
+    // -- CAN FIRE --
+    public bool CanFire()
+    {
+        return Time.time >= nextFireTime;
+    }
+
     // -- USE AMMO --
     public bool UseAmmo()
     {   

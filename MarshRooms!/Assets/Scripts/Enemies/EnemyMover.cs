@@ -6,6 +6,8 @@ namespace TopDown.Movement
 {
     public class EnemyMover : BaseMover
     {
+        protected override bool UseFacingSmoothing => true;
+
          // -- AWAKE --
         protected override void Awake()
         {
