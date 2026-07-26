@@ -1,5 +1,4 @@
 // Button Mushroom's own behaviour - patrol/idle, chase, windup, attack, return to spawn
-// Replaces generic EnemyAI on this enemy type
 
 using UnityEngine;
 using TopDown.Movement;

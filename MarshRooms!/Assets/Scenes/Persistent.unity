@@ -2232,7 +2232,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 10.020833
+  orthographic size: 13.133179
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -20674,141 +20674,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3228137088543572634, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
-      propertyPath: heartContainer
-      value: 
-      objectReference: {fileID: 3537630140295722638}
-    - target: {fileID: 3228137088543572634, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
-      propertyPath: emptyHeartSprite
-      value: 
-      objectReference: {fileID: 5963224104335673325, guid: 772aa7a2a9c6f2d448b8a27f1debc3f8, type: 3}
-    - target: {fileID: 5448062030200764515, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5448062030200764515, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5448062030200764515, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
-      propertyPath: m_AnchorMin.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5448062030200764515, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5448062030200764515, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 250
-      objectReference: {fileID: 0}
-    - target: {fileID: 5448062030200764515, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 5448062030200764515, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5448062030200764515, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5448062030200764515, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 136.09985
-      objectReference: {fileID: 0}
-    - target: {fileID: 5448062030200764515, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -23.099976
-      objectReference: {fileID: 0}
-    - target: {fileID: 5950709055179995762, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 5963224104335673325, guid: 772aa7a2a9c6f2d448b8a27f1debc3f8, type: 3}
-    - target: {fileID: 5950709055179995762, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
-      propertyPath: m_Color.a
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5950709055179995762, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
-      propertyPath: m_Color.b
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5950709055179995762, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
-      propertyPath: m_Color.g
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5950709055179995762, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
-      propertyPath: m_Color.r
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5950709055179995762, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5950709055179995762, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
-      propertyPath: m_PreserveAspect
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6729788007568415483, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7085789729006638418, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
       propertyPath: m_Name
       value: HUD
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects:
-    - {fileID: 5294300313836338722, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
-    - {fileID: 8747260629494115979, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
-    - {fileID: 8417361071253664353, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
-    - {fileID: 8908867014670458345, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
+    m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 2521993023248912401, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
       insertIndex: -1
       addedObject: {fileID: 0}
-    - targetCorrespondingSourceObject: {fileID: 4439711307314198866, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 3537630140295722640}
   m_SourcePrefab: {fileID: 100100000, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
---- !u!224 &3537630140295722638 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 5448062030200764515, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
-  m_PrefabInstance: {fileID: 3537630140295722637}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &3537630140295722639 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4439711307314198866, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
-  m_PrefabInstance: {fileID: 3537630140295722637}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &3537630140295722640
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3537630140295722639}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 30649d3a9faa99c48a7b1166b86bf2a0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.HorizontalLayoutGroup
-  m_Padding:
-    m_Left: 0
-    m_Right: 0
-    m_Top: 0
-    m_Bottom: 0
-  m_ChildAlignment: 0
-  m_Spacing: 5
-  m_ChildForceExpandWidth: 0
-  m_ChildForceExpandHeight: 0
-  m_ChildControlWidth: 0
-  m_ChildControlHeight: 0
-  m_ChildScaleWidth: 0
-  m_ChildScaleHeight: 0
-  m_ReverseArrangement: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
