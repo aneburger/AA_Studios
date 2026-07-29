@@ -320,11 +320,16 @@ public class TutorialDirector : MonoBehaviour
         // Wait until player lands a shot on the toilet or time out
         yield return StartCoroutine(WaitForConditionOrTimeout(() => shootingEnabled, 6f));
 
+        //if (shootingEnabled)
+        //{
+        //    toiletArrowFader?.FadeOut();
+        //    toiletArrowPrompt?.SetActive(false);
+        //}
+
         shootPromptFader?.FadeOut();
-        toiletArrowFader?.FadeOut();
         yield return new WaitForSeconds(0.3f);
         shootPrompt?.SetActive(false);
-        toiletArrowPrompt?.SetActive(false);
+
 
         // ==== PART 6: Wait for toilet to die ====
         yield return StartCoroutine(WaitUntil(() => toiletDead));
@@ -993,7 +998,25 @@ public class TutorialDirector : MonoBehaviour
         UnlockPlayer();
     }
 
-    public void OnToiletShot() => shootingEnabled = true;
+    private IEnumerator HideToiletPromptAfterFade()
+    {
+        yield return new WaitForSeconds(0.3f); 
+        toiletArrowPrompt?.SetActive(false);
+    }
+
+    private bool toiletPromptHidden = false;
+    public void OnToiletShot()
+    {
+        shootingEnabled = true;
+
+        if (toiletPromptHidden)
+            return;
+
+        toiletPromptHidden = true;
+
+        toiletArrowFader?.FadeOut();
+        StartCoroutine(HideToiletPromptAfterFade());
+    }
     public void OnToiletDead() => toiletDead = true;
     public void OnBlobsPostToiletInteracted() => blobsPostToiletInteracted = true;
     public void OnWeaponScrolled() => weaponScrolled = true;
