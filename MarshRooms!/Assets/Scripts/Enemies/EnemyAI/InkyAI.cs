@@ -3,77 +3,46 @@
 using UnityEngine;
 using TopDown.Movement;
 
-public class InkyAI : MonoBehaviour, IEnemyAI
+public class InkyAI : EnemyAIBase
 {
-    private enum State { Idle, Patrol, Chase, Roll, Return }
     private enum RollPhase { Windup, Looping, Recovery }
+    private RollPhase rollPhase;
 
-    [Header("Idle / Patrol")]
-    [SerializeField] private float idleDurationMin = 1.5f;
-    [SerializeField] private float idleDurationMax = 4f;
-    [SerializeField] private float patrolDurationMin = 1f;
-    [SerializeField] private float patrolDurationMax = 2f;
-    [SerializeField] private float patrolRadius = 2f;
-    [SerializeField] private float patrolChance = 0.5f;
-
-    [Header("Line of Sight")]
-    [SerializeField] private LayerMask wallMask;
+    private Animator anim;
 
     [Header("Roll Trigger")]
-    [SerializeField] private float rollRange = 6f;
-    [SerializeField] private float rollTimerMin = 2f;
-    [SerializeField] private float rollTimerMax = 5f;
+    [SerializeField] private float rollRange;
+    [SerializeField] private float rollTimerMin;
+    [SerializeField] private float rollTimerMax;
 
     [Header("Roll Accuracy")]
-    [SerializeField] private float rollInaccuracyMin = 15f;
-    [SerializeField] private float rollInaccuracyMax = 40f;
-    [SerializeField] private float rollDirectionRefreshInterval = 0.5f;
-    [SerializeField] private float rollDirectionTurnSpeed = 4f;
+    [SerializeField] private float rollInaccuracyMin;
+    [SerializeField] private float rollInaccuracyMax;
+    [SerializeField] private float rollDirectionRefreshInterval;
+    [SerializeField] private float rollDirectionTurnSpeed;
 
     [Header("Roll Speed Ramp")]
-    [SerializeField] private float rollSpeedStart = 1.5f;
-    [SerializeField] private float rollSpeedMax = 3.5f;
-    [SerializeField] private float rollSpeedRampDuration = 1.5f;
+    [SerializeField] private float rollSpeedStart;
+    [SerializeField] private float rollSpeedMax;
+    [SerializeField] private float rollSpeedRampDuration;
 
     [Header("Roll Duration")]
-    [SerializeField] private float rollDurationMin = 2f;
-    [SerializeField] private float rollDurationMax = 4f;
+    [SerializeField] private float rollDurationMin;
+    [SerializeField] private float rollDurationMax;
 
     [Header("Roll Recovery")]
-    [SerializeField] private float maxRecoveryDuration = 0.6f;
-
-    [Header("Leash")]
-    [SerializeField] private float leashRadius = 6f;
-
-    [Header("Passive Speed")]
-    [SerializeField] private float passiveSpeedMultiplier = 0.5f;
-
-    [Header("Spawn")]
-    [SerializeField] private float spawnGraceMin = 0.3f;
-    [SerializeField] private float spawnGraceMax = 0.8f;
+    [SerializeField] private float maxRecoveryDuration;
 
     [Header("Audio")]
     [SerializeField] private AudioClip bumpClip;
-    [Range(0f, 1f)] [SerializeField] private float bumpVolume = 0.6f;
-    [SerializeField] private float bumpCooldown = 0.3f;
+    [Range(0f, 1f)] [SerializeField] private float bumpVolume ;
+    [SerializeField] private float bumpCooldown;
     [SerializeField] private AudioClip rollLoopClip;
-    [Range(0f, 1f)] [SerializeField] private float rollLoopVolume = 0.6f;
-    [SerializeField] private float rollLoopPitchVariation = 0.1f;
+    [Range(0f, 1f)] [SerializeField] private float rollLoopVolume;
+    [SerializeField] private float rollLoopPitchVariation;
 
     private float lastBumpTime = -999f;
     private AudioSource rollLoopSource;
-
-    private EnemyController enemy;
-    private EnemyMover mover;
-    private EnemyPathing pathing;
-    private EnemyHealth health;
-    private Animator anim;
-    private Transform player;
-
-    private Vector2 spawnPosition;
-    private Vector2 patrolTarget;
-    private State currentState = State.Idle;
-    private RollPhase rollPhase;
 
     private Vector2 rollDirection;
     private Vector2 rollTargetDirection;
@@ -83,178 +52,44 @@ public class InkyAI : MonoBehaviour, IEnemyAI
     private float rollTimer;
     private float recoveryTimer;
 
-    private float stateTimer;
-    private float spawnGraceTimer;
-    private bool isAlerted;
-    private bool playerDead;
-
     // -- AWAKE --
-    private void Awake()
+    protected override void Awake()
     {
-        enemy = GetComponent<EnemyController>();
-        mover = GetComponent<EnemyMover>();
-        pathing = GetComponent<EnemyPathing>();
-        health = GetComponent<EnemyHealth>();
+        base.Awake();
         anim = GetComponentInChildren<Animator>();
-        player = GameObject.FindGameObjectWithTag("Player")?.transform;
     }
 
     // -- START --
-    private void Start()
+    protected override void Start()
     {
-        spawnPosition = transform.position;
-        spawnGraceTimer = Random.Range(spawnGraceMin, spawnGraceMax);
+        base.Start();
         rollTimer = Random.Range(rollTimerMin, rollTimerMax);
-        EnterIdle();
     }
 
-    private void OnEnable()
+    protected override bool HandleSpawnGrace()
     {
-        PlayerHealth.OnPlayerDeath += HandlePlayerDeath;
-        if (health != null) health.OnTookDamage += HandleTookDamage;
-    }
-
-    private void OnDisable()
-    {
-        PlayerHealth.OnPlayerDeath -= HandlePlayerDeath;
-        if (health != null) health.OnTookDamage -= HandleTookDamage;
-    }
-
-    // -- UPDATE --
-    private void Update()
-    {
-        if (player == null || playerDead) return;
-
         if (spawnGraceTimer > 0f)
         {
             spawnGraceTimer -= Time.deltaTime;
             mover.Stop();
-            return;
+            return true;
         }
-
-        float distance = Vector2.Distance(transform.position, player.position);
-
-        switch (currentState)
-        {
-            case State.Idle:    HandleIdle(distance);    break;
-            case State.Patrol:  HandlePatrol(distance);  break;
-            case State.Chase:   HandleChase(distance);   break;
-            case State.Roll:    HandleRoll(distance);    break;
-            case State.Return:  HandleReturn(distance);  break;
-        }
-    }
-
-    // -- HELPERS --
-    private Vector2 DirectionToPlayer() => ((Vector2)player.position - (Vector2)transform.position).normalized;
-
-    private Vector2 RotateVector(Vector2 v, float degrees)
-    {
-        float rad = degrees * Mathf.Deg2Rad;
-        float cos = Mathf.Cos(rad);
-        float sin = Mathf.Sin(rad);
-        return new Vector2(v.x * cos - v.y * sin, v.x * sin + v.y * cos);
-    }
-
-    private bool HasLineOfSight()
-    {
-        Vector2 origin = transform.position;
-        Vector2 target = player.position;
-        float distance = Vector2.Distance(origin, target);
-
-        RaycastHit2D hit = Physics2D.Raycast(origin, (target - origin).normalized, distance, wallMask);
-        return hit.collider == null;
-    }
-
-    // ==================== IDLE ====================
-    private void EnterIdle()
-    {
-        currentState = State.Idle;
-        stateTimer = Random.Range(idleDurationMin, idleDurationMax);
-        mover.SetSpeedMultiplier(passiveSpeedMultiplier);
-    }
-
-    private void HandleIdle(float distance)
-    {
-        mover.Stop();
-        mover.ClearFacingOverride();
-
-        if (distance <= enemy.Data.detectionRange && HasLineOfSight())
-        {
-            EnterChase();
-            return;
-        }
-
-        stateTimer -= Time.deltaTime;
-        if (stateTimer <= 0f)
-        {
-            if (Random.value < patrolChance)
-                EnterPatrol();
-            else
-                EnterIdle();
-        }
-    }
-
-    // ==================== PATROL ====================
-    private void EnterPatrol()
-    {
-        currentState = State.Patrol;
-        patrolTarget = spawnPosition + Random.insideUnitCircle * patrolRadius;
-        stateTimer = Random.Range(patrolDurationMin, patrolDurationMax);
-        mover.SetSpeedMultiplier(passiveSpeedMultiplier);
-    }
-
-    private void HandlePatrol(float distance)
-    {
-        if (distance <= enemy.Data.detectionRange && HasLineOfSight())
-        {
-            EnterChase();
-            return;
-        }
-
-        Vector2 direction = pathing != null ? pathing.GetDirectionToTarget(patrolTarget) : Vector2.zero;
-        mover.Move(direction);
-
-        stateTimer -= Time.deltaTime;
-        bool reachedTarget = Vector2.Distance(transform.position, patrolTarget) < 0.2f;
-
-        if (stateTimer <= 0f || reachedTarget)
-            EnterIdle();
+        return false;
     }
 
     // ==================== CHASE ====================
-    private void EnterChase()
+    protected override void HandleChase(float distance)
     {
-        currentState = State.Chase;
-        mover.SetSpeedMultiplier(1f);
-    }
-
-    private void HandleChase(float distance)
-    {
-        mover.ClearFacingOverride();
-
-        Vector2 direction = pathing != null ? pathing.GetDirectionToTarget(player.position) : DirectionToPlayer();
-        mover.Move(direction);
-
         rollTimer -= Time.deltaTime;
-
-        if (distance <= rollRange && rollTimer <= 0f)
-        {
-            EnterRoll();
-            return;
-        }
-
-        float distanceFromSpawn = Vector2.Distance(transform.position, spawnPosition);
-        bool lostInterest = isAlerted ? (distanceFromSpawn > leashRadius)
-                                       : (distance > enemy.Data.detectionRange || distanceFromSpawn > leashRadius);
-
-        if (lostInterest)
-            EnterReturn();
+        base.HandleChase(distance);
     }
 
-    // ==================== ROLL ====================
-    private void EnterRoll()
+    protected override bool ShouldEngage(float distance) => distance <= rollRange && rollTimer <= 0f;
+
+    // ==================== ENGAGE: ROLL ====================
+    protected override void EnterEngage()
     {
-        currentState = State.Roll;
+        currentState = State.Engage;
         rollPhase = RollPhase.Windup;
         rollElapsed = 0f;
         rollPlannedDuration = Random.Range(rollDurationMin, rollDurationMax);
@@ -262,10 +97,12 @@ public class InkyAI : MonoBehaviour, IEnemyAI
         mover.Stop();
         mover.SetFacingOverride(DirectionToPlayer());
 
+        anim?.ResetTrigger("EndRoll");
+        anim?.ResetTrigger("CancelRoll");
         anim?.SetTrigger("Roll");
     }
 
-    private void HandleRoll(float distance)
+    protected override void HandleEngage(float distance)
     {
         switch (rollPhase)
         {
@@ -337,6 +174,7 @@ public class InkyAI : MonoBehaviour, IEnemyAI
 
         if (instant)
         {
+            anim?.ResetTrigger("EndRoll");
             anim?.SetTrigger("CancelRoll");
             EnterChase();
         }
@@ -344,6 +182,7 @@ public class InkyAI : MonoBehaviour, IEnemyAI
         {
             rollPhase = RollPhase.Recovery;
             recoveryTimer = 0f;
+            anim?.ResetTrigger("CancelRoll");
             anim?.SetTrigger("EndRoll");
         }
     }
@@ -353,31 +192,6 @@ public class InkyAI : MonoBehaviour, IEnemyAI
     {
         rollTimer = Random.Range(rollTimerMin, rollTimerMax);
         EnterChase();
-    }
-
-    // ==================== RETURN ====================
-    private void EnterReturn()
-    {
-        currentState = State.Return;
-        isAlerted = false;
-        mover.SetSpeedMultiplier(passiveSpeedMultiplier);
-    }
-
-    private void HandleReturn(float distance)
-    {
-        mover.ClearFacingOverride();
-
-        if (distance <= enemy.Data.detectionRange && HasLineOfSight())
-        {
-            EnterChase();
-            return;
-        }
-
-        Vector2 direction = pathing != null ? pathing.GetDirectionToTarget(spawnPosition) : Vector2.zero;
-        mover.Move(direction);
-
-        if (Vector2.Distance(transform.position, spawnPosition) < 0.3f)
-            EnterIdle();
     }
 
     // -- COLLISION --
@@ -391,27 +205,25 @@ public class InkyAI : MonoBehaviour, IEnemyAI
     }
 
     // -- TOOK DAMAGE --
-    private void HandleTookDamage()
+    protected override void HandleTookDamage()
     {
         isAlerted = true;
 
-        if (currentState == State.Roll && rollPhase == RollPhase.Looping)
+        if (currentState == State.Engage && rollPhase == RollPhase.Looping)
         {
             EndRoll(instant: true);
             return;
         }
 
-        if (currentState != State.Roll)
+        if (currentState != State.Engage)
             EnterChase();
     }
 
     // -- PLAYER DEATH --
-    private void HandlePlayerDeath()
+    protected override void HandlePlayerDeath()
     {
-        playerDead = true;
         AudioManager.Instance?.StopLoopingSFX(ref rollLoopSource);
-        mover.Stop();
-        currentState = State.Idle;
+        base.HandlePlayerDeath();
     }
 
     // -- ON DESTROY --

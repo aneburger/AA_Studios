@@ -318,7 +318,7 @@ MonoBehaviour:
   rollRange: 15
   rollTimerMin: 0.5
   rollTimerMax: 2.5
-  rollInaccuracyMin: 15
+  rollInaccuracyMin: 5
   rollInaccuracyMax: 20
   rollDirectionRefreshInterval: 0.3
   rollDirectionTurnSpeed: 3
@@ -336,7 +336,7 @@ MonoBehaviour:
   bumpVolume: 0
   bumpCooldown: 0.3
   rollLoopClip: {fileID: 8300000, guid: 0f1287fc4a59e2745955b41b74f446d7, type: 3}
-  rollLoopVolume: 0.4
+  rollLoopVolume: 0
   rollLoopPitchVariation: 0.2
 --- !u!195 &345462243566778897
 NavMeshAgent:

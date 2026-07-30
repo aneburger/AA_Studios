@@ -296,27 +296,28 @@ MonoBehaviour:
   patrolChance: 0.4
   leashRadius: 6
   windupDurationMin: 0.4
-  windupDurationMax: 0.8
+  windupDurationMax: 0.7
   wallMask:
     serializedVersion: 2
     m_Bits: 163840
   windupClip: {fileID: 8300000, guid: ab209789ecf1a3b4c903ff297d0c9dfa, type: 3}
   windupVolume: 0.25
-  missChance: 0.25
+  missChance: 0.2
   missAngleMin: 10
   missAngleMax: 14
   hitSlowMultiplier: 0.5
   hitSlowDuration: 0.15
   spawnGraceMin: 1
   spawnGraceMax: 2
-  attackRangeVarianceMin: 0.6
+  attackRangeVarianceMin: 0.5
   attackRangeVarianceMax: 1.3
   moveCloserChance: 0.7
   moveCloserAmount: 2
   minAttackRange: 1.5
   fireRateVarianceMin: 0.85
-  fireRateVarianceMax: 1.2
+  fireRateVarianceMax: 1.3
   chanceToShootWhileMoving: 0.4
+  passiveSpeedMultiplier: 0.5
 --- !u!114 &3724249218000953578
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -106,7 +106,6 @@ GameObject:
   - component: {fileID: 9141055844336914756}
   - component: {fileID: 2905366087901206073}
   - component: {fileID: 7585961510317227088}
-  - component: {fileID: 662099414253420649}
   - component: {fileID: 7672455363216179369}
   m_Layer: 7
   m_Name: chef-puffs
@@ -219,6 +218,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TopDown.Movement.EnemyMover
   moveSpeed: 1
+  facingSmoothSpeed: 10
 --- !u!114 &2905366087901206073
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -259,18 +259,6 @@ MonoBehaviour:
   pickupVolume: 0
   emptyClip: {fileID: 0}
   emptyVolume: 0
---- !u!114 &662099414253420649
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 988082134135583188}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c049400ceeaac2c41a5c33e40bcc0d86, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemyAI
 --- !u!114 &7672455363216179369
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -164,8 +164,8 @@ public class TutorialDirector : MonoBehaviour
             playerMover = player.GetComponent<PlayerMover>();
             playerShooter = player.GetComponent<PlayerShooter>();
             playerInput = player.GetComponent<PlayerInput>();
-            playerBaseMover = player.GetComponent<BaseMover>();
             playerAimer = player.GetComponent<PlayerAimer>();
+            playerBaseMover = player.GetComponent<BaseMover>();
             playerHealth = player.GetComponent<PlayerHealth>();
             playerSporeActivator = player.GetComponent<PlayerSporeActivator>();
 
@@ -188,9 +188,10 @@ public class TutorialDirector : MonoBehaviour
             playerMover = player.GetComponent<PlayerMover>();
             playerShooter = player.GetComponent<PlayerShooter>();
             playerInput = player.GetComponent<PlayerInput>();
+            playerAimer = player.GetComponent<PlayerAimer>();
             playerBaseMover = player.GetComponent<BaseMover>();
-            playerSporeActivator = player.GetComponent<PlayerSporeActivator>();
             playerHealth = player.GetComponent<PlayerHealth>();
+            playerSporeActivator = player.GetComponent<PlayerSporeActivator>();
         }
         
         shootPrompt?.SetActive(false);
@@ -199,7 +200,6 @@ public class TutorialDirector : MonoBehaviour
         dodgePrompt?.SetActive(false);
         rightClickPrompt?.SetActive(false);
         minigunPickup?.SetActive(false);
-        //evilChef?.SetActive(false);
 
         // Hide waves
         SetWaveActive(wave1Enemies, false);
@@ -332,6 +332,8 @@ public class TutorialDirector : MonoBehaviour
 
         // ==== PART 8: Crash — enemies burst in ====
         LockPlayer();
+        LockPlayerKeepInput();
+        playerAimer?.SetAimOverride(Vector2.down);
         yield return new WaitForSeconds(0.2f);
 
         // First door bang
@@ -380,8 +382,8 @@ public class TutorialDirector : MonoBehaviour
         playerBaseMover?.DirectionalAnimator?.SetAnimationSpeed(1f);
         if (playerMover != null) playerMover.canDodge = true;
         UnlockPlayer();
+        UnlockPlayerFull();
         playerShooter?.SetCanShoot(true);
-        yield return new WaitForSeconds(0.1f);
         
         // Show dodge hint
         StartCoroutine(DodgeHintRoutine());
@@ -389,13 +391,15 @@ public class TutorialDirector : MonoBehaviour
         // Hand control to their AI + start the actual fight
         foreach (var enemy in wave1Enemies)
         {
-            ButtonMushroomAI ai = enemy?.GetComponent<ButtonMushroomAI>();
+            if (enemy == null) continue;
+
+            var ai = enemy.GetComponent<IEnemyAI>();
             if (ai != null)
             {
                 ai.SkipSpawnGrace();
-                ai.enabled = true;
+                ((Behaviour)ai).enabled = true;
             }
-            yield return new WaitForSeconds(Random.Range(0.4f, 1f));
+            yield return new WaitForSeconds(2.6f);
         }
 
         // Wait for player to defeat wave
@@ -446,6 +450,7 @@ public class TutorialDirector : MonoBehaviour
         // Small beat, then fill + fire the reveal line
         yield return new WaitForSeconds(0.3f);
         SporeManager.Instance?.FillToMax();
+        playerAimer?.SetAimOverride(Vector2.down);
         yield return StartCoroutine(PlayDialogue(sporeFullDialogue));
         yield return new WaitForSeconds(0.8f);
 
@@ -461,8 +466,8 @@ public class TutorialDirector : MonoBehaviour
         // Keep AI disabled so they just stand there, until mutation
         foreach (var enemy in wave3Enemies)
         {
-            ButtonMushroomAI ai = enemy?.GetComponent<ButtonMushroomAI>();
-            if (ai != null) ai.enabled = false;
+            var ai = enemy?.GetComponent<IEnemyAI>();
+            if (ai != null) ((Behaviour)ai).enabled = false;
         }
 
         yield return StartCoroutine(PlayDialogue(wave3StartDialogue));
@@ -484,11 +489,15 @@ public class TutorialDirector : MonoBehaviour
         {
             if (enemy == null) continue;
 
-            ButtonMushroomAI ai = enemy.GetComponent<ButtonMushroomAI>();
-            ai.SkipSpawnGrace();
-            if (ai != null) ai.enabled = true;
+            var ai = enemy.GetComponent<IEnemyAI>();
+            if (ai != null)
+            {
+                ai.SkipSpawnGrace();
+                ((Behaviour)ai).enabled = true;
+            }
 
             yield return new WaitForSeconds(Random.Range(0.8f, 1.3f));
+
         }
 
         yield return StartCoroutine(WaitUntil(() => wave3Clear));
@@ -502,11 +511,13 @@ public class TutorialDirector : MonoBehaviour
         yield return new WaitForSeconds(4f);
 
         LockPlayer();
+        LockPlayerKeepInput();
         yield return StartCoroutine(PlayDialogue(postWave3Dialogue1));
 
         yield return new WaitForSeconds(0.5f);
 
         yield return StartCoroutine(WalkToPoint(marshFinalSpot));
+        playerAimer?.SetAimOverride(Vector2.right);
         
         mrBlobsAnimator.Unhide();
         yield return new WaitForSeconds(1f);
@@ -555,6 +566,7 @@ public class TutorialDirector : MonoBehaviour
         ScreenEffects.Instance?.FadeToBlack(0.6f);
         yield return new WaitForSeconds(2f);
         UnlockPlayer();
+        UnlockPlayerFull();
         LevelLoader.Instance.LoadLevel("Floor_01");
     }
 
@@ -578,6 +590,7 @@ public class TutorialDirector : MonoBehaviour
         if (playerMover != null) playerMover.enabled = true;
         if (playerInput != null) playerInput.enabled = true;
         if (playerAimer != null) playerAimer.enabled = true;
+        playerAimer?.ClearAimOverride();
     }
 
     // -- PARTIAL LOCK --
@@ -602,6 +615,7 @@ public class TutorialDirector : MonoBehaviour
         if (playerAimer != null) playerAimer.enabled = true;
         if (playerMover != null) playerMover.canDodge = true;
         playerShooter?.SetCanShoot(true);
+        playerAimer?.ClearAimOverride();
     }
 
     // -- WALK OFF BED --
@@ -724,12 +738,11 @@ public class TutorialDirector : MonoBehaviour
         foreach (var enemy in enemies)
         {
             if (enemy == null) continue;
-            
-            ButtonMushroomAI ai = enemy.GetComponent<ButtonMushroomAI>();
+
+            var ai = enemy.GetComponent<IEnemyAI>() as Behaviour;
             if (ai != null) ai.enabled = false;
 
             EnemyMover mover = enemy.GetComponent<EnemyMover>();
-            mover?.SetFacingOverride(Vector2.up);
         }
 
         for (int i = 0; i < enemies.Length; i++)

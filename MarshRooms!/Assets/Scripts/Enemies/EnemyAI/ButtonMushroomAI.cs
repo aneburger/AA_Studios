@@ -3,74 +3,46 @@
 using UnityEngine;
 using TopDown.Movement;
 
-public class ButtonMushroomAI : MonoBehaviour, IEnemyAI
+public class ButtonMushroomAI : EnemyAIBase
 {
-    private enum State { Idle, Patrol, Chase, Windup, Attack, Return }
+    private enum EngagePhase { Windup, Attack }
+    private EngagePhase engagePhase;
 
-    private State currentState = State.Idle;
-    private bool playerDead = false;
-    private bool isAlerted = false;
-
-    private EnemyController enemy;
-    private EnemyMover mover;
     private EnemyShooter shooter;
     private WeaponAimer weaponAimer;
-    private EnemyPathing pathing;
-    private EnemyHealth health;
-    private Transform player;
-
-    private Vector2 spawnPosition;
-
-    [Header("Idle / Patrol")]
-    [SerializeField] private float idleDurationMin = 2f;
-    [SerializeField] private float idleDurationMax = 5f;
-    [SerializeField] private float patrolDurationMin = 1f;
-    [SerializeField] private float patrolDurationMax = 2f;
-    [SerializeField] private float patrolRadius = 2f;
-    [SerializeField] private float patrolChance = 0.5f;
-
-    [Header("Leash")]
-    [SerializeField] private float leashRadius = 6f;
 
     [Header("Windup")]
-    [SerializeField] private float windupDurationMin = 0.4f;
-    [SerializeField] private float windupDurationMax = 0.8f;
-
-    [Header("Line of Sight")]
-    [SerializeField] private LayerMask wallMask;
+    [SerializeField] private float windupDurationMin;
+    [SerializeField] private float windupDurationMax;
 
     [Header("Windup Visual")]
     [SerializeField] private AudioClip windupClip;
     [Range(0f, 1f)] [SerializeField] private float windupVolume;
 
     [Header("Accuracy")]
-    [SerializeField] private float missChance = 0.2f;
-    [SerializeField] private float missAngleMin = 12f;
-    [SerializeField] private float missAngleMax = 30f;
+    [SerializeField] private float missChance;
+    [SerializeField] private float missAngleMin;
+    [SerializeField] private float missAngleMax;
 
     [Header("Hit Reaction")]
-    [SerializeField] private float hitSlowMultiplier = 0.5f;
-    [SerializeField] private float hitSlowDuration = 0.15f;
-
-    [Header("Spawn")]
-    [SerializeField] private float spawnGraceMin = 1f;
-    [SerializeField] private float spawnGraceMax = 2f;
+    [SerializeField] private float hitSlowMultiplier;
+    [SerializeField] private float hitSlowDuration;
 
     [Header("Attack Range Variance")]
-    [SerializeField] private float attackRangeVarianceMin = 0.85f;
-    [SerializeField] private float attackRangeVarianceMax = 1.15f;
+    [SerializeField] private float attackRangeVarianceMin;
+    [SerializeField] private float attackRangeVarianceMax;
 
     [Header("Reposition On Miss")]
-    [SerializeField] private float moveCloserChance = 0.5f;
-    [SerializeField] private float moveCloserAmount = 0.7f;
-    [SerializeField] private float minAttackRange = 1.5f;
+    [SerializeField] private float moveCloserChance;
+    [SerializeField] private float moveCloserAmount;
+    [SerializeField] private float minAttackRange;
 
     [Header("Fire Rate Variance")]
-    [SerializeField] private float fireRateVarianceMin = 0.85f;
-    [SerializeField] private float fireRateVarianceMax = 1.2f;
+    [SerializeField] private float fireRateVarianceMin;
+    [SerializeField] private float fireRateVarianceMax;
 
     [Header("Shooting Style")]
-    [Range(0f, 1f)] [SerializeField] private float chanceToShootWhileMoving = 0.3f;
+    [Range(0f, 1f)] [SerializeField] private float chanceToShootWhileMoving;
 
     private bool shootsWhileMoving;
     private float effectiveAttackRange;
@@ -78,88 +50,30 @@ public class ButtonMushroomAI : MonoBehaviour, IEnemyAI
     private Coroutine hitSlowCoroutine;
     private Coroutine windupVisualCoroutine;
 
-    private float stateTimer;
-    private Vector2 patrolTarget;
     private float windupTimer;
-
-    private float spawnGraceTimer;
-    private bool skipGracePending = false;
-
-    private bool isPrimed = false;
+    private float windupTotalDuration;
+    private bool isPrimed;
 
     private bool pendingMiss;
     private float pendingMissAngle;
-    private float windupTotalDuration;
 
     // -- AWAKE --
-    private void Awake()
+    protected override void Awake()
     {
-        enemy = GetComponent<EnemyController>();
-        mover = GetComponent<EnemyMover>();
+        base.Awake();
         shooter = GetComponent<EnemyShooter>();
         weaponAimer = GetComponentInChildren<WeaponAimer>();
-        pathing = GetComponent<EnemyPathing>();
-        health = GetComponent<EnemyHealth>();
-        player = GameObject.FindGameObjectWithTag("Player")?.transform;
         mover.SetSpeed(enemy.Data.moveSpeed * Random.Range(0.9f, 1.1f));
     }
 
     // -- START --
-    private void Start()
+    protected override void Start()
     {
-        spawnPosition = transform.position;
-        spawnGraceTimer = skipGracePending ? 0f : Random.Range(spawnGraceMin, spawnGraceMax);
+        base.Start();
 
         effectiveAttackRange = enemy.Data.attackRange * Random.Range(attackRangeVarianceMin, attackRangeVarianceMax);
         shootsWhileMoving = Random.value < chanceToShootWhileMoving;
         shooter?.SetPermanentFireRateMultiplier(Random.Range(fireRateVarianceMin, fireRateVarianceMax));
-
-        EnterIdle();
-    }
-
-    // -- ENABLE--
-    private void OnEnable()
-    {
-        PlayerHealth.OnPlayerDeath += HandlePlayerDeath;
-        if (health != null) health.OnTookDamage += HandleTookDamage;
-    }
-
-    // -- DISABLE -- 
-    private void OnDisable()
-    {
-        PlayerHealth.OnPlayerDeath -= HandlePlayerDeath;
-        if (health != null) health.OnTookDamage -= HandleTookDamage;
-    }
-
-    // -- UPDATE --
-    private void Update()
-    {
-        if (player == null || playerDead) return;
-
-        float distance = Vector2.Distance(transform.position, player.position);
-
-        switch (currentState)
-        {
-            case State.Idle:    HandleIdle(distance);    break;
-            case State.Patrol:  HandlePatrol(distance);  break;
-            case State.Chase:   HandleChase(distance);   break;
-            case State.Windup:  HandleWindup(distance);  break;
-            case State.Attack:  HandleAttack(distance);  break;
-            case State.Return:  HandleReturn(distance);  break;
-        }
-    }
-
-    // -- SKIP SPAWN GRACE --
-    public void SkipSpawnGrace()
-    {
-        skipGracePending = true;
-        spawnGraceTimer = 0f;
-    }
-
-    // -- DIRECTION TO PLAYER --
-    private Vector2 DirectionToPlayer()
-    {
-        return ((Vector2)player.position - (Vector2)transform.position).normalized;
     }
 
     // -- AIM AT PLAYER --
@@ -171,13 +85,7 @@ public class ButtonMushroomAI : MonoBehaviour, IEnemyAI
     }
 
     // ==================== IDLE ====================
-    private void EnterIdle()
-    {
-        currentState = State.Idle;
-        stateTimer = Random.Range(idleDurationMin, idleDurationMax);
-    }
-
-    private void HandleIdle(float distance)
+    protected override void HandleIdle(float distance)
     {
         mover.Stop();
         mover.ClearFacingOverride();
@@ -202,14 +110,7 @@ public class ButtonMushroomAI : MonoBehaviour, IEnemyAI
     }
 
     // ==================== PATROL ====================
-    private void EnterPatrol()
-    {
-        currentState = State.Patrol;
-        patrolTarget = spawnPosition + Random.insideUnitCircle * patrolRadius;
-        stateTimer = Random.Range(patrolDurationMin, patrolDurationMax);
-    }
-
-    private void HandlePatrol(float distance)
+    protected override void HandlePatrol(float distance)
     {
         if (spawnGraceTimer > 0f)
             spawnGraceTimer -= Time.deltaTime;
@@ -231,12 +132,7 @@ public class ButtonMushroomAI : MonoBehaviour, IEnemyAI
     }
 
     // ==================== CHASE ====================
-    private void EnterChase()
-    {
-        currentState = State.Chase;
-    }
-
-    private void HandleChase(float distance)
+    protected override void HandleChase(float distance)
     {
         mover.ClearFacingOverride();
 
@@ -257,7 +153,7 @@ public class ButtonMushroomAI : MonoBehaviour, IEnemyAI
             AimAtPlayer();
 
             if (shooter == null || shooter.CanFire())
-                EnterWindup();
+                EnterEngage();
 
             return;
         }
@@ -265,18 +161,30 @@ public class ButtonMushroomAI : MonoBehaviour, IEnemyAI
         Vector2 direction = pathing != null ? pathing.GetDirectionToTarget(player.position) : DirectionToPlayer();
         mover.Move(direction);
 
-        float distanceFromSpawn = Vector2.Distance(transform.position, spawnPosition);
-        bool lostInterest = isAlerted ? (distanceFromSpawn > leashRadius)
-                                    : (distance > enemy.Data.detectionRange || distanceFromSpawn > leashRadius);
-
-        if (lostInterest)
-            EnterReturn();
+        CheckLeash(distance);
     }
 
-    // ==================== WINDUP ====================
+    protected override bool ShouldEngage(float distance) => false;
+
+    // ==================== ENGAGE: WINDUP -> ATTACK ====================
+    protected override void EnterEngage()
+    {
+        currentState = State.Engage;
+        EnterWindup();
+    }
+
+    protected override void HandleEngage(float distance)
+    {
+        switch (engagePhase)
+        {
+            case EngagePhase.Windup: HandleWindup(distance); break;
+            case EngagePhase.Attack: HandleAttack(distance); break;
+        }
+    }
+
     private void EnterWindup()
     {
-        currentState = State.Windup;
+        engagePhase = EngagePhase.Windup;
         windupTimer = Random.Range(windupDurationMin, windupDurationMax);
         windupTotalDuration = windupTimer;
 
@@ -296,8 +204,8 @@ public class ButtonMushroomAI : MonoBehaviour, IEnemyAI
     {
         if (!shootsWhileMoving)
         {
-             mover.Stop();
-        } 
+            mover.Stop();
+        }
         else
         {
             Vector2 direction = pathing != null ? pathing.GetDirectionToTarget(player.position) : DirectionToPlayer();
@@ -331,7 +239,7 @@ public class ButtonMushroomAI : MonoBehaviour, IEnemyAI
 
         windupTimer -= Time.deltaTime;
         if (windupTimer <= 0f)
-            EnterAttack();
+            engagePhase = EngagePhase.Attack;
     }
 
     private void CancelWindupVisual()
@@ -360,12 +268,6 @@ public class ButtonMushroomAI : MonoBehaviour, IEnemyAI
         windupVisualCoroutine = null;
     }
 
-    // ==================== ATTACK ====================
-    private void EnterAttack()
-    {
-        currentState = State.Attack;
-    }
-
     private void HandleAttack(float distance)
     {
         Vector2 trueDirection = DirectionToPlayer();
@@ -383,23 +285,8 @@ public class ButtonMushroomAI : MonoBehaviour, IEnemyAI
         EnterChase();
     }
 
-    // -- ROTATE VECTOR  --
-    private Vector2 RotateVector(Vector2 v, float degrees)
-    {
-        float rad = degrees * Mathf.Deg2Rad;
-        float cos = Mathf.Cos(rad);
-        float sin = Mathf.Sin(rad);
-        return new Vector2(v.x * cos - v.y * sin, v.x * sin + v.y * cos);
-    }
-
     // ==================== RETURN ====================
-   private void EnterReturn()
-    {
-        currentState = State.Return;
-        isAlerted = false;
-    }
-
-    private void HandleReturn(float distance)
+    protected override void HandleReturn(float distance)
     {
         mover.ClearFacingOverride();
 
@@ -417,11 +304,11 @@ public class ButtonMushroomAI : MonoBehaviour, IEnemyAI
     }
 
     // -- TOOK DAMAGE --
-    private void HandleTookDamage()
+    protected override void HandleTookDamage()
     {
         isAlerted = true;
 
-        if (currentState != State.Windup && currentState != State.Attack)
+        if (currentState != State.Engage)
             EnterChase();
 
         if (hitSlowCoroutine != null) StopCoroutine(hitSlowCoroutine);
@@ -437,22 +324,9 @@ public class ButtonMushroomAI : MonoBehaviour, IEnemyAI
     }
 
     // -- PLAYER DEATH --
-    private void HandlePlayerDeath()
+    protected override void HandlePlayerDeath()
     {
-        playerDead = true;
         CancelWindupVisual();
-        mover.Stop();
-        currentState = State.Idle;
-    }
-
-    // -- HAS LINE OF SIGHT --
-    private bool HasLineOfSight()
-    {
-        Vector2 origin = transform.position;
-        Vector2 target = player.position;
-        float distance = Vector2.Distance(origin, target);
-
-        RaycastHit2D hit = Physics2D.Raycast(origin, (target - origin).normalized, distance, wallMask);
-        return hit.collider == null;
+        base.HandlePlayerDeath();
     }
 }
