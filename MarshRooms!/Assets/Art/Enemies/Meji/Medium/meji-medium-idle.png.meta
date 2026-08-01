@@ -1,0 +1,756 @@
+fileFormatVersion: 2
+guid: 6d3a7a31100f82d4db70c6d16bd4f9c1
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 1051450942087665484
+    second: meji-medium-idle_0
+  - first:
+      213: 4204050478098299213
+    second: meji-medium-idle_1
+  - first:
+      213: -410142537410252972
+    second: meji-medium-idle_2
+  - first:
+      213: 1040845242650613697
+    second: meji-medium-idle_3
+  - first:
+      213: 216828343304521473
+    second: meji-medium-idle_4
+  - first:
+      213: -4754860511597621915
+    second: meji-medium-idle_5
+  - first:
+      213: -7129179725092269580
+    second: meji-medium-idle_6
+  - first:
+      213: -4409543178947433057
+    second: meji-medium-idle_7
+  - first:
+      213: -8517394571648034714
+    second: meji-medium-idle_8
+  - first:
+      213: -939541590248464622
+    second: meji-medium-idle_9
+  - first:
+      213: 657558055405185014
+    second: meji-medium-idle_10
+  - first:
+      213: -2217284113401837283
+    second: meji-medium-idle_11
+  - first:
+      213: 3748412686925489813
+    second: meji-medium-idle_12
+  - first:
+      213: 8621442539709900177
+    second: meji-medium-idle_13
+  - first:
+      213: 8871977880185380268
+    second: meji-medium-idle_14
+  - first:
+      213: 1964136070763235240
+    second: meji-medium-idle_15
+  - first:
+      213: 1929498219276386847
+    second: meji-medium-idle_16
+  - first:
+      213: -2680066237587821896
+    second: meji-medium-idle_17
+  - first:
+      213: 264350872386382252
+    second: meji-medium-idle_18
+  - first:
+      213: -8931480884596076637
+    second: meji-medium-idle_19
+  - first:
+      213: 7427928934445604055
+    second: meji-medium-idle_20
+  - first:
+      213: 7648757130301193987
+    second: meji-medium-idle_21
+  - first:
+      213: 5809368858580754181
+    second: meji-medium-idle_22
+  - first:
+      213: -2230536696357754257
+    second: meji-medium-idle_23
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 16
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: meji-medium-idle_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 99
+        width: 29
+        height: 33
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c4792ed9f01879e00800000000000000
+      internalID: 1051450942087665484
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: meji-medium-idle_1
+      rect:
+        serializedVersion: 2
+        x: 29
+        y: 99
+        width: 29
+        height: 33
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d493cd4c2a9c75a30800000000000000
+      internalID: 4204050478098299213
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: meji-medium-idle_2
+      rect:
+        serializedVersion: 2
+        x: 58
+        y: 99
+        width: 29
+        height: 33
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 45f62660981ee4af0800000000000000
+      internalID: -410142537410252972
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: meji-medium-idle_3
+      rect:
+        serializedVersion: 2
+        x: 87
+        y: 99
+        width: 29
+        height: 33
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1c7585acb33d17e00800000000000000
+      internalID: 1040845242650613697
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: meji-medium-idle_4
+      rect:
+        serializedVersion: 2
+        x: 116
+        y: 99
+        width: 29
+        height: 33
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 10707ebba34520300800000000000000
+      internalID: 216828343304521473
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: meji-medium-idle_5
+      rect:
+        serializedVersion: 2
+        x: 145
+        y: 99
+        width: 29
+        height: 33
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 56d01b99e87530eb0800000000000000
+      internalID: -4754860511597621915
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: meji-medium-idle_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 66
+        width: 29
+        height: 33
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4f155f1efc0101d90800000000000000
+      internalID: -7129179725092269580
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: meji-medium-idle_7
+      rect:
+        serializedVersion: 2
+        x: 29
+        y: 66
+        width: 29
+        height: 33
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f9d671d67d72ec2c0800000000000000
+      internalID: -4409543178947433057
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: meji-medium-idle_8
+      rect:
+        serializedVersion: 2
+        x: 58
+        y: 66
+        width: 29
+        height: 33
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6681411a3c22cc980800000000000000
+      internalID: -8517394571648034714
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: meji-medium-idle_9
+      rect:
+        serializedVersion: 2
+        x: 87
+        y: 66
+        width: 29
+        height: 33
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 21fd88dc6e316f2f0800000000000000
+      internalID: -939541590248464622
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: meji-medium-idle_10
+      rect:
+        serializedVersion: 2
+        x: 116
+        y: 66
+        width: 29
+        height: 33
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6f76f97419d102900800000000000000
+      internalID: 657558055405185014
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: meji-medium-idle_11
+      rect:
+        serializedVersion: 2
+        x: 145
+        y: 66
+        width: 29
+        height: 33
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d190196b8df9a31e0800000000000000
+      internalID: -2217284113401837283
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: meji-medium-idle_12
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 33
+        width: 29
+        height: 33
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 596e2c39a79050430800000000000000
+      internalID: 3748412686925489813
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: meji-medium-idle_13
+      rect:
+        serializedVersion: 2
+        x: 29
+        y: 33
+        width: 29
+        height: 33
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 195a9debf4485a770800000000000000
+      internalID: 8621442539709900177
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: meji-medium-idle_14
+      rect:
+        serializedVersion: 2
+        x: 58
+        y: 33
+        width: 29
+        height: 33
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cad929350e89f1b70800000000000000
+      internalID: 8871977880185380268
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: meji-medium-idle_15
+      rect:
+        serializedVersion: 2
+        x: 87
+        y: 33
+        width: 29
+        height: 33
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8a7cf549953024b10800000000000000
+      internalID: 1964136070763235240
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: meji-medium-idle_16
+      rect:
+        serializedVersion: 2
+        x: 116
+        y: 33
+        width: 29
+        height: 33
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f12c7b25864f6ca10800000000000000
+      internalID: 1929498219276386847
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: meji-medium-idle_17
+      rect:
+        serializedVersion: 2
+        x: 145
+        y: 33
+        width: 29
+        height: 33
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8ba6f0ed4fd7ecad0800000000000000
+      internalID: -2680066237587821896
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: meji-medium-idle_18
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 29
+        height: 33
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ca9a7a4c7b92ba300800000000000000
+      internalID: 264350872386382252
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: meji-medium-idle_19
+      rect:
+        serializedVersion: 2
+        x: 29
+        y: 0
+        width: 29
+        height: 33
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3af857bd4710d0480800000000000000
+      internalID: -8931480884596076637
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: meji-medium-idle_20
+      rect:
+        serializedVersion: 2
+        x: 58
+        y: 0
+        width: 29
+        height: 33
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7dcd972d20e451760800000000000000
+      internalID: 7427928934445604055
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: meji-medium-idle_21
+      rect:
+        serializedVersion: 2
+        x: 87
+        y: 0
+        width: 29
+        height: 33
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 30fb6dcc518d52a60800000000000000
+      internalID: 7648757130301193987
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: meji-medium-idle_22
+      rect:
+        serializedVersion: 2
+        x: 116
+        y: 0
+        width: 29
+        height: 33
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 50f1ce092360f9050800000000000000
+      internalID: 5809368858580754181
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: meji-medium-idle_23
+      rect:
+        serializedVersion: 2
+        x: 145
+        y: 0
+        width: 29
+        height: 33
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f6a6f1b41ba8b01e0800000000000000
+      internalID: -2230536696357754257
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 92c863de0029ae54496895b3efd4f14e
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":6.0,"y":4.0},"gridSpriteSize":{"x":29.0,"y":33.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.0},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":7,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
+    nameFileIdTable:
+      meji-medium-idle_0: 1051450942087665484
+      meji-medium-idle_1: 4204050478098299213
+      meji-medium-idle_10: 657558055405185014
+      meji-medium-idle_11: -2217284113401837283
+      meji-medium-idle_12: 3748412686925489813
+      meji-medium-idle_13: 8621442539709900177
+      meji-medium-idle_14: 8871977880185380268
+      meji-medium-idle_15: 1964136070763235240
+      meji-medium-idle_16: 1929498219276386847
+      meji-medium-idle_17: -2680066237587821896
+      meji-medium-idle_18: 264350872386382252
+      meji-medium-idle_19: -8931480884596076637
+      meji-medium-idle_2: -410142537410252972
+      meji-medium-idle_20: 7427928934445604055
+      meji-medium-idle_21: 7648757130301193987
+      meji-medium-idle_22: 5809368858580754181
+      meji-medium-idle_23: -2230536696357754257
+      meji-medium-idle_3: 1040845242650613697
+      meji-medium-idle_4: 216828343304521473
+      meji-medium-idle_5: -4754860511597621915
+      meji-medium-idle_6: -7129179725092269580
+      meji-medium-idle_7: -4409543178947433057
+      meji-medium-idle_8: -8517394571648034714
+      meji-medium-idle_9: -939541590248464622
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

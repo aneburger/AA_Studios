@@ -1,4 +1,4 @@
-// Shared enemy AI infrastructure
+// Shared enemy AI infrastructure - idle/patrol/chase/return, line of sight,
 
 using UnityEngine;
 using TopDown.Movement;
@@ -9,25 +9,26 @@ public abstract class EnemyAIBase : MonoBehaviour, IEnemyAI
     protected State currentState = State.Idle;
 
     [Header("Idle / Patrol")]
-    [SerializeField] protected float idleDurationMin;
-    [SerializeField] protected float idleDurationMax;
-    [SerializeField] protected float patrolDurationMin;
-    [SerializeField] protected float patrolDurationMax;
-    [SerializeField] protected float patrolRadius;
-    [SerializeField] protected float patrolChance;
+    [SerializeField] protected float idleDurationMin = 2f;
+    [SerializeField] protected float idleDurationMax = 5f;
+    [SerializeField] protected float patrolDurationMin = 1f;
+    [SerializeField] protected float patrolDurationMax = 2f;
+    [SerializeField] protected float patrolRadius = 2f;
+    [SerializeField] protected float patrolChance = 0.5f;
 
     [Header("Leash")]
-    [SerializeField] protected float leashRadius;
+    [SerializeField] protected float leashRadius = 6f;
 
     [Header("Line of Sight")]
     [SerializeField] protected LayerMask wallMask;
+    [SerializeField] protected float losSkin = 0.15f;
 
     [Header("Passive Speed")]
-    [SerializeField] protected float passiveSpeedMultiplier;
+    [SerializeField] protected float passiveSpeedMultiplier = 0.5f;
 
     [Header("Spawn")]
-    [SerializeField] protected float spawnGraceMin;
-    [SerializeField] protected float spawnGraceMax ;
+    [SerializeField] protected float spawnGraceMin = 1f;
+    [SerializeField] protected float spawnGraceMax = 2f;
 
     protected EnemyController enemy;
     protected EnemyMover mover;
@@ -93,8 +94,26 @@ public abstract class EnemyAIBase : MonoBehaviour, IEnemyAI
         }
     }
 
-   // -- SPAWN GRACE --
     protected virtual bool HandleSpawnGrace() => false;
+
+    [Header("Debug")]
+    [Tooltip("Logs state/distance/LOS to the console a few times a second while enabled.")]
+    [SerializeField] protected bool debugLogging = false;
+    private float debugLogTimer;
+
+    private void LateUpdate()
+    {
+        if (!debugLogging || player == null) return;
+
+        debugLogTimer -= Time.deltaTime;
+        if (debugLogTimer > 0f) return;
+        debugLogTimer = 0.25f;
+
+        float distance = Vector2.Distance(transform.position, player.position);
+        Debug.Log($"[{name}] state={currentState} dist={distance:F2} LOS={HasLineOfSight()}{GetExtraDebugInfo()}");
+    }
+
+    protected virtual string GetExtraDebugInfo() => "";
 
     // -- SKIP SPAWN GRACE --
     public virtual void SkipSpawnGrace()
@@ -120,7 +139,9 @@ public abstract class EnemyAIBase : MonoBehaviour, IEnemyAI
         Vector2 target = player.position;
         float distance = Vector2.Distance(origin, target);
 
-        RaycastHit2D hit = Physics2D.Raycast(origin, (target - origin).normalized, distance, wallMask);
+        float castDistance = Mathf.Max(0f, distance - losSkin);
+
+        RaycastHit2D hit = Physics2D.Raycast(origin, (target - origin).normalized, castDistance, wallMask);
         return hit.collider == null;
     }
 
@@ -187,7 +208,6 @@ public abstract class EnemyAIBase : MonoBehaviour, IEnemyAI
         mover.SetSpeedMultiplier(1f);
     }
 
-    // -- DEFAULT CHASE --
     protected virtual void HandleChase(float distance)
     {
         mover.ClearFacingOverride();

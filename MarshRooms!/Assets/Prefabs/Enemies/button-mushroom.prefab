@@ -295,11 +295,16 @@ MonoBehaviour:
   patrolRadius: 2.5
   patrolChance: 0.4
   leashRadius: 6
-  windupDurationMin: 0.4
-  windupDurationMax: 0.7
   wallMask:
     serializedVersion: 2
     m_Bits: 163840
+  losSkin: 1
+  passiveSpeedMultiplier: 0.5
+  spawnGraceMin: 1
+  spawnGraceMax: 2
+  debugLogging: 0
+  windupDurationMin: 0.4
+  windupDurationMax: 0.7
   windupClip: {fileID: 8300000, guid: ab209789ecf1a3b4c903ff297d0c9dfa, type: 3}
   windupVolume: 0.25
   missChance: 0.2
@@ -307,8 +312,6 @@ MonoBehaviour:
   missAngleMax: 14
   hitSlowMultiplier: 0.5
   hitSlowDuration: 0.15
-  spawnGraceMin: 1
-  spawnGraceMax: 2
   attackRangeVarianceMin: 0.5
   attackRangeVarianceMax: 1.3
   moveCloserChance: 0.7
@@ -317,7 +320,6 @@ MonoBehaviour:
   fireRateVarianceMin: 0.85
   fireRateVarianceMax: 1.3
   chanceToShootWhileMoving: 0.4
-  passiveSpeedMultiplier: 0.5
 --- !u!114 &3724249218000953578
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -331,11 +333,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyPathing
   destinationUpdateInterval: 0.1
+  offMeshSampleDistance: 2.5
   enemyMask:
     serializedVersion: 2
     m_Bits: 128
   separationRadius: 1.4
   separationStrength: 1
+  directionSmoothSpeed: 10
 --- !u!195 &345462243566778897
 NavMeshAgent:
   m_ObjectHideFlags: 0

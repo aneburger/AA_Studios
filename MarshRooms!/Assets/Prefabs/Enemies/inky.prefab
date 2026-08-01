@@ -289,11 +289,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyPathing
   destinationUpdateInterval: 0.1
+  offMeshSampleDistance: 4
   enemyMask:
     serializedVersion: 2
     m_Bits: 128
   separationRadius: 1.4
   separationStrength: 1
+  directionSmoothSpeed: 10
 --- !u!114 &92667325345352086
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -312,9 +314,15 @@ MonoBehaviour:
   patrolDurationMax: 2
   patrolRadius: 2
   patrolChance: 0.5
+  leashRadius: 6
   wallMask:
     serializedVersion: 2
     m_Bits: 0
+  losSkin: 1
+  passiveSpeedMultiplier: 0.5
+  spawnGraceMin: 0.3
+  spawnGraceMax: 0.8
+  debugLogging: 0
   rollRange: 15
   rollTimerMin: 0.5
   rollTimerMax: 2.5
@@ -328,10 +336,6 @@ MonoBehaviour:
   rollDurationMin: 5
   rollDurationMax: 10
   maxRecoveryDuration: 0.6
-  leashRadius: 6
-  passiveSpeedMultiplier: 0.5
-  spawnGraceMin: 0.3
-  spawnGraceMax: 0.8
   bumpClip: {fileID: 8300000, guid: 277cfd5237e689d44b4f267a3990a69e, type: 3}
   bumpVolume: 0
   bumpCooldown: 0.3

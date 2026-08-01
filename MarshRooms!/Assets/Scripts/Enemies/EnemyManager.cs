@@ -24,10 +24,13 @@ public class EnemyManager : MonoBehaviour
     }
 
     // -- SPAWN ENEMY --
-    public GameObject SpawnEnemy(GameObject enemyPrefab, Vector2 position)
+    public GameObject SpawnEnemy(GameObject enemyPrefab, Vector2 position, bool playSpawnAnimation = true)
     {
         GameObject enemy = Instantiate(enemyPrefab, position, Quaternion.identity);
-        enemy.GetComponent<EnemyController>()?.SetShouldSpawnAnimate();
+
+        if (playSpawnAnimation)
+            enemy.GetComponent<EnemyController>()?.SetShouldSpawnAnimate();
+
         RegisterEnemy(enemy);
         return enemy;
     }

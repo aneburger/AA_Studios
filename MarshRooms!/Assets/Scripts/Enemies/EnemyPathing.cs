@@ -9,6 +9,9 @@ public class EnemyPathing : MonoBehaviour
 {
     [SerializeField] private float destinationUpdateInterval = 0.2f;
 
+    [Header("Off-Mesh Target Handling")]
+    [SerializeField] private float offMeshSampleDistance = 2.5f;
+
     [Header("Separation")]
     [SerializeField] private LayerMask enemyMask;
     [SerializeField] private float separationRadius = 1.2f;
@@ -34,12 +37,17 @@ public class EnemyPathing : MonoBehaviour
         agent.nextPosition = transform.position;
     }
 
+    [Header("Direction Smoothing")]
+    [SerializeField] private float directionSmoothSpeed = 10f;
+
+    private Vector2 smoothedDirection;
+
     // -- DIRECTION TO TARGET --
     public Vector2 GetDirectionToTarget(Vector2 targetPosition)
     {
         if (Time.time >= nextUpdateTime)
         {
-            agent.SetDestination(targetPosition);
+            agent.SetDestination(ResolveDestination(targetPosition));
             nextUpdateTime = Time.time + destinationUpdateInterval;
         }
 
@@ -48,9 +56,25 @@ public class EnemyPathing : MonoBehaviour
             pathDirection = ((Vector2)agent.desiredVelocity).normalized;
 
         Vector2 separation = GetSeparationForce();
-
         Vector2 combined = pathDirection + separation * separationStrength;
-        return combined.sqrMagnitude > 0.001f ? combined.normalized : pathDirection;
+        Vector2 rawDirection = combined.sqrMagnitude > 0.001f ? combined.normalized : pathDirection;
+
+        smoothedDirection = Vector2.Lerp(
+            smoothedDirection,
+            rawDirection,
+            1f - Mathf.Exp(-directionSmoothSpeed * Time.deltaTime)
+        );
+
+        return smoothedDirection;
+    }
+
+    // -- RESOLVE DESTINATION --
+    private Vector3 ResolveDestination(Vector2 targetPosition)
+    {
+        if (NavMesh.SamplePosition(targetPosition, out NavMeshHit hit, offMeshSampleDistance, NavMesh.AllAreas))
+            return hit.position;
+
+        return targetPosition;
     }
 
     // -- SEPARATION FORCE --
@@ -58,7 +82,7 @@ public class EnemyPathing : MonoBehaviour
     {
         ContactFilter2D filter = new ContactFilter2D();
         filter.SetLayerMask(enemyMask);
-        filter.useTriggers = true; // set false if your enemy colliders aren't triggers
+        filter.useTriggers = true;
 
         int count = Physics2D.OverlapCircle(transform.position, separationRadius, filter, separationBuffer);
         Vector2 force = Vector2.zero;

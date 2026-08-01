@@ -12,37 +12,37 @@ public class ButtonMushroomAI : EnemyAIBase
     private WeaponAimer weaponAimer;
 
     [Header("Windup")]
-    [SerializeField] private float windupDurationMin;
-    [SerializeField] private float windupDurationMax;
+    [SerializeField] private float windupDurationMin = 0.4f;
+    [SerializeField] private float windupDurationMax = 0.8f;
 
     [Header("Windup Visual")]
     [SerializeField] private AudioClip windupClip;
     [Range(0f, 1f)] [SerializeField] private float windupVolume;
 
     [Header("Accuracy")]
-    [SerializeField] private float missChance;
-    [SerializeField] private float missAngleMin;
-    [SerializeField] private float missAngleMax;
+    [SerializeField] private float missChance = 0.2f;
+    [SerializeField] private float missAngleMin = 12f;
+    [SerializeField] private float missAngleMax = 30f;
 
     [Header("Hit Reaction")]
-    [SerializeField] private float hitSlowMultiplier;
-    [SerializeField] private float hitSlowDuration;
+    [SerializeField] private float hitSlowMultiplier = 0.5f;
+    [SerializeField] private float hitSlowDuration = 0.15f;
 
     [Header("Attack Range Variance")]
-    [SerializeField] private float attackRangeVarianceMin;
-    [SerializeField] private float attackRangeVarianceMax;
+    [SerializeField] private float attackRangeVarianceMin = 0.85f;
+    [SerializeField] private float attackRangeVarianceMax = 1.15f;
 
     [Header("Reposition On Miss")]
-    [SerializeField] private float moveCloserChance;
-    [SerializeField] private float moveCloserAmount;
-    [SerializeField] private float minAttackRange;
+    [SerializeField] private float moveCloserChance = 0.5f;
+    [SerializeField] private float moveCloserAmount = 0.7f;
+    [SerializeField] private float minAttackRange = 1.5f;
 
     [Header("Fire Rate Variance")]
-    [SerializeField] private float fireRateVarianceMin;
-    [SerializeField] private float fireRateVarianceMax;
+    [SerializeField] private float fireRateVarianceMin = 0.85f;
+    [SerializeField] private float fireRateVarianceMax = 1.2f;
 
     [Header("Shooting Style")]
-    [Range(0f, 1f)] [SerializeField] private float chanceToShootWhileMoving;
+    [Range(0f, 1f)] [SerializeField] private float chanceToShootWhileMoving = 0.3f;
 
     private bool shootsWhileMoving;
     private float effectiveAttackRange;
@@ -84,7 +84,7 @@ public class ButtonMushroomAI : EnemyAIBase
         mover.SetFacingOverride(dir);
     }
 
-    // ==================== IDLE ====================
+    // ==================== IDLE  ====================
     protected override void HandleIdle(float distance)
     {
         mover.Stop();
@@ -166,7 +166,7 @@ public class ButtonMushroomAI : EnemyAIBase
 
     protected override bool ShouldEngage(float distance) => false;
 
-    // ==================== ENGAGE: WINDUP -> ATTACK ====================
+    // ==================== ENGAGE ====================
     protected override void EnterEngage()
     {
         currentState = State.Engage;
@@ -301,6 +301,15 @@ public class ButtonMushroomAI : EnemyAIBase
 
         if (Vector2.Distance(transform.position, spawnPosition) < 0.3f)
             EnterIdle();
+    }
+
+    // -- DEBUG --
+    protected override string GetExtraDebugInfo()
+    {
+        float distance = Vector2.Distance(transform.position, player.position);
+        bool inRange = distance <= effectiveAttackRange && HasLineOfSight();
+        bool canFire = shooter == null || shooter.CanFire();
+        return $" attackRange={effectiveAttackRange:F2} inRange={inRange} shootsWhileMoving={shootsWhileMoving} canFire={canFire} engagePhase={engagePhase}";
     }
 
     // -- TOOK DAMAGE --
