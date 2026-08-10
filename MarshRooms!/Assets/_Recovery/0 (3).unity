@@ -20674,54 +20674,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1859339791301895263, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
-      propertyPath: maxSpeed
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 2353622331470411928, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -20.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 2353622331470411928, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 16.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 2522004614775887454, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
-      propertyPath: maxSpeed
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 4046391584696401187, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
-      propertyPath: maxSpeed
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 4631771369125678977, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -84.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 4966949778935202865, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
-      propertyPath: maxSpeed
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 7085789729006638418, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
       propertyPath: m_Name
       value: HUD
       objectReference: {fileID: 0}
-    - target: {fileID: 8223842927672131312, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
-      propertyPath: maxSpeed
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 8476067713805836909, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -131.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8968260883262803628, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
-      propertyPath: maxSpeed
-      value: 3
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2521993023248912401, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
