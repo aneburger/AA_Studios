@@ -10,6 +10,11 @@ public class Interactable : MonoBehaviour
     [SerializeField] private float indicatorHeight = 0.5f;
     [SerializeField] private float indicatorHorizontalOffset = 0f;
 
+    [Header("Speech Bubble")]
+    [SerializeField] private GameObject speechBubblePrefab;
+    [SerializeField] private float speechBubbleHeight = 0.5f;
+    [SerializeField] private float speechBubbleHorizontalOffset = 0f;
+
     [Header("Outline")]
     [SerializeField] private SpriteRenderer targetRenderer;
 
@@ -17,8 +22,10 @@ public class Interactable : MonoBehaviour
     public bool PlayerInRange { get; private set; } = false;
 
     private InteractIndicator indicator;
+    private InteractIndicator speechBubbleIndicator;
     private MaterialPropertyBlock mpb;
     private bool interactionLocked = false;
+    private bool hasSomethingToSay = false;
 
     private static readonly int OutlineEnabledID   = Shader.PropertyToID("_OutlineEnabled");
     private static readonly int OutlineThicknessID = Shader.PropertyToID("_OutlineThickness");
@@ -41,6 +48,25 @@ public class Interactable : MonoBehaviour
             indicator.SetBasePosition(basePos);
             indicator.Hide();
         }
+
+        // Speech bubble
+        if (speechBubblePrefab != null)
+        {
+            GameObject bubbleInstance = Instantiate(speechBubblePrefab, transform);
+            Vector3 bubbleBasePos = new Vector3(speechBubbleHorizontalOffset, speechBubbleHeight, 0f);
+            bubbleInstance.transform.localPosition = bubbleBasePos;
+            speechBubbleIndicator = bubbleInstance.GetComponent<InteractIndicator>();
+
+            if (speechBubbleIndicator != null)
+            {
+                speechBubbleIndicator.SetBasePosition(bubbleBasePos);
+                speechBubbleIndicator.Hide();
+            }
+            else
+            {
+                Debug.LogWarning($"Speech Bubble Prefab on '{gameObject.name}' is missing an InteractIndicator component.", this);
+            }
+        }
     }
 
     // -- PLAYER ENTERS RANGE --
@@ -49,6 +75,8 @@ public class Interactable : MonoBehaviour
         PlayerInRange = true;
         if (enabled && !interactionLocked)
             SetOutline(true);
+
+        UpdateSpeechBubble();
     }
 
     // -- PLAYER EXITS RANGE --
@@ -56,6 +84,8 @@ public class Interactable : MonoBehaviour
     {
         PlayerInRange = false;
         SetOutline(false);
+
+        UpdateSpeechBubble();
     }
 
     // -- SET INTERACTION --
@@ -67,6 +97,15 @@ public class Interactable : MonoBehaviour
             SetOutline(false);
         else if (PlayerInRange)
             SetOutline(true);
+
+        UpdateSpeechBubble();
+    }
+
+    // -- SET HAS SOMETHING TO SAY --
+    public void SetHasSomethingToSay(bool value)
+    {
+        hasSomethingToSay = value;
+        UpdateSpeechBubble();
     }
 
     // -- TRY INTERACT --
@@ -91,6 +130,20 @@ public class Interactable : MonoBehaviour
         else         indicator?.Hide();
     }
 
+    // -- UPDATE SPEECH BUBBLE --
+    private bool speechBubbleVisible = false;
+
+    private void UpdateSpeechBubble()
+    {
+        bool show = hasSomethingToSay && !PlayerInRange && !interactionLocked && enabled;
+
+        if (show == speechBubbleVisible) return;
+        speechBubbleVisible = show;
+
+        if (show) speechBubbleIndicator?.Show();
+        else       speechBubbleIndicator?.Hide();
+    }
+
     // -- DISABLE --
     public void Disable()
     {
@@ -103,5 +156,7 @@ public class Interactable : MonoBehaviour
     {
         if (PlayerInRange && !interactionLocked)
             SetOutline(true);
+
+        UpdateSpeechBubble();
     }
 }
