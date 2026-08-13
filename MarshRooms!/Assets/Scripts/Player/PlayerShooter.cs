@@ -48,6 +48,8 @@ public class PlayerShooter : BaseShooter
         if (!canShoot) isShooting = false;
     }
 
+    public bool CanShoot => canShoot;
+
     // -- GET SHOOT DIRECTION --
     protected override Vector2 GetShootDirection()
     {

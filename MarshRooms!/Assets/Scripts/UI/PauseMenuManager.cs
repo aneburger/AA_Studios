@@ -17,6 +17,7 @@ public class PauseMenuManager : MonoBehaviour
 
     private bool isPaused = false;
     private float volumeBeforePause = 1f;
+    private bool shootingWasEnabledBeforePause = true;
     private InputAction escapeAction;
 
 
@@ -84,7 +85,10 @@ public class PauseMenuManager : MonoBehaviour
     {
         isPaused = true;
         Time.timeScale = 0f;
-        FindPlayerShooter()?.SetCanShoot(false);
+
+        PlayerShooter shooter = FindPlayerShooter();
+        shootingWasEnabledBeforePause = shooter == null || shooter.CanShoot;
+        shooter?.SetCanShoot(false);
 
         volumeBeforePause = AudioManager.Instance.GetMusicVolume();
         AudioManager.Instance.SetMusicVolume(volumeBeforePause * 0.2f);
@@ -97,7 +101,10 @@ public class PauseMenuManager : MonoBehaviour
     {
         isPaused = false;
         Time.timeScale = 1f;
-        FindPlayerShooter()?.SetCanShoot(true);
+
+        // Only re-enable shooting if it was actually enabled before we
+        if (shootingWasEnabledBeforePause)
+            FindPlayerShooter()?.SetCanShoot(true);
 
         AudioManager.Instance.SetMusicVolume(volumeBeforePause);
 
