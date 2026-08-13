@@ -29,7 +29,6 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private GameObject quitArrow;
 
     [Header("UI Audio")]
-    [SerializeField] private AudioSource uiAudioSource;
     [SerializeField] private AudioClip hoverClip;
     [SerializeField] private AudioClip clickClip;
     [Range(0f, 1f)][SerializeField] private float hoverVolume = 1f;
@@ -175,17 +174,6 @@ public class MenuManager : MonoBehaviour
         trigger.triggers.Add(entry);
     }
 
-    //private System.Collections.IEnumerator ResetToDefaultWhenMouseLeaves()
-    //{
-    //    yield return null;
-
-    //    if (EventSystem.current == null)
-    //        yield break;
-
-    //    if (!EventSystem.current.IsPointerOverGameObject())
-    //        SetSelection(0, false);
-    //}
-
 
     // -- SELECTION VISUALS --
     private void SetSelection(int index, bool playHoverSound)
@@ -218,34 +206,14 @@ public class MenuManager : MonoBehaviour
             PlayUiSound(hoverClip, hoverVolume);
     }
 
-    //private void UpdateArrowPosition(RectTransform targetRect)
-    //{
-    //    if (hoverArrow == null || targetRect == null)
-    //        return;
-
-    //    hoverArrow.gameObject.SetActive(true);
-    //    hoverArrow.SetParent(targetRect.parent, false);
-    //    hoverArrow.anchoredPosition = targetRect.anchoredPosition + arrowOffset;
-    //    hoverArrow.SetAsLastSibling();
-    //}
-
-    //private void HideArrow()
-    //{
-    //    currentIndex = -1;
-
-    //    if (hoverArrow != null)
-    //        hoverArrow.gameObject.SetActive(false);
-    //}
 
     private void PlayUiSound(AudioClip clip, float volume)
     {
         if (clip == null)
             return;
 
-        if (uiAudioSource != null)
-            uiAudioSource.PlayOneShot(clip, volume);
-        else
-            AudioSource.PlayClipAtPoint(clip, Vector3.zero, volume);
+        if (AudioManager.Instance != null)
+            AudioManager.Instance.PlaySFXWithPitch(clip, volume);
     }
 
 
