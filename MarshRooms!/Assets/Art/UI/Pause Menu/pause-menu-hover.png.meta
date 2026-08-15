@@ -1,10 +1,16 @@
 fileFormatVersion: 2
-guid: 8587d5130fe31994ab7266e8cc5e8f0f
+guid: cd415a6a019ff5648ae5c27192f06956
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 3044897396056791726
-    second: menu-button_0
+      213: -155451591387048683
+    second: pause-menu-hover_0
+  - first:
+      213: -7299268329590623298
+    second: pause-menu-hover_1
+  - first:
+      213: -1213915869893243370
+    second: pause-menu-hover_2
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -37,7 +43,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -51,7 +57,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 16
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -75,7 +81,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -100,23 +106,67 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: menu-button_0
+      name: pause-menu-hover_0
       rect:
         serializedVersion: 2
-        x: 1
-        y: 1
-        width: 28
-        height: 27
+        x: 4
+        y: 4
+        width: 90
+        height: 22
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: eaa1a759c06a14a20800000000000000
-      internalID: 3044897396056791726
+      spriteID: 5151b9be999b7ddf0800000000000000
+      internalID: -155451591387048683
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pause-menu-hover_1
+      rect:
+        serializedVersion: 2
+        x: 15
+        y: 4
+        width: 67
+        height: 22
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eb3fd7e902ac3ba90800000000000000
+      internalID: -7299268329590623298
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pause-menu-hover_2
+      rect:
+        serializedVersion: 2
+        x: 83
+        y: 8
+        width: 10
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 61ecdcba2fd472fe0800000000000000
+      internalID: -1213915869893243370
       vertices: []
       indices: 
       edges: []
@@ -125,7 +175,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: aa9d19baa002e014da01c0c7e1882d73
     internalID: 0
     vertices: []
     indices: 
@@ -135,7 +185,9 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      menu-button_0: 3044897396056791726
+      pause-menu-hover_0: -155451591387048683
+      pause-menu-hover_1: -7299268329590623298
+      pause-menu-hover_2: -1213915869893243370
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
