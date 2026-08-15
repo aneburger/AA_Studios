@@ -157,7 +157,7 @@ public class MenuManager : MonoBehaviour
                 trigger.triggers = new List<EventTrigger.Entry>();
 
             AddTrigger(trigger, EventTriggerType.PointerEnter, _ => SetSelection(index, true));
-            AddTrigger(trigger, EventTriggerType.Select, _ => SetSelection(index, false));
+            AddTrigger(trigger, EventTriggerType.Select, _ => SetSelection(index, true));
             //AddTrigger(trigger, EventTriggerType.PointerExit, _ => StartCoroutine(ResetToDefaultWhenMouseLeaves()));
         }
     }
