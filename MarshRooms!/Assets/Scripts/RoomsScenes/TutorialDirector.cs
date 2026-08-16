@@ -214,6 +214,8 @@ public class TutorialDirector : MonoBehaviour
         // hide HUD until fight begins
         HUDManager.Instance?.SetHUDVisible(false);
 
+        // Fade out menu music
+        AudioManager.Instance.FadeMusicVolume(0f, 1.5f);
         StartCoroutine(RunTutorial());
     }
 
@@ -228,8 +230,9 @@ public class TutorialDirector : MonoBehaviour
         playerMover?.SetSleeping(true);
 
         // Fade in from black
-        ScreenEffects.Instance?.FadeFromBlack(1.5f);
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2f);
+        ScreenEffects.Instance?.FadeFromBlack(3.5f);
+        yield return new WaitForSeconds(2f);
 
         // Fade in house music
         AudioManager.Instance?.FadeInMusic(houseMusicClip, 2.5f, houseMusicVolume);

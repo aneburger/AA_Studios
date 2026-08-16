@@ -31,8 +31,12 @@ public class MenuManager : MonoBehaviour
     [Header("UI Audio")]
     [SerializeField] private AudioClip hoverClip;
     [SerializeField] private AudioClip clickClip;
-    [Range(0f, 1f)][SerializeField] private float hoverVolume = 1f;
-    [Range(0f, 1f)][SerializeField] private float clickVolume = 1f;
+    [Range(0f, 1f)][SerializeField] private float hoverVolume;
+    [Range(0f, 1f)][SerializeField] private float clickVolume;
+
+    [Header("Music")]
+    [SerializeField] private AudioClip menuMusic;
+    [Range(0f, 1f)][SerializeField] private float menuMusicVolume;
 
     [Header("Text Colors")]
     [SerializeField] private Color selectedColor = Color.white;
@@ -54,7 +58,6 @@ public class MenuManager : MonoBehaviour
 
         // Pause game while menu is open
         Time.timeScale = 0f;
-
 
         menuButtons = new[] { tutorialButton, startButton, controlsButton, quitButton };
         menuTexts = new[] { tutorialText, startText, controlsText, quitText };
@@ -83,6 +86,9 @@ public class MenuManager : MonoBehaviour
 
         // Tutorial is default highlighted option
         SetSelection(0, false);
+
+        // Start title music
+        AudioManager.Instance?.PlayMusic(menuMusic, menuMusicVolume);
     }
 
 

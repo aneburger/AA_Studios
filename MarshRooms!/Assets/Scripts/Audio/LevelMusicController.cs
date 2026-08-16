@@ -10,7 +10,7 @@ public class LevelMusicController : MonoBehaviour
 
     private void Start()
     {
-        AudioManager.Instance.CrossfadeMusic(floorMusic, fadeDuration, combatVolume);
+        AudioManager.Instance?.CrossfadeMusic(floorMusic, fadeDuration, combatVolume);
     }
 
     private void OnEnable()
