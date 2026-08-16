@@ -28,8 +28,8 @@ public class PauseMenuManager : MonoBehaviour
     [Header("UI Audio")]
     [SerializeField] private AudioClip hoverClip;
     [SerializeField] private AudioClip clickClip;
-    [Range(0f, 1f)][SerializeField] private float hoverVolume = 1f;
-    [Range(0f, 1f)][SerializeField] private float clickVolume = 1f;
+    [Range(0f, 1f)][SerializeField] private float hoverVolume;
+    [Range(0f, 1f)][SerializeField] private float clickVolume;
 
     private bool isPaused = false;
     private float volumeBeforePause = 1f;
@@ -207,8 +207,7 @@ public class PauseMenuManager : MonoBehaviour
         if (clip == null)
             return;
 
-        if (AudioManager.Instance != null)
-            AudioManager.Instance.PlaySFXWithPitch(clip, volume);
+        AudioManager.Instance?.PlaySFXWithPitch(clip, volume);
     }
 
     private void OnDestroy()
@@ -264,7 +263,7 @@ public class PauseMenuManager : MonoBehaviour
             FindPlayerShooter()?.SetCanShoot(true);
 
         PlayUiSound(clickClip, clickVolume);
-        AudioManager.Instance.SetMusicVolume(volumeBeforePause);
+        AudioManager.Instance?.SetMusicVolume(volumeBeforePause);
 
         if (playerInput != null) playerInput.enabled = true;
         if (pauseMenuPanel != null) pauseMenuPanel.SetActive(false);

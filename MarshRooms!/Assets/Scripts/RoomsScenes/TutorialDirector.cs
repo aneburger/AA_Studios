@@ -231,8 +231,7 @@ public class TutorialDirector : MonoBehaviour
 
         // Fade in from black
         yield return new WaitForSeconds(2f);
-        ScreenEffects.Instance?.FadeFromBlack(3.5f);
-        yield return new WaitForSeconds(2f);
+        ScreenEffects.Instance?.FadeFromBlack(3f);
 
         // Fade in house music
         AudioManager.Instance?.FadeInMusic(houseMusicClip, 2.5f, houseMusicVolume);

@@ -218,8 +218,7 @@ public class MenuManager : MonoBehaviour
         if (clip == null)
             return;
 
-        if (AudioManager.Instance != null)
-            AudioManager.Instance.PlaySFXWithPitch(clip, volume);
+        AudioManager.Instance?.PlaySFXWithPitch(clip, volume);
     }
 
 
@@ -228,7 +227,7 @@ public class MenuManager : MonoBehaviour
     private void OnBeginGame(string sceneName)
     {
         PlayUiSound(clickClip, clickVolume);
-        AudioManager.Instance.PlayMusic(AudioManager.Instance.musicClip);
+        AudioManager.Instance?.PlayMusic(AudioManager.Instance.musicClip);
 
         // Resume time
         Time.timeScale = 1f;

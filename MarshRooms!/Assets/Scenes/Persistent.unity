@@ -2237,7 +2237,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 13.133179
+  orthographic size: 10.020833
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -20714,6 +20714,22 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4908183722122372763, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
+      propertyPath: menuMusic
+      value: 
+      objectReference: {fileID: 8300000, guid: 72c5b713efc51284894bae5f728fb7b9, type: 3}
+    - target: {fileID: 4908183722122372763, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
+      propertyPath: clickVolume
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4908183722122372763, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
+      propertyPath: hoverVolume
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4908183722122372763, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
+      propertyPath: menuMusicVolume
+      value: 0.45
+      objectReference: {fileID: 0}
     - target: {fileID: 7085789729006638418, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
       propertyPath: m_Name
       value: HUD
@@ -20734,6 +20750,14 @@ PrefabInstance:
       propertyPath: quitArrow
       value: 
       objectReference: {fileID: 1036376947}
+    - target: {fileID: 8785102966773636811, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
+      propertyPath: clickVolume
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8785102966773636811, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
+      propertyPath: hoverVolume
+      value: 0.3
+      objectReference: {fileID: 0}
     - target: {fileID: 8785102966773636811, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
       propertyPath: resumeArrow
       value: 
