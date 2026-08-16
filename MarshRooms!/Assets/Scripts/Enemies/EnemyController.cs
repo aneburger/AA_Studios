@@ -20,8 +20,19 @@ public class EnemyController : MonoBehaviour
     private EnemyHealth health;
     private Animator anim;
     private Behaviour aiBehaviour;
+    private EliteModifier eliteModifier;
 
-    public EnemyData Data => enemyData;
+    private EnemyData effectiveData;
+    public EnemyData Data
+    {
+        get
+        {
+            if (effectiveData == null)
+                effectiveData = ResolveEffectiveData();
+            return effectiveData;
+        }
+    }
+
     public bool IsSpawning { get; private set; }
 
     private bool shouldSpawnAnimate = false;
@@ -34,14 +45,15 @@ public class EnemyController : MonoBehaviour
         health = GetComponent<EnemyHealth>();
         anim = GetComponentInChildren<Animator>();
         aiBehaviour = GetComponent<IEnemyAI>() as Behaviour;
-        mover.SetSpeed(enemyData.moveSpeed);
+
+        mover.SetSpeed(Data.moveSpeed);
     }
 
     // -- START --
     private void Start()
     {
         InitialiseWeapon();
-        health.Initialise(enemyData.maxHealth);
+        health.Initialise(Data.maxHealth);
         EnemyManager.Instance.RegisterEnemy(gameObject);
 
         if (shouldSpawnAnimate)
@@ -55,6 +67,15 @@ public class EnemyController : MonoBehaviour
         }
     }
 
+    // -- RESOLVE EFFECTIVE DATA --
+    private EnemyData ResolveEffectiveData()
+    {
+        if (eliteModifier == null)
+            eliteModifier = GetComponent<EliteModifier>();
+
+        return eliteModifier != null ? eliteModifier.ApplyStatModifiers(enemyData) : enemyData;
+    }
+
     // -- CONTACT DAMAGE --
     private void OnTriggerStay2D(Collider2D collision)
     {
@@ -64,21 +85,26 @@ public class EnemyController : MonoBehaviour
         if (playerHealth == null) return;
         if (playerHealth.IsOnCooldown()) return;
 
-        playerHealth.TakeDamage(enemyData.contactDamage);
+        playerHealth.TakeDamage(Data.contactDamage);
 
         BaseMover playerMover = collision.GetComponentInParent<BaseMover>();
         if (playerMover != null)
         {
             Vector2 knockbackDir = (collision.transform.position - transform.position).normalized;
-            playerMover.ApplyKnockback(knockbackDir * enemyData.contactKnockback);
+            playerMover.ApplyKnockback(knockbackDir * Data.contactKnockback);
         }
     }
 
     // -- INITIALISE WEAPON --
     private void InitialiseWeapon()
     {
-        if (enemyData == null || enemyData.weapon == null) return;
-        shooter.EquipWeapon(enemyData.weapon);
+        if (Data == null || Data.weapon == null) return;
+
+        WeaponData weaponToEquip = Data.weapon;
+        if (eliteModifier != null)
+            weaponToEquip = eliteModifier.ApplyWeaponModifiers(weaponToEquip);
+
+        shooter.EquipWeapon(weaponToEquip);
     }
 
     // -- SET SHOULD SPAWN ANIMATE --

@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class EnemyShooter : BaseShooter
 {
+    private int burstShotsFired = 0;
+
     // -- START --
     private void Start()
     {
@@ -25,6 +27,18 @@ public class EnemyShooter : BaseShooter
         if (Time.time < nextFireTime) return;
 
         Shoot();
-        nextFireTime = Time.time + currentWeapon.fireRate * GetFireRateMultiplier();
+        burstShotsFired++;
+
+        int burstCount = Mathf.Max(1, currentWeapon.burstCount);
+
+        if (burstShotsFired < burstCount)
+        {
+            nextFireTime = Time.time + currentWeapon.burstInterval * GetFireRateMultiplier();
+        }
+        else
+        {
+            burstShotsFired = 0;
+            nextFireTime = Time.time + currentWeapon.fireRate * GetFireRateMultiplier();
+        }
     }
 }

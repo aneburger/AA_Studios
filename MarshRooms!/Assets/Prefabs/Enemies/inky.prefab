@@ -107,8 +107,8 @@ GameObject:
   - component: {fileID: 2905366087901206073}
   - component: {fileID: 7585961510317227088}
   - component: {fileID: 7672455363216179369}
-  - component: {fileID: 3724249218000953578}
   - component: {fileID: 92667325345352086}
+  - component: {fileID: 3724249218000953578}
   - component: {fileID: 345462243566778897}
   m_Layer: 7
   m_Name: inky
@@ -276,26 +276,6 @@ MonoBehaviour:
   hurtVolume: 0.4
   dieClip: {fileID: 8300000, guid: 0d591969c6603fe4cb52ef7b5959feda, type: 3}
   dieVolume: 0.9
---- !u!114 &3724249218000953578
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 988082134135583188}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab4f93db9b59fcc4781fe91fa4795980, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemyPathing
-  destinationUpdateInterval: 0.1
-  offMeshSampleDistance: 4
-  enemyMask:
-    serializedVersion: 2
-    m_Bits: 128
-  separationRadius: 1.4
-  separationStrength: 1
-  directionSmoothSpeed: 10
 --- !u!114 &92667325345352086
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -342,6 +322,26 @@ MonoBehaviour:
   rollLoopClip: {fileID: 8300000, guid: 0f1287fc4a59e2745955b41b74f446d7, type: 3}
   rollLoopVolume: 0
   rollLoopPitchVariation: 0.2
+--- !u!114 &3724249218000953578
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 988082134135583188}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab4f93db9b59fcc4781fe91fa4795980, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyPathing
+  destinationUpdateInterval: 0.1
+  offMeshSampleDistance: 4
+  enemyMask:
+    serializedVersion: 2
+    m_Bits: 128
+  separationRadius: 1.4
+  separationStrength: 1
+  directionSmoothSpeed: 10
 --- !u!195 &345462243566778897
 NavMeshAgent:
   m_ObjectHideFlags: 0

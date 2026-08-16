@@ -9,13 +9,29 @@ public class EnemyHealthBar : MonoBehaviour
     [SerializeField] private Color halfColor;
     [SerializeField] private Color lowColor;
 
+    [Header("Elite")]
+    [SerializeField] private bool isElite = false;
+    [SerializeField] private Color eliteGlowColor = Color.white;
+    [SerializeField] private float eliteTintStrength = 0.6f;
+    [SerializeField] private SpriteRenderer background;
+
+    private Color backgroundOriginalColor;
+
     private Vector3 originalScale;
 
     // -- AWAKE --
     private void Awake()
     {
         originalScale = fill.transform.localScale;
+        if (background != null) backgroundOriginalColor = background.color;
         gameObject.SetActive(false);
+    }
+
+    // -- SET ELITE --
+    public void SetElite(bool value, Color glowColor)
+    {
+        isElite = value;
+        eliteGlowColor = glowColor;
     }
 
     // -- UPDATE HEALTH BAR --
@@ -23,17 +39,49 @@ public class EnemyHealthBar : MonoBehaviour
     {
         gameObject.SetActive(true);
 
-        float t = current / max;
+        if (isElite)
+        {
+            float half = max * 0.5f;
 
-        fill.transform.localScale = new Vector3(originalScale.x * t, originalScale.y, 1f);
+            if (current > half)
+            {
+                // Stage 1 - first half of health
+                float stageT = (current - half) / half;
+                fill.transform.localScale = new Vector3(originalScale.x * stageT, originalScale.y, 1f);
 
-        if (t > 0.5f)
-            fill.color = Color.Lerp(halfColor, fullColor, (t - 0.5f) * 2f);
+                Color baseColor = GetNormalColor(stageT);
+                Color tinted = Color.Lerp(baseColor, eliteGlowColor, eliteTintStrength);
+                fill.color = tinted;
+                if (background != null) background.color = Color.Lerp(backgroundOriginalColor, eliteGlowColor, eliteTintStrength);
+            }
+            else
+            {
+                // Stage 2 - remaining half
+                float stageT = current / half;
+                fill.transform.localScale = new Vector3(originalScale.x * stageT, originalScale.y, 1f);
+                fill.color = GetNormalColor(stageT);
+
+                if (background != null) background.color = backgroundOriginalColor;
+            }
+        }
         else
-            fill.color = Color.Lerp(lowColor, halfColor, t * 2f);
+        {
+            float t = current / max;
+            fill.transform.localScale = new Vector3(originalScale.x * t, originalScale.y, 1f);
+            fill.color = GetNormalColor(t);
+        }
 
         // Hide when empty
         if (current <= 0)
             gameObject.SetActive(false);
+    }
+
+    // -- GET NORMAL COLOR --
+    private Color GetNormalColor(float t)
+    {
+        if (t > 0.5f)
+            return Color.Lerp(halfColor, fullColor, (t - 0.5f) * 2f);
+        else
+            return Color.Lerp(lowColor, halfColor, t * 2f);
     }
 }

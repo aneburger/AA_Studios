@@ -10,12 +10,17 @@ public class SplitOnDeath : MonoBehaviour
     [SerializeField] private int splitCount = 2;
     [SerializeField] private float scatterRadius = 0.6f;
 
+    [Header("Elite Inheritance")]
+    [SerializeField] private GameObject eliteSplitPrefab;
+
+    private EliteModifier eliteModifier;
     private EnemyHealth health;
 
     // -- AWAKE --
     private void Awake()
     {
         health = GetComponent<EnemyHealth>();
+        eliteModifier = GetComponent<EliteModifier>();
     }
 
     // -- ENABLE --
@@ -41,6 +46,10 @@ public class SplitOnDeath : MonoBehaviour
     {
         if (splitPrefab == null || splitCount <= 0) return;
 
+        GameObject prefabToSpawn = splitPrefab;
+        if (eliteSplitPrefab != null && eliteModifier != null)
+            prefabToSpawn = eliteSplitPrefab;
+
         RoomManager room = FindFirstObjectByType<RoomManager>();
 
         for (int i = 0; i < splitCount; i++)
@@ -51,7 +60,7 @@ public class SplitOnDeath : MonoBehaviour
             if (room != null)
                 spawnPos = room.GetSafeDropPosition(spawnPos);
 
-            EnemyManager.Instance.SpawnEnemy(splitPrefab, spawnPos, playSpawnAnimation: false);
+            EnemyManager.Instance.SpawnEnemy(prefabToSpawn, spawnPos, playSpawnAnimation: false);
         }
     }
 }

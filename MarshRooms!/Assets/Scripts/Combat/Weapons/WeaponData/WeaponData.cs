@@ -23,6 +23,10 @@ public class WeaponData : ScriptableObject
     public float bulletSpeed;
     public int maxAmmo;
 
+    [Header("Burst")]
+    public int burstCount = 1;
+    public float burstInterval = 0.08f;
+
     [Header("Aim")]
     public Vector2 firePointOffset;
     public bool flipOffsetOnAimFlip = false;
