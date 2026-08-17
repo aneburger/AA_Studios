@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 341671296227511860}
   - component: {fileID: 7617401256069427312}
   - component: {fileID: 114741990022016019}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: LightReceiver
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -117,7 +117,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ac5e3cd19a51ae48bb2450ecd5ba10d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpriteYSorter
-  sortingOffset: 5
+  sortingOffset: 5000
 --- !u!1001 &6533802466393231104
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -208,6 +208,11 @@ SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 8318394888245565034, guid: 9dd4fa7122095964ab53544fb04bb88e, type: 3}
   m_PrefabInstance: {fileID: 6533802466393231104}
   m_PrefabAsset: {fileID: 0}
+--- !u!212 &3245667814656883104 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 8621674295602067104, guid: 9dd4fa7122095964ab53544fb04bb88e, type: 3}
+  m_PrefabInstance: {fileID: 6533802466393231104}
+  m_PrefabAsset: {fileID: 0}
 --- !u!212 &4550770652505926567 stripped
 SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 7316994202994468007, guid: 9dd4fa7122095964ab53544fb04bb88e, type: 3}
@@ -243,6 +248,8 @@ MonoBehaviour:
   - {fileID: 4550770652505926567}
   - {fileID: 3016385537674959210}
   - {fileID: 1798954934548132268}
+  - {fileID: 3245667814656883104}
+  - {fileID: 6949919032985475949}
   glow: {fileID: 0}
   eliteTrail: {fileID: 0}
 --- !u!212 &6949919032985475949 stripped

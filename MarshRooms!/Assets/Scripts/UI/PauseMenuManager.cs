@@ -45,7 +45,6 @@ public class PauseMenuManager : MonoBehaviour
     {
         escapeAction = new InputAction("Pause", InputActionType.Button, "<Keyboard>/escape");
         escapeAction.performed += ctx => HandleEscapePressed();
-        escapeAction.Enable();
 
         pauseMenuButtons = new[] { resumeButton, controlsButton, mainMenuButton, quitButton };
         menuArrows = new[] { resumeArrow, optionsArrow, mainmenuArrow, quitArrow };
@@ -219,6 +218,10 @@ public class PauseMenuManager : MonoBehaviour
     // -- HANDLE ESCAPE PRESSED --
     private void HandleEscapePressed()
     {
+        MenuManager menuManager = FindFirstObjectByType<MenuManager>();
+        if (menuManager != null && menuManager.enabled)
+            return;
+
         if (DialogueManager.Instance != null && DialogueManager.Instance.IsRunning)
             return;
 
@@ -323,6 +326,20 @@ public class PauseMenuManager : MonoBehaviour
     {
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         return player != null ? player.GetComponent<PlayerShooter>() : null;
+    }
+
+    // -- ENABLE --
+    private void OnEnable()
+    {
+        if (escapeAction != null)
+            escapeAction.Enable();
+    }
+
+    // -- DISABLE --
+    private void OnDisable()
+    {
+        if (escapeAction != null)
+            escapeAction.Disable();
     }
 
     // -- QUIT GAME --

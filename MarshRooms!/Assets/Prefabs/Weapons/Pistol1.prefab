@@ -47,6 +47,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WeaponPickup
   weaponData: {fileID: 11400000, guid: 83dbe672d81c88f449382074c1dd233d, type: 2}
+  setsAsDefault: 0
+  isMinigunTutorialPickup: 0
+  ammo: -1
 --- !u!212 &4335018509098030027
 SpriteRenderer:
   serializedVersion: 2

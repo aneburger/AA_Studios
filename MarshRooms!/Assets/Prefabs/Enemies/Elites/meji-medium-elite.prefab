@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 257510121041616357}
   - component: {fileID: 5788375016411046897}
   - component: {fileID: 5947616285383322942}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: LightReceiver
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -224,11 +224,18 @@ MonoBehaviour:
   - {fileID: 6746953065993041337}
   - {fileID: 8822903679011090354}
   - {fileID: 5429706688269764468}
+  - {fileID: 5732104256192161726}
+  - {fileID: 213209962821666163}
   glow: {fileID: 0}
   eliteTrail: {fileID: 0}
 --- !u!212 &5429706688269764468 stripped
 SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 8318394888245565034, guid: faf64abcc052f8947867cca3bf03bfef, type: 3}
+  m_PrefabInstance: {fileID: 4047277446526701854}
+  m_PrefabAsset: {fileID: 0}
+--- !u!212 &5732104256192161726 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 8621674295602067104, guid: faf64abcc052f8947867cca3bf03bfef, type: 3}
   m_PrefabInstance: {fileID: 4047277446526701854}
   m_PrefabAsset: {fileID: 0}
 --- !u!212 &6746953065993041337 stripped
