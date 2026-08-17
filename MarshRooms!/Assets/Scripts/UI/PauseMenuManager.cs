@@ -32,7 +32,7 @@ public class PauseMenuManager : MonoBehaviour
     [Range(0f, 1f)][SerializeField] private float clickVolume;
 
     private bool isPaused = false;
-    private float volumeBeforePause = 1f;
+    //private float volumeBeforePause = 1f;
     private bool shootingWasEnabledBeforePause = true;
     private InputAction escapeAction;
 
@@ -246,8 +246,9 @@ public class PauseMenuManager : MonoBehaviour
         shootingWasEnabledBeforePause = shooter == null || shooter.CanShoot;
         shooter?.SetCanShoot(false);
 
-        volumeBeforePause = AudioManager.Instance.GetMusicVolume();
-        AudioManager.Instance.SetMusicVolume(volumeBeforePause * 0.2f);
+        //volumeBeforePause = AudioManager.Instance.GetMusicVolume();
+        //AudioManager.Instance.SetMusicVolume(volumeBeforePause * 0.2f);
+        AudioManager.Instance?.SetMusicDampenMultiplier(0.2f);
 
         if (playerInput != null) playerInput.enabled = false;
         if (pauseMenuPanel != null) pauseMenuPanel.SetActive(true);
@@ -263,7 +264,8 @@ public class PauseMenuManager : MonoBehaviour
             FindPlayerShooter()?.SetCanShoot(true);
 
         PlayUiSound(clickClip, clickVolume);
-        AudioManager.Instance?.SetMusicVolume(volumeBeforePause);
+        //AudioManager.Instance?.SetMusicVolume(volumeBeforePause);
+        AudioManager.Instance?.SetMusicDampenMultiplier(1f);
 
         if (playerInput != null) playerInput.enabled = true;
         if (pauseMenuPanel != null) pauseMenuPanel.SetActive(false);

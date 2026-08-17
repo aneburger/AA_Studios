@@ -22,7 +22,15 @@ public sealed class AudioManager : MonoBehaviour
     [SerializeField] private float footstepVolume = 0.5f;
 
     private AudioSource runningSFX;
+    private float musicVolume = 1f;
+    private float sfxVolume = 1f;
+    private float musicBaseVolume = 0.5f;
+    private float musicDampenMultiplier = 1f;
     public float GetMusicVolume() => musicSource.volume;
+    public float GetCurrentMusicVolume()
+    {
+        return musicSource != null ? musicSource.volume : 0f;
+    }
 
     // -- AWAKE --
     private void Awake()
@@ -37,21 +45,42 @@ public sealed class AudioManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
+    private void ApplyMusicVolume()
+    {
+        if (musicSource != null && musicSource.isPlaying)
+            musicSource.volume = musicBaseVolume * musicVolume * musicDampenMultiplier;
+    }
+
     // -- PLAY SFX --
     public void PlaySFX(AudioClip clip, float volume = 1f)
     {
-        if (clip == null) return;
-        sfxSource.PlayOneShot(clip, volume);
+        if (clip == null || sfxSource == null) return;
+        sfxSource.PlayOneShot(clip, volume * sfxVolume);
     }
 
     // -- PLAY MUSIC --
     public void PlayMusic(AudioClip clip, float volume = 0.5f)
     {
         if (clip == null || musicSource.clip == clip) return;
-        musicSource.clip = clip;
-        musicSource.volume = volume;
-        musicSource.loop = true;
-        musicSource.Play();
+
+        //if (musicSource.clip == clip && musicSource.isPlaying)
+        //    return;
+
+        //musicSource.clip = clip;
+        //musicSource.volume = Mathf.Clamp01(volume) * musicVolume;
+        //musicSource.loop = true;
+        //musicSource.Play();
+
+        musicBaseVolume = Mathf.Clamp01(volume);
+
+        if (musicSource.clip != clip)
+        {
+            musicSource.clip = clip;
+            musicSource.loop = true;
+            musicSource.Play();
+        }
+
+        ApplyMusicVolume();
     }
 
     // -- STOP MUSIC --
@@ -63,19 +92,35 @@ public sealed class AudioManager : MonoBehaviour
     // -- SET MUSIC VOLUME --
     public void SetMusicVolume(float volume)
     {
-        musicSource.volume = volume;
+        //musicSource.volume = volume;
+        musicVolume = Mathf.Clamp01(volume);
+
+        ApplyMusicVolume();
+    }
+
+    // -- TEMPORARY MUSIC DAMPEN --
+    public void SetMusicDampenMultiplier(float multiplier)
+    {
+        musicDampenMultiplier = Mathf.Clamp01(multiplier);
+        ApplyMusicVolume();
     }
 
     // -- SET SFX VOLUME --
     public void SetSFXVolume(float volume)
     {
-        sfxSource.volume = volume;
+        //sfxSource.volume = volume;
+        sfxVolume = Mathf.Clamp01(volume);
+
+        if (sfxSource != null)
+            sfxSource.volume = sfxVolume;
     }
 
     // -- FADE MUSIC VOLUME --
     public void FadeMusicVolume(float targetVolume, float duration)
     {
-        StartCoroutine(FadeVolumeCoroutine(targetVolume, duration));
+        //StartCoroutine(FadeVolumeCoroutine(targetVolume * musicVolume, duration));
+        musicBaseVolume = Mathf.Clamp01(targetVolume);
+        StartCoroutine(FadeVolumeCoroutine(musicBaseVolume * musicVolume * musicDampenMultiplier, duration));
     }
 
     private IEnumerator FadeVolumeCoroutine(float targetVolume, float duration)
@@ -94,6 +139,7 @@ public sealed class AudioManager : MonoBehaviour
     // -- CROSSFADE TO A NEW TRACK --
     public void CrossfadeMusic(AudioClip newClip, float duration, float targetVolume = 0.5f)
     {
+        musicBaseVolume = Mathf.Clamp01(targetVolume);
         StartCoroutine(CrossfadeCoroutine(newClip, duration, targetVolume));
     }
 
@@ -114,7 +160,7 @@ public sealed class AudioManager : MonoBehaviour
         AudioSource source = tempAudio.AddComponent<AudioSource>();
 
         source.clip = clip; 
-        source.volume = volume;
+        source.volume = volume * sfxVolume;
         source.pitch = 1f + Random.Range(-pitchVariation, pitchVariation);
  
         source.Play();
@@ -130,7 +176,7 @@ public sealed class AudioManager : MonoBehaviour
         GameObject tempAudio = new GameObject("LoopingSFX");
         AudioSource newSource = tempAudio.AddComponent<AudioSource>();
         newSource.clip = clip;
-        newSource.volume = volume;
+        newSource.volume = volume * sfxVolume;
         newSource.pitch = pitch;
         newSource.loop = true;
         newSource.Play();
@@ -179,6 +225,7 @@ public sealed class AudioManager : MonoBehaviour
     // -- FADE IN --
     public void FadeInMusic(AudioClip clip, float duration, float targetVolume = 0.5f)
     {
+        musicBaseVolume = Mathf.Clamp01(targetVolume);
         StartCoroutine(FadeInCoroutine(clip, duration, targetVolume));
     }
 
@@ -197,13 +244,23 @@ public sealed class AudioManager : MonoBehaviour
         musicSource.Play();
 
         float elapsed = 0f;
+        //while (elapsed < duration)
+        //{
+        //    elapsed += Time.deltaTime;
+        //    musicSource.volume = Mathf.Lerp(0f, targetVolume, elapsed / duration);
+        //    yield return null;
+        //}
+        //musicSource.volume = targetVolume;
+        float finalVolume = Mathf.Clamp01(targetVolume) * musicVolume * musicDampenMultiplier;
+
         while (elapsed < duration)
         {
             elapsed += Time.deltaTime;
-            musicSource.volume = Mathf.Lerp(0f, targetVolume, elapsed / duration);
+            musicSource.volume = Mathf.Lerp(0f, finalVolume, elapsed / duration);
             yield return null;
         }
-        musicSource.volume = targetVolume;
+
+        musicSource.volume = finalVolume;
     }
 
     // -- FADE OUT COROUTINE --

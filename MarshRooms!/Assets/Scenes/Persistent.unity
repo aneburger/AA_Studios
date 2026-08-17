@@ -564,11 +564,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PortraitTalkAnimator
   squishAmount: 0.04
   squishSpeed: 45
---- !u!1 &303725933 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 190149657951606149, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
-  m_PrefabInstance: {fileID: 3537630140295722637}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &319489603
 GameObject:
   m_ObjectHideFlags: 0
@@ -2237,7 +2232,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 8.4375
+  orthographic size: 13.133179
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -13172,16 +13167,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1036376947 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2568491781033129026, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
-  m_PrefabInstance: {fileID: 3537630140295722637}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1059847533 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3632593198204447021, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
-  m_PrefabInstance: {fileID: 3537630140295722637}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1064126478
 GameObject:
   m_ObjectHideFlags: 0
@@ -19621,11 +19606,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 319489611}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1663032104 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1348295674468358712, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
-  m_PrefabInstance: {fileID: 3537630140295722637}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1670491738
 GameObject:
   m_ObjectHideFlags: 0
@@ -20694,82 +20674,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1348295674468358712, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
-      propertyPath: m_Name
-      value: main-menu-hover
-      objectReference: {fileID: 0}
-    - target: {fileID: 1348295674468358712, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2568491781033129026, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3498200045359678933, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3632593198204447021, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4908183722122372763, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
-      propertyPath: menuMusic
-      value: 
-      objectReference: {fileID: 8300000, guid: 72c5b713efc51284894bae5f728fb7b9, type: 3}
-    - target: {fileID: 4908183722122372763, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
-      propertyPath: clickVolume
-      value: 0.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 4908183722122372763, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
-      propertyPath: hoverVolume
-      value: 0.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 4908183722122372763, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
-      propertyPath: menuMusicVolume
-      value: 0.45
-      objectReference: {fileID: 0}
     - target: {fileID: 7085789729006638418, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
       propertyPath: m_Name
       value: HUD
       objectReference: {fileID: 0}
-    - target: {fileID: 7461425882493315119, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8785102966773636811, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
-      propertyPath: clickClip
-      value: 
-      objectReference: {fileID: 8300000, guid: 0f47ab1cfdc3f0d4c90e50f3a42b2ecc, type: 3}
-    - target: {fileID: 8785102966773636811, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
-      propertyPath: hoverClip
-      value: 
-      objectReference: {fileID: 8300000, guid: 628151bdb07a41447ab80ee8c3f2abc3, type: 3}
-    - target: {fileID: 8785102966773636811, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
-      propertyPath: quitArrow
-      value: 
-      objectReference: {fileID: 1036376947}
-    - target: {fileID: 8785102966773636811, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
-      propertyPath: clickVolume
-      value: 0.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 8785102966773636811, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
-      propertyPath: hoverVolume
-      value: 0.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 8785102966773636811, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
-      propertyPath: resumeArrow
-      value: 
-      objectReference: {fileID: 303725933}
-    - target: {fileID: 8785102966773636811, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
-      propertyPath: optionsArrow
-      value: 
-      objectReference: {fileID: 1059847533}
-    - target: {fileID: 8785102966773636811, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
-      propertyPath: mainmenuArrow
-      value: 
-      objectReference: {fileID: 1663032104}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
