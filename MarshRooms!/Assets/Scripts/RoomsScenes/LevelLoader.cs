@@ -17,6 +17,7 @@ public class LevelLoader : MonoBehaviour
     [SerializeField] private float fadeDuration = 0.5f;
  
     public string CurrentLevelScene { get; private set; }
+    private PlayerHealth playerHealth;
     
     // -- AWAKE --
     private void Awake()
@@ -28,6 +29,12 @@ public class LevelLoader : MonoBehaviour
         }
         Instance = this;
         DontDestroyOnLoad(gameObject);
+
+        GameObject player = GameObject.FindWithTag("Player");
+        if (player != null)
+        {
+            playerHealth = player.GetComponent<PlayerHealth>();
+        }
     }
     
     // -- LOAD LEVEL --
@@ -84,6 +91,8 @@ public class LevelLoader : MonoBehaviour
     private IEnumerator LoadLevelRoutine(string sceneName)
     {
         ScreenEffects.Instance?.SetFadeImage();
+
+        playerHealth.UpdateHUD();
 
         if (!SceneManager.GetSceneByName(persistentScene).isLoaded)
         {

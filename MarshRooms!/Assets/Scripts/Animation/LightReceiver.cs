@@ -14,8 +14,12 @@ public class LightReceiver : MonoBehaviour
 
     private void LateUpdate()
     {
+        lightRenderer.enabled = parentRenderer.enabled;
         lightRenderer.sprite = parentRenderer.sprite;
         lightRenderer.flipX = parentRenderer.flipX;
+        lightRenderer.flipY = parentRenderer.flipY;
         lightRenderer.color = parentRenderer.color;
+        lightRenderer.sortingLayerID = parentRenderer.sortingLayerID;
+        lightRenderer.sortingOrder = parentRenderer.sortingOrder;
     }
 }
