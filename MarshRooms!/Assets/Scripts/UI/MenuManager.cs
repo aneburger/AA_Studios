@@ -15,6 +15,7 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private Button closeControlsButton;
     [SerializeField] private Button quitButton;
     [SerializeField] private Button tutorialButton;
+    [SerializeField] private QuitConfirmManager quitConfirmManager;
 
     [Header("Controls Menu Buttons")]
     [SerializeField] private Button cancelControlsButton;
@@ -484,14 +485,28 @@ public class MenuManager : MonoBehaviour
         SetSelection(0, false);
     }
 
+    public void RestoreAfterQuitConfirm()
+    {
+        if (menuPanel != null)
+            menuPanel.SetActive(true);
+
+        if (controlsMenuPanel != null)
+            controlsMenuPanel.SetActive(false);
+
+        int quitIndex = GetMenuButtonIndex(quitButton);
+        SetSelection(quitIndex >= 0 ? quitIndex : 0, false);
+    }
+
     // -- QUIT GAME --
     private void OnQuitGame()
     {
         Debug.Log("Quitting game...");
         PlayUiSound(clickClip, clickVolume);
 
+        quitConfirmManager?.Open(QuitConfirmManager.QuitConfirmSource.MainMenuQuit);
+
         // Resume time before quitting
-        Time.timeScale = 1f;
+        //Time.timeScale = 1f;
 
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
