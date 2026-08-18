@@ -379,9 +379,11 @@ public class MenuManager : MonoBehaviour
         PlayUiSound(clickClip, clickVolume);
 
         controlsMenuSource = ControlsMenuSource.MainMenu;
+        
 
         if (menuPanel != null)
             menuPanel.SetActive(false);
+
 
         if (controlsMenuPanel != null)
             controlsMenuPanel.SetActive(true);
