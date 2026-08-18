@@ -9,25 +9,24 @@ public class SliderSoundManager : MonoBehaviour
     [SerializeField] private Slider musicVolumeSlider;
     [SerializeField] private Slider sfxVolumeSlider;
 
+    private float confirmedMusicVolume = 1f;
+    private float confirmedSfxVolume = 1f;
+
+    private void Awake()
+    {
+        confirmedMusicVolume = PlayerPrefs.GetFloat(MusicVolumeKey, 1f);
+        confirmedSfxVolume = PlayerPrefs.GetFloat(SfxVolumeKey, 1f);
+    }
+
     private void Start()
     {
-        float savedMusicVolume = PlayerPrefs.GetFloat(MusicVolumeKey, 1f);
-        float savedSfxVolume = PlayerPrefs.GetFloat(SfxVolumeKey, 1f);
-
         if (musicVolumeSlider != null)
-        {
-            musicVolumeSlider.SetValueWithoutNotify(savedMusicVolume);
             musicVolumeSlider.onValueChanged.AddListener(OnMusicVolumeChanged);
-        }
 
         if (sfxVolumeSlider != null)
-        {
-            sfxVolumeSlider.SetValueWithoutNotify(savedSfxVolume);
             sfxVolumeSlider.onValueChanged.AddListener(OnSfxVolumeChanged);
-        }
 
-        ApplyMusicVolume(savedMusicVolume);
-        ApplySfxVolume(savedSfxVolume);
+        LoadConfirmedValues();
     }
 
     private void OnDestroy()
@@ -39,29 +38,55 @@ public class SliderSoundManager : MonoBehaviour
             sfxVolumeSlider.onValueChanged.RemoveListener(OnSfxVolumeChanged);
     }
 
+    public void LoadConfirmedValues()
+    {
+        confirmedMusicVolume = PlayerPrefs.GetFloat(MusicVolumeKey, confirmedMusicVolume);
+        confirmedSfxVolume = PlayerPrefs.GetFloat(SfxVolumeKey, confirmedSfxVolume);
+
+        if (musicVolumeSlider != null)
+            musicVolumeSlider.SetValueWithoutNotify(confirmedMusicVolume);
+
+        if (sfxVolumeSlider != null)
+            sfxVolumeSlider.SetValueWithoutNotify(confirmedSfxVolume);
+
+        ApplyVolumes(confirmedMusicVolume, confirmedSfxVolume);
+    }
+
+    public void ConfirmChanges()
+    {
+        confirmedMusicVolume = musicVolumeSlider != null ? musicVolumeSlider.value : confirmedMusicVolume;
+        confirmedSfxVolume = sfxVolumeSlider != null ? sfxVolumeSlider.value : confirmedSfxVolume;
+
+        PlayerPrefs.SetFloat(MusicVolumeKey, confirmedMusicVolume);
+        PlayerPrefs.SetFloat(SfxVolumeKey, confirmedSfxVolume);
+        PlayerPrefs.Save();
+
+        ApplyVolumes(confirmedMusicVolume, confirmedSfxVolume);
+    }
+
+    public void CancelChanges()
+    {
+        LoadConfirmedValues();
+    }
+
     private void OnMusicVolumeChanged(float value)
-    {
-        PlayerPrefs.SetFloat(MusicVolumeKey, value);
-        PlayerPrefs.Save();
-        ApplyMusicVolume(value);
-    }
-
-    private void OnSfxVolumeChanged(float value)
-    {
-        PlayerPrefs.SetFloat(SfxVolumeKey, value);
-        PlayerPrefs.Save();
-        ApplySfxVolume(value);
-    }
-
-    private void ApplyMusicVolume(float value)
     {
         if (AudioManager.Instance != null)
             AudioManager.Instance.SetMusicVolume(value);
     }
 
-    private void ApplySfxVolume(float value)
+    private void OnSfxVolumeChanged(float value)
     {
         if (AudioManager.Instance != null)
             AudioManager.Instance.SetSFXVolume(value);
+    }
+
+    private void ApplyVolumes(float musicVolume, float sfxVolume)
+    {
+        if (AudioManager.Instance == null)
+            return;
+
+        AudioManager.Instance.SetMusicVolume(musicVolume);
+        AudioManager.Instance.SetSFXVolume(sfxVolume);
     }
 }

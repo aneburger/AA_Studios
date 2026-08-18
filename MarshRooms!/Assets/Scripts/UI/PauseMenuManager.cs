@@ -14,10 +14,19 @@ public class PauseMenuManager : MonoBehaviour
     [SerializeField] private Button resumeButton;
     [SerializeField] private Button restartButton;
     [SerializeField] private Button controlsButton;
-    [SerializeField] private Button closeControlsButton;
     [SerializeField] private Button quitButton;
     [SerializeField] private Button mainMenuButton;
     [SerializeField] private PlayerInput playerInput;
+
+    [SerializeField] private SliderSoundManager sliderSoundManager;
+
+    [Header("Controls Menu Buttons")]
+    [SerializeField] private Button cancelControlsButton;
+    [SerializeField] private Button confirmControlsButton;
+
+    [Header("Controls Menu Text")]
+    [SerializeField] private TMP_Text cancelText;
+    [SerializeField] private TMP_Text confirmText;
 
     [Header("Button Arrows")]
     [SerializeField] private GameObject resumeArrow;
@@ -31,6 +40,9 @@ public class PauseMenuManager : MonoBehaviour
     [Range(0f, 1f)][SerializeField] private float hoverVolume;
     [Range(0f, 1f)][SerializeField] private float clickVolume;
 
+    [SerializeField] private Color selectedColor = new Color(255f/255f, 255f/255f, 213f/255f, 255f/255f);
+    [SerializeField] private Color normalColor = new Color(91f/255f, 59f/255f, 63f/255f, 255f/255f);
+
     private bool isPaused = false;
     //private float volumeBeforePause = 1f;
     private bool shootingWasEnabledBeforePause = true;
@@ -38,6 +50,8 @@ public class PauseMenuManager : MonoBehaviour
 
     private Button[] pauseMenuButtons;
     private GameObject[] menuArrows;
+    private Button[] controlsMenuButtons;
+    private TMP_Text[] controlsMenuTexts;
     private int currentIndex = -1;
 
 
@@ -48,9 +62,12 @@ public class PauseMenuManager : MonoBehaviour
 
         pauseMenuButtons = new[] { resumeButton, controlsButton, mainMenuButton, quitButton };
         menuArrows = new[] { resumeArrow, optionsArrow, mainmenuArrow, quitArrow };
+        controlsMenuButtons = new[] { cancelControlsButton, confirmControlsButton };
+        controlsMenuTexts = new[] { cancelText, confirmText };
 
         ConfigureNavigation();
         ConfigurePointerEvents();
+        ConfigureControlsPointerEvents();
     }
 
     private void Start()
@@ -71,8 +88,11 @@ public class PauseMenuManager : MonoBehaviour
         if (controlsButton != null)
             controlsButton.onClick.AddListener(OnOpenControls);
 
-        if (closeControlsButton != null)
-            closeControlsButton.onClick.AddListener(OnCloseControls);
+        if (cancelControlsButton != null)
+            cancelControlsButton.onClick.AddListener(OnCancelControls);
+
+        if (confirmControlsButton != null)
+            confirmControlsButton.onClick.AddListener(OnConfirmControls);
 
         if (quitButton != null)
             quitButton.onClick.AddListener(OnQuitGame);
@@ -201,6 +221,51 @@ public class PauseMenuManager : MonoBehaviour
             PlayUiSound(hoverClip, hoverVolume);
     }
 
+    private void SetControlsSelection(int index, bool playHoverSound)
+    {
+        if (index < 0 || index >= controlsMenuButtons.Length)
+            return;
+
+        if (controlsMenuButtons[index] == null)
+            return;
+
+        bool changed = currentIndex != index;
+        currentIndex = index;
+
+        for (int i = 0; i < controlsMenuTexts.Length; i++)
+        {
+            if (controlsMenuTexts[i] != null)
+                controlsMenuTexts[i].color = i == index ? selectedColor : normalColor;
+        }
+
+        if (EventSystem.current != null && EventSystem.current.currentSelectedGameObject != controlsMenuButtons[index].gameObject)
+            EventSystem.current.SetSelectedGameObject(controlsMenuButtons[index].gameObject);
+
+        if (playHoverSound && changed)
+            PlayUiSound(hoverClip, hoverVolume);
+    }
+
+    private void ConfigureControlsPointerEvents()
+    {
+        for (int i = 0; i < controlsMenuButtons.Length; i++)
+        {
+            if (controlsMenuButtons[i] == null)
+                continue;
+
+            int index = i;
+
+            EventTrigger trigger = controlsMenuButtons[i].GetComponent<EventTrigger>();
+            if (trigger == null)
+                trigger = controlsMenuButtons[i].gameObject.AddComponent<EventTrigger>();
+
+            if (trigger.triggers == null)
+                trigger.triggers = new List<EventTrigger.Entry>();
+
+            AddTrigger(trigger, EventTriggerType.PointerEnter, _ => SetControlsSelection(index, true));
+            AddTrigger(trigger, EventTriggerType.Select, _ => SetControlsSelection(index, true));
+        }
+    }
+
     private void PlayUiSound(AudioClip clip, float volume)
     {
         if (clip == null)
@@ -274,6 +339,34 @@ public class PauseMenuManager : MonoBehaviour
         if (pauseMenuPanel != null) pauseMenuPanel.SetActive(false);
     }
 
+    private void OnCancelControls()
+    {
+        PlayUiSound(clickClip, clickVolume);
+        sliderSoundManager?.CancelChanges();
+
+        if (controlsMenuPanel != null)
+            controlsMenuPanel.SetActive(false);
+
+        if (pauseMenuPanel != null && isPaused)
+            pauseMenuPanel.SetActive(true);
+
+        SetSelection(1, false);
+    }
+
+    private void OnConfirmControls()
+    {
+        PlayUiSound(clickClip, clickVolume);
+        sliderSoundManager?.ConfirmChanges();
+
+        if (controlsMenuPanel != null)
+            controlsMenuPanel.SetActive(false);
+
+        if (pauseMenuPanel != null && isPaused)
+            pauseMenuPanel.SetActive(true);
+
+        SetSelection(1, false);
+    }
+
     // -- OPEN CONTROLS --
     private void OnOpenControls()
     {
@@ -285,6 +378,9 @@ public class PauseMenuManager : MonoBehaviour
 
         if (controlsMenuPanel != null)
             controlsMenuPanel.SetActive(true);
+
+        sliderSoundManager?.LoadConfirmedValues();
+        SetControlsSelection(0, false);
     }
 
     // -- CLOSE CONTROLS --
