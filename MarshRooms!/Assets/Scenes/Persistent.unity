@@ -1133,6 +1133,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d6501af52d14e54a9f1510a26d98f5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerBoonStats
+--- !u!114 &325250050 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7547777682074202659, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
+  m_PrefabInstance: {fileID: 3537630140295722637}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
 --- !u!1 &356983338
 GameObject:
   m_ObjectHideFlags: 0
@@ -8116,6 +8127,17 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 10
   m_TargetDisplay: 0
+--- !u!114 &893182038 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5410519384725999082, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
+  m_PrefabInstance: {fileID: 3537630140295722637}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 426e222097d981346a45ce84bf8abf3f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SliderSoundManager
 --- !u!1 &895041967
 GameObject:
   m_ObjectHideFlags: 0
@@ -20793,6 +20815,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4908183722122372763, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
+      propertyPath: sliderSoundManager
+      value: 
+      objectReference: {fileID: 893182038}
+    - target: {fileID: 4908183722122372763, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
+      propertyPath: cancelControlsButton
+      value: 
+      objectReference: {fileID: 3537630140295722640}
+    - target: {fileID: 4908183722122372763, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
+      propertyPath: confirmControlsButton
+      value: 
+      objectReference: {fileID: 325250050}
     - target: {fileID: 7085789729006638418, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
       propertyPath: m_Name
       value: HUD
@@ -20802,6 +20836,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
+--- !u!114 &3537630140295722640 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5412567612862326570, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
+  m_PrefabInstance: {fileID: 3537630140295722637}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

@@ -53,6 +53,8 @@ public class PauseMenuManager : MonoBehaviour
     private Button[] controlsMenuButtons;
     private TMP_Text[] controlsMenuTexts;
     private int currentIndex = -1;
+    private enum ControlsMenuSource { PauseMenu }
+
 
 
     private void Awake()
@@ -343,12 +345,7 @@ public class PauseMenuManager : MonoBehaviour
     {
         PlayUiSound(clickClip, clickVolume);
         sliderSoundManager?.CancelChanges();
-
-        if (controlsMenuPanel != null)
-            controlsMenuPanel.SetActive(false);
-
-        if (pauseMenuPanel != null && isPaused)
-            pauseMenuPanel.SetActive(true);
+        ReturnToPauseMenu();
 
         SetSelection(1, false);
     }
@@ -357,20 +354,28 @@ public class PauseMenuManager : MonoBehaviour
     {
         PlayUiSound(clickClip, clickVolume);
         sliderSoundManager?.ConfirmChanges();
-
-        if (controlsMenuPanel != null)
-            controlsMenuPanel.SetActive(false);
-
-        if (pauseMenuPanel != null && isPaused)
-            pauseMenuPanel.SetActive(true);
+        ReturnToPauseMenu();
 
         SetSelection(1, false);
     }
 
+    private void ReturnToPauseMenu()
+    {
+        if (controlsMenuPanel != null) controlsMenuPanel.SetActive(false);
+        if (pauseMenuPanel != null && isPaused)
+            pauseMenuPanel.SetActive(true);
+    }
+
+
     // -- OPEN CONTROLS --
     private void OnOpenControls()
     {
-        //controlsMenuSource = MenuSource.Pause;
+        MenuManager menuManager = FindFirstObjectByType<MenuManager>();
+        if (menuManager != null)
+        {
+            menuManager.controlsMenuSource = MenuManager.ControlsMenuSource.PauseMenu;
+        }
+
         PlayUiSound(clickClip, clickVolume);
 
         if (pauseMenuPanel != null)

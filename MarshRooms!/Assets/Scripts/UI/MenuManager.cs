@@ -16,11 +16,20 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private Button quitButton;
     [SerializeField] private Button tutorialButton;
 
+    [Header("Controls Menu Buttons")]
+    [SerializeField] private Button cancelControlsButton;
+    [SerializeField] private Button confirmControlsButton;
+    [SerializeField] private SliderSoundManager sliderSoundManager;
+
     [Header("Menu Text")]
     [SerializeField] private TMP_Text tutorialText;
     [SerializeField] private TMP_Text startText;
     [SerializeField] private TMP_Text controlsText;
     [SerializeField] private TMP_Text quitText;
+
+    [Header("Controls Menu Text")]
+    [SerializeField] private TMP_Text cancelText;
+    [SerializeField] private TMP_Text confirmText;
 
     [Header("Button Arrows")]
     [SerializeField] private GameObject tutorialArrow;
@@ -45,7 +54,20 @@ public class MenuManager : MonoBehaviour
     private Button[] menuButtons;
     private TMP_Text[] menuTexts;
     private GameObject[] menuArrows;
+
+    private Button[] controlsMenuButtons;
+    private TMP_Text[] controlsMenuTexts;
+
     private int currentIndex = -1;
+    private int currentControlsIndex = -1;
+
+    public enum ControlsMenuSource
+    {
+        MainMenu,
+        PauseMenu
+    }
+
+    public ControlsMenuSource controlsMenuSource = ControlsMenuSource.MainMenu;
 
     private void Awake()
     {
@@ -63,8 +85,13 @@ public class MenuManager : MonoBehaviour
         menuTexts = new[] { tutorialText, startText, controlsText, quitText };
         menuArrows = new[] { tutorialArrow, startArrow, controlsArrow, quitArrow };
 
+        controlsMenuButtons = new[] { cancelControlsButton, confirmControlsButton };
+        controlsMenuTexts = new[] { cancelText, confirmText };
+
         ConfigureNavigation();
         ConfigurePointerEvents();
+        ConfigureControlsNavigation();
+        ConfigureControlsPointerEvents();
     }
 
     private void Start()
@@ -78,8 +105,11 @@ public class MenuManager : MonoBehaviour
         if (controlsButton != null)
             controlsButton.onClick.AddListener(OnOpenControls);
 
-        if (closeControlsButton != null)
-            closeControlsButton.onClick.AddListener(OnCloseControls);
+        if (cancelControlsButton != null)
+            cancelControlsButton.onClick.AddListener(OnCancelControls);
+
+        if (confirmControlsButton != null)
+            confirmControlsButton.onClick.AddListener(OnConfirmControls);
 
         if (quitButton != null)
             quitButton.onClick.AddListener(OnQuitGame);
@@ -107,6 +137,23 @@ public class MenuManager : MonoBehaviour
             nav.selectOnLeft = null;
             nav.selectOnRight = null;
             menuButtons[i].navigation = nav;
+        }
+    }
+
+    private void ConfigureControlsNavigation()
+    {
+        for (int i = 0; i < controlsMenuButtons.Length; i++)
+        {
+            if (controlsMenuButtons[i] == null)
+                continue;
+
+            Navigation nav = controlsMenuButtons[i].navigation;
+            nav.mode = Navigation.Mode.Explicit;
+            nav.selectOnUp = FindPreviousControlsButton(i);
+            nav.selectOnDown = FindNextControlsButton(i);
+            nav.selectOnLeft = null;
+            nav.selectOnRight = null;
+            controlsMenuButtons[i].navigation = nav;
         }
     }
 
@@ -144,6 +191,40 @@ public class MenuManager : MonoBehaviour
         return menuButtons[index];
     }
 
+    private Button FindPreviousControlsButton(int index)
+    {
+        for (int i = index - 1; i >= 0; i--)
+        {
+            if (controlsMenuButtons[i] != null)
+                return controlsMenuButtons[i];
+        }
+
+        for (int i = controlsMenuButtons.Length - 1; i > index; i--)
+        {
+            if (controlsMenuButtons[i] != null)
+                return controlsMenuButtons[i];
+        }
+
+        return controlsMenuButtons[index];
+    }
+
+    private Button FindNextControlsButton(int index)
+    {
+        for (int i = index + 1; i < controlsMenuButtons.Length; i++)
+        {
+            if (controlsMenuButtons[i] != null)
+                return controlsMenuButtons[i];
+        }
+
+        for (int i = 0; i < index; i++)
+        {
+            if (controlsMenuButtons[i] != null)
+                return controlsMenuButtons[i];
+        }
+
+        return controlsMenuButtons[index];
+    }
+
 
     // -- POINTER / SELECT EVENTS --
     private void ConfigurePointerEvents()
@@ -165,6 +246,27 @@ public class MenuManager : MonoBehaviour
             AddTrigger(trigger, EventTriggerType.PointerEnter, _ => SetSelection(index, true));
             AddTrigger(trigger, EventTriggerType.Select, _ => SetSelection(index, true));
             //AddTrigger(trigger, EventTriggerType.PointerExit, _ => StartCoroutine(ResetToDefaultWhenMouseLeaves()));
+        }
+    }
+
+    private void ConfigureControlsPointerEvents()
+    {
+        for (int i = 0; i < controlsMenuButtons.Length; i++)
+        {
+            if (controlsMenuButtons[i] == null)
+                continue;
+
+            int index = i;
+
+            EventTrigger trigger = controlsMenuButtons[i].GetComponent<EventTrigger>();
+            if (trigger == null)
+                trigger = controlsMenuButtons[i].gameObject.AddComponent<EventTrigger>();
+
+            if (trigger.triggers == null)
+                trigger.triggers = new List<EventTrigger.Entry>();
+
+            AddTrigger(trigger, EventTriggerType.PointerEnter, _ => SetControlsSelection(index, true));
+            AddTrigger(trigger, EventTriggerType.Select, _ => SetControlsSelection(index, true));
         }
     }
 
@@ -212,6 +314,29 @@ public class MenuManager : MonoBehaviour
             PlayUiSound(hoverClip, hoverVolume);
     }
 
+    private void SetControlsSelection(int index, bool playHoverSound)
+    {
+        if (index < 0 || index >= controlsMenuButtons.Length)
+            return;
+
+        if (controlsMenuButtons[index] == null)
+            return;
+
+        bool changed = currentControlsIndex != index;
+        currentControlsIndex = index;
+
+        for (int i = 0; i < controlsMenuTexts.Length; i++)
+        {
+            if (controlsMenuTexts[i] != null)
+                controlsMenuTexts[i].color = i == index ? selectedColor : normalColor;
+        }
+
+        if (EventSystem.current != null && EventSystem.current.currentSelectedGameObject != controlsMenuButtons[index].gameObject)
+            EventSystem.current.SetSelectedGameObject(controlsMenuButtons[index].gameObject);
+
+        if (playHoverSound && changed)
+            PlayUiSound(hoverClip, hoverVolume);
+    }
 
     private void PlayUiSound(AudioClip clip, float volume)
     {
@@ -252,7 +377,8 @@ public class MenuManager : MonoBehaviour
     private void OnOpenControls()
     {
         PlayUiSound(clickClip, clickVolume);
-        Debug.Log("Opening controls menu...");
+
+        controlsMenuSource = ControlsMenuSource.MainMenu;
 
         if (menuPanel != null)
             menuPanel.SetActive(false);
@@ -260,6 +386,8 @@ public class MenuManager : MonoBehaviour
         if (controlsMenuPanel != null)
             controlsMenuPanel.SetActive(true);
 
+        sliderSoundManager?.LoadConfirmedValues();
+        SetControlsSelection(0, false);
     }
 
     // -- CLOSE CONTROLS --
@@ -274,6 +402,68 @@ public class MenuManager : MonoBehaviour
             menuPanel.SetActive(true);
 
         SetSelection(0, false);
+    }
+
+   
+
+    private void OnCancelControls()
+    {
+        PlayUiSound(clickClip, clickVolume);
+        sliderSoundManager?.CancelChanges();
+        ReturnToOwningMenu();
+    }
+
+    private void OnConfirmControls()
+    {
+        PlayUiSound(clickClip, clickVolume);
+        sliderSoundManager?.ConfirmChanges();
+        ReturnToOwningMenu();
+    }
+
+    private void ReturnToOwningMenu()
+    {
+        if (controlsMenuPanel != null) controlsMenuPanel.SetActive(false);
+        if (controlsMenuSource == ControlsMenuSource.MainMenu)
+        {
+            if (menuPanel != null)
+                menuPanel.SetActive(true);
+
+            SetSelection(2, false); 
+        }
+    }
+
+
+    private void ReturnToMainMenuPanel()
+    {
+        if (controlsMenuPanel != null)
+            controlsMenuPanel.SetActive(false);
+
+        if (menuPanel != null)
+            menuPanel.SetActive(true);
+
+        if (controlsButton != null)
+        {
+            int settingsIndex = GetMenuButtonIndex(controlsButton);
+            if (settingsIndex >= 0)
+                SetSelection(settingsIndex, false);
+            else
+                SetSelection(0, false);
+        }
+        else
+        {
+            SetSelection(0, false);
+        }
+    }
+
+    private int GetMenuButtonIndex(Button button)
+    {
+        for (int i = 0; i < menuButtons.Length; i++)
+        {
+            if (menuButtons[i] == button)
+                return i;
+        }
+
+        return -1;
     }
 
     // -- REOPEN MENU --
