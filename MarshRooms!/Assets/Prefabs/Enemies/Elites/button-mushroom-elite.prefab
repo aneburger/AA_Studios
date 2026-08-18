@@ -117,7 +117,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ac5e3cd19a51ae48bb2450ecd5ba10d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpriteYSorter
-  sortingOffset: 5000
+  sortingOffset: 5
 --- !u!1001 &6533802466393231104
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -169,6 +169,10 @@ PrefabInstance:
     - target: {fileID: 988082134135583188, guid: 9dd4fa7122095964ab53544fb04bb88e, type: 3}
       propertyPath: m_Name
       value: button-mushroom-elite
+      objectReference: {fileID: 0}
+    - target: {fileID: 3868350451764998898, guid: 9dd4fa7122095964ab53544fb04bb88e, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4474422017556449794, guid: 9dd4fa7122095964ab53544fb04bb88e, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
