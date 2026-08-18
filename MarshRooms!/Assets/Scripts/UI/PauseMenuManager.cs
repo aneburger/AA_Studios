@@ -19,6 +19,7 @@ public class PauseMenuManager : MonoBehaviour
     [SerializeField] private PlayerInput playerInput;
 
     [SerializeField] private SliderSoundManager sliderSoundManager;
+    [SerializeField] private QuitConfirmManager quitConfirmManager;
 
     [Header("Controls Menu Buttons")]
     [SerializeField] private Button cancelControlsButton;
@@ -53,6 +54,8 @@ public class PauseMenuManager : MonoBehaviour
     private Button[] controlsMenuButtons;
     private TMP_Text[] controlsMenuTexts;
     private int currentIndex = -1;
+    private enum ControlsMenuSource { PauseMenu }
+
 
 
     private void Awake()
@@ -343,12 +346,7 @@ public class PauseMenuManager : MonoBehaviour
     {
         PlayUiSound(clickClip, clickVolume);
         sliderSoundManager?.CancelChanges();
-
-        if (controlsMenuPanel != null)
-            controlsMenuPanel.SetActive(false);
-
-        if (pauseMenuPanel != null && isPaused)
-            pauseMenuPanel.SetActive(true);
+        ReturnToPauseMenu();
 
         SetSelection(1, false);
     }
@@ -357,20 +355,28 @@ public class PauseMenuManager : MonoBehaviour
     {
         PlayUiSound(clickClip, clickVolume);
         sliderSoundManager?.ConfirmChanges();
-
-        if (controlsMenuPanel != null)
-            controlsMenuPanel.SetActive(false);
-
-        if (pauseMenuPanel != null && isPaused)
-            pauseMenuPanel.SetActive(true);
+        ReturnToPauseMenu();
 
         SetSelection(1, false);
     }
 
+    private void ReturnToPauseMenu()
+    {
+        if (controlsMenuPanel != null) controlsMenuPanel.SetActive(false);
+        if (pauseMenuPanel != null && isPaused)
+            pauseMenuPanel.SetActive(true);
+    }
+
+
     // -- OPEN CONTROLS --
     private void OnOpenControls()
     {
-        //controlsMenuSource = MenuSource.Pause;
+        MenuManager menuManager = FindFirstObjectByType<MenuManager>();
+        if (menuManager != null)
+        {
+            menuManager.controlsMenuSource = MenuManager.ControlsMenuSource.PauseMenu;
+        }
+
         PlayUiSound(clickClip, clickVolume);
 
         if (pauseMenuPanel != null)
@@ -414,7 +420,9 @@ public class PauseMenuManager : MonoBehaviour
     // -- MAIN MENU --
     private void OnMainMenu()
     {
-        LevelLoader.Instance.ReturnToMainMenu();
+        //LevelLoader.Instance.ReturnToMainMenu();
+        PlayUiSound(clickClip, clickVolume);
+        quitConfirmManager?.Open(QuitConfirmManager.QuitConfirmSource.PauseMenuMainMenu);
     }
     
     // -- FIND SHOOTER --
@@ -431,6 +439,37 @@ public class PauseMenuManager : MonoBehaviour
             escapeAction.Enable();
     }
 
+    public void RestoreAfterQuitConfirm(QuitConfirmManager.QuitConfirmSource source)
+    {
+        if (controlsMenuPanel != null)
+            controlsMenuPanel.SetActive(false);
+
+        if (pauseMenuPanel != null && isPaused)
+            pauseMenuPanel.SetActive(true);
+
+        if (source == QuitConfirmManager.QuitConfirmSource.PauseMenuMainMenu)
+        {
+            int index = GetPauseMenuButtonIndex(mainMenuButton);
+            SetSelection(index >= 0 ? index : 0, false);
+        }
+        else
+        {
+            int index = GetPauseMenuButtonIndex(quitButton);
+            SetSelection(index >= 0 ? index : 0, false);
+        }
+    }
+
+    private int GetPauseMenuButtonIndex(Button button)
+    {
+        for (int i = 0; i < pauseMenuButtons.Length; i++)
+        {
+            if (pauseMenuButtons[i] == button)
+                return i;
+        }
+
+        return -1;
+    }
+
     // -- DISABLE --
     private void OnDisable()
     {
@@ -441,14 +480,15 @@ public class PauseMenuManager : MonoBehaviour
     // -- QUIT GAME --
     private void OnQuitGame()
     {
-
+        PlayUiSound(clickClip, clickVolume);
+        quitConfirmManager?.Open(QuitConfirmManager.QuitConfirmSource.PauseMenuQuit);
         // Resume time before quitting
-        Time.timeScale = 1f;
+        //Time.timeScale = 1f;
 
-        #if UNITY_EDITOR
-                UnityEditor.EditorApplication.isPlaying = false;
-        #else
-                    Application.Quit();
-        #endif
+        //#if UNITY_EDITOR
+        //        UnityEditor.EditorApplication.isPlaying = false;
+        //#else
+        //            Application.Quit();
+        //#endif
     }
 }
