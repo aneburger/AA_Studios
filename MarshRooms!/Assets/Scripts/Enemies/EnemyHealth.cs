@@ -86,10 +86,10 @@ public class EnemyHealth : BaseHealth
     {
         base.Die();
         AudioManager.Instance.PlaySFX(dieClip, dieVolume);
-        EnemyManager.Instance.UnregisterEnemy(gameObject);
         VFXManager.Instance.SpawnEnemyExplosion(transform.position);
 
-        OnDied?.Invoke(transform.position);
+        OnDied?.Invoke(transform.position);                
+        EnemyManager.Instance.UnregisterEnemy(gameObject); 
 
         EnemyController controller = GetComponent<EnemyController>();
         RoomManager room = FindFirstObjectByType<RoomManager>();
