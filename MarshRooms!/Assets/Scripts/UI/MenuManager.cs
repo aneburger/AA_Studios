@@ -503,15 +503,16 @@ public class MenuManager : MonoBehaviour
         Debug.Log("Quitting game...");
         PlayUiSound(clickClip, clickVolume);
 
-        quitConfirmManager?.Open(QuitConfirmManager.QuitConfirmSource.MainMenuQuit);
-
         // Resume time before quitting
         //Time.timeScale = 1f;
 
-#if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
-#else
-        Application.Quit();
-#endif
+        quitConfirmManager?.Open(QuitConfirmManager.QuitConfirmSource.MainMenuQuit);
+
+
+//#if UNITY_EDITOR
+//        UnityEditor.EditorApplication.isPlaying = false;
+//#else
+//        Application.Quit();
+//#endif
     }
 }
