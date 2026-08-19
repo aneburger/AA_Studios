@@ -16,9 +16,9 @@ public class BoonManager : MonoBehaviour
     // Card rarity weight per floors
     private static readonly (float normal, float rare, float epic)[] rarityWeightsByTier = new[]
     {
-        (0.70f, 0.25f, 0.05f), // floors 1-2
+        (0.60f, 0.30f, 0.10f), // floors 1-2
         (0.60f, 0.275f, 0.125f), // floors 3-4
-        (0.50f, 0.325f, 0.175f), // floors 5+
+        (0.50f, 0.30f, 0.20f), // floors 5-6
     };
 
     // -- AWAKE --

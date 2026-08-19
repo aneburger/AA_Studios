@@ -693,7 +693,7 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -702,6 +702,28 @@ TextureImporter:
       bones: []
       spriteID: 6829ce7d2e38e4d44af4fc023c0a7fa4
       internalID: 452636795
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: wall-tileset_27
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eb22f9c630dd7c94d9ceb299893ae3da
+      internalID: -1256781868
       vertices: []
       indices: 
       edges: []
@@ -742,6 +764,7 @@ TextureImporter:
       wall-tileset_24: 1674954983
       wall-tileset_25: -1671835377
       wall-tileset_26: 452636795
+      wall-tileset_27: -1256781868
       wall-tileset_3: 1729739877
       wall-tileset_4: 1245147555
       wall-tileset_5: 530082332
