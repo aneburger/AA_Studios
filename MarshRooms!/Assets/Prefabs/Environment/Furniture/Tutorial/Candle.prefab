@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 503118498505674759}
   - component: {fileID: 5752980376647930581}
   - component: {fileID: 699518273764024306}
-  - component: {fileID: 5075320865132571826}
   m_Layer: 0
   m_Name: Candle
   m_TagString: Untagged
@@ -160,29 +159,6 @@ MonoBehaviour:
   - {x: 0.5, y: -0.5, z: 0}
   - {x: 0.5, y: 0.5, z: 0}
   - {x: -0.5, y: 0.5, z: 0}
---- !u!114 &5075320865132571826
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3253549065094669965}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: db34320027c47c84aaece462ee7ad117, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::LightFlicker
-  flameSprite: {fileID: 0}
-  breathSpeed: 1
-  breathIntensityAmount: 0.08
-  breathScaleAmount: 0.03
-  flickerIntervalMin: 2
-  flickerIntervalMax: 6
-  flickerDuration: 0.15
-  flickerIntensityDrop: 0.4
-  minIntensityFraction: 0.783
-  minScaleFraction: 0.872
-  randomizeSeed: 1
 --- !u!1 &6394726941662677693
 GameObject:
   m_ObjectHideFlags: 0
@@ -193,6 +169,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3155086467627897851}
   - component: {fileID: 2817973980040211291}
+  - component: {fileID: 3100930479365226197}
   m_Layer: 0
   m_Name: Light
   m_TagString: Untagged
@@ -267,3 +244,26 @@ MonoBehaviour:
   - {x: 0.5, y: -0.5, z: 0}
   - {x: 0.5, y: 0.5, z: 0}
   - {x: -0.5, y: 0.5, z: 0}
+--- !u!114 &3100930479365226197
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6394726941662677693}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db34320027c47c84aaece462ee7ad117, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LightFlicker
+  flameSprite: {fileID: 0}
+  breathSpeed: 1
+  breathIntensityAmount: 0.08
+  breathScaleAmount: 0.03
+  flickerIntervalMin: 2
+  flickerIntervalMax: 6
+  flickerDuration: 0.15
+  flickerIntensityDrop: 0.4
+  minIntensityFraction: 0.783
+  minScaleFraction: 0.872
+  randomizeSeed: 1

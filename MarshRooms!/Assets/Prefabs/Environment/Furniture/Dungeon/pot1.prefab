@@ -11,8 +11,9 @@ GameObject:
   - component: {fileID: 2166477703874850487}
   - component: {fileID: 7496474196502974891}
   - component: {fileID: 6198880207050171093}
-  - component: {fileID: 3059033973436317596}
-  m_Layer: 0
+  - component: {fileID: -5755930854772572081}
+  - component: {fileID: 9083433785388038508}
+  m_Layer: 17
   m_Name: pot1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -106,8 +107,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpriteYSorter
   sortingOffset: 0
---- !u!70 &3059033973436317596
-CapsuleCollider2D:
+--- !u!114 &-5755930854772572081
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6583796016957280314}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9809bf1345abc5648af68b3a82653f08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: NavMeshPlus::NavMeshPlus.Components.NavMeshModifier
+  m_OverrideArea: 1
+  m_Area: 1
+  m_IgnoreFromBuild: 0
+  m_AffectedAgents: ffffffff
+--- !u!61 &9083433785388038508
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -140,6 +157,15 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.002668947, y: -0.12944448}
-  m_Size: {x: 0.9450658, y: 1.116111}
-  m_Direction: 0
+  m_Offset: {x: 0, y: 0.76906335}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0}
+    oldSize: {x: 1.0625, y: 1.4375}
+    newSize: {x: 1.0625, y: 1.375}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 1.0625, y: 1.3368733}
+  m_EdgeRadius: 0

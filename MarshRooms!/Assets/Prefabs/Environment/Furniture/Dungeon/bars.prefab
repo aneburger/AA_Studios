@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7496474196502974891}
   - component: {fileID: 6198880207050171093}
   - component: {fileID: 5818962708024452269}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: bars
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -105,7 +105,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ac5e3cd19a51ae48bb2450ecd5ba10d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpriteYSorter
-  sortingOffset: 0
+  sortingOffset: -300
 --- !u!61 &5818962708024452269
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -140,15 +140,15 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.03835535, y: 0.004037857}
+  m_Offset: {x: -0.03835535, y: 1.0267211}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0.5, y: 0}
     oldSize: {x: 2, y: 2}
     newSize: {x: 2, y: 2}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1.9969244, y: 2.0066166}
+  m_Size: {x: 1.9969244, y: 1.9793451}
   m_EdgeRadius: 0
