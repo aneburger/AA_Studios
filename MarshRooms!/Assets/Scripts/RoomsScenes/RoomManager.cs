@@ -11,6 +11,22 @@ public class RoomManager : MonoBehaviour
     [SerializeField] private float spawnIntervalMin = 0.2f;
     [SerializeField] private float spawnIntervalMax = 0.6f;
 
+    public enum EnemyRole
+    {
+        Ranged,
+        Erratic
+    }
+
+    private static readonly EnemyRole[][] wavePatterns = new EnemyRole[][]
+    {
+        new[] { EnemyRole.Ranged, EnemyRole.Erratic, EnemyRole.Ranged },
+        new[] { EnemyRole.Erratic, EnemyRole.Erratic, EnemyRole.Ranged },
+        new[] { EnemyRole.Ranged, EnemyRole.Ranged },
+        new[] { EnemyRole.Erratic, EnemyRole.Ranged, EnemyRole.Erratic },
+        new[] { EnemyRole.Erratic },
+        new[] { EnemyRole.Ranged, EnemyRole.Erratic },
+    };
+
     [System.Serializable]
     public class Wave
     {
@@ -23,6 +39,14 @@ public class RoomManager : MonoBehaviour
 
     [Header("Enemies")]
     [SerializeField] private EnemyEntry[] enemyTypes;
+
+    [Header("Elites")]
+    [SerializeField, Range(0f, 1f)] private float eliteChance = 0f;
+    [SerializeField] private int maxElitesPerWave = 1;
+
+    [Header("Exploding")]
+    [SerializeField, Range(0f, 1f)] private float explodeChance = 0f;
+    [SerializeField] private int maxExplodersPerWave = 1;
 
     [Header("Weapon Drops")]
     [SerializeField] private int minWeaponDrops;
@@ -47,6 +71,13 @@ public class RoomManager : MonoBehaviour
     {
         public GameObject prefab;
         public int cost;
+        public EnemyRole role;
+
+        [Header("Elite Variant")]
+        public GameObject eliteVariant;
+
+        [Header("Exploding Variant")]
+        public GameObject explodingVariant;
     }
 
     private int currentWave = -1;
@@ -115,26 +146,182 @@ public class RoomManager : MonoBehaviour
 
     // -- GENERATE ENEMIES --
     private List<GameObject> GenerateEnemies(int budget)
-    {  
-        List<GameObject> generated = new List<GameObject>();
+    {
+        List<EnemyEntry> chosenEntries = new List<EnemyEntry>();
 
-        while (budget > 0)
+        EnemyRole[] pattern = ChoosePattern(budget);
+
+        if (pattern != null)
         {
-            // Shuffle enemy types
-            EnemyEntry entry = enemyTypes[Random.Range(0, enemyTypes.Length)];
+            foreach (EnemyRole role in pattern)
+            {
+                EnemyEntry entry = PickAffordableEntry(role, budget);
+                if (entry == null) break;
 
-            if (budget - entry.cost >= 0)
-            {
-                generated.Add(entry.prefab);
+                chosenEntries.Add(entry);
                 budget -= entry.cost;
-            }
-            else
-            {
-                break;
             }
         }
 
-        return generated;
+        FillRemainingBudget(chosenEntries, ref budget);
+
+        return ApplyWaveMods(chosenEntries);
+    }
+
+    // -- CHOOSE PATTERN --
+    private EnemyRole[] ChoosePattern(int budget)
+    {
+        List<EnemyRole[]> eligible = new List<EnemyRole[]>();
+
+        foreach (EnemyRole[] pattern in wavePatterns)
+        {
+            if (CanAffordPattern(pattern, budget))
+                eligible.Add(pattern);
+        }
+
+        if (eligible.Count == 0) return null;
+
+        return eligible[Random.Range(0, eligible.Count)];
+    }
+
+    // -- CAN AFFORD PATTERN --
+    private bool CanAffordPattern(EnemyRole[] pattern, int budget)
+    {
+        int total = 0;
+
+        foreach (EnemyRole role in pattern)
+        {
+            int cheapest = GetCheapestCost(role);
+            if (cheapest < 0) return false;
+
+            total += cheapest;
+        }
+
+        return total <= budget;
+    }
+
+    // -- GET CHEAPEST COST FOR ROLE --
+    private int GetCheapestCost(EnemyRole role)
+    {
+        int cheapest = -1;
+
+        foreach (EnemyEntry entry in enemyTypes)
+        {
+            if (entry.role != role) continue;
+            if (cheapest == -1 || entry.cost < cheapest)
+                cheapest = entry.cost;
+        }
+
+        return cheapest;
+    }
+
+    // -- PICK AFFORDABLE ENTRY OF ROLE --
+    private EnemyEntry PickAffordableEntry(EnemyRole role, int budget)
+    {
+        List<EnemyEntry> candidates = new List<EnemyEntry>();
+
+        foreach (EnemyEntry entry in enemyTypes)
+        {
+            if (entry.role == role && entry.cost <= budget)
+                candidates.Add(entry);
+        }
+
+        if (candidates.Count == 0) return null;
+
+        return candidates[Random.Range(0, candidates.Count)];
+    }
+
+    // -- FILL REMAINING BUDGET --
+    private void FillRemainingBudget(List<EnemyEntry> chosenEntries, ref int budget)
+    {
+        while (budget > 0)
+        {
+            List<EnemyEntry> affordable = new List<EnemyEntry>();
+
+            foreach (EnemyEntry entry in enemyTypes)
+            {
+                if (entry.cost <= budget)
+                    affordable.Add(entry);
+            }
+
+            if (affordable.Count == 0) break;
+
+            EnemyEntry pick = affordable[Random.Range(0, affordable.Count)];
+            chosenEntries.Add(pick);
+            budget -= pick.cost;
+        }
+    }
+
+    // -- APPLY WAVE MODS --
+    private List<GameObject> ApplyWaveMods(List<EnemyEntry> chosenEntries)
+    {
+        List<GameObject> result = new List<GameObject>();
+        foreach (EnemyEntry entry in chosenEntries)
+            result.Add(entry.prefab);
+
+        HashSet<int> promotedIndices = new HashSet<int>();
+
+        // -- Elite pass --
+        if (eliteChance > 0f && maxElitesPerWave > 0)
+        {
+            List<int> eliteEligible = new List<int>();
+            for (int i = 0; i < chosenEntries.Count; i++)
+            {
+                if (chosenEntries[i].eliteVariant != null)
+                    eliteEligible.Add(i);
+            }
+            Shuffle(eliteEligible);
+
+            int elitePromotions = 0;
+            foreach (int index in eliteEligible)
+            {
+                if (elitePromotions >= maxElitesPerWave) break;
+
+                if (Random.value <= eliteChance)
+                {
+                    result[index] = chosenEntries[index].eliteVariant;
+                    promotedIndices.Add(index);
+                    elitePromotions++;
+                }
+            }
+        }
+
+        // -- Exploding pass --
+        if (explodeChance > 0f && maxExplodersPerWave > 0)
+        {
+            List<int> explodeEligible = new List<int>();
+            for (int i = 0; i < chosenEntries.Count; i++)
+            {
+                if (promotedIndices.Contains(i)) continue;
+                if (chosenEntries[i].explodingVariant != null)
+                    explodeEligible.Add(i);
+            }
+            Shuffle(explodeEligible);
+
+            int explodePromotions = 0;
+            foreach (int index in explodeEligible)
+            {
+                if (explodePromotions >= maxExplodersPerWave) break;
+
+                if (Random.value <= explodeChance)
+                {
+                    result[index] = chosenEntries[index].explodingVariant;
+                    explodePromotions++;
+                }
+            }
+        }
+
+        return result;
+    }
+
+    // -- SHUFFLE --
+    private void Shuffle(List<int> list)
+    {
+        for (int i = list.Count - 1; i > 0; i--)
+        {
+            int swap = Random.Range(0, i + 1);
+            (list[i], list[swap]) = (list[swap], list[i]);
+        }
     }
 
     // -- TRY TO DROP WEAPON --
