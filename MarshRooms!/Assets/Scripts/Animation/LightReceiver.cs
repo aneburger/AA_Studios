@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class LightReceiver : MonoBehaviour
 {
+    private int sortingOrderOffset = 5;
+
     private SpriteRenderer parentRenderer;
     private SpriteRenderer lightRenderer;
 
@@ -14,12 +16,11 @@ public class LightReceiver : MonoBehaviour
 
     private void LateUpdate()
     {
-        lightRenderer.enabled = parentRenderer.enabled;
         lightRenderer.sprite = parentRenderer.sprite;
         lightRenderer.flipX = parentRenderer.flipX;
         lightRenderer.flipY = parentRenderer.flipY;
         lightRenderer.color = parentRenderer.color;
         lightRenderer.sortingLayerID = parentRenderer.sortingLayerID;
-        lightRenderer.sortingOrder = parentRenderer.sortingOrder;
+        lightRenderer.sortingOrder = parentRenderer.sortingOrder + sortingOrderOffset;
     }
 }
