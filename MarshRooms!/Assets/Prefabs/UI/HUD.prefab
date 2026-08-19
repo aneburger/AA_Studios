@@ -171,7 +171,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 3
+  m_SortingOrder: 10
   m_TargetDisplay: 0
 --- !u!114 &8161643529067093517
 MonoBehaviour:
@@ -1552,7 +1552,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &715330637298745095
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1602,7 +1602,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 9129473509809155334, guid: 9fe535581168ca5499af764db6282fdc, type: 3}
+  m_Sprite: {fileID: -1432480973852308533, guid: 2ccab2b3605dfa546940e0d7da1669fc, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -6170,6 +6170,7 @@ GameObject:
   - component: {fileID: 4908183722122372763}
   - component: {fileID: 8785102966773636811}
   - component: {fileID: 5410519384725999082}
+  - component: {fileID: 398054369855910758}
   m_Layer: 0
   m_Name: HUD
   m_TagString: Untagged
@@ -6240,6 +6241,7 @@ MonoBehaviour:
   closeControlsButton: {fileID: 5412567612862326570}
   quitButton: {fileID: 3620148805262552271}
   tutorialButton: {fileID: 2370985189917230936}
+  quitConfirmManager: {fileID: 398054369855910758}
   cancelControlsButton: {fileID: 5412567612862326570}
   confirmControlsButton: {fileID: 7547777682074202659}
   sliderSoundManager: {fileID: 5410519384725999082}
@@ -6283,6 +6285,7 @@ MonoBehaviour:
   mainMenuButton: {fileID: 3839628981771625357}
   playerInput: {fileID: 0}
   sliderSoundManager: {fileID: 5410519384725999082}
+  quitConfirmManager: {fileID: 398054369855910758}
   cancelControlsButton: {fileID: 5412567612862326570}
   confirmControlsButton: {fileID: 7547777682074202659}
   cancelText: {fileID: 581946847586660614}
@@ -6311,6 +6314,33 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SliderSoundManager
   musicVolumeSlider: {fileID: 8933613093561561480}
   sfxVolumeSlider: {fileID: 5753770183639007962}
+--- !u!114 &398054369855910758
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7085789729006638418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 839004931f769ea4ea7d270ad151a7ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::QuitConfirmManager
+  quitConfirmPanel: {fileID: 2521737371163306019}
+  yesButton: {fileID: 435067651431300116}
+  noButton: {fileID: 2556433196779162848}
+  yesText: {fileID: 9140792087920013866}
+  noText: {fileID: 4432297501485201660}
+  yesArrow: {fileID: 8388244797749294981}
+  noArrow: {fileID: 8340515402015755191}
+  hoverClip: {fileID: 8300000, guid: 628151bdb07a41447ab80ee8c3f2abc3, type: 3}
+  clickClip: {fileID: 8300000, guid: 0f47ab1cfdc3f0d4c90e50f3a42b2ecc, type: 3}
+  hoverVolume: 1
+  clickVolume: 1
+  selectedColor: {r: 1, g: 1, b: 0.8352941, a: 1}
+  normalColor: {r: 0.35686275, g: 0.23137255, b: 0.24705882, a: 1}
+  menuManager: {fileID: 4908183722122372763}
+  pauseMenuManager: {fileID: 8785102966773636811}
 --- !u!1 &7398477323917162510
 GameObject:
   m_ObjectHideFlags: 0
@@ -6713,7 +6743,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &6629387001064252606
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6730,7 +6760,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -20.7, y: -0.9}
+  m_AnchoredPosition: {x: -20.699999, y: -0.9}
   m_SizeDelta: {x: 10, y: 14}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8432179350541495317
@@ -6797,6 +6827,7 @@ GameObject:
   - component: {fileID: 5206754299891850610}
   - component: {fileID: 4710266481994501273}
   - component: {fileID: 1222454030354032919}
+  - component: {fileID: 2217845157544770223}
   m_Layer: 5
   m_Name: yes-hover
   m_TagString: Untagged
@@ -6820,7 +6851,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -20.699997, y: -1.3}
+  m_AnchoredPosition: {x: -20.7, y: -1.3}
   m_SizeDelta: {x: 10, y: 14}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4710266481994501273
@@ -6861,6 +6892,21 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &2217845157544770223
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8388244797749294981}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32e0a6302d54c8544892f148fc39b7eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ContinueIndicatorBob
+  style: 0
+  amount: 1.5
+  speed: 4.5
 --- !u!1 &8447283992273189211
 GameObject:
   m_ObjectHideFlags: 0
