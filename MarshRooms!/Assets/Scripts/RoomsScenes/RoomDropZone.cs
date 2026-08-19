@@ -4,23 +4,30 @@ using UnityEngine;
 
 public class RoomDropZone : MonoBehaviour
 {
+    [SerializeField] private LayerMask obstacleMask;
+
     private PolygonCollider2D zone;
 
-    // -- AWAKE --
     private void Awake()
     {
         zone = GetComponent<PolygonCollider2D>();
     }
 
-    // -- GET SAFE POSITION --
+    private bool IsValidDrop(Vector2 point)
+    {
+        if (!zone.OverlapPoint(point)) return false;
+        if (Physics2D.OverlapPoint(point, obstacleMask) != null) return false;
+        return true;
+    }
+
     public Vector2 GetSafeDropPosition(Vector2 preferredPosition)
     {
-        if (zone.OverlapPoint(preferredPosition))
+        if (IsValidDrop(preferredPosition))
             return preferredPosition;
 
-        // Find nearest point inside the zone
         Vector2 closest = preferredPosition;
         float closestDist = float.MaxValue;
+        bool found = false;
 
         for (int angle = 0; angle < 360; angle += 15)
         {
@@ -29,18 +36,19 @@ public class RoomDropZone : MonoBehaviour
                 float rad = angle * Mathf.Deg2Rad;
                 Vector2 candidate = preferredPosition + new Vector2(Mathf.Cos(rad), Mathf.Sin(rad)) * radius;
 
-                if (zone.OverlapPoint(candidate))
+                if (IsValidDrop(candidate))
                 {
                     float dist = Vector2.Distance(preferredPosition, candidate);
                     if (dist < closestDist)
                     {
                         closestDist = dist;
                         closest = candidate;
+                        found = true;
                     }
                 }
             }
         }
 
-        return closest;
+        return found ? closest : preferredPosition;
     }
 }
