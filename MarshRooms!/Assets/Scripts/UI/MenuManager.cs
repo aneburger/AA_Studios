@@ -98,7 +98,7 @@ public class MenuManager : MonoBehaviour
     private void Start()
     {
         if (startButton != null)
-            startButton.onClick.AddListener(() => OnBeginGame("Floor_07"));
+            startButton.onClick.AddListener(() => OnBeginGame("Floor_01"));
 
         if (tutorialButton != null)
             tutorialButton.onClick.AddListener(() => OnBeginGame("Tutorial"));
@@ -120,6 +120,7 @@ public class MenuManager : MonoBehaviour
 
         // Start title music
         AudioManager.Instance?.PlayMusic(menuMusic, menuMusicVolume);
+        AudioManager.Instance?.SetMusicDampenMultiplier(1f);
     }
 
 

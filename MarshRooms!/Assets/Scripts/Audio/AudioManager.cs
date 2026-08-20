@@ -149,6 +149,34 @@ public sealed class AudioManager : MonoBehaviour
         yield return FadeInCoroutine(newClip, duration, targetVolume);
     }
 
+    private Coroutine musicPitchCoroutine;
+
+    // -- SET MUSIC PITCH --
+    public void SetMusicPitch(float targetPitch, float duration)
+    {
+        if (musicSource == null) return;
+
+        if (musicPitchCoroutine != null)
+            StopCoroutine(musicPitchCoroutine);
+
+        musicPitchCoroutine = StartCoroutine(MusicPitchCoroutine(targetPitch, duration));
+    }
+
+    private IEnumerator MusicPitchCoroutine(float targetPitch, float duration)
+    {
+        float startPitch = musicSource.pitch;
+        float elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            musicSource.pitch = Mathf.Lerp(startPitch, targetPitch, elapsed / duration);
+            yield return null;
+        }
+
+        musicSource.pitch = targetPitch;
+    }
+
     // --------------------------- AUDIO EFFECTS ---------------------------------
 
     // -- PLAY SFX WITH PITCH VARIATION --

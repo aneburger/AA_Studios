@@ -32,6 +32,7 @@ public class PlayerHealth : BaseHealth
     private Coroutine flickerCoroutine;
     private SpriteRenderer playerRenderer;
     private PlayerMutatedVisuals mutatedVisuals;
+    private PlayerSporeReadyVisuals sporeReadyVisuals;
 
     public int MaxHealth => (int)maxHealth;
     public int CurrentHealth => (int)currentHealth;
@@ -53,6 +54,7 @@ public class PlayerHealth : BaseHealth
         base.Awake();
         mover = GetComponent<PlayerMover>();
         mutatedVisuals = GetComponent<PlayerMutatedVisuals>();
+        sporeReadyVisuals = GetComponent<PlayerSporeReadyVisuals>();
 
         // Update HUD on start
 
@@ -155,7 +157,6 @@ public class PlayerHealth : BaseHealth
         }
     }
 
-
     // -- HIT EFFECT --
     protected override void OnHitEffect()
     {
@@ -209,6 +210,15 @@ public class PlayerHealth : BaseHealth
         flickerCoroutine = null;
     }
 
+    // -- LOW HEALTH EFFECT -- 
+    public void UpdateLowHealthEffect()
+    {
+        ScreenEffects.Instance?.SetLowHealth(
+            currentHealth <= maxHealth * 0.3f
+        );
+    }
+
+    // -- REVIVE --
     public void Revive()
     {   
         Heal(maxHealth);

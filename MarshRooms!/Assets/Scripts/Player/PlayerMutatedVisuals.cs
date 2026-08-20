@@ -38,6 +38,8 @@ public class PlayerMutatedVisuals : MonoBehaviour
     private Coroutine flickerCoroutine;
     private bool isFlickering = false;
 
+    private bool isActive = false;
+
     private static readonly int OutlineEnabledID = Shader.PropertyToID("_OutlineEnabled");
     private static readonly int OutlineColorID = Shader.PropertyToID("_OutlineColor");
     private static readonly int OutlineThicknessID = Shader.PropertyToID("_OutlineThickness");
@@ -74,7 +76,10 @@ public class PlayerMutatedVisuals : MonoBehaviour
     {
         isFlickering = false;
         if (flickerCoroutine != null) StopCoroutine(flickerCoroutine);
-        SetEffectsVisible(false);
+
+        ApplyVisibility(false);
+        isActive = false;
+
         AudioManager.Instance.PlaySFXWithPitch(deactivationClip, deactivationVolume, 0.1f);
         if (activationBurst != null)
             activationBurst.Play();
@@ -82,16 +87,24 @@ public class PlayerMutatedVisuals : MonoBehaviour
 
     private void OnActivated()
     {
+        isActive = true;
         isFlickering = false;
-        SetEffectsVisible(true);
+
+        ApplyVisibility(true);
+
         StartCoroutine(ActivationSequence());
     }
 
-    // -- SET ALL EFFECTS VISIBLE --
+    // -- PUBLIC: SET ALL EFFECTS VISIBLE -- 
     public void SetEffectsVisible(bool visible)
     {
-        if (visible && !SporeManager.Instance.IsMutated) return;
+        if (!isActive) return;
+        ApplyVisibility(visible);
+    }
 
+    // -- INTERNAL: actually applies visibility, no gating --
+    private void ApplyVisibility(bool visible)
+    {
         if (sporeLight != null) sporeLight.enabled = visible;
 
         if (mutatedTrail != null)

@@ -689,6 +689,7 @@ GameObject:
   - component: {fileID: 319489619}
   - component: {fileID: 319489620}
   - component: {fileID: 319489622}
+  - component: {fileID: 319489625}
   - component: {fileID: 319489604}
   - component: {fileID: 319489623}
   m_Layer: 6
@@ -1218,7 +1219,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MushroomBombEffect
   explosionRadius: 5
   explosionDamage: 9
-  explosionVFXPrefab: {fileID: 4081999799842582576, guid: 58ff3210537b77e43a7aece106f1672e, type: 3}
+  explosionVFXPrefab: {fileID: 4081999799842582576, guid: 4b125e6cf9b21074792e0f157f0e767e, type: 3}
   enemyMask:
     serializedVersion: 2
     m_Bits: 512
@@ -1234,6 +1235,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d6501af52d14e54a9f1510a26d98f5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerBoonStats
+--- !u!114 &319489625
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 319489603}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df87792bd56988c4190f1c13bb2fc0b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerSporeReadyVisuals
+  mutateGlowLight: {fileID: 895041969}
+  readyTintColor: {r: 0.25471687, g: 1, b: 0.74864954, a: 1}
+  minTintBlend: 0.2
+  maxTintBlend: 0.5
+  minLightIntensity: 0.2
+  maxLightIntensity: 0.4
+  pulseSpeed: 3.5
+  rampUpDuration: 0.6
 --- !u!1 &356983338
 GameObject:
   m_ObjectHideFlags: 0
@@ -2451,7 +2472,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 13.133179
+  orthographic size: 8.4375
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2

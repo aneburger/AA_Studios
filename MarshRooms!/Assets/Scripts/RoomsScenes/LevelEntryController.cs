@@ -25,6 +25,8 @@ public class LevelEntryController : MonoBehaviour
         }
 
         TryHealToFull(player);
+        PlayerHealth health = player.GetComponent<PlayerHealth>();
+        health?.UpdateLowHealthEffect();
     }
 
     private void TryHealToFull(GameObject player)
