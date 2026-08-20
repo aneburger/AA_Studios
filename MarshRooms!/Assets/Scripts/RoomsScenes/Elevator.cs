@@ -74,13 +74,6 @@ public class Elevator : MonoBehaviour
     {
         int currentFloor = LevelLoader.Instance.GetCurrentFloorNumber();
 
-        // TEMPORARY - we only have 3 levels for now..
-        if (currentFloor >= 3)
-        {
-            LevelLoader.Instance.ReturnToMainMenu();
-            return;
-        }
-
         string nextScene = LevelLoader.Instance.GetNextFloorSceneName();
         LevelLoader.Instance.LoadLevel(nextScene);
     }

@@ -186,6 +186,14 @@ PrefabInstance:
       propertyPath: eliteTintStrength
       value: 0.95
       objectReference: {fileID: 0}
+    - target: {fileID: 8471073151134515050, guid: 9dd4fa7122095964ab53544fb04bb88e, type: 3}
+      propertyPath: spawnGraceMax
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8471073151134515050, guid: 9dd4fa7122095964ab53544fb04bb88e, type: 3}
+      propertyPath: chanceToShootWhileMoving
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -239,9 +247,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d4fa8e02ced7e54e9f3a68e3494375f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EliteModifier
-  healthMultiplier: 1.8
+  healthMultiplier: 2.5
   damageMultiplier: 2
-  speedMultiplier: 1.8
+  speedMultiplier: 1.9
   burstCountOverride: 2
   burstIntervalOverride: 0.005
   outlineMaterial: {fileID: 2100000, guid: 410a5e3741b4ca14193c13e47b40c1d4, type: 2}

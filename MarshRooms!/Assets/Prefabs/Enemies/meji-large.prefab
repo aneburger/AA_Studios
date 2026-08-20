@@ -302,7 +302,7 @@ MonoBehaviour:
   losSkin: 1
   passiveSpeedMultiplier: 0.6
   spawnGraceMin: 1
-  spawnGraceMax: 2
+  spawnGraceMax: 1.5
   debugLogging: 0
   windupDurationMin: 0.4
   windupDurationMax: 0.7
@@ -378,6 +378,7 @@ MonoBehaviour:
   splitPrefab: {fileID: 988082134135583188, guid: faf64abcc052f8947867cca3bf03bfef, type: 3}
   splitCount: 2
   scatterRadius: 1
+  eliteSplitPrefab: {fileID: 0}
 --- !u!1 &1474284981994161219
 GameObject:
   m_ObjectHideFlags: 0
