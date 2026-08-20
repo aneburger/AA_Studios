@@ -1025,7 +1025,7 @@ TextureImporter:
         width: 27
         height: 31
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -1034,6 +1034,72 @@ TextureImporter:
       bones: []
       spriteID: 532d37fcc4a41494dba794ad15833dbb
       internalID: 74703941
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: furniture_32
+      rect:
+        serializedVersion: 2
+        x: 214
+        y: 87
+        width: 38
+        height: 30
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6cbba3b0d38ff724eb20407ea67e7b91
+      internalID: -1598023041
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: furniture_33
+      rect:
+        serializedVersion: 2
+        x: 280
+        y: 14
+        width: 34
+        height: 34
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6740e5815a61b98449d7755bd7cd4679
+      internalID: 1325234162
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: furniture_34
+      rect:
+        serializedVersion: 2
+        x: 292
+        y: 131
+        width: 34
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 35e2adf3d2c888e4e9c9b4b81ce5302e
+      internalID: 1957084957
       vertices: []
       indices: 
       edges: []
@@ -1087,6 +1153,9 @@ TextureImporter:
       furniture_3: -37883169
       furniture_30: -1877213961
       furniture_31: 74703941
+      furniture_32: -1598023041
+      furniture_33: 1325234162
+      furniture_34: 1957084957
       furniture_4: -919437310
       furniture_5: -1547867901
       furniture_6: -1585966000
