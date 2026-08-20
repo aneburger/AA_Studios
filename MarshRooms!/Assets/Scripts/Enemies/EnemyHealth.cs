@@ -18,10 +18,13 @@ public class EnemyHealth : BaseHealth
     public event System.Action<Vector2> OnDied;
     public event System.Action OnTookDamage;
 
+    private ExplodingModifier exploder;
+
     // -- AWAKE --
     protected override void Awake()
     {
         base.Awake();
+        exploder = GetComponent<ExplodingModifier>();
     }
 
     // -- SPAWN SPORES --
@@ -54,6 +57,8 @@ public class EnemyHealth : BaseHealth
         EnemyController controller = GetComponent<EnemyController>();
         if (controller != null && controller.IsSpawning) return;
 
+        if (exploder != null && (exploder.IsPriming || exploder.HasDetonated)) return;
+
         base.TakeDamage(amount);
         healthBar?.UpdateHealth(currentHealth, maxHealth);
 
@@ -84,12 +89,24 @@ public class EnemyHealth : BaseHealth
     // -- DIE --
     protected override void Die()
     {
+        if (exploder != null && !exploder.HasDetonated)
+        {
+            exploder.BeginPriming(FinalizeDeath);
+            return;
+        }
+
+        FinalizeDeath();
+    }
+
+    // -- FINALIZE DEATH --
+    private void FinalizeDeath()
+    {
         base.Die();
         AudioManager.Instance.PlaySFX(dieClip, dieVolume);
         VFXManager.Instance.SpawnEnemyExplosion(transform.position);
 
-        OnDied?.Invoke(transform.position);                
-        EnemyManager.Instance.UnregisterEnemy(gameObject); 
+        OnDied?.Invoke(transform.position);
+        EnemyManager.Instance.UnregisterEnemy(gameObject);
 
         EnemyController controller = GetComponent<EnemyController>();
         RoomManager room = FindFirstObjectByType<RoomManager>();

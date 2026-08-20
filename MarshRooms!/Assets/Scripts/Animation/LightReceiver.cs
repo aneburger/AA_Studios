@@ -20,6 +20,7 @@ public class LightReceiver : MonoBehaviour
         lightRenderer.flipX = parentRenderer.flipX;
         lightRenderer.flipY = parentRenderer.flipY;
         lightRenderer.color = parentRenderer.color;
+        lightRenderer.enabled = parentRenderer.enabled;
         lightRenderer.sortingLayerID = parentRenderer.sortingLayerID;
         lightRenderer.sortingOrder = parentRenderer.sortingOrder + sortingOrderOffset;
     }

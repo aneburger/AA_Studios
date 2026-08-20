@@ -6143,7 +6143,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LevelMusicController
   floorMusic: {fileID: 8300000, guid: b35782aeaab70614ab5237db63f8c4ec, type: 3}
   combatVolume: 0.6
-  calmVolume: 0.2
+  calmVolume: 0.12
   fadeDuration: 0.6
 --- !u!4 &459729766
 Transform:
@@ -42823,8 +42823,8 @@ MonoBehaviour:
   - prefab: {fileID: 988082134135583188, guid: 39d6ae334eb4f5e4e859bc4deb21e400, type: 3}
     cost: 1
     role: 1
-    eliteVariant: {fileID: 0}
-    explodingVariant: {fileID: 0}
+    eliteVariant: {fileID: 326763554630917196, guid: f0ff04b61cf850148baf49e7d345ae38, type: 3}
+    explodingVariant: {fileID: 326763554630917196, guid: f0ff04b61cf850148baf49e7d345ae38, type: 3}
   - prefab: {fileID: 988082134135583188, guid: faf64abcc052f8947867cca3bf03bfef, type: 3}
     cost: 7
     role: 0
@@ -42832,7 +42832,7 @@ MonoBehaviour:
     explodingVariant: {fileID: 0}
   eliteChance: 0.2
   maxElitesPerWave: 1
-  explodeChance: 0
+  explodeChance: 0.2
   maxExplodersPerWave: 1
   minWeaponDrops: 2
   maxWeaponDrops: 4

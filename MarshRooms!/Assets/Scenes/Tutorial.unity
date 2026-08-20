@@ -8557,7 +8557,7 @@ MonoBehaviour:
   spawnStaggerMin: 0.4
   spawnStaggerMax: 0.9
   houseMusicClip: {fileID: 8300000, guid: af440aa2fad166b48be3581c818acbe7, type: 3}
-  houseMusicVolume: 0.16
+  houseMusicVolume: 0.19
   toiletUnclogAttemptClip: {fileID: 8300000, guid: 254dc21b7bace014cbc7dd62c2e5b269, type: 3}
   toiletUnclogAttemptVolume: 0.18
   triggerClickClip: {fileID: 8300000, guid: d18e8ca6f92695c459ca1d6fcc86ebdb, type: 3}
@@ -10231,6 +10231,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae69313a0322e5b49aef7c01adb682ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoomDropZone
+  obstacleMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!60 &1288310430
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -11394,6 +11397,10 @@ MonoBehaviour:
   spawnIntervalMax: 0
   waves: []
   enemyTypes: []
+  eliteChance: 0
+  maxElitesPerWave: 1
+  explodeChance: 0
+  maxExplodersPerWave: 1
   minWeaponDrops: 0
   maxWeaponDrops: 0
   dropZone: {fileID: 1288310429}

@@ -98,7 +98,7 @@ public class MenuManager : MonoBehaviour
     private void Start()
     {
         if (startButton != null)
-            startButton.onClick.AddListener(() => OnBeginGame("Floor_01"));
+            startButton.onClick.AddListener(() => OnBeginGame("Floor_07"));
 
         if (tutorialButton != null)
             tutorialButton.onClick.AddListener(() => OnBeginGame("Tutorial"));

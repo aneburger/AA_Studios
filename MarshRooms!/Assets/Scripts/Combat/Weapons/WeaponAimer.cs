@@ -18,13 +18,43 @@ public class WeaponAimer : MonoBehaviour
     
     public Vector2 AimDirection => aimDirection;
 
-    // -- SET DIRECTION -- (call from PlayerAim or Enemy AI)
+    // -- AWAKE --
+    private void Awake()
+    {
+        if (characterRenderer == null)
+        {
+            SpriteRenderer[] renderers = GetComponentsInChildren<SpriteRenderer>();
+            foreach (var sr in renderers)
+            {
+                if (sr != weaponRenderer)
+                {
+                    characterRenderer = sr;
+                    break;
+                }
+            }
+        }
+    }
+
+    // -- GET HIERARCHY PATH -- 
+    private string GetHierarchyPath()
+    {
+        string path = gameObject.name;
+        Transform current = transform.parent;
+        while (current != null)
+        {
+            path = current.name + "/" + path;
+            current = current.parent;
+        }
+        return path;
+    }
+
+    // -- SET DIRECTION --
     public void SetAimDirection(Vector2 direction)
     {
         aimDirection = direction;
     }
 
-    // -- APPLY RECOIL -- (Called by Shooter)
+    // -- APPLY RECOIL --
     public void ApplyRecoil(float amount, float decay)
     {
         recoilAmount = amount;
@@ -36,6 +66,9 @@ public class WeaponAimer : MonoBehaviour
     private void Update()
     {
         if (aimDirection.sqrMagnitude < 0.001f)
+            return;
+
+        if (characterRenderer == null || weaponRenderer == null || weaponPivot == null)
             return;
 
         // -- RECOIL --

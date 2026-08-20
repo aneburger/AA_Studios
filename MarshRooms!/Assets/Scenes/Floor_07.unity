@@ -4721,9 +4721,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3dfd63ba2fcd2446b655ffdc9ce70a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelMusicController
-  floorMusic: {fileID: 8300000, guid: b35782aeaab70614ab5237db63f8c4ec, type: 3}
-  combatVolume: 0.6
-  calmVolume: 0.2
+  floorMusic: {fileID: 8300000, guid: a4f3eb722b1806345a4e13d312190806, type: 3}
+  combatVolume: 0.3
+  calmVolume: 0.1
   fadeDuration: 0.6
 --- !u!4 &459729766
 Transform:
@@ -79220,6 +79220,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae69313a0322e5b49aef7c01adb682ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoomDropZone
+  obstacleMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &1365138128
 GameObject:
   m_ObjectHideFlags: 0
@@ -79354,8 +79357,18 @@ MonoBehaviour:
   enemyTypes:
   - prefab: {fileID: 988082134135583188, guid: 9dd4fa7122095964ab53544fb04bb88e, type: 3}
     cost: 2
+    role: 0
+    eliteVariant: {fileID: 0}
+    explodingVariant: {fileID: 0}
   - prefab: {fileID: 988082134135583188, guid: db7427b6297ecc148bf0996ef14fa631, type: 3}
     cost: 1
+    role: 0
+    eliteVariant: {fileID: 0}
+    explodingVariant: {fileID: 0}
+  eliteChance: 0
+  maxElitesPerWave: 1
+  explodeChance: 0
+  maxExplodersPerWave: 1
   minWeaponDrops: 1
   maxWeaponDrops: 2
   dropZone: {fileID: 1288310429}

@@ -697,17 +697,17 @@ MonoBehaviour:
     cost: 5
     role: 0
     eliteVariant: {fileID: 6276581705901883092, guid: eb0f2b126d1ede84fb764cfeba047f2b, type: 3}
-    explodingVariant: {fileID: 0}
+    explodingVariant: {fileID: 8703177176063560429, guid: 30686d44f9d5f0545be78b81c47d3885, type: 3}
   - prefab: {fileID: 988082134135583188, guid: db7427b6297ecc148bf0996ef14fa631, type: 3}
     cost: 3
     role: 1
     eliteVariant: {fileID: 6344997218657848839, guid: c9d4834841c4dac4fb2ba8b84ed98d9b, type: 3}
-    explodingVariant: {fileID: 0}
+    explodingVariant: {fileID: 463830490151690618, guid: 5bc37e6c2b2b9694da397bda641ae45e, type: 3}
   - prefab: {fileID: 988082134135583188, guid: 39d6ae334eb4f5e4e859bc4deb21e400, type: 3}
     cost: 2
     role: 1
-    eliteVariant: {fileID: 0}
-    explodingVariant: {fileID: 0}
+    eliteVariant: {fileID: 326763554630917196, guid: f0ff04b61cf850148baf49e7d345ae38, type: 3}
+    explodingVariant: {fileID: 326763554630917196, guid: f0ff04b61cf850148baf49e7d345ae38, type: 3}
   - prefab: {fileID: 988082134135583188, guid: faf64abcc052f8947867cca3bf03bfef, type: 3}
     cost: 7
     role: 0
@@ -716,12 +716,12 @@ MonoBehaviour:
   - prefab: {fileID: 988082134135583188, guid: b31d3fda1a4393546a08902bd405630b, type: 3}
     cost: 10
     role: 0
-    eliteVariant: {fileID: 6276581705901883092, guid: eb0f2b126d1ede84fb764cfeba047f2b, type: 3}
+    eliteVariant: {fileID: 7313000267866192345, guid: f31ff347708d89c49bfe169ba9f5bc50, type: 3}
     explodingVariant: {fileID: 0}
   eliteChance: 0.4
   maxElitesPerWave: 2
-  explodeChance: 0
-  maxExplodersPerWave: 1
+  explodeChance: 0.2
+  maxExplodersPerWave: 3
   minWeaponDrops: 3
   maxWeaponDrops: 5
   dropZone: {fileID: 1288310429}
@@ -4199,9 +4199,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3dfd63ba2fcd2446b655ffdc9ce70a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelMusicController
-  floorMusic: {fileID: 8300000, guid: b35782aeaab70614ab5237db63f8c4ec, type: 3}
+  floorMusic: {fileID: 8300000, guid: ae56c791d9bd81d44b6f8bebfe7a8644, type: 3}
   combatVolume: 0.6
-  calmVolume: 0.2
+  calmVolume: 0.12
   fadeDuration: 0.6
 --- !u!4 &459729766
 Transform:
@@ -68068,58 +68068,58 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1722930559}
     m_Modifications:
-    - target: {fileID: 208003371081328597, guid: 39d6ae334eb4f5e4e859bc4deb21e400, type: 3}
+    - target: {fileID: 326763554630917196, guid: f0ff04b61cf850148baf49e7d345ae38, type: 3}
+      propertyPath: m_Name
+      value: meji-small-explode
+      objectReference: {fileID: 0}
+    - target: {fileID: 854631942396349005, guid: f0ff04b61cf850148baf49e7d345ae38, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2.1464748
       objectReference: {fileID: 0}
-    - target: {fileID: 208003371081328597, guid: 39d6ae334eb4f5e4e859bc4deb21e400, type: 3}
+    - target: {fileID: 854631942396349005, guid: f0ff04b61cf850148baf49e7d345ae38, type: 3}
       propertyPath: m_LocalPosition.y
       value: -7.844983
       objectReference: {fileID: 0}
-    - target: {fileID: 208003371081328597, guid: 39d6ae334eb4f5e4e859bc4deb21e400, type: 3}
+    - target: {fileID: 854631942396349005, guid: f0ff04b61cf850148baf49e7d345ae38, type: 3}
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 208003371081328597, guid: 39d6ae334eb4f5e4e859bc4deb21e400, type: 3}
+    - target: {fileID: 854631942396349005, guid: f0ff04b61cf850148baf49e7d345ae38, type: 3}
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 208003371081328597, guid: 39d6ae334eb4f5e4e859bc4deb21e400, type: 3}
+    - target: {fileID: 854631942396349005, guid: f0ff04b61cf850148baf49e7d345ae38, type: 3}
       propertyPath: m_LocalRotation.x
       value: -0
       objectReference: {fileID: 0}
-    - target: {fileID: 208003371081328597, guid: 39d6ae334eb4f5e4e859bc4deb21e400, type: 3}
+    - target: {fileID: 854631942396349005, guid: f0ff04b61cf850148baf49e7d345ae38, type: 3}
       propertyPath: m_LocalRotation.y
       value: -0
       objectReference: {fileID: 0}
-    - target: {fileID: 208003371081328597, guid: 39d6ae334eb4f5e4e859bc4deb21e400, type: 3}
+    - target: {fileID: 854631942396349005, guid: f0ff04b61cf850148baf49e7d345ae38, type: 3}
       propertyPath: m_LocalRotation.z
       value: -0
       objectReference: {fileID: 0}
-    - target: {fileID: 208003371081328597, guid: 39d6ae334eb4f5e4e859bc4deb21e400, type: 3}
+    - target: {fileID: 854631942396349005, guid: f0ff04b61cf850148baf49e7d345ae38, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 208003371081328597, guid: 39d6ae334eb4f5e4e859bc4deb21e400, type: 3}
+    - target: {fileID: 854631942396349005, guid: f0ff04b61cf850148baf49e7d345ae38, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 208003371081328597, guid: 39d6ae334eb4f5e4e859bc4deb21e400, type: 3}
+    - target: {fileID: 854631942396349005, guid: f0ff04b61cf850148baf49e7d345ae38, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 988082134135583188, guid: 39d6ae334eb4f5e4e859bc4deb21e400, type: 3}
-      propertyPath: m_Name
-      value: meji-small
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 39d6ae334eb4f5e4e859bc4deb21e400, type: 3}
+  m_SourcePrefab: {fileID: 100100000, guid: f0ff04b61cf850148baf49e7d345ae38, type: 3}
 --- !u!4 &2035065158 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 208003371081328597, guid: 39d6ae334eb4f5e4e859bc4deb21e400, type: 3}
+  m_CorrespondingSourceObject: {fileID: 854631942396349005, guid: f0ff04b61cf850148baf49e7d345ae38, type: 3}
   m_PrefabInstance: {fileID: 2035065157}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2042752280
