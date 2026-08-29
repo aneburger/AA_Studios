@@ -432,16 +432,6 @@ SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 1800059435372338781, guid: d10a319c85c09cd4aa88037a9112cab5, type: 3}
   m_PrefabInstance: {fileID: 3070024072695073873}
   m_PrefabAsset: {fileID: 0}
---- !u!212 &3942696004442223302 stripped
-SpriteRenderer:
-  m_CorrespondingSourceObject: {fileID: -7192900063087935849, guid: d10a319c85c09cd4aa88037a9112cab5, type: 3}
-  m_PrefabInstance: {fileID: 3070024072695073873}
-  m_PrefabAsset: {fileID: 0}
---- !u!212 &9158084151047352513 stripped
-SpriteRenderer:
-  m_CorrespondingSourceObject: {fileID: 6161741929184541840, guid: d10a319c85c09cd4aa88037a9112cab5, type: 3}
-  m_PrefabInstance: {fileID: 3070024072695073873}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6533802466393231104
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -558,7 +548,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EliteModifier
   healthMultiplier: 2.5
   damageMultiplier: 2
-  speedMultiplier: 1.9
+  speedMultiplier: 1.7
   burstCountOverride: 2
   burstIntervalOverride: 0.005
   outlineMaterial: {fileID: 2100000, guid: 410a5e3741b4ca14193c13e47b40c1d4, type: 2}
@@ -566,11 +556,9 @@ MonoBehaviour:
   outlineThickness: 1
   targetRenderers: []
   excludeRenderers:
-  - {fileID: 3942696004442223302}
-  - {fileID: 3630449011390288396}
-  - {fileID: 1798954934548132268}
-  - {fileID: 9158084151047352513}
   - {fileID: 5952767252654572118}
+  - {fileID: 1798954934548132268}
+  - {fileID: 3630449011390288396}
   glow: {fileID: 0}
   eliteTrail: {fileID: 0}
 --- !u!4 &6363097330179270869 stripped

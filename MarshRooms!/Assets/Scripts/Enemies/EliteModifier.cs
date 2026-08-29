@@ -32,13 +32,13 @@ public class EliteModifier : MonoBehaviour
 
     private MaterialPropertyBlock mpb;
 
-    // -- AWAKE --
+        // -- AWAKE --
     private void Awake()
     {
         mpb = new MaterialPropertyBlock();
 
         if (targetRenderers == null || targetRenderers.Length == 0)
-            targetRenderers = GetComponentsInChildren<SpriteRenderer>();
+            targetRenderers = GetComponentsInChildren<SpriteRenderer>(true);
 
         if (excludeRenderers != null && excludeRenderers.Length > 0)
         {

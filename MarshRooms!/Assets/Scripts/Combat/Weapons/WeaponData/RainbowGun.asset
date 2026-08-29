@@ -23,6 +23,8 @@ MonoBehaviour:
   maxDamage: 7
   bulletSpeed: 15
   maxAmmo: 40
+  burstCount: 1
+  burstInterval: 0.08
   firePointOffset: {x: 0, y: 0.2}
   flipOffsetOnAimFlip: 1
   bulletCount: 1
@@ -35,7 +37,7 @@ MonoBehaviour:
   wallHitClip: {fileID: 0}
   wallHitVolume: 0.7
   shakeForce: 0.2
-  knockbackForce: 10
-  hitKnockback: 7
+  knockbackForce: 4
+  hitKnockback: 4
   recoilAmount: -15
   recoilDecay: 15

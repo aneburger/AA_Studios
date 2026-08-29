@@ -235,6 +235,7 @@ MonoBehaviour:
   primingDuration: 1.7
   flickerStartInterval: 0.3
   flickerEndInterval: 0.01
+  primingSpeedMultiplier: 1.5
   tickClip: {fileID: 8300000, guid: 8daf8d3e58f3f784d9bbff7a9c25c99c, type: 3}
   tickStartVolume: 0.2
   tickMaxVolume: 1
@@ -260,3 +261,4 @@ MonoBehaviour:
   - {fileID: 5741547194840919892}
   - {fileID: 1223454647777370014}
   - {fileID: 3975037666421638549}
+  bodyFlashBlend: 0.5

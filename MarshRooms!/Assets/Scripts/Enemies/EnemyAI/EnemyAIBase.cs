@@ -43,6 +43,21 @@ public abstract class EnemyAIBase : MonoBehaviour, IEnemyAI
     protected bool skipGracePending;
     protected bool isAlerted;
     protected bool playerDead;
+    
+    public bool ForceChaseOnly { get; private set; } = false;
+
+    // -- FORCE PURE CHASE --
+    public void ForcePureChase()
+    {
+        ForceChaseOnly = true;
+        EnterChase();
+    }
+
+    // -- CLEAR FORCED CHASE --
+    public void ClearForcedChase()
+    {
+        ForceChaseOnly = false;
+    }
 
     // -- AWAKE --
     protected virtual void Awake()
@@ -97,7 +112,6 @@ public abstract class EnemyAIBase : MonoBehaviour, IEnemyAI
     protected virtual bool HandleSpawnGrace() => false;
 
     [Header("Debug")]
-    [Tooltip("Logs state/distance/LOS to the console a few times a second while enabled.")]
     [SerializeField] protected bool debugLogging = false;
     private float debugLogTimer;
 
@@ -214,6 +228,8 @@ public abstract class EnemyAIBase : MonoBehaviour, IEnemyAI
 
         Vector2 direction = pathing != null ? pathing.GetDirectionToTarget(player.position) : DirectionToPlayer();
         mover.Move(direction);
+
+        if (ForceChaseOnly) return;
 
         if (ShouldEngage(distance))
         {
