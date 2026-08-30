@@ -42,6 +42,7 @@ public class WeaponData : ScriptableObject
 
     [Header("Audio")]
     public AudioClip shootClip;
+    public AudioClip[] shootClips;
     [Range(0f, 1f)] public float shootVolume;
     public AudioClip wallHitClip;
     [Range(0f, 1f)] public float wallHitVolume = 0.7f;

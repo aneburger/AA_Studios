@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36776f04a1ca3d8449b04b532f7a016e, type: 3}
+  m_Name: Bubble
+  m_EditorClassIdentifier: Assembly-CSharp::WeaponData
+  gunName: Bubble Gun
+  bulletPrefab: {fileID: 6894130498819508759, guid: 5b0eadf7dad9e8c42b4fed5ef0b7ce3d, type: 3}
+  shellsPrefab: {fileID: 0}
+  hitPrefab: {fileID: 0}
+  muzzleFlashPrefab: {fileID: 0}
+  pickupPrefab: {fileID: 1303430737314922756, guid: 193d1ea62b307254fb6859bcdebea6d2, type: 3}
+  fireRate: 0.065
+  minDamage: 0.5
+  maxDamage: 1.5
+  bulletSpeed: 8
+  maxAmmo: 300
+  burstCount: 1
+  burstInterval: 0.08
+  firePointOffset: {x: 0, y: -0.1}
+  flipOffsetOnAimFlip: 0
+  bulletCount: 1
+  spreadAngle: 8
+  sprite: {fileID: -7610050222887571251, guid: 2fa9dd436ea3a91428675f25f5ccae45, type: 3}
+  hudSprite: {fileID: -7610050222887571251, guid: 2fa9dd436ea3a91428675f25f5ccae45, type: 3}
+  ammoDisplaySprite: {fileID: 0}
+  shootClip: {fileID: 0}
+  shootClips:
+  - {fileID: 8300000, guid: f03d042b6c3e6f94394242925c63eff3, type: 3}
+  - {fileID: 8300000, guid: 8445cf7c4358fe74ebf3c106a52f8dec, type: 3}
+  - {fileID: 8300000, guid: e9f9d50ad73899443b9cad0dc5ab62fb, type: 3}
+  shootVolume: 0.65
+  wallHitClip: {fileID: 0}
+  wallHitVolume: 0
+  shakeForce: 0.03
+  knockbackForce: 0.5
+  hitKnockback: 1.5
+  recoilAmount: -10
+  recoilDecay: 5
