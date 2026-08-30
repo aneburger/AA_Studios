@@ -4982,7 +4982,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelMusicController
   floorMusic: {fileID: 8300000, guid: b35782aeaab70614ab5237db63f8c4ec, type: 3}
-  combatVolume: 0.6
+  combatVolume: 0.5
   calmVolume: 0.12
   fadeDuration: 0.6
 --- !u!4 &459729766
@@ -40743,6 +40743,63 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6257052244954196687, guid: 5a2dd72e4e6b0fe44a1ee83ce8ac86d0, type: 3}
   m_PrefabInstance: {fileID: 1751772180}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &878352706
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 355038307526482999, guid: 193d1ea62b307254fb6859bcdebea6d2, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 4.33767
+      objectReference: {fileID: 0}
+    - target: {fileID: 355038307526482999, guid: 193d1ea62b307254fb6859bcdebea6d2, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -8.10354
+      objectReference: {fileID: 0}
+    - target: {fileID: 355038307526482999, guid: 193d1ea62b307254fb6859bcdebea6d2, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 355038307526482999, guid: 193d1ea62b307254fb6859bcdebea6d2, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 355038307526482999, guid: 193d1ea62b307254fb6859bcdebea6d2, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 355038307526482999, guid: 193d1ea62b307254fb6859bcdebea6d2, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 355038307526482999, guid: 193d1ea62b307254fb6859bcdebea6d2, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 355038307526482999, guid: 193d1ea62b307254fb6859bcdebea6d2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 355038307526482999, guid: 193d1ea62b307254fb6859bcdebea6d2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 355038307526482999, guid: 193d1ea62b307254fb6859bcdebea6d2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1303430737314922756, guid: 193d1ea62b307254fb6859bcdebea6d2, type: 3}
+      propertyPath: m_Name
+      value: Bubble-Gun
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 193d1ea62b307254fb6859bcdebea6d2, type: 3}
 --- !u!1 &882842618
 GameObject:
   m_ObjectHideFlags: 0
@@ -56072,3 +56129,4 @@ SceneRoots:
   - {fileID: 1651084093}
   - {fileID: 1288310428}
   - {fileID: 4730439802504969470}
+  - {fileID: 878352706}

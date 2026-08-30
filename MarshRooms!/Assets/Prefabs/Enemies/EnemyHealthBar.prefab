@@ -143,6 +143,10 @@ MonoBehaviour:
   fullColor: {r: 0.2229761, g: 0.82641506, b: 0.26320532, a: 1}
   halfColor: {r: 1, g: 0.6934757, b: 0.12549019, a: 1}
   lowColor: {r: 0.87058824, g: 0.081131995, b: 0.20134032, a: 1}
+  isElite: 0
+  eliteGlowColor: {r: 1, g: 1, b: 1, a: 1}
+  eliteTintStrength: 0.6
+  background: {fileID: 6161741929184541840}
 --- !u!212 &-7192900063087935849
 SpriteRenderer:
   serializedVersion: 2

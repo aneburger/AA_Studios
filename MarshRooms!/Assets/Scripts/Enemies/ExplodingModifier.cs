@@ -10,6 +10,7 @@ public class ExplodingModifier : MonoBehaviour
     [SerializeField] private float primingDuration = 1.5f;
     [SerializeField] private float flickerStartInterval = 0.4f;
     [SerializeField] private float flickerEndInterval = 0.05f;
+    [SerializeField] private float primingSpeedMultiplier = 1.4f;
 
     [Header("Priming Tick Sound")]
     [SerializeField] private AudioClip tickClip;
@@ -33,15 +34,21 @@ public class ExplodingModifier : MonoBehaviour
     [SerializeField] private SpriteRenderer[] targetRenderers;
     [SerializeField] private SpriteRenderer[] excludeRenderers;
 
+    [Header("Body Flash")]
+    [SerializeField, Range(0f, 1f)] private float bodyFlashBlend = 0.5f;
+
     private static readonly int OutlineEnabledID = Shader.PropertyToID("_OutlineEnabled");
     private static readonly int OutlineColorID = Shader.PropertyToID("_OutlineColor");
     private static readonly int OutlineThicknessID = Shader.PropertyToID("_OutlineThickness");
 
     private MaterialPropertyBlock mpb;
     private TopDown.Movement.EnemyMover mover;
-    private Behaviour aiBehaviour;
+    private EnemyAIBase aiBase;
+    private EnemyShooter shooter;
     private Transform player;
     private int flickerCount;
+
+    private Color[] originalColors;
 
     public bool IsPriming { get; private set; }
     public bool HasDetonated { get; private set; }
@@ -51,7 +58,8 @@ public class ExplodingModifier : MonoBehaviour
     {
         mpb = new MaterialPropertyBlock();
         mover = GetComponent<TopDown.Movement.EnemyMover>();
-        aiBehaviour = GetComponent<IEnemyAI>() as Behaviour;
+        aiBase = GetComponent<EnemyAIBase>();
+        shooter = GetComponent<EnemyShooter>();
         player = GameObject.FindGameObjectWithTag("Player")?.transform;
 
         if (targetRenderers == null || targetRenderers.Length == 0)
@@ -64,6 +72,10 @@ public class ExplodingModifier : MonoBehaviour
                 sr => System.Array.IndexOf(excludeRenderers, sr) < 0
             );
         }
+
+        originalColors = new Color[targetRenderers.Length];
+        for (int i = 0; i < targetRenderers.Length; i++)
+            originalColors[i] = targetRenderers[i] != null ? targetRenderers[i].color : Color.white;
     }
 
     // -- START --
@@ -86,20 +98,12 @@ public class ExplodingModifier : MonoBehaviour
         IsPriming = true;
         flickerCount = 0;
 
+        aiBase?.ForcePureChase();
+
         if (mover != null)
-        {
-            mover.DirectionalAnimator?.SetWalking(false);
+            mover.SetSpeedMultiplier(primingSpeedMultiplier);
 
-            if (player != null)
-            {
-                Vector2 facing = ((Vector2)player.position - (Vector2)transform.position).normalized;
-                mover.DirectionalAnimator?.SetDirection(facing);
-            }
-
-            mover.StopMovement();
-            mover.enabled = false;
-        }
-        if (aiBehaviour != null) aiBehaviour.enabled = false;
+        shooter.HideWeapon(true);
 
         float elapsed = 0f;
         bool outlineOn = true;
@@ -111,6 +115,7 @@ public class ExplodingModifier : MonoBehaviour
 
             outlineOn = !outlineOn;
             SetOutlineEnabled(outlineOn);
+            SetBodyFlash(outlineOn);
 
             if (outlineOn)
                 PlayTick();
@@ -120,6 +125,13 @@ public class ExplodingModifier : MonoBehaviour
         }
 
         SetOutlineEnabled(true);
+        SetBodyFlash(false);
+
+        if (mover != null)
+            mover.SetSpeedMultiplier(1f);
+
+        aiBase?.ClearForcedChase();
+
         Detonate();
         onComplete?.Invoke();
     }
@@ -175,6 +187,18 @@ public class ExplodingModifier : MonoBehaviour
             mpb.SetColor(OutlineColorID, outlineColor);
             mpb.SetFloat(OutlineThicknessID, outlineThickness);
             sr.SetPropertyBlock(mpb);
+        }
+    }
+
+    // -- BODY FLASH --
+    private void SetBodyFlash(bool flashOn)
+    {
+        for (int i = 0; i < targetRenderers.Length; i++)
+        {
+            var sr = targetRenderers[i];
+            if (sr == null) continue;
+
+            sr.color = flashOn ? Color.Lerp(originalColors[i], outlineColor, bodyFlashBlend) : originalColors[i];
         }
     }
 

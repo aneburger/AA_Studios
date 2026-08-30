@@ -202,11 +202,6 @@ SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 7316994202994468007, guid: b31d3fda1a4393546a08902bd405630b, type: 3}
   m_PrefabInstance: {fileID: 7551025331508840461}
   m_PrefabAsset: {fileID: 0}
---- !u!212 &1997981522187181671 stripped
-SpriteRenderer:
-  m_CorrespondingSourceObject: {fileID: 8318394888245565034, guid: b31d3fda1a4393546a08902bd405630b, type: 3}
-  m_PrefabInstance: {fileID: 7551025331508840461}
-  m_PrefabAsset: {fileID: 0}
 --- !u!212 &2264455878389644973 stripped
 SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 8621674295602067104, guid: b31d3fda1a4393546a08902bd405630b, type: 3}
@@ -255,9 +250,7 @@ MonoBehaviour:
   targetRenderers: []
   excludeRenderers:
   - {fileID: 955201816673152170}
-  - {fileID: 1997981522187181671}
   - {fileID: 3067286468575786657}
   - {fileID: 2264455878389644973}
-  - {fileID: 5914644372131699808}
   glow: {fileID: 0}
   eliteTrail: {fileID: 0}

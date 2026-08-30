@@ -25,7 +25,9 @@ public abstract class BaseShooter : MonoBehaviour
     [Range(0f, 1f)] public float emptyVolume;
 
     public bool IsArmed => currentWeapon != null;
+
     protected float nextFireTime = 0f;
+    private float nextEmptyClickTime = 0f;
 
     private Coroutine squishCoroutine;
     private Vector3 defaultScale;
@@ -245,7 +247,7 @@ public abstract class BaseShooter : MonoBehaviour
         mover?.ApplyKnockback(-direction * currentWeapon.knockbackForce);
 
         // Play weapon sound
-        AudioManager.Instance.PlaySFXWithPitch(currentWeapon.shootClip, currentWeapon.shootVolume, 0.1f);
+        PlayShootSound();
 
         // Spawn muzzle flash VFX
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
@@ -256,14 +258,26 @@ public abstract class BaseShooter : MonoBehaviour
             squishCoroutine = StartCoroutine(SquishWeapon());
     }
 
+    // -- PLAY SHOOT SOUND --
+    private void PlayShootSound()
+    {
+        AudioClip clip = (currentWeapon.shootClips != null && currentWeapon.shootClips.Length > 0)
+            ? currentWeapon.shootClips[Random.Range(0, currentWeapon.shootClips.Length)]
+            : currentWeapon.shootClip;
+
+        AudioManager.Instance.PlaySFXWithPitch(clip, currentWeapon.shootVolume, 0.1f);
+    }
+
     // -- EMPTY SHOOT EFFECTS --
     protected virtual void OnEmptyShootEffetcs()
     {
-        // Half strength recoil
-        weaponAimer?.ApplyRecoil(currentWeapon.recoilAmount * 0.5f, currentWeapon.recoilDecay);
-
         // Empty click sound
-        AudioManager.Instance.PlaySFX(emptyClip, emptyVolume);
+        if (Time.time >= nextEmptyClickTime)
+        {
+            AudioManager.Instance.PlaySFX(emptyClip, emptyVolume);
+            nextEmptyClickTime = Time.time + 0.5f;
+            weaponAimer?.ApplyRecoil(currentWeapon.recoilAmount * 0.5f, currentWeapon.recoilDecay);
+        }
     }
 
     // -- SQUISH EFFECT --

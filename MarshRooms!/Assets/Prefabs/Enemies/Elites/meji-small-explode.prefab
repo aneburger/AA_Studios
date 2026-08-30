@@ -80,6 +80,7 @@ MonoBehaviour:
   primingDuration: 1.7
   flickerStartInterval: 0.3
   flickerEndInterval: 0.01
+  primingSpeedMultiplier: 1.1
   tickClip: {fileID: 8300000, guid: 8daf8d3e58f3f784d9bbff7a9c25c99c, type: 3}
   tickStartVolume: 0.2
   tickMaxVolume: 1
@@ -105,6 +106,7 @@ MonoBehaviour:
   - {fileID: 3738290056188508661}
   - {fileID: 7833331753452144959}
   - {fileID: 5432796411827819316}
+  bodyFlashBlend: 0.5
 --- !u!212 &3738290056188508661 stripped
 SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 4242294298305090669, guid: 39d6ae334eb4f5e4e859bc4deb21e400, type: 3}

@@ -6122,9 +6122,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3dfd63ba2fcd2446b655ffdc9ce70a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelMusicController
-  floorMusic: {fileID: 8300000, guid: b35782aeaab70614ab5237db63f8c4ec, type: 3}
-  combatVolume: 0.6
-  calmVolume: 0.12
+  floorMusic: {fileID: 8300000, guid: 8ac4109b74158094882fa68372defb25, type: 3}
+  combatVolume: 0.5
+  calmVolume: 0.1
   fadeDuration: 0.6
 --- !u!4 &459729766
 Transform:
@@ -49285,7 +49285,7 @@ MonoBehaviour:
   m_LightType: 1
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.189
-  m_Color: {r: 0.68490565, g: 1, b: 0.9596033, a: 1}
+  m_Color: {r: 1, g: 0.9015169, b: 0.6862745, a: 1}
   m_Intensity: 0.3
   m_LightVolumeIntensity: 1
   m_LightVolumeEnabled: 0

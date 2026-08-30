@@ -136,6 +136,13 @@ public class ButtonMushroomAI : EnemyAIBase
     {
         mover.ClearFacingOverride();
 
+        if (ForceChaseOnly)
+        {
+            Vector2 chaseDirection = pathing != null ? pathing.GetDirectionToTarget(player.position) : DirectionToPlayer();
+            mover.Move(chaseDirection);
+            return;
+        }
+
         bool inRange = distance <= effectiveAttackRange && HasLineOfSight();
 
         if (inRange)
