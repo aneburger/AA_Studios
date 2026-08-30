@@ -2472,7 +2472,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 8.4375
+  orthographic size: 13.133179
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -20830,6 +20830,14 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.x
       value: -58.61
       objectReference: {fileID: 0}
+    - target: {fileID: 1242613423045343126, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
+      propertyPath: spritePerFrame
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 2521737371163306019, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3225524358858379386, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
       propertyPath: m_SizeDelta.x
       value: 64
@@ -20846,6 +20854,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -45.8
       objectReference: {fileID: 0}
+    - target: {fileID: 3498200045359678933, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4378696629242631385, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -20861,10 +20873,6 @@ PrefabInstance:
     - target: {fileID: 4714534623166651183, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
       propertyPath: m_PreserveAspect
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1242613423045343126, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
-      propertyPath: spritePerFrame
-      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 4908183722122372763, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
       propertyPath: menuMusicVolume
@@ -20934,6 +20942,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 6210212258158056921, guid: 8ee5eb4d56d8b4545a3e6f5cc31e9f84, type: 3}
+    - target: {fileID: 9140792087920013866, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
+      propertyPath: m_text
+      value: YES
+      objectReference: {fileID: 0}
     - target: {fileID: 9213421604107254578, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
       propertyPath: m_Sprite
       value: 
