@@ -1283,6 +1283,10 @@ MonoBehaviour:
   sporeMutatedBulletCount: 5
   sporeMutatedSpread: 10
   sporeGunName: Spore Blaster
+  bubbleMutatedMinDamage: 1
+  bubbleMutatedMaxDamage: 1.5
+  bubbleMutatedBulletSpeedMultiplier: 1.5
+  bubbleGunName: Bubble Gun
 --- !u!114 &319489619
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2643,7 +2647,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 13.133179
+  orthographic size: 8.4375
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2

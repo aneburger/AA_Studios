@@ -23,6 +23,13 @@ public class PlayerMutatedStats : MonoBehaviour
     [SerializeField] private float sporeMutatedSpread = 10f;
     [SerializeField] private string sporeGunName = "Spore Blaster";
 
+    [Header("Bubble Gun Mutated")]
+    [SerializeField] private float bubbleMutatedMinDamage = 1f;
+    [SerializeField] private float bubbleMutatedMaxDamage = 2f;
+    [SerializeField] private float bubbleMutatedBulletSpeedMultiplier = 1.4f;
+    [SerializeField] private string bubbleGunName = "Bubble Gun";
+
+
     private void Start()
     {
         SporeManager.Instance.OnMutatedActivated += OnActivated;
@@ -57,16 +64,26 @@ public class PlayerMutatedStats : MonoBehaviour
         shooter.SetShakeMultiplier(1f);
         shooter.SetDamageMultiplier(1f);
         shooter.ClearBulletOverrides();
+        shooter.ClearDamageOverride();
+        shooter.SetBulletSpeedMultiplier(1f);
     }
 
     private void ApplyWeaponOverrides()
     {
         if (shooter.currentWeapon == null) return;
 
+        shooter.ClearDamageOverride();
+        shooter.SetBulletSpeedMultiplier(1f);
+
         if (shooter.currentWeapon.gunName == laserGunName)
             shooter.SetBulletOverrides(laserMutatedBulletCount, laserMutatedSpread);
         else if (shooter.currentWeapon.gunName == sporeGunName)
             shooter.SetBulletOverrides(sporeMutatedBulletCount, sporeMutatedSpread);
+        else if (shooter.currentWeapon.gunName == bubbleGunName)
+        {
+            shooter.SetDamageOverride(bubbleMutatedMinDamage, bubbleMutatedMaxDamage);
+            shooter.SetBulletSpeedMultiplier(bubbleMutatedBulletSpeedMultiplier);
+        }
     }
 
     private void OnWeaponChanged(WeaponData weapon)

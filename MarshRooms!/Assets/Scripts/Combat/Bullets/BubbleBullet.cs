@@ -30,6 +30,8 @@ public class BubbleBullet : BaseBullet
     [SerializeField] private float wobbleAmplitude = 0.5f;
     [SerializeField] private float wobbleFrequency = 2f;
 
+    [SerializeField] private float mutatedDragDecay = 1f;
+
     private SpriteRenderer sr;
     private GameObject popVFX;
 
@@ -62,7 +64,8 @@ public class BubbleBullet : BaseBullet
     // -- PICK RANDOM SIZE --
     private void PickRandomSize()
     {
-        int roll = Random.Range(0, 3);
+        bool mutated = SporeManager.Instance != null && SporeManager.Instance.IsMutated;
+        int roll = mutated ? Random.Range(1, 3) : Random.Range(0, 3);
         Sprite[] pool;
 
         switch (roll)
@@ -90,8 +93,10 @@ public class BubbleBullet : BaseBullet
     {
         elapsed += Time.deltaTime;
 
-        // Slow down over time
-        currentSpeed = Mathf.Lerp(currentSpeed, 0f, 1f - Mathf.Exp(-dragDecay * Time.deltaTime));
+        bool mutated = SporeManager.Instance != null && SporeManager.Instance.IsMutated;
+        float currentDragDecay = mutated ? mutatedDragDecay : dragDecay;
+
+        currentSpeed = Mathf.Lerp(currentSpeed, 0f, 1f - Mathf.Exp(-currentDragDecay * Time.deltaTime));
         traveledDistance += currentSpeed * Time.deltaTime;
 
         // Sideways wobble around the forward path

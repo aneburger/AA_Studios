@@ -8,7 +8,7 @@ using System.Collections;
 public abstract class BaseShooter : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] protected Transform firePoint; 
+    [SerializeField] protected Transform firePoint;
     [SerializeField] protected WeaponAimer weaponAimer;
     [SerializeField] protected BaseMover mover;
     [SerializeField] protected SpriteRenderer weaponSprite;
@@ -49,6 +49,11 @@ public abstract class BaseShooter : MonoBehaviour
     private float temporaryDamageMultiplier = 1f;
     private float critChance = 0f;
 
+    // Damage Overrides
+    private float minDamageOverride = -1f;
+    private float maxDamageOverride = -1f;
+
+    // Bullet Overrides
     private int bulletCountOverride = -1;
     private int permanentBulletCountBonus = 0;
 
@@ -127,6 +132,20 @@ public abstract class BaseShooter : MonoBehaviour
     public void SetPermanentBulletCountBonus(int bonus)
     {
         permanentBulletCountBonus = bonus;
+    }
+
+    // -- SET DAMAGE OVERRIDE -- 
+    public void SetDamageOverride(float min, float max)
+    {
+        minDamageOverride = min;
+        maxDamageOverride = max;
+    }
+
+    // -- CLEAR DAMAGE OVERRIDE -- 
+    public void ClearDamageOverride()
+    {
+        minDamageOverride = -1f;
+        maxDamageOverride = -1f;
     }
 
     // -- GET FIRE POSITION --
@@ -213,7 +232,9 @@ public abstract class BaseShooter : MonoBehaviour
                 continue;
 
             // Roll a random damage
-            float rolledDamage = Random.Range(currentWeapon.minDamage, currentWeapon.maxDamage);
+            float minDmg = minDamageOverride >= 0f ? minDamageOverride : currentWeapon.minDamage;
+            float maxDmg = maxDamageOverride >= 0f ? maxDamageOverride : currentWeapon.maxDamage;
+            float rolledDamage = Random.Range(minDmg, maxDmg);
             rolledDamage *= GetDamageMultiplier();
 
             // Apply crit damage
