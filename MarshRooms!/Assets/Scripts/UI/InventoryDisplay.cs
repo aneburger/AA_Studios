@@ -9,6 +9,12 @@ public class InventoryDisplay : MonoBehaviour
     [Header("Inventory Slots")]
     [SerializeField] private Image[] inventorySlots = new Image[3];
 
+    [Header("Inventory Slots Backgrounds")]
+    [SerializeField] private Image[] inventorySlotsBackgrounds = new Image[3];
+
+    [Range(0f, 1f)]
+    [SerializeField] private float emptySlotAlpha = 0.35f;
+
     private PlayerShooter playerShooter;
     private PlayerWeaponSlot weaponSlots;
     private int currentDisplaySlot = 0;
@@ -19,6 +25,7 @@ public class InventoryDisplay : MonoBehaviour
         weaponSlots = FindFirstObjectByType<PlayerWeaponSlot>();
 
         HideAllInventorySlots();
+        UpdateInventoryDisplay();
     }
 
     private void Update()
@@ -32,31 +39,56 @@ public class InventoryDisplay : MonoBehaviour
     private void UpdateInventoryDisplay()
     {
         int currentSlot = GetCurrentWeaponSlot();
-
         if (currentSlot != currentDisplaySlot)
-        {
             currentDisplaySlot = currentSlot;
-        }
 
         WeaponData[] displayWeapons = GetDisplayWeapons(currentDisplaySlot);
 
-        // display weapons in slots, filling from top
         for (int displayIndex = 0; displayIndex < inventorySlots.Length; displayIndex++)
         {
-            if (inventorySlots[displayIndex] == null) continue;
+            Image slotImage = inventorySlots[displayIndex];
+            if (slotImage == null)
+                continue;
 
-            WeaponData weapon = displayWeapons[displayIndex];
+            WeaponData weapon = displayIndex < displayWeapons.Length ? displayWeapons[displayIndex] : null;
+            bool hasWeapon = weapon != null && weapon.hudSprite != null;
 
-            if (weapon != null)
+            if (hasWeapon)
             {
-                inventorySlots[displayIndex].sprite = weapon.hudSprite;
-                inventorySlots[displayIndex].enabled = true;
+                slotImage.sprite = weapon.hudSprite;
+                slotImage.color = Color.white;
+                slotImage.enabled = true;
+                slotImage.SetNativeSize();
+
+                SetBackgroundAlpha(displayIndex, 1f);
             }
             else
             {
-                inventorySlots[displayIndex].enabled = false;
+                slotImage.sprite = null;
+                slotImage.enabled = false;
+
+                SetBackgroundAlpha(displayIndex, emptySlotAlpha);
             }
         }
+    }
+
+    // -- SET BACKGROUND OPACITY --
+    private void SetBackgroundAlpha(int index, float alpha)
+    {
+        if (inventorySlotsBackgrounds == null)
+            return;
+
+        if (index < 0 || index >= inventorySlotsBackgrounds.Length)
+            return;
+
+        Image background = inventorySlotsBackgrounds[index];
+        if (background == null)
+            return;
+
+        Color color = background.color;
+        color.a = alpha;
+        background.color = color;
+        background.enabled = true;
     }
 
     // -- GET DISPLAY WEAPONS --
@@ -98,7 +130,24 @@ public class InventoryDisplay : MonoBehaviour
         foreach (Image slot in inventorySlots)
         {
             if (slot != null)
+            {
+                slot.sprite = null;
                 slot.enabled = false;
+            }
+        }
+
+        if (inventorySlotsBackgrounds == null)
+            return;
+
+        for (int i = 0; i < inventorySlotsBackgrounds.Length; i++)
+        {
+            if (inventorySlotsBackgrounds[i] != null)
+            {
+                Color color = inventorySlotsBackgrounds[i].color;
+                color.a = emptySlotAlpha;
+                inventorySlotsBackgrounds[i].color = color;
+                inventorySlotsBackgrounds[i].enabled = true;
+            }
         }
     }
 }
