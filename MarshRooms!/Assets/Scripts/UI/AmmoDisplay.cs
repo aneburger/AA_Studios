@@ -6,6 +6,8 @@ public class AmmoDisplay : MonoBehaviour
 {
     [SerializeField] private Image ammoDisplayImage;
     [SerializeField] private TextMeshProUGUI ammoCountText;
+    [SerializeField] private TextMeshProUGUI maxAmmoCountText;
+    [SerializeField] private TextMeshProUGUI slashText;
 
     private PlayerShooter playerShooter;
     private PlayerWeaponSlot weaponSlots;
@@ -30,36 +32,34 @@ public class AmmoDisplay : MonoBehaviour
         {
             ammoDisplayImage.enabled = false;
             ammoCountText.enabled = false;
+            maxAmmoCountText.enabled = false;
+            if (slashText != null) slashText.enabled = false;
             return;
         }
 
-        if (playerShooter.currentWeapon.ammoDisplaySprite != null)
-        {
-            ammoDisplayImage.sprite = playerShooter.currentWeapon.ammoDisplaySprite;
-            ammoDisplayImage.enabled = true;
-        }
-        else
-        {
-            ammoDisplayImage.enabled = false;
-        }
-
-        // update ammo count text only for weapons with limited ammo
         int currentAmmo = playerShooter.GetAmmo();
 
+        // Plunger: show nothing
         if (currentAmmo == -1)
         {
-            // plunger shows infinity symbol
+            ammoDisplayImage.enabled = false;
             ammoCountText.enabled = false;
+            maxAmmoCountText.enabled = false;
+            if (slashText != null) slashText.enabled = false;
+            return;
         }
-        else if (currentAmmo >= 0)
-        {
-            // display ammo count for limited ammo weapons
-            ammoCountText.text = currentAmmo.ToString();
-            ammoCountText.enabled = true;
-        }
-        else
-        {
-            ammoCountText.enabled = false;
-        }
+
+        ammoDisplayImage.enabled = playerShooter.currentWeapon.ammoDisplaySprite != null;
+        if (ammoDisplayImage.enabled)
+            ammoDisplayImage.sprite = playerShooter.currentWeapon.ammoDisplaySprite;
+
+        ammoCountText.text = currentAmmo.ToString();
+        maxAmmoCountText.text = playerShooter.currentWeapon.maxAmmo.ToString();
+
+        ammoCountText.enabled = true;
+        maxAmmoCountText.enabled = true;
+        if (slashText != null) slashText.enabled = true;
     }
+
+    
 }
