@@ -19,10 +19,12 @@ MonoBehaviour:
   muzzleFlashPrefab: {fileID: 4081999799842582576, guid: 7aad1d6931a1696439336ee76143d1cb, type: 3}
   pickupPrefab: {fileID: 1303430737314922756, guid: 0f851c1cdd294d7468c7afb55dbfea2c, type: 3}
   fireRate: 0.65
-  minDamage: 3.5
-  maxDamage: 5
+  minDamage: 3
+  maxDamage: 4.5
   bulletSpeed: 8
-  maxAmmo: 20
+  maxAmmo: 30
+  burstCount: 1
+  burstInterval: 0.08
   firePointOffset: {x: 0, y: 0}
   flipOffsetOnAimFlip: 0
   bulletCount: 3
@@ -31,6 +33,7 @@ MonoBehaviour:
   hudSprite: {fileID: -7310361649043192752, guid: 116a95a09137fb844a5e255ac1534143, type: 3}
   ammoDisplaySprite: {fileID: 0}
   shootClip: {fileID: 8300000, guid: fd784beb6d293a2469f9e3937835b7c6, type: 3}
+  shootClips: []
   shootVolume: 0.5
   wallHitClip: {fileID: 0}
   wallHitVolume: 0.7

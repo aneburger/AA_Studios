@@ -1,22 +1,19 @@
 fileFormatVersion: 2
-guid: 70eed43991566ac47896354d8f9486e4
+guid: 59944e1e9a4d2344eb75bd6feb6f92ea
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 1649192393020575799
-    second: bubbles_0
+      213: 6210212258158056921
+    second: inventory-new_0
   - first:
-      213: 436068532722222212
-    second: bubbles_1
+      213: 903045054568571733
+    second: inventory-new_1
   - first:
-      213: 4446514367426954430
-    second: bubbles_2
+      213: -5529971212598406805
+    second: inventory-new_2
   - first:
-      213: 2895248461379961665
-    second: bubbles_3
-  - first:
-      213: -1131802689570784725
-    second: bubbles_4
+      213: -3764550050444246172
+    second: inventory-new_3
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,7 +110,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -125,13 +122,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: bubbles_0
+      name: inventory-new_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 15
-        height: 15
+        x: 23
+        y: 69
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -140,20 +137,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 73094406ebb13e610800000000000000
-      internalID: 1649192393020575799
+      spriteID: 9d5994b452b1f2650800000000000000
+      internalID: 6210212258158056921
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: bubbles_1
+      name: inventory-new_1
       rect:
         serializedVersion: 2
-        x: 15
-        y: 0
-        width: 15
-        height: 15
+        x: 26
+        y: 38
+        width: 26
+        height: 26
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -162,20 +159,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 48442a6250a3d0600800000000000000
-      internalID: 436068532722222212
+      spriteID: 553abbd41b2488c00800000000000000
+      internalID: 903045054568571733
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: bubbles_2
+      name: inventory-new_2
       rect:
         serializedVersion: 2
-        x: 30
-        y: 0
-        width: 15
-        height: 15
+        x: 26
+        y: 4
+        width: 26
+        height: 26
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -184,74 +181,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: eb4872f224135bd30800000000000000
-      internalID: 4446514367426954430
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: bubbles_3
-      rect:
-        serializedVersion: 2
-        x: 45
-        y: 0
-        width: 15
-        height: 15
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 1438c0dc22dfd2820800000000000000
-      internalID: 2895248461379961665
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: bubbles_4
-      rect:
-        serializedVersion: 2
-        x: 60
-        y: 0
-        width: 15
-        height: 15
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: b2a3d4c43770b40f0800000000000000
-      internalID: -1131802689570784725
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: bubbles_5
-      rect:
-        serializedVersion: 2
-        x: 75
-        y: 0
-        width: 15
-        height: 15
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 00d2a36222dffa048a99ef031eb4ffa7
-      internalID: -350379253
+      spriteID: b619fee2b789143b0800000000000000
+      internalID: -5529971212598406805
       vertices: []
       indices: 
       edges: []
@@ -260,7 +191,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 33da8980e4e8c8b46a0a44f1aefa57fc
+    spriteID: 451f584f3dfbe6345bc03e3230e78ef2
     internalID: 0
     vertices: []
     indices: 
@@ -270,14 +201,11 @@ TextureImporter:
     spriteCustomMetadata:
       entries:
       - key: SpriteEditor.SliceSettings
-        value: '{"sliceOnImport":false,"gridCellCount":{"x":5.0,"y":1.0},"gridSpriteSize":{"x":15.0,"y":15.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      bubbles_0: 1649192393020575799
-      bubbles_1: 436068532722222212
-      bubbles_2: 4446514367426954430
-      bubbles_3: 2895248461379961665
-      bubbles_4: -1131802689570784725
-      bubbles_5: -350379253
+      inventory-new_0: 6210212258158056921
+      inventory-new_1: 903045054568571733
+      inventory-new_2: -5529971212598406805
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

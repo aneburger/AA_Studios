@@ -20,7 +20,7 @@ MonoBehaviour:
   pickupPrefab: {fileID: 1303430737314922756, guid: ad297751ddca1854da2564903476b9a4, type: 3}
   fireRate: 0.65
   minDamage: 5
-  maxDamage: 7
+  maxDamage: 6
   bulletSpeed: 15
   maxAmmo: 40
   burstCount: 1
@@ -33,6 +33,7 @@ MonoBehaviour:
   hudSprite: {fileID: 1306517108130304039, guid: 3e09dbcf5c1feb94a8cec943ad1f812a, type: 3}
   ammoDisplaySprite: {fileID: 0}
   shootClip: {fileID: 8300000, guid: 7999fbf05fd575343bbafb1caf493afd, type: 3}
+  shootClips: []
   shootVolume: 0.6
   wallHitClip: {fileID: 0}
   wallHitVolume: 0.7

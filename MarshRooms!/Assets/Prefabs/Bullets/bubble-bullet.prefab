@@ -177,16 +177,18 @@ MonoBehaviour:
   - {fileID: 2895248461379961665, guid: 70eed43991566ac47896354d8f9486e4, type: 3}
   largeSprites:
   - {fileID: -1131802689570784725, guid: 70eed43991566ac47896354d8f9486e4, type: 3}
+  - {fileID: -350379253, guid: 70eed43991566ac47896354d8f9486e4, type: 3}
   smallPopVFX: {fileID: 4081999799842582576, guid: c723486b0732bf44b95f5e9d0f1ce8cd, type: 3}
   mediumPopVFX: {fileID: 4081999799842582576, guid: 50af85a5cddf7124a80c199bb234981d, type: 3}
   largePopVFX: {fileID: 4081999799842582576, guid: 4b3f20730b99de1448955cbe905514fe, type: 3}
   minLifetime: 1.5
-  maxLifetime: 3
+  maxLifetime: 4
   popClips:
   - {fileID: 8300000, guid: e25d21698960e854899774c511dc708a, type: 3}
   - {fileID: 8300000, guid: c82c7e0a60c9d6c458c0e11a60186fcb, type: 3}
   - {fileID: 8300000, guid: ff7ba1b42bcb80d46a44def5356b62ba, type: 3}
   popVolume: 0.2
-  dragDecay: 2
-  wobbleAmplitude: 0.5
+  dragDecay: 1.8
+  wobbleAmplitude: 0.6
   wobbleFrequency: 2
+  mutatedDragDecay: 1
