@@ -60,6 +60,8 @@ public class RoomManager : MonoBehaviour
 
     private int weaponDropsThisFloor = 0;
 
+    private List<(GameObject prefab, Vector2 position)> weaponDropCandidatesThisFloor = new List<(GameObject, Vector2)>();
+
     private int enemiesRemainingInFloor = 0;
 
     private Transform player;
@@ -87,6 +89,7 @@ public class RoomManager : MonoBehaviour
     {
         weaponDropsThisWave = 0;
         weaponDropsThisFloor = 0;
+        weaponDropCandidatesThisFloor.Clear();
         player = GameObject.FindWithTag("Player").transform;
         EnemyManager.OnAllEnemiesDead += OnWaveCleared;
     }
@@ -106,6 +109,7 @@ public class RoomManager : MonoBehaviour
         if (currentWave >= waves.Length)
         {
             EnemyManager.OnAllEnemiesDead -= OnWaveCleared;
+            EnsureMinimumWeaponDrops();
             OnRoomCleared?.Invoke();
             return;
         }
@@ -327,10 +331,44 @@ public class RoomManager : MonoBehaviour
     // -- TRY TO DROP WEAPON --
     public void TryDropWeapon(Vector2 position, GameObject weaponPrefab, float dropChance)
     {
+
+        weaponDropCandidatesThisFloor.Add((weaponPrefab, position));
+
         if (weaponDropsThisFloor >= maxWeaponDrops) return;
         if (weaponDropsThisWave >= maxWeaponDropsPerWave) return;
         if (Random.value > dropChance) return;
 
+        SpawnWeaponDrop(weaponPrefab, position);
+    }
+
+    // -- ENSURE MINIMUM WEAPON DROPS --
+    private void EnsureMinimumWeaponDrops()
+    {
+        int needed = minWeaponDrops - weaponDropsThisFloor;
+        if (needed <= 0) return;
+
+        int allowed = Mathf.Max(0, maxWeaponDrops - weaponDropsThisFloor);
+        needed = Mathf.Min(needed, allowed);
+        if (needed <= 0) return;
+
+        if (weaponDropCandidatesThisFloor.Count == 0)
+        {
+            return;
+        }
+
+        List<(GameObject prefab, Vector2 position)> pool = new List<(GameObject, Vector2)>(weaponDropCandidatesThisFloor);
+
+        for (int i = 0; i < needed && pool.Count > 0; i++)
+        {
+            int idx = Random.Range(0, pool.Count);
+            SpawnWeaponDrop(pool[idx].prefab, pool[idx].position);
+            pool.RemoveAt(idx);
+        }
+    }
+
+    // -- SPAWN WEAPON DROP --
+    private void SpawnWeaponDrop(GameObject weaponPrefab, Vector2 position)
+    {
         Vector2 safePos = dropZone != null ? dropZone.GetSafeDropPosition(position) : position;
         Instantiate(weaponPrefab, safePos, Quaternion.identity);
         weaponDropsThisFloor++;

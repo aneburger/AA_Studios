@@ -45,7 +45,7 @@ public class Elevator : MonoBehaviour
     private IEnumerator OpenSequence()
     {
         isOpen = true;
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(2f);
 
         AudioManager.Instance.PlaySFX(elevatorOpenClip, elevatorOpenClipVolume);
         yield return new WaitForSeconds(0.2f);

@@ -19,6 +19,7 @@ public class EnemyHealth : BaseHealth
     public event System.Action OnTookDamage;
 
     private ExplodingModifier exploder;
+    private bool hasFinalized = false;
 
     // -- AWAKE --
     protected override void Awake()
@@ -54,6 +55,8 @@ public class EnemyHealth : BaseHealth
     // -- TAKE DAMAGE --
     public override void TakeDamage(float amount)
     {
+        if (hasFinalized || IsDead()) return;
+
         EnemyController controller = GetComponent<EnemyController>();
         if (controller != null && controller.IsSpawning) return;
 
@@ -89,6 +92,8 @@ public class EnemyHealth : BaseHealth
     // -- DIE --
     protected override void Die()
     {
+        if (hasFinalized) return;
+
         if (exploder != null && !exploder.HasDetonated)
         {
             exploder.BeginPriming(FinalizeDeath);
@@ -101,6 +106,9 @@ public class EnemyHealth : BaseHealth
     // -- FINALIZE DEATH --
     private void FinalizeDeath()
     {
+        if (hasFinalized) return;
+        hasFinalized = true;
+
         base.Die();
         AudioManager.Instance.PlaySFX(dieClip, dieVolume);
         VFXManager.Instance.SpawnEnemyExplosion(transform.position);

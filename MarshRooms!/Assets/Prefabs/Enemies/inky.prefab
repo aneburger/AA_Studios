@@ -305,9 +305,9 @@ MonoBehaviour:
   debugLogging: 0
   rollRange: 15
   rollTimerMin: 0.5
-  rollTimerMax: 2.5
-  rollInaccuracyMin: 5
-  rollInaccuracyMax: 20
+  rollTimerMax: 2
+  rollInaccuracyMin: 3
+  rollInaccuracyMax: 15
   rollDirectionRefreshInterval: 0.3
   rollDirectionTurnSpeed: 3
   rollSpeedStart: 1.5
