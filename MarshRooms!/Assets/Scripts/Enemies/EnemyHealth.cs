@@ -113,22 +113,18 @@ public class EnemyHealth : BaseHealth
         AudioManager.Instance.PlaySFX(dieClip, dieVolume);
         VFXManager.Instance.SpawnEnemyExplosion(transform.position);
 
-        OnDied?.Invoke(transform.position);
-        EnemyManager.Instance.UnregisterEnemy(gameObject);
-
         EnemyController controller = GetComponent<EnemyController>();
         RoomManager room = FindFirstObjectByType<RoomManager>();
 
         if (controller != null)
         {
-            // Weapon drop
             if (controller.Data.possibleWeaponDrops.Length > 0 && room != null)
             {
                 EnemyData.WeaponDrop drop = controller.Data.possibleWeaponDrops[Random.Range(0, controller.Data.possibleWeaponDrops.Length)];
                 room.TryDropWeapon(transform.position, drop.weaponPickupPrefab, drop.dropChance);
             }
 
-           // Health drop
+            // Health drop
             float healthDropChance = controller.Data.healthDropChance * BoonManager.Instance.Stats.healthDropRateMultiplier;
             float roll = Random.value;
             bool willDrop = controller.Data.healthPickupPrefab != null && roll <= healthDropChance;
@@ -140,6 +136,9 @@ public class EnemyHealth : BaseHealth
                 Instantiate(controller.Data.healthPickupPrefab, safePos, Quaternion.identity);
             }
         }
+
+        OnDied?.Invoke(transform.position);
+        EnemyManager.Instance.UnregisterEnemy(gameObject);
 
         SpawnSpores();
         Destroy(gameObject);

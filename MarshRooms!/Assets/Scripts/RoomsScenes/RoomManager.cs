@@ -341,7 +341,6 @@ public class RoomManager : MonoBehaviour
         SpawnWeaponDrop(weaponPrefab, position);
     }
 
-    // -- ENSURE MINIMUM WEAPON DROPS --
     private void EnsureMinimumWeaponDrops()
     {
         int needed = minWeaponDrops - weaponDropsThisFloor;
@@ -351,18 +350,16 @@ public class RoomManager : MonoBehaviour
         needed = Mathf.Min(needed, allowed);
         if (needed <= 0) return;
 
-        if (weaponDropCandidatesThisFloor.Count == 0)
-        {
-            return;
-        }
+        if (weaponDropCandidatesThisFloor.Count == 0) return;
 
-        List<(GameObject prefab, Vector2 position)> pool = new List<(GameObject, Vector2)>(weaponDropCandidatesThisFloor);
+        List<(GameObject prefab, Vector2 position)> pool =
+            new List<(GameObject, Vector2)>(weaponDropCandidatesThisFloor);
+        pool.Reverse();
 
         for (int i = 0; i < needed && pool.Count > 0; i++)
         {
-            int idx = Random.Range(0, pool.Count);
-            SpawnWeaponDrop(pool[idx].prefab, pool[idx].position);
-            pool.RemoveAt(idx);
+            SpawnWeaponDrop(pool[0].prefab, pool[0].position);
+            pool.RemoveAt(0);
         }
     }
 
