@@ -181,8 +181,8 @@ BoxCollider2D:
   m_Offset: {x: 0.5625, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.1, y: 0.5}
-    oldSize: {x: 1.1875, y: 0.625}
+    pivot: {x: 0, y: 0.5}
+    oldSize: {x: 1, y: 0.625}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -203,3 +203,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RainbowBullet
   maxRange: 18
+  mutatedRangeMultiplier: 1.5
+  mutatedDamageMultiplier: 1.2
