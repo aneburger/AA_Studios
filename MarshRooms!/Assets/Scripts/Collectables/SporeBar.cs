@@ -90,7 +90,6 @@ public class SporeBar : MonoBehaviour
             fillImage.fillAmount = Mathf.Lerp(fillImage.fillAmount, targetFillAmount, meterConfig.fillSmoothSpeed * Time.deltaTime);
 
         UpdateShake();
-        UpdatePromptPosition();
         //UpdateGlow();
     }
 
@@ -134,9 +133,11 @@ public class SporeBar : MonoBehaviour
     private void ShowReadyPrompt()
     {
         if (readyPrompt != null && !readyPrompt.activeSelf)
+        {
             readyPrompt.SetActive(true);
-
-        UpdatePromptPosition();
+            promptRect.SetParent(parentRect, false);
+            promptRect.anchoredPosition = originalAnchoredPosition + readyPromptOffset;
+        }
     }
 
     // -- HIDE READY PROMPT --
@@ -146,24 +147,17 @@ public class SporeBar : MonoBehaviour
             readyPrompt.SetActive(false);
     }
 
-    // -- UPDATE PROMPT POSITION --
-    private void UpdatePromptPosition()
-    {
-        if (readyPrompt == null || promptRect == null || parentRect == null)
-            return;
-
-        if (!readyPrompt.activeSelf)
-            return;
-
-        promptRect.SetParent(parentRect, false);
-        promptRect.anchoredPosition = originalAnchoredPosition + readyPromptOffset;
-    }
-
     // -- UPDATE SHAKE --
     private void UpdateShake()
     {
         if (!hasOriginalPosition || shakeTarget == null || SporeManager.Instance == null)
             return;
+
+        if (Time.timeScale == 0f)
+        {
+            shakeTarget.anchoredPosition = originalAnchoredPosition;
+            return;
+        }
 
         bool shouldShake = SporeManager.Instance.IsFull || SporeManager.Instance.IsMutated;
 

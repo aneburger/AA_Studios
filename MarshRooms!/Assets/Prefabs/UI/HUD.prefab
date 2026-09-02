@@ -4315,9 +4315,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 37.5, y: -39.5}
-  m_SizeDelta: {x: 59, y: 15}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 8.619995, y: -50.049988}
+  m_SizeDelta: {x: 60, y: 19}
+  m_Pivot: {x: 0, y: 0}
 --- !u!222 &3970662932113793707
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4346,7 +4346,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -2273193109253888791, guid: 11fc5d7906fac384495581f551078aa6, type: 3}
+  m_Sprite: {fileID: -148152407, guid: e2405e20ff320e74992e23eb961610eb, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -4371,10 +4371,10 @@ MonoBehaviour:
   fillImage: {fileID: 4991149228030264838}
   meterConfig: {fileID: 11400000, guid: 6628942d7fb8e6445ac28f3edcfa22f8, type: 2}
   readyPrompt: {fileID: 8035314170115426913}
-  readyPromptOffset: {x: 38, y: 15}
+  readyPromptOffset: {x: 0, y: 0}
   shakeTarget: {fileID: 3225524358858379386}
-  shakeAmplitude: 0.5
-  shakeSpeed: 59
+  shakeAmplitude: 0.4
+  shakeSpeed: 55
 --- !u!1 &4654457328855493187
 GameObject:
   m_ObjectHideFlags: 0
@@ -5151,9 +5151,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -24.51, y: -6.99}
-  m_SizeDelta: {x: 39, y: 6}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -42.01, y: -13.97}
+  m_SizeDelta: {x: 40, y: 5}
+  m_Pivot: {x: 0, y: 0}
 --- !u!222 &1749580183042759587
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5182,7 +5182,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -2227876622814630107, guid: e42de4d2d320f22449278bfe444cbb0e, type: 3}
+  m_Sprite: {fileID: -1213162284, guid: e2405e20ff320e74992e23eb961610eb, type: 3}
   m_Type: 3
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -6917,8 +6917,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: /
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: b3d881c31a3df254baf241ecaf54e9da, type: 2}
-  m_sharedMaterial: {fileID: 7835370868060652561, guid: b3d881c31a3df254baf241ecaf54e9da, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 45359ae67aabf7548add47a33f209900, type: 2}
+  m_sharedMaterial: {fileID: -1368823652715923689, guid: 45359ae67aabf7548add47a33f209900, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -7321,7 +7321,7 @@ GameObject:
   - component: {fileID: 7643294057282783187}
   - component: {fileID: 4910788913408193078}
   - component: {fileID: 5113364419720095107}
-  - component: {fileID: 783154850293730789}
+  - component: {fileID: 206128455553804893}
   m_Layer: 5
   m_Name: right-click-prompt
   m_TagString: Untagged
@@ -7343,9 +7343,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 3272473265372880317}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -162.79999, y: 92.15536}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 82.46, y: -42.6}
   m_SizeDelta: {x: 17, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7643294057282783187
@@ -7399,9 +7399,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ContinueIndicatorBob
   style: 1
-  amount: 0.6
+  amount: 0.3
   speed: 10
---- !u!114 &783154850293730789
+--- !u!114 &206128455553804893
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -7410,16 +7410,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 8035314170115426913}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 61be911b1a456ad44b12fa591ad08f29, type: 3}
+  m_Script: {fileID: 11500000, guid: 4adb26e4da21d4142afa869bee6bbcf0, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SporeBar
-  fillImage: {fileID: 0}
-  meterConfig: {fileID: 0}
-  readyPrompt: {fileID: 8035314170115426913}
-  readyPromptOffset: {x: -0.76, y: -0.17}
-  shakeTarget: {fileID: 0}
-  shakeAmplitude: 1.5
-  shakeSpeed: 18
+  m_EditorClassIdentifier: Assembly-CSharp::ImageAnimation
+  sprites:
+  - {fileID: -4960477123370688669, guid: b0f3f556556a2ea4987c3693141e1227, type: 3}
+  - {fileID: 1232040222, guid: b0f3f556556a2ea4987c3693141e1227, type: 3}
+  spritePerFrame: 30
+  loop: 1
+  destroyOnEnd: 0
 --- !u!1 &8276625774236999412
 GameObject:
   m_ObjectHideFlags: 0
