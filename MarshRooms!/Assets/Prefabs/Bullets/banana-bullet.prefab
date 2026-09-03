@@ -173,7 +173,8 @@ MonoBehaviour:
   rotationSpeed: 0
   splashRadius: 2.4
   splashDamageMultiplier: 0.3
-  maxRange: 7
+  minRange: 6
+  maxRange: 9
   splatSprites:
   - {fileID: -7905663524377662597, guid: 24eb5746f98972542805ce9af991a7c6, type: 3}
   - {fileID: 7220928588772206736, guid: 24eb5746f98972542805ce9af991a7c6, type: 3}

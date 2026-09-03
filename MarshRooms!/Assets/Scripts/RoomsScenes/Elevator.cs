@@ -59,6 +59,7 @@ public class Elevator : MonoBehaviour
 
         interactable.SetInteractionLocked(true);
         AudioManager.Instance.CrossfadeMusic(elevatorTuneClip, 0.5f, elevatorTuneClipVolume);
+        Time.timeScale = 0f;
 
         int floorNumber = LevelLoader.Instance.GetCurrentFloorNumber();
         List<BoonCardData> offers = BoonManager.Instance.GetThreeCardOffers(floorNumber);
@@ -76,5 +77,6 @@ public class Elevator : MonoBehaviour
 
         string nextScene = LevelLoader.Instance.GetNextFloorSceneName();
         LevelLoader.Instance.LoadLevel(nextScene);
+        Time.timeScale = 1f;
     }
 }

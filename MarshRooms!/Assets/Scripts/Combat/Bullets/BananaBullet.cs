@@ -7,6 +7,7 @@ public class BananaBullet : BaseBullet
     [SerializeField] private float rotationSpeed;
     [SerializeField] private float splashRadius;
     [SerializeField] private float splashDamageMultiplier;
+    [SerializeField] private float minRange;
     [SerializeField] private float maxRange;
 
     [Header("Splat VFX")]
@@ -47,8 +48,10 @@ public class BananaBullet : BaseBullet
         // Spin the bullet
         transform.Rotate(0f, 0f, rotationDirection * rotationSpeed * Time.deltaTime);
 
-        // Splash when max range is reached
-        if (Vector2.Distance(transform.position, spawnPosition) >= maxRange)
+        // Splash when range is reached
+        float range = Random.Range(minRange, maxRange);
+
+        if (Vector2.Distance(transform.position, spawnPosition) >= range)
             Splash();
     }
 

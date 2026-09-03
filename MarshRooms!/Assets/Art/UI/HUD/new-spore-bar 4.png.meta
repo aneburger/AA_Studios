@@ -1,13 +1,31 @@
 fileFormatVersion: 2
-guid: 1cb32013a27906d488afb2c5a2fd6721
+guid: e2405e20ff320e74992e23eb961610eb
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 6309917649375919019
-    second: new-spore-bar 1_0
+      213: -6805828367796317315
+    second: new-spore-bar 3_0
   - first:
-      213: 7472217772101799999
-    second: new-spore-bar 1_1
+      213: -3489044341318414279
+    second: new-spore-bar 3_1
+  - first:
+      213: 3601567601849985585
+    second: new-spore-bar 3_2
+  - first:
+      213: -6682803856277930943
+    second: new-spore-bar 3_3
+  - first:
+      213: 8209816117452402149
+    second: new-spore-bar 3_4
+  - first:
+      213: 361451363596573621
+    second: new-spore-bar 3_5
+  - first:
+      213: -2273193109253888791
+    second: new-spore-bar 3_6
+  - first:
+      213: 7734840717392898206
+    second: new-spore-bar 3_7
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -116,12 +134,12 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: new-spore-bar 1_0
+      name: new-spore-bar 4_0
       rect:
         serializedVersion: 2
-        x: 14
-        y: 31
-        width: 64
+        x: 35
+        y: 25
+        width: 60
         height: 19
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -129,32 +147,32 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: babf405bba4519750800000000000000
-      internalID: 6309917649375919019
+      spriteID: f5901b6dd04474144a2d5b91355100af
+      internalID: -148152407
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: new-spore-bar 1_1
+      name: new-spore-bar 4_1
       rect:
         serializedVersion: 2
-        x: 31
-        y: 32
-        width: 47
-        height: 14
+        x: 53
+        y: 13
+        width: 40
+        height: 5
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: f301d766976a2b760800000000000000
-      internalID: 7472217772101799999
+      spriteID: 60e1141ecd377484ba29200499bab0b0
+      internalID: -1213162284
       vertices: []
       indices: 
       edges: []
@@ -163,7 +181,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: fec4e493debba8544af19288069497f9
+    spriteID: ab12dd85cb07e18418a2ba00728b37ca
     internalID: 0
     vertices: []
     indices: 
@@ -173,8 +191,16 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      new-spore-bar 1_0: 6309917649375919019
-      new-spore-bar 1_1: 7472217772101799999
+      new-spore-bar 3_0: -6805828367796317315
+      new-spore-bar 3_1: -3489044341318414279
+      new-spore-bar 3_2: 3601567601849985585
+      new-spore-bar 3_3: -6682803856277930943
+      new-spore-bar 3_4: 8209816117452402149
+      new-spore-bar 3_5: 361451363596573621
+      new-spore-bar 3_6: -2273193109253888791
+      new-spore-bar 3_7: 7734840717392898206
+      new-spore-bar 4_0: -148152407
+      new-spore-bar 4_1: -1213162284
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
