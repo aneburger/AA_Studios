@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using TopDown.Movement;
 
 public class PauseMenuManager : MonoBehaviour
 {
@@ -317,8 +318,8 @@ public class PauseMenuManager : MonoBehaviour
         shootingWasEnabledBeforePause = shooter == null || shooter.CanShoot;
         shooter?.SetCanShoot(false);
 
-        //volumeBeforePause = AudioManager.Instance.GetMusicVolume();
-        //AudioManager.Instance.SetMusicVolume(volumeBeforePause * 0.2f);
+        FindPlayerMover()?.SetInputLocked(true);
+
         AudioManager.Instance?.SetMusicDampenMultiplier(0.2f);
 
         if (playerInput != null) playerInput.enabled = false;
@@ -330,12 +331,12 @@ public class PauseMenuManager : MonoBehaviour
         isPaused = false;
         Time.timeScale = 1f;
 
-        // Only re-enable shooting if it was actually enabled before we
         if (shootingWasEnabledBeforePause)
             FindPlayerShooter()?.SetCanShoot(true);
 
+        FindPlayerMover()?.SetInputLocked(false);
+
         PlayUiSound(clickClip, clickVolume);
-        //AudioManager.Instance?.SetMusicVolume(volumeBeforePause);
         AudioManager.Instance?.SetMusicDampenMultiplier(1f);
 
         if (playerInput != null) playerInput.enabled = true;
@@ -430,6 +431,13 @@ public class PauseMenuManager : MonoBehaviour
     {
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         return player != null ? player.GetComponent<PlayerShooter>() : null;
+    }
+
+    // -- FIND MOVER --
+    private PlayerMover FindPlayerMover()
+    {
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        return player != null ? player.GetComponent<PlayerMover>() : null;
     }
 
     // -- ENABLE --

@@ -72,15 +72,16 @@ public class MenuManager : MonoBehaviour
 
     private void Awake()
     {
-        // Ensure menu is visible at start
         if (menuPanel != null)
             menuPanel.SetActive(true);
 
         if (controlsMenuPanel != null)
             controlsMenuPanel.SetActive(false);
 
-        // Pause game while menu is open
         Time.timeScale = 0f;
+
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        player?.GetComponent<TopDown.Movement.PlayerMover>()?.SetInputLocked(true);
 
         menuButtons = new[] { tutorialButton, startButton, controlsButton, quitButton };
         menuTexts = new[] { tutorialText, startText, controlsText, quitText };
@@ -358,6 +359,8 @@ public class MenuManager : MonoBehaviour
 
         // Resume time
         Time.timeScale = 1f;
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        player?.GetComponent<TopDown.Movement.PlayerMover>()?.SetInputLocked(false);
 
         if (controlsMenuPanel != null)
             controlsMenuPanel.SetActive(false);

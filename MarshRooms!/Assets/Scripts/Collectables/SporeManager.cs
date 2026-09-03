@@ -100,10 +100,17 @@ public class SporeManager : MonoBehaviour
         OnMutatedEnded?.Invoke();
     }
 
-    // -- RESET (new level) --
+    // -- END MUTATED STATE SILENTLY (death/reset) --
+    private void EndMutatedStateSilent()
+    {
+        isMutated = false;
+        mutatedTimeRemaining = 0f;
+    }
+
+    // -- RESET (new level / respawn) --
     public void ResetSpores()
     {
-        if (isMutated) EndMutatedState();
+        if (isMutated) EndMutatedStateSilent();
         currentSpores = 0;
         OnSporeCountChanged?.Invoke(currentSpores, maxSpores);
     }

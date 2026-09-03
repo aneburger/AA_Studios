@@ -13,6 +13,7 @@ namespace TopDown.Movement
         [Header("References")]
         [SerializeField] private PlayerAimer aim;
         [SerializeField] private PlayerShooter shooter;
+        [SerializeField] private PlayerSporeActivator sporeActivator; 
 
         [Header("Dodge Settings")]
         [SerializeField] private float dodgeForce;
@@ -60,6 +61,9 @@ namespace TopDown.Movement
             anim = GetComponentInChildren<Animator>();
             playerHealth = GetComponent<PlayerHealth>();
             weaponSlot = GetComponent<PlayerWeaponSlot>();
+
+            if (sporeActivator == null)
+                sporeActivator = GetComponent<PlayerSporeActivator>();
         }
 
         // -- UPDATE -- 
@@ -144,6 +148,15 @@ namespace TopDown.Movement
         {
             canMove = value;
             if (!canMove) moveInput = Vector2.zero;
+        }
+
+        // -- SET ALL INPUT LOCKED --
+        public void SetInputLocked(bool locked)
+        {
+            SetCanMove(!locked);
+            canDodge = !locked;
+            shooter?.SetCanShoot(!locked);
+            sporeActivator?.SetCanActivate(!locked);
         }
 
         // -- MOVE INPUT --

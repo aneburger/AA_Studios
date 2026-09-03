@@ -84,7 +84,6 @@ public class PlayerHealth : BaseHealth
     public override void IncreaseMaxHealth(float amount, bool healToFull = false)
     {
         base.IncreaseMaxHealth(amount, healToFull);
-        //UpdateHUD();
         HUDManager.Instance?.RefreshHearts();
     }
 
@@ -232,7 +231,6 @@ public class PlayerHealth : BaseHealth
     // -- DIE -- 
     protected override void Die()
     {   
-        // If player dies in tutorial
         if (TutorialDirector.Instance != null)
         {   
             anim.SetTrigger("Die");
@@ -248,9 +246,12 @@ public class PlayerHealth : BaseHealth
         AudioManager.Instance.PlaySFX(dieClip, dieVolume);
 
         if (SporeManager.Instance.IsMutated)
+        {
             mutatedVisuals?.SetEffectsVisible(false);
+            SporeManager.Instance.ResetSpores();
+            mutatedVisuals?.ResetStateSilently();
+        }
 
-        // Disable input and physics
         GetComponent<PlayerInput>().enabled = false;
         GetComponent<Rigidbody2D>().linearVelocity = Vector2.zero;
         shooter.HideWeapon(true);
