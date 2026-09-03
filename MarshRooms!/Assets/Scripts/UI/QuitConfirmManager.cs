@@ -17,6 +17,10 @@ public class QuitConfirmManager : MonoBehaviour
     [Header("Panel")]
     [SerializeField] private GameObject quitConfirmPanel;
 
+    [Header("Owning Panels")]
+    [SerializeField] private GameObject pauseMenuPanel;
+    //[SerializeField] private GameObject mainMenuPanel;
+
     [Header("Buttons")]
     [SerializeField] private Button yesButton;
     [SerializeField] private Button noButton;
@@ -133,10 +137,29 @@ public class QuitConfirmManager : MonoBehaviour
     {
         currentSource = source;
 
+        HideOwningPanel();
+
         if (quitConfirmPanel != null)
             quitConfirmPanel.SetActive(true);
 
         SetSelection(0, false);
+    }
+
+    private void HideOwningPanel()
+    {
+        switch (currentSource)
+        {
+            //case QuitConfirmSource.MainMenuQuit:
+            //    if (mainMenuPanel != null)
+            //        mainMenuPanel.SetActive(false);
+            //    break;
+
+            case QuitConfirmSource.PauseMenuMainMenu:
+            case QuitConfirmSource.PauseMenuQuit:
+                if (pauseMenuPanel != null)
+                    pauseMenuPanel.SetActive(false);
+                break;
+        }
     }
 
     private void Close()

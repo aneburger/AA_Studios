@@ -1492,6 +1492,11 @@ MonoBehaviour:
     DissipationDistance: 100
     PropagationSpeed: 343
   DefaultVelocity: {x: 1, y: 0, z: 0}
+--- !u!1 &412762260 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7461425882493315119, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
+  m_PrefabInstance: {fileID: 3537630140295722637}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &448653076
 GameObject:
   m_ObjectHideFlags: 0
@@ -19230,6 +19235,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 398054369855910758, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
+      propertyPath: pauseMenuPanel
+      value: 
+      objectReference: {fileID: 412762260}
     - target: {fileID: 675943994774310337, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.07288
@@ -19270,10 +19279,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 715330637298745095, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 513
+      objectReference: {fileID: 0}
+    - target: {fileID: 715330637298745095, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 351
+      objectReference: {fileID: 0}
+    - target: {fileID: 2521737371163306019, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7085789729006638418, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
       propertyPath: m_Name
       value: HUD
       objectReference: {fileID: 0}
+    - target: {fileID: 7806629421340127122, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -7630763090617950681, guid: 9eee482aa75f59b42b7585365e26291e, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
