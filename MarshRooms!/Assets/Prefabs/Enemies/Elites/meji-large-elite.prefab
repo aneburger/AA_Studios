@@ -9,9 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1675817234078937308}
-  - component: {fileID: 6215935945583767107}
   - component: {fileID: 384602431835891705}
-  - component: {fileID: 890782628552830442}
+  - component: {fileID: 3569159909284302705}
   m_Layer: 7
   m_Name: LightReceiver
   m_TagString: Untagged
@@ -34,18 +33,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 3024620641038415664}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6215935945583767107
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 879157366085670032}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 87db913f9b10fe5469d13a34266ab748, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerLightReceiver
 --- !u!212 &384602431835891705
 SpriteRenderer:
   serializedVersion: 2
@@ -105,7 +92,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 0
   m_SpriteSortPoint: 0
---- !u!114 &890782628552830442
+--- !u!114 &3569159909284302705
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -114,10 +101,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 879157366085670032}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8ac5e3cd19a51ae48bb2450ecd5ba10d, type: 3}
+  m_Script: {fileID: 11500000, guid: f01cd984ec769cb4f8cd8d1aa47765a1, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SpriteYSorter
-  sortingOffset: 5
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyLightReceiver
+  sortingOffset: 0
 --- !u!1001 &7551025331508840461
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -252,5 +239,6 @@ MonoBehaviour:
   - {fileID: 955201816673152170}
   - {fileID: 3067286468575786657}
   - {fileID: 2264455878389644973}
+  - {fileID: 384602431835891705}
   glow: {fileID: 0}
   eliteTrail: {fileID: 0}

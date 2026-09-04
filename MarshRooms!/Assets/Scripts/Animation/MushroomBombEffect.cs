@@ -8,6 +8,11 @@ public class MushroomBombEffect : MonoBehaviour
     [SerializeField] private GameObject explosionVFXPrefab;
     [SerializeField] private LayerMask enemyMask;
 
+
+    [Header("Audio")]
+    [SerializeField] private AudioClip explodeClip;
+    [Range(0f, 1f)] [SerializeField] private float explodeVolume;
+
     private void Start()
     {
         SporeManager.Instance.OnMutatedActivated += OnActivated;
@@ -25,6 +30,8 @@ public class MushroomBombEffect : MonoBehaviour
 
         if (explosionVFXPrefab != null)
             Instantiate(explosionVFXPrefab, transform.position, Quaternion.identity);
+
+        AudioManager.Instance?.PlaySFXWithPitch(explodeClip, explodeVolume, 0.15f);
 
         Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, explosionRadius, enemyMask);
         foreach (var hit in hits)

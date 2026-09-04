@@ -262,7 +262,15 @@ public class PlayerHealth : BaseHealth
 
     private IEnumerator DeathSequence()
     {
-        yield return new WaitForSeconds(4f);
+        ScreenEffects.Instance?.SetLowHealth(false);
+
+        yield return new WaitForSeconds(2.5f);
+
+        bool fadeComplete = false;
+        ScreenEffects.Instance?.FadeToBlack(1f, () => fadeComplete = true);
+        yield return new WaitUntil(() => fadeComplete);
+
+         yield return new WaitForSeconds(2.5f);
 
         LevelLoader.Instance.ReloadCurrentLevel();
 

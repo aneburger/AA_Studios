@@ -949,6 +949,8 @@ MonoBehaviour:
   enemyMask:
     serializedVersion: 2
     m_Bits: 512
+  explodeClip: {fileID: 8300000, guid: f865e391e169eed4ba0873e315343b5e, type: 3}
+  explodeVolume: 0.6
 --- !u!114 &319489624
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1849,7 +1851,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 13.133179
+  orthographic size: 8.4375
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -12834,7 +12836,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 243b7bf5083ec7545bfc709c717ba205, type: 2}
   - {fileID: 11400000, guid: b3246f704d7ce2d4dbb1bb88f3c56bb9, type: 2}
   - {fileID: 11400000, guid: 4a45d62aa93ea274b8e7cbf88365c358, type: 2}
-  - {fileID: 11400000, guid: 65a1c6ad1df46554a84812dbced580cc, type: 2}
   - {fileID: 11400000, guid: cfd6fe6fccc07a54f83537cee962e5de, type: 2}
   - {fileID: 11400000, guid: f219b4ca878bc734a909425d86a623c9, type: 2}
   - {fileID: 11400000, guid: ef9939ac8feafd6478d138aa127b68ca, type: 2}
