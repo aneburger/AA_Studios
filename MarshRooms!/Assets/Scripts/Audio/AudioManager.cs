@@ -129,7 +129,7 @@ public sealed class AudioManager : MonoBehaviour
         float elapsed = 0f;
         while (elapsed < duration)
         {
-            elapsed += Time.deltaTime;
+            elapsed += Time.unscaledDeltaTime;
             musicSource.volume = Mathf.Lerp(startVolume, targetVolume, elapsed / duration);
             yield return null;
         }
@@ -169,7 +169,7 @@ public sealed class AudioManager : MonoBehaviour
 
         while (elapsed < duration)
         {
-            elapsed += Time.deltaTime;
+            elapsed += Time.unscaledDeltaTime;
             musicSource.pitch = Mathf.Lerp(startPitch, targetPitch, elapsed / duration);
             yield return null;
         }
@@ -274,7 +274,7 @@ public sealed class AudioManager : MonoBehaviour
         float elapsed = 0f;
         //while (elapsed < duration)
         //{
-        //    elapsed += Time.deltaTime;
+        //    elapsed += Time.unscaledDeltaTime;
         //    musicSource.volume = Mathf.Lerp(0f, targetVolume, elapsed / duration);
         //    yield return null;
         //}
@@ -283,7 +283,7 @@ public sealed class AudioManager : MonoBehaviour
 
         while (elapsed < duration)
         {
-            elapsed += Time.deltaTime;
+            elapsed += Time.unscaledDeltaTime;
             musicSource.volume = Mathf.Lerp(0f, finalVolume, elapsed / duration);
             yield return null;
         }
@@ -298,7 +298,7 @@ public sealed class AudioManager : MonoBehaviour
         float elapsed = 0f;
         while (elapsed < duration)
         {
-            elapsed += Time.deltaTime;
+            elapsed += Time.unscaledDeltaTime;
             musicSource.volume = Mathf.Lerp(startVolume, 0f, elapsed / duration);
             yield return null;
         }

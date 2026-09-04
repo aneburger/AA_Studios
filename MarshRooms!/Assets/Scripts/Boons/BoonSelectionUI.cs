@@ -1,6 +1,7 @@
 using UnityEngine;
 using System;
 using System.Collections.Generic;
+using TopDown.Movement;
 
 public class BoonSelectionUI : MonoBehaviour
 {
@@ -8,8 +9,14 @@ public class BoonSelectionUI : MonoBehaviour
 
     [SerializeField] private GameObject panelRoot;
     [SerializeField] private BoonCardSlotUI[] cardSlots;
+    [SerializeField] private UnityEngine.UI.Button skipButton;
+
+    [Header("Audio")]
+    [SerializeField] private AudioClip skipSfx;
+    [Range(0f, 1f)] [SerializeField] private float skipSfxVolume = 0.6f;
 
     private Action<BoonCardData> currentCallback;
+    private Action currentSkipCallback;
 
     // -- AWAKE --
     private void Awake()
@@ -19,14 +26,31 @@ public class BoonSelectionUI : MonoBehaviour
 
         if (panelRoot != null)
             panelRoot.SetActive(false);
+
+        if (skipButton != null)
+            skipButton.onClick.AddListener(HandleSkip);
     }
 
     // -- SHOW --
-    public void Show(List<BoonCardData> offers, Action<BoonCardData> onPicked)
+    public void Show(List<BoonCardData> offers, Action<BoonCardData> onPicked, Action onSkipped = null)
     {
         currentCallback = onPicked;
+        currentSkipCallback = onSkipped;
+
+        if (SporeManager.Instance != null && SporeManager.Instance.IsMutated)
+        {
+            PlayerMutatedVisuals mutatedVisuals = FindPlayerMover()?.GetComponent<PlayerMutatedVisuals>();
+            mutatedVisuals?.SetEffectsVisible(false);
+            SporeManager.Instance.ResetSpores();
+            mutatedVisuals?.ResetStateSilently();
+        }
+
         panelRoot.SetActive(true);
-        FindPlayerShooter()?.SetCanShoot(false);
+        SetPlayerLocked(true);
+        Time.timeScale = 0f;
+
+        if (skipButton != null)
+            skipButton.gameObject.SetActive(onSkipped != null);
 
         for (int i = 0; i < cardSlots.Length; i++)
         {
@@ -46,15 +70,37 @@ public class BoonSelectionUI : MonoBehaviour
     private void HandlePick(BoonCardData chosen)
     {
         panelRoot.SetActive(false);
-        FindPlayerShooter()?.SetCanShoot(true);
+        SetPlayerLocked(false);
+        Time.timeScale = 1f;
         currentCallback?.Invoke(chosen);
         currentCallback = null;
+        currentSkipCallback = null;
     }
 
-    // -- FIND SHOOTER --
-    private PlayerShooter FindPlayerShooter()
+    // -- HANDLE SKIP --
+    private void HandleSkip()
+    {
+        if (skipSfx != null)
+            AudioManager.Instance.PlaySFX(skipSfx, skipSfxVolume);
+
+        panelRoot.SetActive(false);
+        SetPlayerLocked(false);
+        Time.timeScale = 1f;
+        currentSkipCallback?.Invoke();
+        currentCallback = null;
+        currentSkipCallback = null;
+    }
+
+    // -- SET PLAYER LOCKED --
+    private void SetPlayerLocked(bool locked)
+    {
+        FindPlayerMover()?.SetInputLocked(locked);
+    }
+
+    // -- FIND PLAYER MOVER --
+    private PlayerMover FindPlayerMover()
     {
         GameObject player = GameObject.FindGameObjectWithTag("Player");
-        return player != null ? player.GetComponent<PlayerShooter>() : null;
+        return player != null ? player.GetComponent<PlayerMover>() : null;
     }
 }

@@ -182,4 +182,15 @@ public class PlayerMutatedVisuals : MonoBehaviour
         yield return new WaitForSecondsRealtime(freezeDuration);
         Time.timeScale = 1f;
     }
+
+    // -- RESET SILENTLY --
+    public void ResetStateSilently()
+    {
+        isFlickering = false;
+        if (flickerCoroutine != null) StopCoroutine(flickerCoroutine);
+
+        ApplyVisibility(false);
+        isActive = false;
+    }
+
 }

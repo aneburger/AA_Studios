@@ -123,15 +123,18 @@ public class HUDManager : MonoBehaviour
         }
     }
 
-    // -- REFRESH HEARTS  -- when max health changes
+    // -- REFRESH HEARTS  -- 
     public void RefreshHearts()
     {
         PlayerHealth playerHealth = FindFirstObjectByType<PlayerHealth>();
-        if (playerHealth != null)
-        {
+        if (playerHealth == null) return;
+
+        int neededHearts = Mathf.CeilToInt(playerHealth.MaxHealth / 4f);
+
+        if (heartImages == null || heartImages.Length != neededHearts)
             InitializeHearts();
-            UpdateHealthDisplay(playerHealth.CurrentHealth, playerHealth.MaxHealth);
-        }
+
+        UpdateHealthDisplay(playerHealth.CurrentHealth, playerHealth.MaxHealth);
     }
 
     // -- SET HUD VISIBLE --
