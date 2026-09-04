@@ -310,6 +310,9 @@ MonoBehaviour:
   rollInaccuracyMax: 15
   rollDirectionRefreshInterval: 0.3
   rollDirectionTurnSpeed: 3
+  bumpMask:
+    serializedVersion: 2
+    m_Bits: 163840
   rollSpeedStart: 1.5
   rollSpeedMax: 2.8
   rollSpeedRampDuration: 1.5
@@ -317,7 +320,7 @@ MonoBehaviour:
   rollDurationMax: 10
   maxRecoveryDuration: 0.6
   bumpClip: {fileID: 8300000, guid: 277cfd5237e689d44b4f267a3990a69e, type: 3}
-  bumpVolume: 0
+  bumpVolume: 0.2
   bumpCooldown: 0.3
   rollLoopClip: {fileID: 8300000, guid: 0f1287fc4a59e2745955b41b74f446d7, type: 3}
   rollLoopVolume: 0

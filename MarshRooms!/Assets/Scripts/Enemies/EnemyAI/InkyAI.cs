@@ -20,6 +20,7 @@ public class InkyAI : EnemyAIBase
     [SerializeField] private float rollInaccuracyMax;
     [SerializeField] private float rollDirectionRefreshInterval;
     [SerializeField] private float rollDirectionTurnSpeed;
+    [SerializeField] protected LayerMask bumpMask;
 
     [Header("Roll Speed Ramp")]
     [SerializeField] private float rollSpeedStart;
@@ -35,7 +36,7 @@ public class InkyAI : EnemyAIBase
 
     [Header("Audio")]
     [SerializeField] private AudioClip bumpClip;
-    [Range(0f, 1f)] [SerializeField] private float bumpVolume ;
+    [Range(0f, 1f)] [SerializeField] private float bumpVolume;
     [SerializeField] private float bumpCooldown;
     [SerializeField] private AudioClip rollLoopClip;
     [Range(0f, 1f)] [SerializeField] private float rollLoopVolume;
@@ -197,9 +198,16 @@ public class InkyAI : EnemyAIBase
     // -- COLLISION --
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (((1 << collision.gameObject.layer) & wallMask) == 0) return;
-        if (Time.time - lastBumpTime < bumpCooldown) return;
+        if (((1 << collision.gameObject.layer) & bumpMask) == 0) return;
 
+        if (currentState == State.Engage && rollPhase == RollPhase.Looping)
+        {
+            Vector2 normal = collision.GetContact(0).normal;
+            rollDirection = Vector2.Reflect(rollDirection, normal).normalized;
+            rollTargetDirection = rollDirection;
+        }
+
+        if (Time.time - lastBumpTime < bumpCooldown) return;
         lastBumpTime = Time.time;
         AudioManager.Instance?.PlaySFXWithPitch(bumpClip, bumpVolume, 0.15f);
     }
