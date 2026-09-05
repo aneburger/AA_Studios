@@ -287,6 +287,12 @@ public class PauseMenuManager : MonoBehaviour
     // -- HANDLE ESCAPE PRESSED --
     private void HandleEscapePressed()
     {
+        if (quitConfirmManager != null && quitConfirmManager.IsOpen)
+        {
+            quitConfirmManager.HandleEscapePressed();
+            return;
+        }
+
         MenuManager menuManager = FindFirstObjectByType<MenuManager>();
         if (menuManager != null && menuManager.enabled)
             return;

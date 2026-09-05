@@ -40,12 +40,13 @@ public class QuitConfirmManager : MonoBehaviour
     [Range(0f, 1f)][SerializeField] private float clickVolume = 1f;
 
     [Header("Text Colors")]
-    [SerializeField] private Color selectedColor = Color.white;
+    [SerializeField] private Color selectedColor = new Color(255f/255f, 225f/255f, 213f/255f, 255f/255f);
     [SerializeField] private Color normalColor = new Color(0.78f, 0.78f, 0.78f, 1f);
 
     [Header("Menu References")]
     [SerializeField] private MenuManager menuManager;
     [SerializeField] private PauseMenuManager pauseMenuManager;
+    public bool IsOpen => quitConfirmPanel != null && quitConfirmPanel.activeSelf;
 
     private Button[] buttons;
     private TMP_Text[] texts;
@@ -221,6 +222,11 @@ public class QuitConfirmManager : MonoBehaviour
                 QuitGame();
                 break;
         }
+    }
+
+    public void HandleEscapePressed()
+    {
+        OnNoPressed();
     }
 
     private void OnNoPressed()

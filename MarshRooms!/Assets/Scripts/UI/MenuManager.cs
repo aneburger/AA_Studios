@@ -5,6 +5,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.Events;
+using UnityEngine.InputSystem;
 
 public class MenuManager : MonoBehaviour
 {
@@ -119,9 +120,26 @@ public class MenuManager : MonoBehaviour
         // Tutorial is default highlighted option
         SetSelection(0, false);
 
+        //HUDManager.Instance?.SetHUDVisible(false);
+
         // Start title music
         AudioManager.Instance?.PlayMusic(menuMusic, menuMusicVolume);
         AudioManager.Instance?.SetMusicDampenMultiplier(1f);
+    }
+
+    private void Update()
+    {
+        if (Keyboard.current == null || !Keyboard.current.escapeKey.wasPressedThisFrame)
+            return;
+
+        if (quitConfirmManager != null && quitConfirmManager.IsOpen)
+        {
+            quitConfirmManager.HandleEscapePressed();
+            return;
+        }
+
+        if (controlsMenuPanel != null && controlsMenuPanel.activeSelf)
+            OnCloseControls();
     }
 
 
@@ -387,11 +405,13 @@ public class MenuManager : MonoBehaviour
         
 
         if (menuPanel != null)
-            menuPanel.SetActive(false);
+            menuPanel.SetActive(true);
 
 
         if (controlsMenuPanel != null)
             controlsMenuPanel.SetActive(true);
+
+        //HUDManager.Instance?.SetHUDVisible(false);
 
         sliderSoundManager?.LoadConfirmedValues();
         SetControlsSelection(0, false);
@@ -405,10 +425,22 @@ public class MenuManager : MonoBehaviour
         if (controlsMenuPanel != null)
             controlsMenuPanel.SetActive(false);
 
-        if (menuPanel != null)
-            menuPanel.SetActive(true);
+        //if (menuPanel != null)
+        //    menuPanel.SetActive(true);
 
-        SetSelection(0, false);
+        //SetSelection(0, false);
+        if (controlsMenuSource == ControlsMenuSource.MainMenu)
+        {
+            if (menuPanel != null)
+                menuPanel.SetActive(true);
+
+            //HUDManager.Instance?.SetHUDVisible(false);
+            SetSelection(2, false);
+        }
+        else
+        {
+            SetSelection(0, false);
+        }
     }
 
    
@@ -430,6 +462,11 @@ public class MenuManager : MonoBehaviour
     private void ReturnToOwningMenu()
     {
         if (controlsMenuPanel != null) controlsMenuPanel.SetActive(false);
+        //if (menuPanel != null)
+        //    menuPanel.SetActive(true);
+
+        //HUDManager.Instance?.SetHUDVisible(false);
+
         if (controlsMenuSource == ControlsMenuSource.MainMenu)
         {
             if (menuPanel != null)
