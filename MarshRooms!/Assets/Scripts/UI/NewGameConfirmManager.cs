@@ -185,12 +185,13 @@ public class NewGameConfirmManager : MonoBehaviour
 
         Time.timeScale = 1f;
 
+        LevelLoader.Instance?.ClearSavedGame();
+
         MenuManager menuManager = FindFirstObjectByType<MenuManager>();
         if (menuManager != null)
         {
             menuManager.OnBeginGame("Floor_01");
         }
-        //LevelLoader.Instance?.LoadLevel("Floor_01");
     }
 
     public void HandleEscapePressed()

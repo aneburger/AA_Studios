@@ -141,6 +141,10 @@ public class MenuManager : MonoBehaviour
 
     private void Update()
     {
+        // uncomment and use F9 key to delete the currently saved game
+        // if (Keyboard.current != null && Keyboard.current.f9Key.wasPressedThisFrame)
+        //     LevelLoader.Instance?.ClearSavedGame();
+
         if (Keyboard.current == null || !Keyboard.current.escapeKey.wasPressedThisFrame)
             return;
 
@@ -422,7 +426,6 @@ public class MenuManager : MonoBehaviour
         if (closeControlsButton != null)
             closeControlsButton.onClick.RemoveListener(OnCloseControls);
 
-        // Disable this script so ESC doesn't open main menu again
         gameObject.GetComponent<MenuManager>().enabled = false;
 
         LevelLoader.Instance.LoadLevel(sceneName);
@@ -431,6 +434,12 @@ public class MenuManager : MonoBehaviour
 
     private void OnOpenNewGameConfirm()
     {
+        if (LevelLoader.Instance == null || !LevelLoader.Instance.HasSavedGame)
+        {
+            OnBeginGame("Floor_01");
+            return;
+        }
+
         PlayUiSound(clickClip, clickVolume);
         newGameConfirmManager?.Open(NewGameConfirmManager.NewGameConfirmSource.MainMenuNewGame);
     }
