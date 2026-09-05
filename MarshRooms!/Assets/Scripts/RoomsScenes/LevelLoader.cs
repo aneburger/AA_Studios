@@ -15,7 +15,10 @@ public class LevelLoader : MonoBehaviour
  
     [Header("Transition")]
     [SerializeField] private float fadeDuration = 0.5f;
- 
+
+    private const string SavedLevelKey = "SavedLevelScene";
+    private const string HasSavedGameKey = "HasSavedGame";
+
     public string CurrentLevelScene { get; private set; }
     private PlayerHealth playerHealth;
     
@@ -80,6 +83,8 @@ public class LevelLoader : MonoBehaviour
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         if (player != null)
             Destroy(player);
+
+        HUDManager.Instance?.SetHUDVisible(false);
 
         AudioManager.Instance?.StopMusic();
 
@@ -159,4 +164,45 @@ public class LevelLoader : MonoBehaviour
         var rb2d = player.GetComponent<Rigidbody2D>();
         if (rb2d != null) rb2d.linearVelocity = Vector2.zero;
     }
+
+
+
+    // ----- SAVE GAME CODE -----
+    public bool HasSavedGame =>
+    PlayerPrefs.GetInt(HasSavedGameKey, 0) == 1 &&
+    !string.IsNullOrEmpty(PlayerPrefs.GetString(SavedLevelKey, string.Empty));
+
+    public void SaveCurrentLevel()
+    {
+        if (string.IsNullOrEmpty(CurrentLevelScene))
+            return;
+
+        if (!CurrentLevelScene.StartsWith("Floor_"))
+            return; // do not save Tutorial
+
+        PlayerPrefs.SetString(SavedLevelKey, CurrentLevelScene);
+        PlayerPrefs.SetInt(HasSavedGameKey, 1);
+        PlayerPrefs.Save();
+    }
+
+    public void ContinueSavedGame()
+    {
+        if (!HasSavedGame)
+            return;
+
+        string savedScene = PlayerPrefs.GetString(SavedLevelKey, string.Empty);
+        if (!string.IsNullOrEmpty(savedScene))
+            LoadLevel(savedScene);
+    }
+
+    public void ClearSavedGame()
+    {
+        PlayerPrefs.DeleteKey(SavedLevelKey);
+        PlayerPrefs.DeleteKey(HasSavedGameKey);
+        PlayerPrefs.Save();
+    }
 }
+
+
+
+

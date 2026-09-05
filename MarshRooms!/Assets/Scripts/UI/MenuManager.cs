@@ -16,7 +16,9 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private Button closeControlsButton;
     [SerializeField] private Button quitButton;
     [SerializeField] private Button tutorialButton;
+    [SerializeField] private Button continueButton;
     [SerializeField] private QuitConfirmManager quitConfirmManager;
+    [SerializeField] private NewGameConfirmManager newGameConfirmManager;
 
     [Header("Controls Menu Buttons")]
     [SerializeField] private Button cancelControlsButton;
@@ -28,6 +30,7 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private TMP_Text startText;
     [SerializeField] private TMP_Text controlsText;
     [SerializeField] private TMP_Text quitText;
+    [SerializeField] private TMP_Text continueText;
 
     [Header("Controls Menu Text")]
     [SerializeField] private TMP_Text cancelText;
@@ -38,6 +41,7 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private GameObject startArrow;
     [SerializeField] private GameObject controlsArrow;
     [SerializeField] private GameObject quitArrow;
+    [SerializeField] private GameObject continueArrow;
 
     [Header("UI Audio")]
     [SerializeField] private AudioClip hoverClip;
@@ -84,12 +88,14 @@ public class MenuManager : MonoBehaviour
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         player?.GetComponent<TopDown.Movement.PlayerMover>()?.SetInputLocked(true);
 
-        menuButtons = new[] { tutorialButton, startButton, controlsButton, quitButton };
-        menuTexts = new[] { tutorialText, startText, controlsText, quitText };
-        menuArrows = new[] { tutorialArrow, startArrow, controlsArrow, quitArrow };
+        menuButtons = new[] { tutorialButton, continueButton, startButton, controlsButton, quitButton };
+        menuTexts = new[] { tutorialText, continueText, startText, controlsText, quitText };
+        menuArrows = new[] { tutorialArrow, continueArrow, startArrow, controlsArrow, quitArrow };
 
         controlsMenuButtons = new[] { cancelControlsButton, confirmControlsButton };
         controlsMenuTexts = new[] { cancelText, confirmText };
+
+        UpdateContinueButtonVisibility();
 
         ConfigureNavigation();
         ConfigurePointerEvents();
@@ -99,8 +105,10 @@ public class MenuManager : MonoBehaviour
 
     private void Start()
     {
+        //if (startButton != null)
+        //    startButton.onClick.AddListener(() => OnBeginGame("Floor_01"));
         if (startButton != null)
-            startButton.onClick.AddListener(() => OnBeginGame("Floor_01"));
+            startButton.onClick.AddListener(OnOpenNewGameConfirm);
 
         if (tutorialButton != null)
             tutorialButton.onClick.AddListener(() => OnBeginGame("Tutorial"));
@@ -117,9 +125,13 @@ public class MenuManager : MonoBehaviour
         if (quitButton != null)
             quitButton.onClick.AddListener(OnQuitGame);
 
+        if (continueButton != null)
+            continueButton.onClick.AddListener(OnContinueGame);
+
         // Tutorial is default highlighted option
         SetSelection(0, false);
 
+        UpdateContinueButtonVisibility();
         //HUDManager.Instance?.SetHUDVisible(false);
 
         // Start title music
@@ -135,6 +147,12 @@ public class MenuManager : MonoBehaviour
         if (quitConfirmManager != null && quitConfirmManager.IsOpen)
         {
             quitConfirmManager.HandleEscapePressed();
+            return;
+        }
+
+        if (newGameConfirmManager != null && newGameConfirmManager.NewGameConfirmIsOpen)
+        {
+            newGameConfirmManager.HandleEscapePressed();
             return;
         }
 
@@ -368,9 +386,23 @@ public class MenuManager : MonoBehaviour
     }
 
 
+    private void UpdateContinueButtonVisibility()
+    {
+        bool showContinue = LevelLoader.Instance != null && LevelLoader.Instance.HasSavedGame;
+
+        if (continueButton != null)
+            continueButton.gameObject.SetActive(showContinue);
+
+        ConfigureNavigation();
+
+        if (!showContinue && currentIndex == GetMenuButtonIndex(continueButton))
+            SetSelection(0, false);
+    }
+
+
 
     // -- BEGIN GAME --
-    private void OnBeginGame(string sceneName)
+    public void OnBeginGame(string sceneName)
     {
         PlayUiSound(clickClip, clickVolume);
         AudioManager.Instance?.PlayMusic(AudioManager.Instance.musicClip);
@@ -394,6 +426,13 @@ public class MenuManager : MonoBehaviour
         gameObject.GetComponent<MenuManager>().enabled = false;
 
         LevelLoader.Instance.LoadLevel(sceneName);
+    }
+
+
+    private void OnOpenNewGameConfirm()
+    {
+        PlayUiSound(clickClip, clickVolume);
+        newGameConfirmManager?.Open(NewGameConfirmManager.NewGameConfirmSource.MainMenuNewGame);
     }
 
     // -- OPEN CONTROLS --
@@ -421,26 +460,27 @@ public class MenuManager : MonoBehaviour
     private void OnCloseControls()
     {
         PlayUiSound(clickClip, clickVolume);
+        ReturnToOwningMenu();
 
-        if (controlsMenuPanel != null)
-            controlsMenuPanel.SetActive(false);
+        //if (controlsMenuPanel != null)
+        //    controlsMenuPanel.SetActive(false);
 
-        //if (menuPanel != null)
-        //    menuPanel.SetActive(true);
+        ////if (menuPanel != null)
+        ////    menuPanel.SetActive(true);
 
-        //SetSelection(0, false);
-        if (controlsMenuSource == ControlsMenuSource.MainMenu)
-        {
-            if (menuPanel != null)
-                menuPanel.SetActive(true);
+        ////SetSelection(0, false);
+        //if (controlsMenuSource == ControlsMenuSource.MainMenu)
+        //{
+        //    if (menuPanel != null)
+        //        menuPanel.SetActive(true);
 
-            //HUDManager.Instance?.SetHUDVisible(false);
-            SetSelection(2, false);
-        }
-        else
-        {
-            SetSelection(0, false);
-        }
+        //    //HUDManager.Instance?.SetHUDVisible(false);
+        //    SetSelection(2, false);
+        //}
+        //else
+        //{
+        //    SetSelection(0, false);
+        //}
     }
 
    
@@ -472,8 +512,40 @@ public class MenuManager : MonoBehaviour
             if (menuPanel != null)
                 menuPanel.SetActive(true);
 
-            SetSelection(2, false); 
+            SetSelection(2, false);
         }
+
+        //if (menuPanel != null)
+        //    menuPanel.SetActive(true);
+
+        //HUDManager.Instance?.SetHUDVisible(false);
+
+        int settingsIndex = GetMenuButtonIndex(controlsButton);
+        SetSelection(settingsIndex >= 0 ? settingsIndex : 0, false);
+    }
+
+
+    private void OnContinueGame()
+    {
+        if (LevelLoader.Instance == null || !LevelLoader.Instance.HasSavedGame)
+            return;
+
+        PlayUiSound(clickClip, clickVolume);
+        AudioManager.Instance?.PlayMusic(AudioManager.Instance.musicClip);
+
+        Time.timeScale = 1f;
+
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        player?.GetComponent<TopDown.Movement.PlayerMover>()?.SetInputLocked(false);
+
+        if (controlsMenuPanel != null)
+            controlsMenuPanel.SetActive(false);
+
+        if (menuPanel != null)
+            menuPanel.SetActive(false);
+
+        gameObject.GetComponent<MenuManager>().enabled = false;
+        LevelLoader.Instance.ContinueSavedGame();
     }
 
 
