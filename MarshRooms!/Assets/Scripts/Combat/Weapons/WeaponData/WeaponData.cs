@@ -6,6 +6,10 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "WeaponData", menuName = "Weapons/WeaponData")]
 public class WeaponData : ScriptableObject
 {   
+    [Header("Identity")]
+    //Unique, stable ID used to look this weapon up when restoring a save. Do not change once used in a save file
+    public string weaponId;
+
     [Header("Name")]
     public string gunName;
 

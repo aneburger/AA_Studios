@@ -824,6 +824,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerWeaponSlot
   defaultWeapon: {fileID: 0}
   maxWeapons: 3
+  allWeapons:
+  - {fileID: 11400000, guid: f82ad5183ec6c7a47ad9d1644203f41d, type: 2}
+  - {fileID: 11400000, guid: ef97f664ca807e943b90ce66ecb5c46a, type: 2}
+  - {fileID: 11400000, guid: ae422df2cefa3b04b88e3d38b891d1f8, type: 2}
+  - {fileID: 11400000, guid: 5c8b1284f5406064ab49882cef48850c, type: 2}
+  - {fileID: 11400000, guid: 38cd2185404d569428038c5ace32c6bd, type: 2}
+  - {fileID: 11400000, guid: 2532a4cced05a6d46867c183a006290d, type: 2}
   pickupPrefab: {fileID: 0}
 --- !u!114 &319489615
 MonoBehaviour:

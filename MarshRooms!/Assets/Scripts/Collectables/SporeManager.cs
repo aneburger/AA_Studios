@@ -71,6 +71,14 @@ public class SporeManager : MonoBehaviour
         sporeGainAmount = amount;
     }
 
+    // -- RESTORE SPORES (from save) --
+    public void RestoreSpores(int count)
+    {
+        if (isMutated) EndMutatedStateSilent();
+        currentSpores = Mathf.Clamp(count, 0, maxSpores);
+        OnSporeCountChanged?.Invoke(currentSpores, maxSpores);
+    }
+
     // -- COLLECT SPORE --
     public void CollectSpore()
     {

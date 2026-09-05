@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Text.RegularExpressions;
 using System.Collections;
+using System.IO;
 
 public class LevelLoader : MonoBehaviour
 {
@@ -16,11 +17,14 @@ public class LevelLoader : MonoBehaviour
     [Header("Transition")]
     [SerializeField] private float fadeDuration = 0.5f;
 
-    private const string SavedLevelKey = "SavedLevelScene";
-    private const string HasSavedGameKey = "HasSavedGame";
+    private const string SaveFileName = "savegame.json";
+    private string SaveFilePath => Path.Combine(Application.persistentDataPath, SaveFileName);
 
     public string CurrentLevelScene { get; private set; }
     private PlayerHealth playerHealth;
+
+    // Set by ContinueSavedGame(), consumed and cleared at the end of LoadLevelRoutine
+    private SaveGameData pendingRestoreData;
     
     // -- AWAKE --
     private void Awake()
@@ -97,7 +101,9 @@ public class LevelLoader : MonoBehaviour
     {
         ScreenEffects.Instance?.SetFadeImage();
 
-        playerHealth.UpdateHUD();
+        GameObject existingPlayer = GameObject.FindGameObjectWithTag(playerTag);
+        playerHealth = existingPlayer != null ? existingPlayer.GetComponent<PlayerHealth>() : null;
+        playerHealth?.UpdateHUD();
 
         if (!SceneManager.GetSceneByName(persistentScene).isLoaded)
         {
@@ -121,6 +127,8 @@ public class LevelLoader : MonoBehaviour
         yield return null;
  
         PositionPlayerAtSpawn();
+
+        ApplyPendingRestore();
 
         if(sceneName == "Tutorial") yield break;
         
@@ -168,9 +176,7 @@ public class LevelLoader : MonoBehaviour
 
 
     // ----- SAVE GAME CODE -----
-    public bool HasSavedGame =>
-    PlayerPrefs.GetInt(HasSavedGameKey, 0) == 1 &&
-    !string.IsNullOrEmpty(PlayerPrefs.GetString(SavedLevelKey, string.Empty));
+    public bool HasSavedGame => File.Exists(SaveFilePath);
 
     public void SaveCurrentLevel()
     {
@@ -180,9 +186,61 @@ public class LevelLoader : MonoBehaviour
         if (!CurrentLevelScene.StartsWith("Floor_"))
             return; // do not save Tutorial
 
-        PlayerPrefs.SetString(SavedLevelKey, CurrentLevelScene);
-        PlayerPrefs.SetInt(HasSavedGameKey, 1);
-        PlayerPrefs.Save();
+        SaveGameData data = new SaveGameData
+        {
+            sceneName = CurrentLevelScene
+        };
+
+        if (BoonManager.Instance != null)
+        {
+            data.runStats = BoonManager.Instance.Stats;
+            data.boonCounts = BoonManager.Instance.GetOwnedCountsSnapshot();
+        }
+        else
+        {
+            Debug.LogWarning("LevelLoader: BoonManager.Instance is null while saving, boon progress will not be saved.");
+        }
+
+        if (SporeManager.Instance != null)
+        {
+            data.currentSpores = SporeManager.Instance.GetCurrentSpores();
+        }
+        else
+        {
+            Debug.LogWarning("LevelLoader: SporeManager.Instance is null while saving, spore count will not be saved.");
+        }
+
+        GameObject player = GameObject.FindGameObjectWithTag(playerTag);
+        if (player != null)
+        {
+            PlayerHealth health = player.GetComponent<PlayerHealth>();
+            if (health != null)
+            {
+                data.maxHealth = health.MaxHealth;
+                data.currentHealth = health.CurrentHealth;
+            }
+
+            PlayerWeaponSlot weaponSlot = player.GetComponent<PlayerWeaponSlot>();
+            if (weaponSlot != null)
+            {
+                data.weapons = weaponSlot.GetSaveData(out int currentSlot);
+                data.currentWeaponSlot = currentSlot;
+            }
+        }
+        else
+        {
+            Debug.LogWarning("LevelLoader: no player found while saving, health/weapons will not be saved.");
+        }
+
+        try
+        {
+            string json = JsonUtility.ToJson(data);
+            File.WriteAllText(SaveFilePath, json);
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError($"LevelLoader: failed to write save file - {e.Message}");
+        }
     }
 
     public void ContinueSavedGame()
@@ -190,19 +248,75 @@ public class LevelLoader : MonoBehaviour
         if (!HasSavedGame)
             return;
 
-        string savedScene = PlayerPrefs.GetString(SavedLevelKey, string.Empty);
-        if (!string.IsNullOrEmpty(savedScene))
-            LoadLevel(savedScene);
+        SaveGameData loaded;
+        try
+        {
+            string json = File.ReadAllText(SaveFilePath);
+            loaded = JsonUtility.FromJson<SaveGameData>(json);
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError($"LevelLoader: failed to read save file - {e.Message}");
+            return;
+        }
+
+        if (loaded == null || string.IsNullOrEmpty(loaded.sceneName))
+        {
+            Debug.LogError("LevelLoader: save file was empty or corrupt.");
+            return;
+        }
+
+        pendingRestoreData = loaded;
+        LoadLevel(loaded.sceneName);
     }
 
     public void ClearSavedGame()
     {
-        PlayerPrefs.DeleteKey(SavedLevelKey);
-        PlayerPrefs.DeleteKey(HasSavedGameKey);
-        PlayerPrefs.Save();
+        if (File.Exists(SaveFilePath))
+            File.Delete(SaveFilePath);
+    }
+
+    // -- APPLY PENDING RESTORE --
+    // Runs at the end of LoadLevelRoutine, after the floor scene has loaded and the
+    // player has been positioned, so it works whether the player/managers persisted
+    // through the whole session or were freshly recreated for this run.
+    private void ApplyPendingRestore()
+    {
+        if (pendingRestoreData == null) return;
+
+        SaveGameData data = pendingRestoreData;
+        pendingRestoreData = null;
+
+        if (BoonManager.Instance != null)
+        {
+            BoonManager.Instance.RestoreFromSave(data.runStats, data.boonCounts);
+        }
+        else
+        {
+            Debug.LogWarning("LevelLoader: BoonManager.Instance is null while restoring, boon progress was not restored.");
+        }
+
+        if (SporeManager.Instance != null)
+        {
+            SporeManager.Instance.RestoreSpores(data.currentSpores);
+        }
+        else
+        {
+            Debug.LogWarning("LevelLoader: SporeManager.Instance is null while restoring, spore count was not restored.");
+        }
+
+        GameObject player = GameObject.FindGameObjectWithTag(playerTag);
+        if (player != null)
+        {
+            PlayerHealth health = player.GetComponent<PlayerHealth>();
+            health?.RestoreHealth(data.maxHealth, data.currentHealth);
+
+            PlayerWeaponSlot weaponSlot = player.GetComponent<PlayerWeaponSlot>();
+            weaponSlot?.RestoreFromSave(data.weapons, data.currentWeaponSlot);
+        }
+        else
+        {
+            Debug.LogWarning("LevelLoader: no player found while restoring, health/weapons were not restored.");
+        }
     }
 }
-
-
-
-

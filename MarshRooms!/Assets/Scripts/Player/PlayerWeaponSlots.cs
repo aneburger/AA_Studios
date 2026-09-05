@@ -9,6 +9,10 @@ public class PlayerWeaponSlot : MonoBehaviour
     [SerializeField] private WeaponData defaultWeapon;
     [SerializeField] private int maxWeapons = 3;
 
+    [Header("Save/Load")]
+    [Tooltip("Every WeaponData asset in the game. Used to look weapons back up by weaponId when restoring a save.")]
+    [SerializeField] private List<WeaponData> allWeapons;
+
     public GameObject pickupPrefab;
     private PlayerShooter shooter;
 
@@ -29,6 +33,36 @@ public class PlayerWeaponSlot : MonoBehaviour
 
         ammo = new int[maxWeapons];
         ammo[0] = -1;
+
+        ValidateWeaponIds();
+    }
+
+    // -- VALIDATE WEAPON IDS --
+    // debug func to catch duplicates
+    private void ValidateWeaponIds()
+    {
+        if (allWeapons == null) return;
+
+        Dictionary<string, WeaponData> seen = new Dictionary<string, WeaponData>();
+        foreach (WeaponData weapon in allWeapons)
+        {
+            if (weapon == null) continue;
+
+            if (string.IsNullOrEmpty(weapon.weaponId))
+            {
+                Debug.LogWarning($"PlayerWeaponSlot: '{weapon.gunName}' has no weaponId set.");
+                continue;
+            }
+
+            if (seen.TryGetValue(weapon.weaponId, out WeaponData existing))
+            {
+                Debug.LogError($"PlayerWeaponSlot: duplicate weaponId '{weapon.weaponId}' shared by '{existing.gunName}' and '{weapon.gunName}'. Give each a unique weaponId.");
+            }
+            else
+            {
+                seen[weapon.weaponId] = weapon;
+            }
+        }
     }
 
     // -- START --
@@ -252,5 +286,75 @@ public class PlayerWeaponSlot : MonoBehaviour
         ammo[0] = ammoAmount == -1 ? weapon.maxAmmo : ammoAmount;
         currentSlot = 0;
         EquipCurrentSlot(true, false);
+    }
+
+    // -- FIND WEAPON BY ID --
+    private WeaponData FindWeaponById(string weaponId)
+    {
+        if (string.IsNullOrEmpty(weaponId) || allWeapons == null) return null;
+        return allWeapons.Find(w => w != null && w.weaponId == weaponId);
+    }
+
+    // -- GET SAVE DATA --
+    public List<WeaponSaveEntry> GetSaveData(out int savedCurrentSlot)
+    {
+        SaveCurrentAmmo();
+
+        List<WeaponSaveEntry> data = new List<WeaponSaveEntry>();
+        for (int i = 0; i < slots.Length; i++)
+        {
+            if (slots[i] == null) continue;
+
+            if (string.IsNullOrEmpty(slots[i].weaponId))
+            {
+                Debug.LogWarning($"PlayerWeaponSlot: '{slots[i].gunName}' has no weaponId set, it won't be restored on continue.");
+                continue;
+            }
+
+            data.Add(new WeaponSaveEntry
+            {
+                slot = i,
+                weaponId = slots[i].weaponId,
+                ammo = ammo[i]
+            });
+        }
+
+        savedCurrentSlot = currentSlot;
+        return data;
+    }
+
+    // -- RESTORE FROM SAVE --
+    public void RestoreFromSave(List<WeaponSaveEntry> savedWeapons, int savedCurrentSlot)
+    {
+        for (int i = 0; i < slots.Length; i++)
+        {
+            slots[i] = null;
+            ammo[i] = 0;
+        }
+
+        if (savedWeapons != null)
+        {
+            foreach (WeaponSaveEntry entry in savedWeapons)
+            {
+                if (entry.slot < 0 || entry.slot >= slots.Length) continue;
+
+                WeaponData weapon = FindWeaponById(entry.weaponId);
+                if (weapon == null)
+                {
+                    Debug.LogWarning($"PlayerWeaponSlot: could not find weapon with id '{entry.weaponId}' while restoring save.");
+                    continue;
+                }
+
+                slots[entry.slot] = weapon;
+                ammo[entry.slot] = entry.ammo;
+            }
+        }
+
+        currentSlot = Mathf.Clamp(savedCurrentSlot, 0, maxWeapons - 1);
+        if (slots[currentSlot] == null)
+            SkipEmptySlots(1, ref currentSlot);
+
+        if (slots[currentSlot] != null)
+            EquipCurrentSlot(false, false);
     }
 }
