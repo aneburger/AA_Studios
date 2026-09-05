@@ -39,12 +39,14 @@ public class BoonSelectionUI : MonoBehaviour
 
         if (SporeManager.Instance != null && SporeManager.Instance.IsMutated)
         {
-            PlayerMutatedVisuals mutatedVisuals = FindPlayerMover()?.GetComponent<PlayerMutatedVisuals>();
+            PlayerMover mover = FindPlayerMover();
+            PlayerMutatedVisuals mutatedVisuals = mover?.GetComponent<PlayerMutatedVisuals>();
             mutatedVisuals?.SetEffectsVisible(false);
             SporeManager.Instance.ResetSpores();
             mutatedVisuals?.ResetStateSilently();
+            mover?.GetComponent<PlayerMutatedStats>()?.ResetStateSilently();
         }
-
+        
         panelRoot.SetActive(true);
         SetPlayerLocked(true);
         Time.timeScale = 0f;

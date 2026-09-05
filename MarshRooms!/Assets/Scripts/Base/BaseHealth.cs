@@ -50,7 +50,14 @@ public abstract class BaseHealth : MonoBehaviour
         maxHealth += amount;
 
         if (healToFull)
+        {
             currentHealth = maxHealth;
+        }
+        else
+        {
+            currentHealth += 4;
+        }
+            
     }
 
     // -- IS DEAD

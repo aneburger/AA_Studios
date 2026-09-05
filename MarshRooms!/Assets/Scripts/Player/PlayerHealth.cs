@@ -117,7 +117,7 @@ public class PlayerHealth : BaseHealth
         base.TakeDamage(amount);
         UpdateHUD();
 
-        ScreenEffects.Instance.SetLowHealth(currentHealth / maxHealth <= 0.3f);
+        ScreenEffects.Instance.SetLowHealth(currentHealth < 4f);
     }
 
     // -- HEAL --
@@ -130,7 +130,7 @@ public class PlayerHealth : BaseHealth
         anim.SetTrigger("Heal");
         UpdateHUD();
 
-        ScreenEffects.Instance.SetLowHealth(currentHealth / maxHealth <= 0.3f);
+        ScreenEffects.Instance.SetLowHealth(currentHealth < 4f);
     }
 
     // -- RESET FOR RESPAWN --
@@ -212,9 +212,7 @@ public class PlayerHealth : BaseHealth
     // -- LOW HEALTH EFFECT -- 
     public void UpdateLowHealthEffect()
     {
-        ScreenEffects.Instance?.SetLowHealth(
-            currentHealth <= maxHealth * 0.3f
-        );
+        ScreenEffects.Instance?.SetLowHealth(currentHealth < 4f);
     }
 
     // -- REVIVE --
@@ -250,6 +248,7 @@ public class PlayerHealth : BaseHealth
             mutatedVisuals?.SetEffectsVisible(false);
             SporeManager.Instance.ResetSpores();
             mutatedVisuals?.ResetStateSilently();
+            GetComponent<PlayerMutatedStats>()?.ResetStateSilently();
         }
 
         GetComponent<PlayerInput>().enabled = false;
@@ -270,7 +269,7 @@ public class PlayerHealth : BaseHealth
         ScreenEffects.Instance?.FadeToBlack(1f, () => fadeComplete = true);
         yield return new WaitUntil(() => fadeComplete);
 
-         yield return new WaitForSeconds(2.5f);
+        yield return new WaitForSeconds(3f);
 
         LevelLoader.Instance.ReloadCurrentLevel();
 

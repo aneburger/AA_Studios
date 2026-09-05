@@ -59,6 +59,11 @@ public class PlayerMutatedStats : MonoBehaviour
 
     private void OnEnded()
     {
+        ResetStateSilently();
+    }
+
+    public void ResetStateSilently()
+    {
         mover.SetSpeedMultiplier(1f);
         shooter.SetFireRateMultiplier(1f);
         shooter.SetShakeMultiplier(1f);
