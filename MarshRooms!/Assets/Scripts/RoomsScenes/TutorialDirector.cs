@@ -335,7 +335,7 @@ public class TutorialDirector : MonoBehaviour
 
         // ==== PART 6: Wait for toilet to die ====
         yield return StartCoroutine(WaitUntil(() => toiletDead));
-        yield return new WaitForSeconds(2.2f);
+        yield return new WaitForSeconds(1.8f);
         yield return StartCoroutine(PlayDialogue(toiletWinDialogue));
 
 
