@@ -1,25 +1,21 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using UnityEngine.Events;
+using static QuitConfirmManager;
 
-public class QuitConfirmManager : MonoBehaviour
+public class NewGameConfirmManager : MonoBehaviour
 {
-    public enum QuitConfirmSource
+
+    public enum NewGameConfirmSource
     {
-        MainMenuQuit,
-        PauseMenuMainMenu,
-        PauseMenuQuit
+        MainMenuNewGame
     }
 
     [Header("Panel")]
-    [SerializeField] private GameObject quitConfirmPanel;
-
-    [Header("Owning Panels")]
-    [SerializeField] private GameObject pauseMenuPanel;
-    //[SerializeField] private GameObject mainMenuPanel;
+    [SerializeField] private GameObject newGameConfirmPanel;
 
     [Header("Buttons")]
     [SerializeField] private Button yesButton;
@@ -40,20 +36,18 @@ public class QuitConfirmManager : MonoBehaviour
     [Range(0f, 1f)][SerializeField] private float clickVolume = 1f;
 
     [Header("Text Colors")]
-    [SerializeField] private Color selectedColor = new Color(255f/255f, 225f/255f, 213f/255f, 255f/255f);
+    [SerializeField] private Color selectedColor = new Color(255f / 255f, 225f / 255f, 213f / 255f, 255f / 255f);
     [SerializeField] private Color normalColor = new Color(0.78f, 0.78f, 0.78f, 1f);
-
-    [Header("Menu References")]
-    [SerializeField] private MenuManager menuManager;
-    [SerializeField] private PauseMenuManager pauseMenuManager;
-    public bool IsOpen => quitConfirmPanel != null && quitConfirmPanel.activeSelf;
 
     private Button[] buttons;
     private TMP_Text[] texts;
     private GameObject[] arrows;
 
-    private QuitConfirmSource currentSource;
+    private NewGameConfirmSource currentSource;
     private int currentIndex = -1;
+
+    public bool NewGameConfirmIsOpen => newGameConfirmPanel != null && newGameConfirmPanel.activeSelf;
+
 
     private void Awake()
     {
@@ -64,8 +58,8 @@ public class QuitConfirmManager : MonoBehaviour
         ConfigureNavigation();
         ConfigurePointerEvents();
 
-        if (quitConfirmPanel != null)
-            quitConfirmPanel.SetActive(false);
+        if (newGameConfirmPanel != null)
+            newGameConfirmPanel.SetActive(false);
     }
 
     private void Start()
@@ -76,6 +70,7 @@ public class QuitConfirmManager : MonoBehaviour
         if (noButton != null)
             noButton.onClick.AddListener(OnNoPressed);
     }
+
 
     private void ConfigureNavigation()
     {
@@ -134,39 +129,20 @@ public class QuitConfirmManager : MonoBehaviour
         trigger.triggers.Add(entry);
     }
 
-    public void Open(QuitConfirmSource source)
+    public void Open(NewGameConfirmSource source)
     {
         currentSource = source;
 
-        HideOwningPanel();
-
-        if (quitConfirmPanel != null)
-            quitConfirmPanel.SetActive(true);
+        if (newGameConfirmPanel != null)
+            newGameConfirmPanel.SetActive(true);
 
         SetSelection(0, false);
     }
 
-    private void HideOwningPanel()
-    {
-        switch (currentSource)
-        {
-            //case QuitConfirmSource.MainMenuQuit:
-            //    if (mainMenuPanel != null)
-            //        mainMenuPanel.SetActive(false);
-            //    break;
-
-            case QuitConfirmSource.PauseMenuMainMenu:
-            case QuitConfirmSource.PauseMenuQuit:
-                if (pauseMenuPanel != null)
-                    pauseMenuPanel.SetActive(false);
-                break;
-        }
-    }
-
     private void Close()
     {
-        if (quitConfirmPanel != null)
-            quitConfirmPanel.SetActive(false);
+        if (newGameConfirmPanel != null)
+            newGameConfirmPanel.SetActive(false);
 
         currentIndex = -1;
     }
@@ -201,6 +177,7 @@ public class QuitConfirmManager : MonoBehaviour
             PlayUiSound(hoverClip, hoverVolume);
     }
 
+
     private void OnYesPressed()
     {
         PlayUiSound(clickClip, clickVolume);
@@ -208,24 +185,12 @@ public class QuitConfirmManager : MonoBehaviour
 
         Time.timeScale = 1f;
 
+        LevelLoader.Instance?.ClearSavedGame();
 
-        // Save logic
-        if (currentSource != QuitConfirmSource.MainMenuQuit)
-            LevelLoader.Instance?.SaveCurrentLevel();
-
-        switch (currentSource)
+        MenuManager menuManager = FindFirstObjectByType<MenuManager>();
+        if (menuManager != null)
         {
-            case QuitConfirmSource.MainMenuQuit:
-                QuitGame();
-                break;
-
-            case QuitConfirmSource.PauseMenuMainMenu:
-                LevelLoader.Instance?.ReturnToMainMenu();
-                break;
-
-            case QuitConfirmSource.PauseMenuQuit:
-                QuitGame();
-                break;
+            menuManager.OnBeginGame("Floor_01");
         }
     }
 
@@ -239,26 +204,7 @@ public class QuitConfirmManager : MonoBehaviour
         PlayUiSound(clickClip, clickVolume);
         Close();
 
-        switch (currentSource)
-        {
-            case QuitConfirmSource.MainMenuQuit:
-                menuManager?.RestoreAfterQuitConfirm();
-                break;
-
-            case QuitConfirmSource.PauseMenuMainMenu:
-            case QuitConfirmSource.PauseMenuQuit:
-                pauseMenuManager?.RestoreAfterQuitConfirm(currentSource);
-                break;
-        }
-    }
-
-    private void QuitGame()
-    {
-#if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
-#else
-        Application.Quit();
-#endif
+        if (newGameConfirmPanel != null) newGameConfirmPanel.SetActive(false);
     }
 
     private void PlayUiSound(AudioClip clip, float volume)
@@ -268,4 +214,5 @@ public class QuitConfirmManager : MonoBehaviour
 
         AudioManager.Instance?.PlaySFXWithPitch(clip, volume);
     }
+
 }

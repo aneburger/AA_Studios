@@ -127,6 +127,36 @@ public class BoonManager : MonoBehaviour
         OnBoonApplied?.Invoke(boonId);
     }
 
+    // -- GET SAVE SNAPSHOT --
+    // Returns the owned boon counts as a serializable list.
+    public List<BoonCountEntry> GetOwnedCountsSnapshot()
+    {
+        List<BoonCountEntry> list = new List<BoonCountEntry>();
+        foreach (KeyValuePair<string, int> kvp in ownedCounts)
+        {
+            list.Add(new BoonCountEntry { boonId = kvp.Key, count = kvp.Value });
+        }
+        return list;
+    }
+
+    // -- RESTORE FROM SAVE --
+    // Restores Stats and ownedCounts wholesale rather than replaying ApplyBoonById.
+    public void RestoreFromSave(RunStats savedStats, List<BoonCountEntry> savedCounts)
+    {
+        Stats = savedStats ?? new RunStats();
+
+        ownedCounts.Clear();
+        if (savedCounts != null)
+        {
+            foreach (BoonCountEntry entry in savedCounts)
+                ownedCounts[entry.boonId] = entry.count;
+        }
+
+        // Reuse the existing event so PlayerBoonStats.ApplyAllStats() re-syncs
+        // shooter/spore/health bonuses to the restored stats.
+        OnBoonApplied?.Invoke(null);
+    }
+
     // -- APPLY BONUS HEART --
     private void ApplyBonusHeart(bool healToFull)
     {
@@ -193,3 +223,13 @@ public class BoonManager : MonoBehaviour
         return candidates[Random.Range(0, candidates.Count)];
     }
 }
+
+
+
+
+
+
+
+
+
+
