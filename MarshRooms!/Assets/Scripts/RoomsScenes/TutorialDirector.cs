@@ -335,6 +335,7 @@ public class TutorialDirector : MonoBehaviour
 
         // ==== PART 6: Wait for toilet to die ====
         yield return StartCoroutine(WaitUntil(() => toiletDead));
+        yield return new WaitForSeconds(2.2f);
         yield return StartCoroutine(PlayDialogue(toiletWinDialogue));
 
 
@@ -526,6 +527,7 @@ public class TutorialDirector : MonoBehaviour
 
         // -- Part 13: Post-fight + evil chef --
         yield return new WaitForSeconds(4f);
+        AudioManager.Instance?.FadeMusicVolume(0.2f, 1f);
 
         LockPlayer();
         LockPlayerKeepInput();
