@@ -9,6 +9,7 @@ public class EnemyManager : MonoBehaviour
     public static EnemyManager Instance { get; private set; }
 
     private List<GameObject> activeEnemies = new List<GameObject>();
+    private Coroutine confirmRoutine;
 
     public static event System.Action OnAllEnemiesDead;
 
@@ -41,12 +42,29 @@ public class EnemyManager : MonoBehaviour
     {
         if (!activeEnemies.Contains(enemy))
             activeEnemies.Add(enemy);
+
+        if (confirmRoutine != null)
+        {
+            StopCoroutine(confirmRoutine);
+            confirmRoutine = null;
+        }
     }
 
-    // -- UNREGISTER ENEMY -- called when an enemy dies
+    // -- UNREGISTER ENEMY --
     public void UnregisterEnemy(GameObject enemy)
     {
         activeEnemies.Remove(enemy);
+
+        if (activeEnemies.Count == 0 && confirmRoutine == null)
+            confirmRoutine = StartCoroutine(ConfirmAllDead());
+    }
+
+    // -- CONFIRM ALL DEAD --
+    private IEnumerator ConfirmAllDead()
+    {
+        yield return null;
+
+        confirmRoutine = null;
 
         if (activeEnemies.Count == 0)
             OnAllEnemiesDead?.Invoke();

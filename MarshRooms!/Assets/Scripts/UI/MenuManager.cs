@@ -142,8 +142,8 @@ public class MenuManager : MonoBehaviour
     private void Update()
     {
         // uncomment and use F9 key to delete the currently saved game
-        // if (Keyboard.current != null && Keyboard.current.f9Key.wasPressedThisFrame)
-        //     LevelLoader.Instance?.ClearSavedGame();
+            if (Keyboard.current != null && Keyboard.current.f9Key.wasPressedThisFrame)
+                LevelLoader.Instance?.ClearSavedGame();
 
         if (Keyboard.current == null || !Keyboard.current.escapeKey.wasPressedThisFrame)
             return;

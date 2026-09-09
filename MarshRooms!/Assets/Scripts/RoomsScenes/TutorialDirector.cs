@@ -421,7 +421,8 @@ public class TutorialDirector : MonoBehaviour
         }
 
         // Wait for player to defeat wave
-        yield return StartCoroutine(WaitUntil(() => wave1Clear));
+        yield return StartCoroutine(WaitUntil(() => AllWave1EnemiesDead()));
+        wave1Clear = true;
 
         // ==== PART 10: Minigun drop + learn weapon switching ====
         
@@ -874,6 +875,16 @@ public class TutorialDirector : MonoBehaviour
             float delay = Random.Range(spawnStaggerMin, spawnStaggerMax);
             yield return new WaitForSeconds(delay);
         }
+    }
+
+    // -- WAVE 1 ENEMIES DEAD --
+    private bool AllWave1EnemiesDead()
+    {
+        foreach (var enemy in wave1Enemies)
+        {
+            if (enemy != null) return false;
+        }
+        return true;
     }
 
     // -- PLAY DIALOGUE --
