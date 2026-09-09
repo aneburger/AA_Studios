@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36776f04a1ca3d8449b04b532f7a016e, type: 3}
+  m_Name: PistolPurple1
+  m_EditorClassIdentifier: Assembly-CSharp::WeaponData
+  weaponId: 
+  gunName: Pistol Purple 1
+  bulletPrefab: {fileID: 6894130498819508759, guid: 69924905709c7684cb965ee1934d4d8c, type: 3}
+  shellsPrefab: {fileID: 3331065470414262999, guid: b2b9e163261c23b418b6fc5856cd3a3c, type: 3}
+  hitPrefab: {fileID: 4081999799842582576, guid: f3fb2799471e50644919e5464a868be7, type: 3}
+  muzzleFlashPrefab: {fileID: 4081999799842582576, guid: e4d518779a0ad1941ae4b48c28db2b82, type: 3}
+  pickupPrefab: {fileID: 0}
+  fireRate: 2
+  minDamage: 3
+  maxDamage: 3
+  bulletSpeed: 8
+  maxAmmo: -1
+  burstCount: 3
+  burstInterval: 0.001
+  firePointOffset: {x: 0, y: -0.1}
+  flipOffsetOnAimFlip: 0
+  bulletCount: 1
+  spreadAngle: 15
+  sprite: {fileID: -4854829337826818713, guid: cebe449b75bd9394883dbf6420d9ecde, type: 3}
+  hudSprite: {fileID: 0}
+  ammoDisplaySprite: {fileID: 0}
+  shootClip: {fileID: 8300000, guid: d82fd3063321ffb44af8a9ae49c5adaa, type: 3}
+  shootClips: []
+  shootVolume: 0.6
+  wallHitClip: {fileID: 8300000, guid: 277cfd5237e689d44b4f267a3990a69e, type: 3}
+  wallHitVolume: 0.1
+  shakeForce: 0
+  knockbackForce: 1
+  hitKnockback: 3
+  recoilAmount: -35
+  recoilDecay: 25

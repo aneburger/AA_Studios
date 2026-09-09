@@ -96,7 +96,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -7379,6 +7379,7 @@ MonoBehaviour:
   tutorialButton: {fileID: 2370985189917230936}
   continueButton: {fileID: 2424903480513166304}
   quitConfirmManager: {fileID: 398054369855910758}
+  newGameConfirmManager: {fileID: 7115363292743406181}
   cancelControlsButton: {fileID: 5412567612862326570}
   confirmControlsButton: {fileID: 7547777682074202659}
   sliderSoundManager: {fileID: 5410519384725999082}
@@ -8894,7 +8895,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 15
+  m_SortingOrder: 20
   m_TargetDisplay: 0
 --- !u!114 &1413906491727773818
 MonoBehaviour:

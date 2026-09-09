@@ -1901,7 +1901,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 8.4375
+  orthographic size: 13.133179
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -19495,42 +19495,15 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 706486883499823396, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
-      propertyPath: m_SortingOrder
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 4908183722122372763, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
-      propertyPath: newGameConfirmManager
-      value: 
-      objectReference: {fileID: 3537630140295722638}
-    - target: {fileID: 5873042432419290886, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
-      propertyPath: m_Color.a
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7085789729006638418, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
       propertyPath: m_Name
       value: HUD
-      objectReference: {fileID: 0}
-    - target: {fileID: 7461425882493315119, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
---- !u!114 &3537630140295722638 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7115363292743406181, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
-  m_PrefabInstance: {fileID: 3537630140295722637}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d8c83564e718a8340969586cee99de70, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NewGameConfirmManager
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
