@@ -687,6 +687,54 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: bd11a1b1-694f-4293-a88e-ea64da47bca3
     m_ActionName: 'Player/Mutate[/Mouse/rightButton]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 319489607}
+        m_TargetAssemblyTypeName: TopDown.Movement.PlayerMover, Assembly-CSharp
+        m_MethodName: OnWeaponSlot1
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: da695b8b-6802-4ef4-9971-1c2f7342602c
+    m_ActionName: 'Player/Slot1[/Keyboard/1]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 319489607}
+        m_TargetAssemblyTypeName: TopDown.Movement.PlayerMover, Assembly-CSharp
+        m_MethodName: OnWeaponSlot2
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: e2e1c89f-0d0c-42a5-bdac-d1b507ac1d12
+    m_ActionName: 'Player/Slot2[/Keyboard/2]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 319489607}
+        m_TargetAssemblyTypeName: TopDown.Movement.PlayerMover, Assembly-CSharp
+        m_MethodName: OnWeaponSlot3
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: f62b2011-3183-4ab6-b2a7-ca250757a71b
+    m_ActionName: 'Player/Slot3[/Keyboard/3]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -1853,7 +1901,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 13.133179
+  orthographic size: 8.4375
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2

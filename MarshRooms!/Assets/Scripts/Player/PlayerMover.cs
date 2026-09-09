@@ -197,6 +197,25 @@ namespace TopDown.Movement
         // -- INTERACT INPUT --
         public void OnInteract(InputAction.CallbackContext context){}
 
+        // -- WEAPON SLOT INPUT --
+        public void OnWeaponSlot1(InputAction.CallbackContext context)
+        {
+            if (!context.started) return;
+            weaponSlot.EquipSlot(0);
+        }
+
+        public void OnWeaponSlot2(InputAction.CallbackContext context)
+        {
+            if (!context.started) return;
+            weaponSlot.EquipSlot(1);
+        }
+
+        public void OnWeaponSlot3(InputAction.CallbackContext context)
+        {
+            if (!context.started) return;
+            weaponSlot.EquipSlot(2);
+        }
+
         // -- SET SLEEPING --
         public void SetSleeping(bool sleeping)
         {

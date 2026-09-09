@@ -165,6 +165,14 @@ public class PlayerWeaponSlot : MonoBehaviour
     {
         if (slots[slot] == null) return true;
 
+        // If the weapon has no ammo left
+        if (ammo[slot] == 0)
+        {
+            slots[slot] = null;
+            ammo[slot] = 0;
+            return true;
+        }
+
         if (slots[slot].pickupPrefab == null)
         {
             return false;
@@ -236,17 +244,19 @@ public class PlayerWeaponSlot : MonoBehaviour
         shooter.EquipWeapon(slots[currentSlot], isPickup, playSound);
         shooter.SetAmmo(ammo[currentSlot]);
         OnWeaponChanged?.Invoke(slots[currentSlot]);
-        //UpdateWeaponDisplay();
     }
 
-    // -- UPDATE WEAPON DISPLAY --
-    //private void UpdateWeaponDisplay()
-    //{
-    //    if (HUDManager.Instance != null && slots[currentSlot] != null)
-    //    {
-    //        HUDManager.Instance.UpdateWeaponDisplay(slots[currentSlot]);
-    //    }
-    //}
+    // -- EQUIP SPECIFIC SLOT --
+    public void EquipSlot(int slot)
+    {
+        if (slot < 0 || slot >= maxWeapons) return;
+        if (slots[slot] == null) return;
+        if (slot == currentSlot) return;
+
+        SaveCurrentAmmo();
+        currentSlot = slot;
+        EquipCurrentSlot();
+    }
 
     // -- SKIP EMPTY SLOTS --
     private void SkipEmptySlots(int direction, ref int slot)

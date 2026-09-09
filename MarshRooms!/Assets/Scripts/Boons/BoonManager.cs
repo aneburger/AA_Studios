@@ -68,7 +68,7 @@ public class BoonManager : MonoBehaviour
                 break;
 
             case "health_drop_rate":
-                Stats.healthDropRateMultiplier *= 2f;
+                Stats.healthDropRateMultiplier *= 1.3f;
                 break;
 
             case "heal_full_chance":
