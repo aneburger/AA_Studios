@@ -45815,7 +45815,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::RoomManager
   spawnDelay: 1.5
   spawnIntervalMin: 0.5
-  spawnIntervalMax: 1.5
+  spawnIntervalMax: 2
   waves:
   - pointBudget: 10
     spawnPoints:
@@ -46029,7 +46029,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2166477703874850487, guid: 9fc4ca1abe7be83499b814cbd8e58f3a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -8.413
+      value: -8.301
       objectReference: {fileID: 0}
     - target: {fileID: 2166477703874850487, guid: 9fc4ca1abe7be83499b814cbd8e58f3a, type: 3}
       propertyPath: m_LocalPosition.z
@@ -46067,7 +46067,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: book-green
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6488178732444971081, guid: 9fc4ca1abe7be83499b814cbd8e58f3a, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
