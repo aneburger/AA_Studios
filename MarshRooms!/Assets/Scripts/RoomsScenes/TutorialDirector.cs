@@ -585,8 +585,12 @@ public class TutorialDirector : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         ScreenEffects.Instance?.FadeToBlack(0.6f);
         yield return new WaitForSeconds(2f);
+
         UnlockPlayer();
         UnlockPlayerFull();
+
+        SporeManager.Instance?.ResetSpores();
+        playerTransform?.GetComponent<PlayerWeaponSlot>()?.ResetToDefaultWeapon();
         LevelLoader.Instance.LoadLevel("Floor_01");
     }
 

@@ -257,10 +257,11 @@ public class PlayerHealth : BaseHealth
         if (SporeManager.Instance.IsMutated)
         {
             mutatedVisuals?.SetEffectsVisible(false);
-            SporeManager.Instance.ResetSpores();
             mutatedVisuals?.ResetStateSilently();
             GetComponent<PlayerMutatedStats>()?.ResetStateSilently();
         }
+
+        SporeManager.Instance.ResetSpores();
 
         GetComponent<PlayerInput>().enabled = false;
         GetComponent<Rigidbody2D>().linearVelocity = Vector2.zero;
@@ -285,6 +286,7 @@ public class PlayerHealth : BaseHealth
         LevelLoader.Instance.ReloadCurrentLevel();
 
         GetComponent<PlayerInput>().enabled = true;
+        GetComponent<PlayerWeaponSlot>()?.ResetToDefaultWeapon();
         shooter.HideWeapon(false);
         mover.ForceIdleAnimation();
 

@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f196ce04001eea24c8ebbc95906a3cf9, type: 3}
-  m_Name: bonus_heart_full_heal
+  m_Name: heal_on_mutate
   m_EditorClassIdentifier: Assembly-CSharp::BoonCardData
-  boonId: bonus_heart_full_heal
+  boonId: heal_on_mutate
   displayName: Vital Surge
-  description: Permanently gain 1 max heart and fully heal.
-  icon: {fileID: 1525148124, guid: e95e88aeb9c9bf445ad8ee4c8d06099d, type: 3}
+  description: Heal +1 heart  when you mutate.
+  icon: {fileID: -1792888915, guid: e95e88aeb9c9bf445ad8ee4c8d06099d, type: 3}
   rarity: 1
   category: 0
-  maxCopies: 1
+  maxCopies: 2

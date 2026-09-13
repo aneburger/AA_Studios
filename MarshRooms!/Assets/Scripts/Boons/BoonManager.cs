@@ -62,17 +62,12 @@ public class BoonManager : MonoBehaviour
                 ApplyBonusHeart(healToFull: false);
                 break;
 
-            case "bonus_heart_full_heal":
-                Stats.bonusMaxHearts++;
-                ApplyBonusHeart(healToFull: true);
+            case "heal_on_mutate":
+                Stats.healOnMutateAmount += 4;
                 break;
 
             case "health_drop_rate":
                 Stats.healthDropRateMultiplier *= 1.3f;
-                break;
-
-            case "heal_full_chance":
-                Stats.healToFullChance += 0.2f;
                 break;
 
             case "iframe_extension":

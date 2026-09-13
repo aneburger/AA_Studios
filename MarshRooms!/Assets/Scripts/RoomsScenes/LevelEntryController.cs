@@ -18,29 +18,8 @@ public class LevelEntryController : MonoBehaviour
             }
         }
 
-        if (LevelLoader.Instance.GetCurrentFloorNumber() == 1)
-        {
-            PlayerHealth playerHealth = player.GetComponent<PlayerHealth>();
-            playerHealth?.ResetHealth();
-        }
-
-        TryHealToFull(player);
-        PlayerHealth health = player.GetComponent<PlayerHealth>();
-        health?.UpdateLowHealthEffect();
-    }
-
-    private void TryHealToFull(GameObject player)
-    {
-        if (BoonManager.Instance == null) return;
-
-        float chance = BoonManager.Instance.Stats.healToFullChance;
-        if (chance <= 0f) return;
-
-        if (Random.value <= chance)
-        {
-            PlayerHealth playerHealth = player.GetComponent<PlayerHealth>();
-            if (playerHealth != null)
-                playerHealth.Heal(playerHealth.GetMaxHealth());
-        }
+        PlayerHealth playerHealth = player.GetComponent<PlayerHealth>();
+        playerHealth?.ResetHealth();
+        playerHealth?.UpdateLowHealthEffect();
     }
 }

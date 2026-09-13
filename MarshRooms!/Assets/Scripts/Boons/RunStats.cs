@@ -4,7 +4,7 @@ public class RunStats
     // Health
     public int bonusMaxHearts = 0;
     public float healthDropRateMultiplier = 1f;
-    public float healToFullChance = 0f;
+    public int healOnMutateAmount = 0;
     public float bonusIFrameDuration = 0f;
     public float dodgeDamageChance = 0f;
 

@@ -367,4 +367,19 @@ public class PlayerWeaponSlot : MonoBehaviour
         if (slots[currentSlot] != null)
             EquipCurrentSlot(false, false);
     }
+
+    // -- RESET TO DEFAULT WEAPON --
+    public void ResetToDefaultWeapon()
+    {
+        for (int i = 1; i < slots.Length; i++)
+        {
+            slots[i] = null;
+            ammo[i] = 0;
+        }
+
+        slots[0] = defaultWeapon;
+        ammo[0] = -1;
+        currentSlot = 0;
+        EquipCurrentSlot(false, false);
+    }
 }
