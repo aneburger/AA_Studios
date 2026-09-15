@@ -190,7 +190,7 @@ public class NewGameConfirmManager : MonoBehaviour
         MenuManager menuManager = FindFirstObjectByType<MenuManager>();
         if (menuManager != null)
         {
-            menuManager.OnBeginGame("Floor_01");
+            menuManager.OnBeginGame("Floor_08");
         }
     }
 
