@@ -12,25 +12,27 @@ public class InventoryDisplay : MonoBehaviour
     [Header("Inventory Slots Backgrounds")]
     [SerializeField] private Image[] inventorySlotsBackgrounds = new Image[3];
 
+    [Header("Active Slot Highlight")]
+    [SerializeField] private RectTransform activeHighlight;
+
     [Range(0f, 1f)]
     [SerializeField] private float emptySlotAlpha = 0.35f;
 
-    private PlayerShooter playerShooter;
     private PlayerWeaponSlot weaponSlots;
-    private int currentDisplaySlot = 0;
 
+    // -- START --
     private void Start()
     {
-        playerShooter = FindFirstObjectByType<PlayerShooter>();
         weaponSlots = FindFirstObjectByType<PlayerWeaponSlot>();
 
         HideAllInventorySlots();
         UpdateInventoryDisplay();
     }
 
+    // -- UPDATE --
     private void Update()
     {
-        if (playerShooter == null || weaponSlots == null) return;
+        if (weaponSlots == null) return;
 
         UpdateInventoryDisplay();
     }
@@ -38,19 +40,13 @@ public class InventoryDisplay : MonoBehaviour
     // -- UPDATE INVENTORY DISPLAY --
     private void UpdateInventoryDisplay()
     {
-        int currentSlot = GetCurrentWeaponSlot();
-        if (currentSlot != currentDisplaySlot)
-            currentDisplaySlot = currentSlot;
-
-        WeaponData[] displayWeapons = GetDisplayWeapons(currentDisplaySlot);
-
-        for (int displayIndex = 0; displayIndex < inventorySlots.Length; displayIndex++)
+        for (int i = 0; i < inventorySlots.Length; i++)
         {
-            Image slotImage = inventorySlots[displayIndex];
+            Image slotImage = inventorySlots[i];
             if (slotImage == null)
                 continue;
 
-            WeaponData weapon = displayIndex < displayWeapons.Length ? displayWeapons[displayIndex] : null;
+            WeaponData weapon = weaponSlots.GetWeaponAtSlot(i);
             bool hasWeapon = weapon != null && weapon.hudSprite != null;
 
             if (hasWeapon)
@@ -60,16 +56,30 @@ public class InventoryDisplay : MonoBehaviour
                 slotImage.enabled = true;
                 slotImage.SetNativeSize();
 
-                SetBackgroundAlpha(displayIndex, 1f);
+                SetBackgroundAlpha(i, 1f);
             }
             else
             {
                 slotImage.sprite = null;
                 slotImage.enabled = false;
 
-                SetBackgroundAlpha(displayIndex, emptySlotAlpha);
+                SetBackgroundAlpha(i, emptySlotAlpha);
             }
         }
+
+        UpdateActiveHighlight(weaponSlots.CurrentSlotIndex);
+    }
+
+    // -- UPDATE ACTIVE HIGHLIGHT --
+    private void UpdateActiveHighlight(int activeSlot)
+    {
+        if (activeHighlight == null) return;
+        if (activeSlot < 0 || activeSlot >= inventorySlots.Length) return;
+
+        Image targetSlot = inventorySlots[activeSlot];
+        if (targetSlot == null) return;
+
+        activeHighlight.position = targetSlot.rectTransform.position;
     }
 
     // -- SET BACKGROUND OPACITY --
@@ -89,39 +99,6 @@ public class InventoryDisplay : MonoBehaviour
         color.a = alpha;
         background.color = color;
         background.enabled = true;
-    }
-
-    // -- GET DISPLAY WEAPONS --
-    private WeaponData[] GetDisplayWeapons(int startSlot)
-    {
-        WeaponData[] displayWeapons = new WeaponData[3];
-        int displayIndex = 0;
-
-        for (int i = 0; i < 3 && displayIndex < 3; i++)
-        {
-            int slotIndex = (startSlot + i) % 3;
-            WeaponData weapon = weaponSlots.GetWeaponAtSlot(slotIndex);
-
-            if (weapon != null)
-            {
-                displayWeapons[displayIndex] = weapon;
-                displayIndex++;
-            }
-        }
-
-        return displayWeapons;
-    }
-
-    // -- GET CURRENT WEAPON SLOT --
-    private int GetCurrentWeaponSlot()
-    {
-        for (int i = 0; i < 3; i++)
-        {
-            WeaponData weapon = weaponSlots.GetWeaponAtSlot(i);
-            if (weapon != null && weapon == playerShooter.currentWeapon)
-                return i;
-        }
-        return 0; 
     }
 
     // -- HIDE ALL INVENTORY SLOTS --

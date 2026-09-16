@@ -92,6 +92,10 @@ public class RoomManager : MonoBehaviour
         weaponDropCandidatesThisFloor.Clear();
         player = GameObject.FindWithTag("Player").transform;
         EnemyManager.OnAllEnemiesDead += OnWaveCleared;
+
+        // capture the player's current spores/weapons when entering room
+        if (LevelLoader.Instance != null && !LevelLoader.Instance.HasPendingRestore)
+            LevelLoader.Instance.SaveCurrentLevel();
     }
 
     // -- ON DESTROY --

@@ -208,11 +208,6 @@ public class QuitConfirmManager : MonoBehaviour
 
         Time.timeScale = 1f;
 
-
-        // Save logic
-        if (currentSource != QuitConfirmSource.MainMenuQuit)
-            LevelLoader.Instance?.SaveCurrentLevel();
-
         switch (currentSource)
         {
             case QuitConfirmSource.MainMenuQuit:

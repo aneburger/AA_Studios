@@ -12,10 +12,6 @@ public class SaveGameData
     // Spores
     public int currentSpores;
 
-    // Health
-    public int maxHealth;
-    public int currentHealth;
-
     // Weapons
     public List<WeaponSaveEntry> weapons = new List<WeaponSaveEntry>();
     public int currentWeaponSlot;
