@@ -106,7 +106,7 @@ public class BoonManager : MonoBehaviour
                 break;
 
             case "overall_damage":
-                Stats.permanentDamageMultiplier += 0.15f;
+                Stats.permanentDamageMultiplier += 0.2f;
                 break;
 
             case "extra_bullet":

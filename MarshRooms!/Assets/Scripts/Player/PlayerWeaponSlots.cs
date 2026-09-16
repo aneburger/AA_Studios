@@ -113,20 +113,6 @@ public class PlayerWeaponSlot : MonoBehaviour
         TutorialDirector.Instance?.OnWeaponScrolled();
     }
 
-    // -- EQUIP SLOT --
-    public void EquipSlot(int slot)
-    {
-        if (slot < 0 || slot >= maxWeapons) return;
-        if (slots[slot] == null) return; 
-        if (slot == currentSlot) return;
-
-        SaveCurrentAmmo();
-        currentSlot = slot;
-
-        EquipCurrentSlot();
-        TutorialDirector.Instance?.OnWeaponScrolled();
-    }
-
     // -- PICKUP --
     public void PickupWeapon()
     {
