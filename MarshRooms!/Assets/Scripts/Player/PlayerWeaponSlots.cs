@@ -1,6 +1,7 @@
 // Manages player weapon slots
 
 using UnityEngine;
+using UnityEngine.InputSystem;
 using System.Collections.Generic;
 
 public class PlayerWeaponSlot : MonoBehaviour
@@ -10,7 +11,7 @@ public class PlayerWeaponSlot : MonoBehaviour
     [SerializeField] private int maxWeapons = 3;
 
     [Header("Save/Load")]
-    [Tooltip("Every WeaponData asset in the game. Used to look weapons back up by weaponId when restoring a save.")]
+    // Every WeaponData asset in the game. used to look weapons back up by weaponId when restoring a save.
     [SerializeField] private List<WeaponData> allWeapons;
 
     public GameObject pickupPrefab;
@@ -19,6 +20,8 @@ public class PlayerWeaponSlot : MonoBehaviour
     private int[] ammo;
     private WeaponData[] slots;
     private int currentSlot = 0;
+
+    public int CurrentSlotIndex => currentSlot;
 
     public event System.Action<WeaponData> OnWeaponChanged;
     private List<WeaponPickup> nearbyPickups = new List<WeaponPickup>();
@@ -71,6 +74,17 @@ public class PlayerWeaponSlot : MonoBehaviour
         EquipCurrentSlot();
     }
 
+    // -- UPDATE --
+    // Number-key weapon switching (1/2/3), alongside scroll wheel.
+    private void Update()
+    {
+        if (Keyboard.current == null) return;
+
+        if (Keyboard.current.digit1Key.wasPressedThisFrame) EquipSlot(0);
+        else if (Keyboard.current.digit2Key.wasPressedThisFrame) EquipSlot(1);
+        else if (Keyboard.current.digit3Key.wasPressedThisFrame) EquipSlot(2);
+    }
+
     // -- SCROLL UP --
     public void ScrollUp()
     {
@@ -98,6 +112,20 @@ public class PlayerWeaponSlot : MonoBehaviour
         EquipCurrentSlot();
         TutorialDirector.Instance?.OnWeaponScrolled();
     }
+
+    // -- EQUIP SLOT --
+    // public void EquipSlot(int slot)
+    // {
+    //     if (slot < 0 || slot >= maxWeapons) return;
+    //     if (slots[slot] == null) return; 
+    //     if (slot == currentSlot) return;
+
+    //     SaveCurrentAmmo();
+    //     currentSlot = slot;
+
+    //     EquipCurrentSlot();
+    //     TutorialDirector.Instance?.OnWeaponScrolled();
+    // }
 
     // -- PICKUP --
     public void PickupWeapon()
@@ -256,6 +284,7 @@ public class PlayerWeaponSlot : MonoBehaviour
         SaveCurrentAmmo();
         currentSlot = slot;
         EquipCurrentSlot();
+        TutorialDirector.Instance?.OnWeaponScrolled();
     }
 
     // -- SKIP EMPTY SLOTS --

@@ -72,6 +72,7 @@ public class PlayerMutatedStats : MonoBehaviour
         ResetStateSilently();
     }
 
+    // -- RESET STATE SILENTLY --
     public void ResetStateSilently()
     {
         mover.SetSpeedMultiplier(1f);

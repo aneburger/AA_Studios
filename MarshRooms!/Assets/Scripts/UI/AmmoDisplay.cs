@@ -15,6 +15,13 @@ public class AmmoDisplay : MonoBehaviour
     [SerializeField] private float weaponNameVisibleTime = 2f;
     [SerializeField] private float weaponNameFadeTime = 0.4f;
 
+    [Header("Active Slot Positioning")]
+    [SerializeField] private RectTransform[] slotAnchors = new RectTransform[3];
+    [SerializeField] private Vector2 offsetFromSlot = new Vector2(0f, -60f);
+
+    private RectTransform selfRect;
+    private Canvas rootCanvas;
+
     private PlayerShooter playerShooter;
     private PlayerWeaponSlot weaponSlots;
 
@@ -23,6 +30,8 @@ public class AmmoDisplay : MonoBehaviour
 
     private void Start()
     {
+        selfRect = GetComponent<RectTransform>();
+        rootCanvas = GetComponentInParent<Canvas>();
         playerShooter = FindFirstObjectByType<PlayerShooter>();
         weaponSlots = FindFirstObjectByType<PlayerWeaponSlot>();
 
@@ -35,9 +44,26 @@ public class AmmoDisplay : MonoBehaviour
 
     private void Update()
     {
+        PositionUnderActiveSlot();
+
         if (playerShooter == null) return;
 
         UpdateAmmoDisplay();
+    }
+
+    // -- POSITION UNDER ACTIVE SLOT --
+    private void PositionUnderActiveSlot()
+    {
+        if (selfRect == null || weaponSlots == null || slotAnchors == null) return;
+
+        int activeSlot = weaponSlots.CurrentSlotIndex;
+        if (activeSlot < 0 || activeSlot >= slotAnchors.Length) return;
+
+        RectTransform anchor = slotAnchors[activeSlot];
+        if (anchor == null) return;
+
+        float scale = rootCanvas != null ? rootCanvas.scaleFactor : 1f;
+        selfRect.position = anchor.position + (Vector3)(offsetFromSlot * scale);
     }
 
     // -- UPDATE AMMO DISPLAY --
@@ -53,7 +79,6 @@ public class AmmoDisplay : MonoBehaviour
             return;
         }
 
-        // Show weapon name only when the active weapon changes
         if (currentWeapon != lastWeapon)
         {
             lastWeapon = currentWeapon;

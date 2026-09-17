@@ -290,6 +290,8 @@ public class PlayerHealth : BaseHealth
         shooter.HideWeapon(false);
         mover.ForceIdleAnimation();
 
+        LevelLoader.Instance?.SaveCurrentLevel();
+
         ResetHealth();
     }
 

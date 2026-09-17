@@ -23,8 +23,10 @@ public class LevelLoader : MonoBehaviour
     public string CurrentLevelScene { get; private set; }
     private PlayerHealth playerHealth;
 
-    // Set by ContinueSavedGame(), consumed and cleared at the end of LoadLevelRoutine
+    // Set by ContinueSavedGame()
     private SaveGameData pendingRestoreData;
+
+    public bool HasPendingRestore => pendingRestoreData != null;
     
     // -- AWAKE --
     private void Awake()
@@ -213,13 +215,6 @@ public class LevelLoader : MonoBehaviour
         GameObject player = GameObject.FindGameObjectWithTag(playerTag);
         if (player != null)
         {
-            PlayerHealth health = player.GetComponent<PlayerHealth>();
-            if (health != null)
-            {
-                data.maxHealth = health.MaxHealth;
-                data.currentHealth = health.CurrentHealth;
-            }
-
             PlayerWeaponSlot weaponSlot = player.GetComponent<PlayerWeaponSlot>();
             if (weaponSlot != null)
             {
@@ -229,7 +224,7 @@ public class LevelLoader : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("LevelLoader: no player found while saving, health/weapons will not be saved.");
+            Debug.LogWarning("LevelLoader: no player found while saving, weapons will not be saved.");
         }
 
         try
@@ -277,9 +272,6 @@ public class LevelLoader : MonoBehaviour
     }
 
     // -- APPLY PENDING RESTORE --
-    // Runs at the end of LoadLevelRoutine, after the floor scene has loaded and the
-    // player has been positioned, so it works whether the player/managers persisted
-    // through the whole session or were freshly recreated for this run.
     private void ApplyPendingRestore()
     {
         if (pendingRestoreData == null) return;
@@ -308,15 +300,12 @@ public class LevelLoader : MonoBehaviour
         GameObject player = GameObject.FindGameObjectWithTag(playerTag);
         if (player != null)
         {
-            PlayerHealth health = player.GetComponent<PlayerHealth>();
-            health?.RestoreHealth(data.maxHealth, data.currentHealth);
-
             PlayerWeaponSlot weaponSlot = player.GetComponent<PlayerWeaponSlot>();
             weaponSlot?.RestoreFromSave(data.weapons, data.currentWeaponSlot);
         }
         else
         {
-            Debug.LogWarning("LevelLoader: no player found while restoring, health/weapons were not restored.");
+            Debug.LogWarning("LevelLoader: no player found while restoring, weapons were not restored.");
         }
     }
 }
