@@ -326,6 +326,8 @@ public class PauseMenuManager : MonoBehaviour
 
         FindPlayerMover()?.SetInputLocked(true);
 
+        FindPlayerHealth()?.SetLowHealthAudioPaused(true);
+
         AudioManager.Instance?.SetMusicDampenMultiplier(0.2f);
 
         if (playerInput != null) playerInput.enabled = false;
@@ -341,6 +343,8 @@ public class PauseMenuManager : MonoBehaviour
             FindPlayerShooter()?.SetCanShoot(true);
 
         FindPlayerMover()?.SetInputLocked(false);
+
+        FindPlayerHealth()?.SetLowHealthAudioPaused(false);
 
         PlayUiSound(clickClip, clickVolume);
         AudioManager.Instance?.SetMusicDampenMultiplier(1f);
@@ -444,6 +448,13 @@ public class PauseMenuManager : MonoBehaviour
     {
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         return player != null ? player.GetComponent<PlayerMover>() : null;
+    }
+
+    // -- FIND HEALTH --
+    private PlayerHealth FindPlayerHealth()
+    {
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        return player != null ? player.GetComponent<PlayerHealth>() : null;
     }
 
     // -- ENABLE --
