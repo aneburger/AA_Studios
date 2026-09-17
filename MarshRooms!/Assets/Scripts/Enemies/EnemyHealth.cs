@@ -89,6 +89,14 @@ public class EnemyHealth : BaseHealth
         AudioManager.Instance.PlaySFXWithPitch(hurtClip, hurtVolume, 0.2f);
     }
 
+    // -- HEAL --
+    public void Heal(float amount)
+    {
+        if (IsDead()) return;
+        currentHealth = Mathf.Min(currentHealth + amount, maxHealth);
+        healthBar?.UpdateHealth(currentHealth, maxHealth);
+    }
+
     // -- DIE --
     protected override void Die()
     {

@@ -283,7 +283,11 @@ public class ButtonMushroomAI : EnemyAIBase
         mover.SetFacingOverride(trueDirection);
         weaponAimer?.SetAimDirection(shootDirection);
 
-        shooter?.TryShoot();
+        if (shooter != null && shooter.CanFire())
+            shooter.TryShoot();
+
+        if (shooter != null && shooter.IsBursting)
+            return;
 
         if (pendingMiss && Random.value < moveCloserChance)
             effectiveAttackRange = Mathf.Max(minAttackRange, effectiveAttackRange * moveCloserAmount);

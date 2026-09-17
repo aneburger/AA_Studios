@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6302092c942ee1644bc4027ea868e779, type: 3}
   m_Name: PurpleButtonMushroom
   m_EditorClassIdentifier: Assembly-CSharp::EnemyData
-  maxHealth: 18
-  moveSpeed: 2.4
+  maxHealth: 16
+  moveSpeed: 2.5
   contactDamage: 2
-  contactKnockback: 8
+  contactKnockback: 15
   weapon: {fileID: 11400000, guid: 228a03579c54a894ebb61e3ab0535259, type: 2}
   detectionRange: 18
   attackRange: 12
@@ -32,4 +32,4 @@ MonoBehaviour:
   sporePrefab: {fileID: 7129025776932877359, guid: b8874dc0a3c605d419413a967c2f2c17, type: 3}
   guaranteesSporeDrop: 0
   healthPickupPrefab: {fileID: 1002410625230129664, guid: 1dd3664c0f1e23b4182c58054280f391, type: 3}
-  healthDropChance: 0.08
+  healthDropChance: 0.09

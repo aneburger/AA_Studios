@@ -8,6 +8,8 @@ public class EnemyShooter : BaseShooter
 {
     private int burstShotsFired = 0;
 
+    public bool IsBursting => burstShotsFired > 0;
+
     // -- START --
     private void Start()
     {

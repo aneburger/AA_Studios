@@ -11,6 +11,7 @@ public class EnemyData : ScriptableObject
     public float moveSpeed;
     public float contactDamage;
     public float contactKnockback;
+    public string enemyName;
 
     [Header("Weapon")]
     public WeaponData weapon;
