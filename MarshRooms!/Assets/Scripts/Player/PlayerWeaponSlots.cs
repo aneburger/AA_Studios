@@ -114,18 +114,18 @@ public class PlayerWeaponSlot : MonoBehaviour
     }
 
     // -- EQUIP SLOT --
-    public void EquipSlot(int slot)
-    {
-        if (slot < 0 || slot >= maxWeapons) return;
-        if (slots[slot] == null) return; 
-        if (slot == currentSlot) return;
+    // public void EquipSlot(int slot)
+    // {
+    //     if (slot < 0 || slot >= maxWeapons) return;
+    //     if (slots[slot] == null) return; 
+    //     if (slot == currentSlot) return;
 
-        SaveCurrentAmmo();
-        currentSlot = slot;
+    //     SaveCurrentAmmo();
+    //     currentSlot = slot;
 
-        EquipCurrentSlot();
-        TutorialDirector.Instance?.OnWeaponScrolled();
-    }
+    //     EquipCurrentSlot();
+    //     TutorialDirector.Instance?.OnWeaponScrolled();
+    // }
 
     // -- PICKUP --
     public void PickupWeapon()
@@ -192,6 +192,14 @@ public class PlayerWeaponSlot : MonoBehaviour
     private bool DropWeapon(int slot)
     {
         if (slots[slot] == null) return true;
+
+        // If the weapon has no ammo left
+        if (ammo[slot] == 0)
+        {
+            slots[slot] = null;
+            ammo[slot] = 0;
+            return true;
+        }
 
         if (slots[slot].pickupPrefab == null)
         {
@@ -264,6 +272,19 @@ public class PlayerWeaponSlot : MonoBehaviour
         shooter.EquipWeapon(slots[currentSlot], isPickup, playSound);
         shooter.SetAmmo(ammo[currentSlot]);
         OnWeaponChanged?.Invoke(slots[currentSlot]);
+    }
+
+    // -- EQUIP SPECIFIC SLOT --
+    public void EquipSlot(int slot)
+    {
+        if (slot < 0 || slot >= maxWeapons) return;
+        if (slots[slot] == null) return;
+        if (slot == currentSlot) return;
+
+        SaveCurrentAmmo();
+        currentSlot = slot;
+        EquipCurrentSlot();
+        TutorialDirector.Instance?.OnWeaponScrolled();
     }
 
     // -- SKIP EMPTY SLOTS --

@@ -49,6 +49,8 @@ public class DialogueUI : MonoBehaviour
             audioSource = gameObject.AddComponent<AudioSource>();
 
         audioSource.playOnAwake = false;
+        audioSource.volume = 1.2f;
+        
         dialoguePanel.SetActive(false);
         portraitImage.gameObject.SetActive(false);
 
@@ -221,12 +223,11 @@ public class DialogueUI : MonoBehaviour
 
         if (isTyping)
         {
-            // First click: skip to end of current line
             skipRequested = true;
+            audioSource.Stop();
         }
         else
         {
-            // Second click: advance to next line
             continueIndicator.SetActive(false);
             currentLineIndex++;
             ShowLine(currentLineIndex);
@@ -237,6 +238,8 @@ public class DialogueUI : MonoBehaviour
     {
         if (typewriterCoroutine != null)
             StopCoroutine(typewriterCoroutine);
+
+        audioSource.Stop();
 
         textEffects?.ClearEffects();
         dialoguePanel.SetActive(false);

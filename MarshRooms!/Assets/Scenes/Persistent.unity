@@ -293,7 +293,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0.99}
+  m_AnchoredPosition: {x: -1.0263891, y: 4.1348715}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &290956429
@@ -687,6 +687,54 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: bd11a1b1-694f-4293-a88e-ea64da47bca3
     m_ActionName: 'Player/Mutate[/Mouse/rightButton]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 319489607}
+        m_TargetAssemblyTypeName: TopDown.Movement.PlayerMover, Assembly-CSharp
+        m_MethodName: OnWeaponSlot1
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: da695b8b-6802-4ef4-9971-1c2f7342602c
+    m_ActionName: 'Player/Slot1[/Keyboard/1]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 319489607}
+        m_TargetAssemblyTypeName: TopDown.Movement.PlayerMover, Assembly-CSharp
+        m_MethodName: OnWeaponSlot2
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: e2e1c89f-0d0c-42a5-bdac-d1b507ac1d12
+    m_ActionName: 'Player/Slot2[/Keyboard/2]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 319489607}
+        m_TargetAssemblyTypeName: TopDown.Movement.PlayerMover, Assembly-CSharp
+        m_MethodName: OnWeaponSlot3
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: f62b2011-3183-4ab6-b2a7-ca250757a71b
+    m_ActionName: 'Player/Slot3[/Keyboard/3]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -889,6 +937,7 @@ MonoBehaviour:
   mover: {fileID: 319489607}
   shooter: {fileID: 319489605}
   weaponSlot: {fileID: 319489614}
+  playerHealth: {fileID: 0}
   speedMultiplier: 1.35
   fireRateMultiplier: 1.3
   mutatedShakeMultiplier: 1.5
@@ -7143,7 +7192,6 @@ GameObject:
   - component: {fileID: 837937881}
   - component: {fileID: 837937880}
   - component: {fileID: 837937879}
-  - component: {fileID: 837937878}
   m_Layer: 5
   m_Name: DialogueCanvas
   m_TagString: Untagged
@@ -7173,103 +7221,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!82 &837937878
-AudioSource:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 837937876}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 0}
-  m_PlayOnAwake: 1
-  m_Volume: 1
-  m_Pitch: 1
-  Loop: 0
-  Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
 --- !u!114 &837937879
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7292,8 +7243,8 @@ MonoBehaviour:
   portraitTalkAnimator: {fileID: 290956433}
   dimFadeDuration: 0.15
   dimMaxAlpha: 0.55
-  defaultCharsPerSecond: 40
-  defaultTypingSound: {fileID: 8300000, guid: 276bd7f606410ef43b0e7e7d3c1481a0, type: 3}
+  defaultCharsPerSecond: 45
+  defaultTypingSound: {fileID: 0}
   typingSoundInterval: 0.09
   typingPitchVariation: 0.2
 --- !u!114 &837937880
@@ -7669,7 +7620,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 1, y: 0.9}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &958547382
@@ -7701,8 +7652,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4281479730
-  m_fontColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+    rgba: 4282203458
+  m_fontColor: {r: 0.2603773, g: 0.23728722, b: 0.23728722, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -13481,8 +13432,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f59e75423b50d4f4f970a3f49aa6d076, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CursorManager
-  cursorTexture: {fileID: 2800000, guid: 64685e42caadb264987bdbc6800321cf, type: 3}
-  cursorHotspot: {x: 0, y: 0}
+  aimCursorTexture: {fileID: 2800000, guid: 64685e42caadb264987bdbc6800321cf, type: 3}
+  arrowCursorTexture: {fileID: 2800000, guid: f3cbdaed404d27b40b9b4fb3d5af1ad0, type: 3}
+  pointerCursorTexture: {fileID: 2800000, guid: 5b5719de93482c34d86f119e439b893d, type: 3}
+  aimCursorHotspot: {x: -1, y: -1}
+  arrowCursorHotspot: {x: 0, y: 0}
+  pointerCursorHotspot: {x: 0, y: 0}
 --- !u!4 &1527244762
 Transform:
   m_ObjectHideFlags: 0
@@ -18824,7 +18779,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -100.4}
-  m_SizeDelta: {x: 40, y: 20}
+  m_SizeDelta: {x: 45, y: 22}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1805502468
 MonoBehaviour:
@@ -18890,9 +18845,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
-  m_PreserveAspect: 0
+  m_Sprite: {fileID: 4715870390528551799, guid: ebc21307332c7274982a32258d6b3271, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -19560,6 +19515,7 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+<<<<<<< HEAD
     - target: {fileID: 1746857018157071998, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
       propertyPath: offsetFromSlot.x
       value: -43
@@ -19571,6 +19527,11 @@ PrefabInstance:
     - target: {fileID: 6330156949571340651, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
       propertyPath: m_Color.a
       value: 0
+=======
+    - target: {fileID: 4908183722122372763, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
+      propertyPath: startFloor
+      value: Floor_01
+>>>>>>> main
       objectReference: {fileID: 0}
     - target: {fileID: 7085789729006638418, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
       propertyPath: m_Name
@@ -19581,6 +19542,7 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
+<<<<<<< HEAD
 --- !u!114 &3537630140295722639 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 233896131535970191, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
@@ -19592,6 +19554,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+=======
+>>>>>>> main
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

@@ -7,6 +7,7 @@ public class PlayerMutatedStats : MonoBehaviour
     [SerializeField] private BaseMover mover;
     [SerializeField] private PlayerShooter shooter;
     [SerializeField] private PlayerWeaponSlot weaponSlot;
+    [SerializeField] private PlayerHealth playerHealth;
 
     [Header("Mutated Boosts")]
     [SerializeField] private float speedMultiplier;
@@ -29,6 +30,11 @@ public class PlayerMutatedStats : MonoBehaviour
     [SerializeField] private float bubbleMutatedBulletSpeedMultiplier = 1.4f;
     [SerializeField] private string bubbleGunName = "Bubble Gun";
 
+    private void Awake()
+    {
+        if (playerHealth == null)
+            playerHealth = GetComponent<PlayerHealth>();
+    }
 
     private void Start()
     {
@@ -55,6 +61,10 @@ public class PlayerMutatedStats : MonoBehaviour
         shooter.SetShakeMultiplier(mutatedShakeMultiplier);
         shooter.SetDamageMultiplier(1f + BoonManager.Instance.Stats.mutationDamageBonus);
         ApplyWeaponOverrides();
+
+        int healAmount = BoonManager.Instance.Stats.healOnMutateAmount;
+        if (healAmount > 0)
+            playerHealth?.Heal(healAmount);
     }
 
     private void OnEnded()

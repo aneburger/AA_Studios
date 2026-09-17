@@ -43,8 +43,6 @@ public class EnemyManager : MonoBehaviour
         if (!activeEnemies.Contains(enemy))
             activeEnemies.Add(enemy);
 
-        // A new enemy registering means we're definitely not clear anymore —
-        // cancel any pending "all dead" confirmation from earlier this frame.
         if (confirmRoutine != null)
         {
             StopCoroutine(confirmRoutine);
@@ -52,7 +50,7 @@ public class EnemyManager : MonoBehaviour
         }
     }
 
-    // -- UNREGISTER ENEMY -- called when an enemy dies
+    // -- UNREGISTER ENEMY --
     public void UnregisterEnemy(GameObject enemy)
     {
         activeEnemies.Remove(enemy);

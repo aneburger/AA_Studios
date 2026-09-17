@@ -133,6 +133,17 @@ public class PlayerHealth : BaseHealth
         ScreenEffects.Instance.SetLowHealth(currentHealth < 4f);
     }
 
+    // -- RESTORE FROM SAVE --
+    public void RestoreHealth(int savedMaxHealth, int savedCurrentHealth)
+    {
+        maxHealth = savedMaxHealth;
+        currentHealth = Mathf.Clamp(savedCurrentHealth, 0, maxHealth);
+
+        HUDManager.Instance?.RefreshHearts();
+        UpdateHUD();
+        UpdateLowHealthEffect();
+    }
+
     // -- RESET FOR RESPAWN --
     public void ResetHealth()
     {

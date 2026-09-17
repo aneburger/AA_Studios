@@ -20,6 +20,9 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private QuitConfirmManager quitConfirmManager;
     [SerializeField] private NewGameConfirmManager newGameConfirmManager;
 
+    [Header("Floor Testing")]
+    [SerializeField] private string startFloor = "Floor_01";
+
     [Header("Controls Menu Buttons")]
     [SerializeField] private Button cancelControlsButton;
     [SerializeField] private Button confirmControlsButton;
@@ -142,8 +145,8 @@ public class MenuManager : MonoBehaviour
     private void Update()
     {
         // uncomment and use F9 key to delete the currently saved game
-        // if (Keyboard.current != null && Keyboard.current.f9Key.wasPressedThisFrame)
-        //     LevelLoader.Instance?.ClearSavedGame();
+            if (Keyboard.current != null && Keyboard.current.f9Key.wasPressedThisFrame)
+                LevelLoader.Instance?.ClearSavedGame();
 
         if (Keyboard.current == null || !Keyboard.current.escapeKey.wasPressedThisFrame)
             return;
@@ -436,7 +439,7 @@ public class MenuManager : MonoBehaviour
     {
         if (LevelLoader.Instance == null || !LevelLoader.Instance.HasSavedGame)
         {
-            OnBeginGame("Floor_01");
+            OnBeginGame(startFloor);
             return;
         }
 
