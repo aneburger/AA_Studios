@@ -245,7 +245,7 @@ MonoBehaviour:
   weaponAimer: {fileID: 3068222108091938041}
   mover: {fileID: 9141055844336914756}
   weaponSprite: {fileID: 4781575144476638892}
-  currentWeapon: {fileID: 11400000, guid: 228a03579c54a894ebb61e3ab0535259, type: 2}
+  currentWeapon: {fileID: 11400000, guid: 74712fb004535a14080797496a356898, type: 2}
   equipClip: {fileID: 0}
   equipVolume: 0
   pickupClip: {fileID: 0}
@@ -324,9 +324,6 @@ MonoBehaviour:
   spawnGraceMax: 2
   debugLogging: 0
   attackRange: 20
-  minKeepDistance: 7
-  retreatWallCheckDistance: 0.4
-  retreatStepDuration: 0.35
   windupDurationMin: 0.4
   windupDurationMax: 0.8
   summonWeight: 1
@@ -337,7 +334,9 @@ MonoBehaviour:
   specialActionTimeout: 5
   healDelayAfterDamage: 4
   healCooldown: 7
-  healAmount: 10
+  healAmount: 15
+  healHpThreshold: 0.65
+  healChance: 0.5
   healTrigger: Heal
   healWindupClip: {fileID: 8300000, guid: fe9c5a1744380084196c74d3137ebe9b, type: 3}
   healWindupVolume: 0.5
@@ -350,7 +349,6 @@ MonoBehaviour:
   minionSpawnRadius: 2.5
   minionSpawnStaggerMin: 0.15
   minionSpawnStaggerMax: 0.4
-  minionSpawnClearance: 0.3
   summonTrigger: Summon
   summonWindupClip: {fileID: 8300000, guid: fe9c5a1744380084196c74d3137ebe9b, type: 3}
   summonWindupVolume: 0.5

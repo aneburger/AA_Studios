@@ -6,6 +6,10 @@ using System.Collections.Generic;
 
 public class RoomManager : MonoBehaviour
 {   
+    // The currently active room - lets enemy prefabs (spawned without a per-prefab
+    // reference to any specific room) find whichever RoomManager/dropZone is live.
+    public static RoomManager Current { get; private set; }
+
     [Header("Settings")]
     [SerializeField] private float spawnDelay = 2f;
     [SerializeField] private float spawnIntervalMin = 0.2f;
@@ -83,6 +87,18 @@ public class RoomManager : MonoBehaviour
     }
 
     private int currentWave = -1;
+
+    // -- ENABLE --
+    private void OnEnable()
+    {
+        Current = this;
+    }
+
+    // -- DISABLE --
+    private void OnDisable()
+    {
+        if (Current == this) Current = null;
+    }
 
     // -- START --
     private void Start()

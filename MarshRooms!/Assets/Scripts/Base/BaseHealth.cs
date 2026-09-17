@@ -19,6 +19,14 @@ public abstract class BaseHealth : MonoBehaviour
 
     protected Animator anim;
 
+    protected bool suppressHitAnimation = false;
+
+    // -- SET SUPPRESS HIT ANIMATION --
+    public void SetSuppressHitAnimation(bool suppress)
+    {
+        suppressHitAnimation = suppress;
+    }
+
     public void Initialise(float max)
     {
         maxHealth = max;
@@ -56,8 +64,7 @@ public abstract class BaseHealth : MonoBehaviour
         else
         {
             currentHealth += 4;
-        }
-            
+        }      
     }
 
     // -- IS DEAD
@@ -74,7 +81,7 @@ public abstract class BaseHealth : MonoBehaviour
         currentHealth -= amount;
         onTakeDamage?.Invoke();
 
-        if (!IsDead())
+        if (!IsDead() && !suppressHitAnimation)
             anim?.SetTrigger("TakeDamage");
         
         OnHitEffect();

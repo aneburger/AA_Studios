@@ -1,5 +1,5 @@
-// Mushroom Mage's behaviour - kites at range, uses a default wand attack,
-// and randomly weaves in Heal / Summon Minions / Magic Burst specials.
+// Mushroom Mage's behaviour - chases and fires the wand continuously,
+// with an occasional chance to stop and cast Heal / Summon Minions / Magic Burst.
 
 using System.Collections;
 using System.Collections.Generic;
@@ -9,7 +9,7 @@ using TopDown.Movement;
 public class MageAI : EnemyAIBase
 {
     private enum SpecialType { None, Heal, Summon, Burst }
-    private enum EngagePhase { WandWindup, WandAttack, SpecialActive, Retreat, Recover }
+    private enum EngagePhase { SpecialActive, Recover }
 
     private EngagePhase engagePhase;
     private SpecialType activeSpecial;
@@ -17,31 +17,17 @@ public class MageAI : EnemyAIBase
     private EnemyShooter shooter;
     private WeaponAimer weaponAimer;
     private Animator animator;
-    
-    private static readonly int IsCastingHash = Animator.StringToHash("IsCasting");
 
-    // ==================== KITING ====================
-    [Header("Kiting")]
+    [Header("Attack Range")]
     [SerializeField] private float attackRange = 6f;
-    [SerializeField] private float minKeepDistance = 3.5f;
-    [SerializeField] private float retreatWallCheckDistance = 0.4f;
 
-    [Header("Post-Attack Spacing")]
-    [SerializeField] private float retreatStepDuration = 0.35f;
-    private float retreatTimer;
-
-    // ==================== WAND ATTACK (default) ====================
-    [Header("Wand Attack")]
-    [SerializeField] private float windupDurationMin = 0.4f;
-    [SerializeField] private float windupDurationMax = 0.8f;
-
-    private float windupTimer;
-
-    // ==================== SPECIAL SELECTION ====================
     [Header("Special Attack Weights")]
+    [Tooltip("Relative chance of picking Summon vs Burst when a special is due (Heal takes priority over both when it's available).")]
     [SerializeField] private float summonWeight = 1f;
     [SerializeField] private float burstWeight = 1f;
     [SerializeField, Range(0f, 1f)] private float specialChance = 0.35f;
+    [SerializeField] private float specialCheckInterval = 1.5f;
+    private float nextSpecialCheckTime = 0f;
 
     [Header("Special Cooldowns")]
     [SerializeField] private float summonCooldown = 10f;
@@ -53,11 +39,11 @@ public class MageAI : EnemyAIBase
     [SerializeField] private float specialActionTimeout = 5f;
     private float specialFailsafeTimer;
 
-    // ==================== HEAL ====================
     [Header("Heal")]
     [SerializeField] private float healDelayAfterDamage = 4f;
     [SerializeField] private float healCooldown = 12f;
     [SerializeField] private float healAmount = 15f;
+    [SerializeField, Range(0f, 1f)] private float healHpThreshold = 0.5f; // only eligible below this % of max HP
     [SerializeField] private string healTrigger = "Heal";
     [SerializeField] private AudioClip healWindupClip;
     [Range(0f, 1f)] [SerializeField] private float healWindupVolume;
@@ -66,7 +52,6 @@ public class MageAI : EnemyAIBase
     private float lastDamageTime = -999f;
     private float nextHealTime = 0f;
 
-    // ==================== SUMMON MINIONS ====================
     [Header("Summon Minions")]
     [SerializeField] private GameObject[] minionPrefabs;
     [SerializeField] private int minionCountMin = 2;
@@ -74,14 +59,12 @@ public class MageAI : EnemyAIBase
     [SerializeField] private float minionSpawnRadius = 2f;
     [SerializeField] private float minionSpawnStaggerMin = 0.15f;
     [SerializeField] private float minionSpawnStaggerMax = 0.4f;
-    [SerializeField] private float minionSpawnClearance = 0.3f;
     [SerializeField] private string summonTrigger = "Summon";
     [SerializeField] private AudioClip summonWindupClip;
     [Range(0f, 1f)] [SerializeField] private float summonWindupVolume;
     [SerializeField] private AudioClip summonActionClip;
     [Range(0f, 1f)] [SerializeField] private float summonActionVolume;
 
-    // ==================== MAGIC BURST ====================
     [Header("Magic Burst")]
     [SerializeField] private WeaponData magicBurstWeapon;
     [SerializeField] private string burstTrigger = "Burst";
@@ -91,7 +74,6 @@ public class MageAI : EnemyAIBase
     [Range(0f, 1f)] [SerializeField] private float burstActionVolume;
     private WeaponData wandWeapon;
 
-    // ==================== HIT REACTION ====================
     [Header("Hit Reaction")]
     [SerializeField] private float hitSlowMultiplier = 0.6f;
     [SerializeField] private float hitSlowDuration = 0.15f;
@@ -121,81 +103,78 @@ public class MageAI : EnemyAIBase
         mover.SetFacingOverride(dir);
     }
 
-    // -- WALL-AWARE DIRECTION CHECK --
-    private bool CanMoveDirection(Vector2 direction, float checkDistance)
-    {
-        if (direction.sqrMagnitude < 0.0001f) return false;
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, checkDistance, wallMask);
-        return hit.collider == null;
-    }
-
-    // ==================== CHASE / KITING ====================
+    // -- CHASE -- (keeps closing distance and firing every frame; only breaks off to cast a special)
     protected override void HandleChase(float distance)
     {
         mover.ClearFacingOverride();
 
-        if (ForceChaseOnly)
-        {
-            Vector2 chaseDir = pathing != null ? pathing.GetDirectionToTarget(player.position) : DirectionToPlayer();
-            mover.Move(chaseDir);
-            return;
-        }
+        Vector2 moveDir = pathing != null ? pathing.GetDirectionToTarget(player.position) : DirectionToPlayer();
+        mover.Move(moveDir);
 
-        bool hasLos = HasLineOfSight();
+        bool inRange = distance <= attackRange && HasLineOfSight();
 
-        if (distance < minKeepDistance)
+        if (inRange)
         {
-            Vector2 away = ((Vector2)transform.position - (Vector2)player.position).normalized;
-            if (CanMoveDirection(away, retreatWallCheckDistance))
-                mover.Move(away);
-            else
-                mover.Stop();
-            AimAtPlayer();
-        }
-        else if (distance > attackRange || !hasLos)
-        {
-            Vector2 approach = pathing != null ? pathing.GetDirectionToTarget(player.position) : DirectionToPlayer();
-            mover.Move(approach);
-        }
-        else
-        {
-            mover.Stop();
             AimAtPlayer();
 
-            if (shooter == null || shooter.CanFire())
-                EnterEngage();
-            return;
+            if (shooter != null && shooter.CanFire())
+                shooter.TryShoot();
+
+            if (Time.time >= nextSpecialCheckTime)
+            {
+                nextSpecialCheckTime = Time.time + specialCheckInterval;
+
+                if (HasSpecialAvailable() && Random.value < specialChance)
+                {
+                    EnterEngage();
+                    return;
+                }
+            }
         }
 
         CheckLeash(distance);
     }
 
+    // -- SHOULD ENGAGE -- (unused: MageAI decides specials directly in HandleChase above)
     protected override bool ShouldEngage(float distance) => false;
 
-    // ==================== ENGAGE ====================
+    // -- ENTER ENGAGE --
     protected override void EnterEngage()
     {
         currentState = State.Engage;
+        mover.Stop();
         DecideAction();
     }
 
+    // -- HANDLE ENGAGE --
     protected override void HandleEngage(float distance)
     {
         switch (engagePhase)
         {
-            case EngagePhase.WandWindup:    HandleWandWindup(distance);  break;
-            case EngagePhase.WandAttack:    HandleWandAttack(distance);  break;
-            case EngagePhase.SpecialActive: HandleSpecialActive();       break;
-            case EngagePhase.Retreat:       HandleRetreatStep(distance); break;
-            case EngagePhase.Recover:       HandleRecover();             break;
+            case EngagePhase.SpecialActive: HandleSpecialActive(); break;
+            case EngagePhase.Recover:       HandleRecover();       break;
         }
     }
 
-    // -- DECIDE WHICH ACTION TO TAKE --
+    // -- HAS SPECIAL AVAILABLE --
+    private bool HasSpecialAvailable()
+    {
+        bool canHeal = health != null
+            && health.GetCurrentHealth() < health.GetMaxHealth() * healHpThreshold
+            && Time.time - lastDamageTime >= healDelayAfterDamage
+            && Time.time >= nextHealTime;
+
+        bool canSummon = minionPrefabs != null && minionPrefabs.Length > 0 && Time.time >= nextSummonTime;
+        bool canBurst = magicBurstWeapon != null && Time.time >= nextBurstTime;
+
+        return canHeal || canSummon || canBurst;
+    }
+
+    // -- DECIDE WHICH SPECIAL TO CAST --
     private void DecideAction()
     {
         bool canHeal = health != null
-            && health.GetCurrentHealth() < health.GetMaxHealth()
+            && health.GetCurrentHealth() < health.GetMaxHealth() * healHpThreshold
             && Time.time - lastDamageTime >= healDelayAfterDamage
             && Time.time >= nextHealTime;
 
@@ -208,65 +187,25 @@ public class MageAI : EnemyAIBase
         bool canSummon = minionPrefabs != null && minionPrefabs.Length > 0 && Time.time >= nextSummonTime;
         bool canBurst = magicBurstWeapon != null && Time.time >= nextBurstTime;
 
-        if ((canSummon || canBurst) && Random.value < specialChance)
-        {
-            float totalWeight = (canSummon ? summonWeight : 0f) + (canBurst ? burstWeight : 0f);
-            float roll = Random.value * totalWeight;
+        float totalWeight = (canSummon ? summonWeight : 0f) + (canBurst ? burstWeight : 0f);
+        float roll = totalWeight > 0f ? Random.value * totalWeight : 0f;
 
-            if (canSummon && roll < summonWeight)
-            {
-                StartSpecial(SpecialType.Summon);
-                return;
-            }
-            if (canBurst)
-            {
-                StartSpecial(SpecialType.Burst);
-                return;
-            }
+        if (canSummon && roll < summonWeight)
+        {
+            StartSpecial(SpecialType.Summon);
+            return;
         }
-
-        // Default: wand attack
-        StartWandAttack();
-    }
-
-    // ==================== WAND ATTACK ====================
-    private void StartWandAttack()
-    {
-        activeSpecial = SpecialType.None;
-        engagePhase = EngagePhase.WandWindup;
-        windupTimer = Random.Range(windupDurationMin, windupDurationMax);
-    }
-
-    private void HandleWandWindup(float distance)
-    {
-        mover.Stop();
-        AimAtPlayer();
-
-        if (distance > attackRange * 1.2f || !HasLineOfSight())
+        if (canBurst)
         {
-            EnterChase();
+            StartSpecial(SpecialType.Burst);
             return;
         }
 
-        windupTimer -= Time.deltaTime;
-        if (windupTimer <= 0f)
-            engagePhase = EngagePhase.WandAttack;
+        // Shouldn't happen since HasSpecialAvailable() already checked, but bail safely.
+        EnterChase();
     }
 
-    private void HandleWandAttack(float distance)
-    {
-        AimAtPlayer();
-
-        if (shooter != null && shooter.CanFire())
-            shooter.TryShoot();
-
-        if (shooter != null && shooter.IsBursting)
-            return;
-
-        EnterRecover();
-    }
-
-    // ==================== SPECIAL: SHARED FLOW ====================
+    // -- START SPECIAL -- (Animator drives Windup -> Action -> Idle; OnXAction fires via Animation Event)
     private void StartSpecial(SpecialType type)
     {
         activeSpecial = type;
@@ -275,6 +214,7 @@ public class MageAI : EnemyAIBase
 
         mover.Stop();
         AimAtPlayer();
+        health?.SetSuppressHitAnimation(true);
 
         string trigger = null;
         AudioClip windupClip = null;
@@ -299,11 +239,11 @@ public class MageAI : EnemyAIBase
                 break;
         }
 
-        animator?.SetBool(IsCastingHash, true);
         if (trigger != null) animator?.SetTrigger(trigger);
         AudioManager.Instance?.PlaySFXWithPitch(windupClip, windupVolume, 0.1f);
     }
 
+    // -- HANDLE SPECIAL ACTIVE -- (specialFailsafeTimer forces recovery if the Action Animation Event never fires)
     private void HandleSpecialActive()
     {
         AimAtPlayer();
@@ -317,7 +257,7 @@ public class MageAI : EnemyAIBase
         }
     }
 
-    // -- ANIMATION EVENT CALLBACKS --
+    // -- ON HEAL ACTION --
     public void OnHealAction()
     {
         AudioManager.Instance?.PlaySFXWithPitch(healActionClip, healActionVolume, 0.1f);
@@ -326,12 +266,14 @@ public class MageAI : EnemyAIBase
         EnterRecover();
     }
 
+    // -- ON SUMMON ACTION --
     public void OnSummonAction()
     {
         AudioManager.Instance?.PlaySFXWithPitch(summonActionClip, summonActionVolume, 0.1f);
         StartCoroutine(SpawnMinions());
     }
 
+    // -- ON BURST ACTION --
     public void OnBurstAction()
     {
         AudioManager.Instance?.PlaySFXWithPitch(burstActionClip, burstActionVolume, 0.1f);
@@ -350,7 +292,7 @@ public class MageAI : EnemyAIBase
         EnterRecover();
     }
 
-    // ==================== SUMMON MINIONS ====================
+    // -- SPAWN MINIONS --
     private IEnumerator SpawnMinions()
     {
         int count = Random.Range(minionCountMin, minionCountMax + 1);
@@ -358,7 +300,8 @@ public class MageAI : EnemyAIBase
         for (int i = 0; i < count; i++)
         {
             GameObject prefab = minionPrefabs[Random.Range(0, minionPrefabs.Length)];
-            Vector2 spawnPos = GetSafeSpawnPosition();
+            Vector2 preferred = (Vector2)transform.position + Random.insideUnitCircle * minionSpawnRadius;
+            Vector2 spawnPos = RoomManager.Current != null ? RoomManager.Current.GetSafeDropPosition(preferred) : preferred;
 
             EnemyManager.Instance?.SpawnEnemy(prefab, spawnPos);
 
@@ -369,61 +312,20 @@ public class MageAI : EnemyAIBase
         EnterRecover();
     }
 
-    // -- SAFE SPAWN POSITION --
-    private Vector2 GetSafeSpawnPosition()
-    {
-        const int maxAttempts = 8;
-
-        for (int i = 0; i < maxAttempts; i++)
-        {
-            Vector2 offset = Random.insideUnitCircle.normalized * Random.Range(minionSpawnRadius * 0.4f, minionSpawnRadius);
-            Vector2 candidate = (Vector2)transform.position + offset;
-
-            if (Physics2D.OverlapCircle(candidate, minionSpawnClearance, wallMask) == null)
-                return candidate;
-        }
-
-        return transform.position;
-    }
-
-    // ==================== RECOVER / RETREAT ====================
+    // -- ENTER RECOVER --
     private void EnterRecover()
     {
-        animator?.SetBool(IsCastingHash, false);
-
-        if (player != null && Vector2.Distance(transform.position, player.position) < minKeepDistance)
-        {
-            engagePhase = EngagePhase.Retreat;
-            retreatTimer = retreatStepDuration;
-        }
-        else
-        {
-            engagePhase = EngagePhase.Recover;
-        }
+        health?.SetSuppressHitAnimation(false);
+        engagePhase = EngagePhase.Recover;
     }
 
+    // -- HANDLE RECOVER --
     private void HandleRecover()
     {
         EnterChase();
     }
 
-    private void HandleRetreatStep(float distance)
-    {
-        AimAtPlayer();
-
-        Vector2 away = ((Vector2)transform.position - (Vector2)player.position).normalized;
-        if (CanMoveDirection(away, retreatWallCheckDistance))
-            mover.Move(away);
-        else
-            mover.Stop();
-
-        retreatTimer -= Time.deltaTime;
-
-        if (retreatTimer <= 0f || distance >= minKeepDistance)
-            EnterChase();
-    }
-
-    // ==================== RETURN ====================
+    // -- RETURN --
     protected override void HandleReturn(float distance)
     {
         mover.ClearFacingOverride();
@@ -441,7 +343,7 @@ public class MageAI : EnemyAIBase
             EnterIdle();
     }
 
-    // -- HELPERS --
+    // -- ROTATE VECTOR --
     private static Vector2 RotateVector(Vector2 v, float degrees)
     {
         float rad = degrees * Mathf.Deg2Rad;
@@ -463,6 +365,7 @@ public class MageAI : EnemyAIBase
         hitSlowCoroutine = StartCoroutine(HitSlow());
     }
 
+    // -- HIT SLOW --
     private IEnumerator HitSlow()
     {
         mover.SetSpeedMultiplier(hitSlowMultiplier);

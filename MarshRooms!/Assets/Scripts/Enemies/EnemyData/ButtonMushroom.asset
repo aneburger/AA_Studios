@@ -16,8 +16,9 @@ MonoBehaviour:
   moveSpeed: 2
   contactDamage: 1
   contactKnockback: 5
+  enemyName: 
   weapon: {fileID: 11400000, guid: ae5f0808f91f61b4db927c47cb2de3a0, type: 2}
-  detectionRange: 18
+  detectionRange: 16
   attackRange: 12
   possibleWeaponDrops:
   - weaponPickupPrefab: {fileID: 1303430737314922756, guid: ecb11ea6b86a8244688f6cc913226356, type: 3}
