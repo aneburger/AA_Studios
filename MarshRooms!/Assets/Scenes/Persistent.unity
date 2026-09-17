@@ -858,6 +858,9 @@ MonoBehaviour:
   dieVolume: 0.65
   healClip: {fileID: 8300000, guid: 5b3c449f1dfce654080b33e0fa2fd32a, type: 3}
   healVolume: 0.7
+  lowHealthClip: {fileID: 8300000, guid: 90725d39a02c333409129e32ffe65d84, type: 3}
+  lowHealthVolume: 1
+  lowHealthPitch: 1.3
 --- !u!114 &319489614
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1902,7 +1905,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 8.4375
+  orthographic size: 13.133179
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2

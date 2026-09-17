@@ -21,6 +21,14 @@ public class PlayerHealth : BaseHealth
     [SerializeField] private AudioClip healClip;
     [Range(0f, 1f)] public float healVolume;
 
+    [Header("Low Health Audio")]
+    [SerializeField] private AudioClip lowHealthClip;
+    [Range(0f, 1f)] public float lowHealthVolume = 0.5f;
+    [SerializeField] private float lowHealthPitch = 1f;
+
+    private AudioSource lowHealthLoopingSource;
+    private bool isLowHealthActive = false;
+
     private float damageCooldownTimer;
     private bool isInvincible = false;
 
@@ -117,7 +125,11 @@ public class PlayerHealth : BaseHealth
         base.TakeDamage(amount);
         UpdateHUD();
 
-        ScreenEffects.Instance.SetLowHealth(currentHealth < 4f);
+        // If this hit was fatal, base.TakeDamage() has already triggered Die(),
+        // which stops the low-health loop - don't immediately re-arm it here just
+        // because currentHealth (now 0) is still numerically "low".
+        if (!IsDead())
+            UpdateLowHealthEffect();
     }
 
     // -- HEAL --
@@ -130,7 +142,7 @@ public class PlayerHealth : BaseHealth
         anim.SetTrigger("Heal");
         UpdateHUD();
 
-        ScreenEffects.Instance.SetLowHealth(currentHealth < 4f);
+        UpdateLowHealthEffect();
     }
 
     // -- RESTORE FROM SAVE --
@@ -149,7 +161,7 @@ public class PlayerHealth : BaseHealth
     {
         currentHealth = maxHealth;
         UpdateHUD();
-        ScreenEffects.Instance?.SetLowHealth(false);
+        UpdateLowHealthEffect();
     }
 
     // -- IS ON COOLDOWN -- 
@@ -223,7 +235,36 @@ public class PlayerHealth : BaseHealth
     // -- LOW HEALTH EFFECT -- 
     public void UpdateLowHealthEffect()
     {
-        ScreenEffects.Instance?.SetLowHealth(currentHealth < 4f);
+        SetLowHealthState(currentHealth < 4f);
+    }
+
+    // -- SET LOW HEALTH STATE --
+    // Single source of truth for both the screen vignette and the looping sound,
+    // so they can never drift out of sync with each other.
+    private void SetLowHealthState(bool isLow)
+    {
+        if (isLow == isLowHealthActive) return;
+        isLowHealthActive = isLow;
+
+        ScreenEffects.Instance?.SetLowHealth(isLow);
+
+        if (isLow)
+            AudioManager.Instance?.PlayLoopingSFX(ref lowHealthLoopingSource, lowHealthClip, lowHealthVolume, lowHealthPitch);
+        else
+            AudioManager.Instance?.StopLoopingSFX(ref lowHealthLoopingSource);
+    }
+
+    // -- SET LOW HEALTH AUDIO PAUSED --
+    // Called by PauseMenuManager so the looping sound pauses/resumes with the game,
+    // since AudioSource playback isn't affected by Time.timeScale on its own.
+    public void SetLowHealthAudioPaused(bool paused)
+    {
+        if (lowHealthLoopingSource == null) return;
+
+        if (paused)
+            lowHealthLoopingSource.Pause();
+        else
+            lowHealthLoopingSource.UnPause();
     }
 
     // -- REVIVE --
@@ -242,6 +283,8 @@ public class PlayerHealth : BaseHealth
     {   
         if (TutorialDirector.Instance != null)
         {   
+            SetLowHealthState(false);
+
             anim.SetTrigger("Die");
             AudioManager.Instance.PlaySFX(dieClip, dieVolume);
             TutorialDirector.Instance.HandlePlayerDeath(this);
@@ -273,7 +316,7 @@ public class PlayerHealth : BaseHealth
 
     private IEnumerator DeathSequence()
     {
-        ScreenEffects.Instance?.SetLowHealth(false);
+        SetLowHealthState(false);
 
         yield return new WaitForSeconds(2.5f);
 
@@ -298,6 +341,7 @@ public class PlayerHealth : BaseHealth
     // -- ON DISABLE --
     private void OnDisable()
     {
-        
+        AudioManager.Instance?.StopLoopingSFX(ref lowHealthLoopingSource);
+        isLowHealthActive = false;
     }
 }
