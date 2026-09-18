@@ -46,8 +46,6 @@ public class PauseMenuManager : MonoBehaviour
     [SerializeField] private Color normalColor = new Color(91f/255f, 59f/255f, 63f/255f, 255f/255f);
 
     private bool isPaused = false;
-    //private float volumeBeforePause = 1f;
-    private bool shootingWasEnabledBeforePause = true;
     private InputAction escapeAction;
 
     private Button[] pauseMenuButtons;
@@ -320,14 +318,9 @@ public class PauseMenuManager : MonoBehaviour
         isPaused = true;
         Time.timeScale = 0f;
 
-        PlayerShooter shooter = FindPlayerShooter();
-        shootingWasEnabledBeforePause = shooter == null || shooter.CanShoot;
-        shooter?.SetCanShoot(false);
-
         FindPlayerMover()?.SetInputLocked(true);
 
         FindPlayerHealth()?.SetLowHealthAudioPaused(true);
-
         AudioManager.Instance?.SetMusicDampenMultiplier(0.2f);
 
         if (playerInput != null) playerInput.enabled = false;
@@ -338,9 +331,6 @@ public class PauseMenuManager : MonoBehaviour
     {
         isPaused = false;
         Time.timeScale = 1f;
-
-        if (shootingWasEnabledBeforePause)
-            FindPlayerShooter()?.SetCanShoot(true);
 
         FindPlayerMover()?.SetInputLocked(false);
 

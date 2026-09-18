@@ -11,6 +11,8 @@ public class EnemyManager : MonoBehaviour
     private List<GameObject> activeEnemies = new List<GameObject>();
     private Coroutine confirmRoutine;
 
+    private int spawningLocks = 0;
+
     public static event System.Action OnAllEnemiesDead;
 
     // -- AWAKE --
@@ -23,6 +25,27 @@ public class EnemyManager : MonoBehaviour
         }
 
         Instance = this;
+    }
+
+    // -- BEGIN SPAWNING --
+    public void BeginSpawning()
+    {
+        spawningLocks++;
+
+        if (confirmRoutine != null)
+        {
+            StopCoroutine(confirmRoutine);
+            confirmRoutine = null;
+        }
+    }
+
+    // -- END SPAWNING --
+    public void EndSpawning()
+    {
+        spawningLocks = Mathf.Max(0, spawningLocks - 1);
+
+        if (spawningLocks == 0 && activeEnemies.Count == 0 && confirmRoutine == null)
+            confirmRoutine = StartCoroutine(ConfirmAllDead());
     }
 
     // -- SPAWN ENEMY --
@@ -55,18 +78,18 @@ public class EnemyManager : MonoBehaviour
     {
         activeEnemies.Remove(enemy);
 
-        if (activeEnemies.Count == 0 && confirmRoutine == null)
+        if (activeEnemies.Count == 0 && spawningLocks == 0 && confirmRoutine == null)
             confirmRoutine = StartCoroutine(ConfirmAllDead());
     }
 
     // -- CONFIRM ALL DEAD --
     private IEnumerator ConfirmAllDead()
     {
-        yield return null;
+        yield return new WaitForSeconds(0.15f);
 
         confirmRoutine = null;
 
-        if (activeEnemies.Count == 0)
+        if (activeEnemies.Count == 0 && spawningLocks == 0)
             OnAllEnemiesDead?.Invoke();
     }
 

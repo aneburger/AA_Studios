@@ -143,6 +143,7 @@ public class TutorialDirector : MonoBehaviour
     private bool shootingEnabled = false;
 
     private Vector2 lastAmbushDeathPosition;
+    private int wave1DeathCount = 0;
     public static TutorialDirector Instance { get; private set; }
 
     public enum TutorialStage
@@ -321,12 +322,6 @@ public class TutorialDirector : MonoBehaviour
 
         // Wait until player lands a shot on the toilet or time out
         yield return StartCoroutine(WaitForConditionOrTimeout(() => shootingEnabled, 6f));
-
-        //if (shootingEnabled)
-        //{
-        //    toiletArrowFader?.FadeOut();
-        //    toiletArrowPrompt?.SetActive(false);
-        //}
 
         shootPromptFader?.FadeOut();
         yield return new WaitForSeconds(0.3f);
@@ -856,11 +851,17 @@ public class TutorialDirector : MonoBehaviour
     // -- TRACK LAST AMBUSH --
     private void TrackAmbushDeaths(GameObject[] enemies)
     {
+        wave1DeathCount = 0;
+
         foreach (var enemy in enemies)
         {
             EnemyHealth health = enemy?.GetComponent<EnemyHealth>();
             if (health != null)
-                health.OnDied += (pos) => lastAmbushDeathPosition = pos;
+                health.OnDied += (pos) =>
+                {
+                    lastAmbushDeathPosition = pos;
+                    wave1DeathCount++;
+                };
         }
     }
 
@@ -884,11 +885,7 @@ public class TutorialDirector : MonoBehaviour
     // -- WAVE 1 ENEMIES DEAD --
     private bool AllWave1EnemiesDead()
     {
-        foreach (var enemy in wave1Enemies)
-        {
-            if (enemy != null) return false;
-        }
-        return true;
+        return wave1DeathCount >= wave1Enemies.Length;
     }
 
     // -- PLAY DIALOGUE --

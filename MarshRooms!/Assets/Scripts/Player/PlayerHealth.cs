@@ -26,6 +26,9 @@ public class PlayerHealth : BaseHealth
     [Range(0f, 1f)] public float lowHealthVolume = 0.5f;
     [SerializeField] private float lowHealthPitch = 1f;
 
+    [Header("Respawn Settings")]
+    [SerializeField] private float respawnInvincibilityDuration = 1.5f;
+
     private bool isLowHealthActive = false;
 
     private float damageCooldownTimer;
@@ -95,12 +98,11 @@ public class PlayerHealth : BaseHealth
     }
 
     // -- SET INVINCIBILITY -- 
-    public void SetInvincible(bool value)
+    public void SetInvincible(bool value, bool affectSpeed = true)
     {
         isInvincible = value;
 
-        // Delay speed when invincible
-        if (mover != null)
+        if (affectSpeed && mover != null)
         {
             mover.SetSpeed(value ? mover.OriginalSpeed * 0.3f : mover.OriginalSpeed);
             mover.DirectionalAnimator.SetAnimationSpeed(value ? 0.5f : 1f);
@@ -158,6 +160,15 @@ public class PlayerHealth : BaseHealth
         currentHealth = maxHealth;
         UpdateHUD();
         UpdateLowHealthEffect();
+    }
+
+    // -- Respawn Invincibility --
+    private IEnumerator RespawnInvincibility()
+    {
+        SetInvincible(true, affectSpeed: false);
+        yield return new WaitForSeconds(respawnInvincibilityDuration);
+        if (!IsDead())
+            SetInvincible(false, affectSpeed: false);
     }
 
     // -- IS ON COOLDOWN -- 
@@ -260,11 +271,10 @@ public class PlayerHealth : BaseHealth
     public void Revive()
     {   
         Heal(maxHealth);
-
         anim.SetTrigger("Revive");
         shooter.HideWeapon(false);
-
         ScreenEffects.Instance?.SetLowHealth(false);
+        StartCoroutine(RespawnInvincibility());
     }
 
     // -- DIE -- 
@@ -325,6 +335,8 @@ public class PlayerHealth : BaseHealth
         LevelLoader.Instance?.SaveCurrentLevel();
 
         ResetHealth();
+        
+        StartCoroutine(RespawnInvincibility()); 
     }
 
     // -- ON DISABLE --

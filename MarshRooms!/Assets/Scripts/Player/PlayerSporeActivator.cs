@@ -6,6 +6,7 @@ public class PlayerSporeActivator : MonoBehaviour
     private bool canActivate = true;
 
     public void SetCanActivate(bool value) => canActivate = value;
+    public bool CanActivate => canActivate;
 
     // -- MUTATE INPUT --
     public void OnActivateSpore(InputAction.CallbackContext context)

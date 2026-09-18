@@ -44,11 +44,19 @@ namespace TopDown.Movement
 
         private float dodgeCooldownTimer;
         private bool isDodging;
-        public bool IsDodging => isDodging;
-
+    
         public bool canDodge = true;
         private bool canMove = true;
 
+        public bool IsDodging => isDodging;
+        public bool CanMove => canMove;
+
+        private bool isInputLocked = false;
+        private bool preLockCanMove;
+        private bool preLockCanDodge;
+        private bool preLockCanShoot;
+        private bool preLockCanActivateSpore;
+        
         private float scrollCooldown = 0.35f;
         private float scrollCooldownTimer;
 
@@ -153,10 +161,31 @@ namespace TopDown.Movement
         // -- SET ALL INPUT LOCKED --
         public void SetInputLocked(bool locked)
         {
-            SetCanMove(!locked);
-            canDodge = !locked;
-            shooter?.SetCanShoot(!locked);
-            sporeActivator?.SetCanActivate(!locked);
+            if (locked)
+            {
+                if (isInputLocked) return;
+                isInputLocked = true;
+
+                preLockCanMove = canMove;
+                preLockCanDodge = canDodge;
+                preLockCanShoot = shooter == null || shooter.CanShoot;
+                preLockCanActivateSpore = sporeActivator == null || sporeActivator.CanActivate;
+
+                SetCanMove(false);
+                canDodge = false;
+                shooter?.SetCanShoot(false);
+                sporeActivator?.SetCanActivate(false);
+            }
+            else
+            {
+                if (!isInputLocked) return;
+                isInputLocked = false;
+
+                SetCanMove(preLockCanMove);
+                canDodge = preLockCanDodge;
+                shooter?.SetCanShoot(preLockCanShoot);
+                sporeActivator?.SetCanActivate(preLockCanActivateSpore);
+            }
         }
 
         // -- MOVE INPUT --

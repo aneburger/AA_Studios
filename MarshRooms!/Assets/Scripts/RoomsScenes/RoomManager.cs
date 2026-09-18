@@ -159,13 +159,14 @@ public class RoomManager : MonoBehaviour
             return distA.CompareTo(distB);
         });
 
+        EnemyManager.Instance.BeginSpawning();
         for (int i = 0; i < enemiesToSpawn.Count; i++)
         {
             if (i >= sortedPoints.Count) break;
-
             EnemyManager.Instance.SpawnEnemy(enemiesToSpawn[i], sortedPoints[i].position);
             yield return new WaitForSeconds(Random.Range(spawnIntervalMin, spawnIntervalMax));
         }
+        EnemyManager.Instance.EndSpawning();
     }
 
     // -- GENERATE ENEMIES --
