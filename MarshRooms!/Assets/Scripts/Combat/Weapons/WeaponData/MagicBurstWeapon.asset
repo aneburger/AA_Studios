@@ -22,7 +22,7 @@ MonoBehaviour:
   fireRate: 2.5
   minDamage: 2
   maxDamage: 2
-  bulletSpeed: 6
+  bulletSpeed: 5.8
   maxAmmo: -1
   burstCount: 1
   burstInterval: 0
@@ -37,7 +37,7 @@ MonoBehaviour:
   shootClips: []
   shootVolume: 0
   wallHitClip: {fileID: 8300000, guid: 277cfd5237e689d44b4f267a3990a69e, type: 3}
-  wallHitVolume: 0.1
+  wallHitVolume: 0
   shakeForce: 0
   knockbackForce: 1
   hitKnockback: 8

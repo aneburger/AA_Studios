@@ -245,7 +245,7 @@ MonoBehaviour:
   weaponAimer: {fileID: 3068222108091938041}
   mover: {fileID: 9141055844336914756}
   weaponSprite: {fileID: 4781575144476638892}
-  currentWeapon: {fileID: 11400000, guid: 83dbe672d81c88f449382074c1dd233d, type: 2}
+  currentWeapon: {fileID: 11400000, guid: 228a03579c54a894ebb61e3ab0535259, type: 2}
   equipClip: {fileID: 0}
   equipVolume: 0
   pickupClip: {fileID: 0}
@@ -319,7 +319,7 @@ MonoBehaviour:
   minAttackRange: 1.5
   fireRateVarianceMin: 0.85
   fireRateVarianceMax: 1.3
-  chanceToShootWhileMoving: 0.8
+  chanceToShootWhileMoving: 0.7
 --- !u!114 &3724249218000953578
 MonoBehaviour:
   m_ObjectHideFlags: 0

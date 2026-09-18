@@ -102,13 +102,16 @@ GameObject:
   m_Component:
   - component: {fileID: 208003371081328597}
   - component: {fileID: 8831653329582606974}
-  - component: {fileID: 6094116744071000044}
+  - component: {fileID: 1352117975290639043}
   - component: {fileID: 9141055844336914756}
   - component: {fileID: 2905366087901206073}
   - component: {fileID: 7585961510317227088}
   - component: {fileID: 7672455363216179369}
+  - component: {fileID: 3724249218000953578}
+  - component: {fileID: -5271332957310462840}
+  - component: {fileID: 345462243566778897}
   m_Layer: 7
-  m_Name: chef-puffs
+  m_Name: meji-chef
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -159,8 +162,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
---- !u!61 &6094116744071000044
-BoxCollider2D:
+--- !u!58 &1352117975290639043
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -193,18 +196,8 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.03, y: 0.66}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Size: {x: 1, y: 1.06}
-  m_EdgeRadius: 0
+  m_Offset: {x: -0.01, y: 0.56}
+  m_Radius: 0.382002
 --- !u!114 &9141055844336914756
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -231,7 +224,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 320c83c86ab251449a9056c5f534234a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyController
-  enemyData: {fileID: 11400000, guid: 4f6381ad17075b44ea7a1edb95edba71, type: 2}
+  enemyData: {fileID: 11400000, guid: ad65927f9038dfd439f2aa93f29d94f3, type: 2}
   externalAIControl: 0
   spawnDuration: 1.5
   spawnClip: {fileID: 8300000, guid: fd719a68106daa84a832ce2f492ac83f, type: 3}
@@ -252,7 +245,7 @@ MonoBehaviour:
   weaponAimer: {fileID: 3068222108091938041}
   mover: {fileID: 9141055844336914756}
   weaponSprite: {fileID: 4781575144476638892}
-  currentWeapon: {fileID: 11400000, guid: 83dbe672d81c88f449382074c1dd233d, type: 2}
+  currentWeapon: {fileID: 0}
   equipClip: {fileID: 0}
   equipVolume: 0
   pickupClip: {fileID: 0}
@@ -271,7 +264,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2846554c14e837e40ba449b64c14a845, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
-  maxHealth: 4
+  maxHealth: 5
   onDeath:
     m_PersistentCalls:
       m_Calls: []
@@ -282,7 +275,91 @@ MonoBehaviour:
   hurtClip: {fileID: 8300000, guid: 3ef1eef1e125ae04ca5e0053211ce2c1, type: 3}
   hurtVolume: 0.4
   dieClip: {fileID: 8300000, guid: 0d591969c6603fe4cb52ef7b5959feda, type: 3}
-  dieVolume: 0.9
+  dieVolume: 0.5
+--- !u!114 &3724249218000953578
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 988082134135583188}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab4f93db9b59fcc4781fe91fa4795980, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyPathing
+  destinationUpdateInterval: 0.1
+  offMeshSampleDistance: 4
+  enemyMask:
+    serializedVersion: 2
+    m_Bits: 128
+  separationRadius: 1.4
+  separationStrength: 1
+  directionSmoothSpeed: 10
+--- !u!114 &-5271332957310462840
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 988082134135583188}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 136753f748aaa7a42b054c47afbb1c97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MejiSmallAI
+  idleDurationMin: 3
+  idleDurationMax: 5
+  patrolDurationMin: 1
+  patrolDurationMax: 3
+  patrolRadius: 2.5
+  patrolChance: 0.4
+  leashRadius: 5
+  wallMask:
+    serializedVersion: 2
+    m_Bits: 0
+  losSkin: 1
+  passiveSpeedMultiplier: 0.5
+  spawnGraceMin: 0.6
+  spawnGraceMax: 1
+  debugLogging: 0
+  panicRadius: 1.5
+  panicTargetRefreshMin: 0.3
+  panicTargetRefreshMax: 0.7
+  panicSpeedMultiplier: 1.5
+  dashRange: 2.5
+  dashDuration: 0.35
+  dashSpeedMultiplier: 2.2
+  dashInaccuracyMin: 20
+  dashInaccuracyMax: 40
+  staggerDuration: 0.8
+  staggerSpeedMultiplier: 0.25
+  spriteTransform: {fileID: 208003371081328597}
+  squashScaleX: 1.3
+  squashScaleY: 0.7
+  squashDuration: 0.4
+--- !u!195 &345462243566778897
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 988082134135583188}
+  m_Enabled: 1
+  m_AgentTypeID: -1372625422
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1 &1474284981994161219
 GameObject:
   m_ObjectHideFlags: 0
@@ -369,7 +446,7 @@ SpriteRenderer:
   m_SortingLayer: 3
   m_SortingOrder: 1
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 4194268402133393728, guid: 46305afaa6ef4b3458c62eb3785cced2, type: 3}
+  m_Sprite: {fileID: -7120631989524559942, guid: 0143e7be6d4f79041b1ed2f64fad7272, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -389,7 +466,7 @@ Animator:
   m_GameObject: {fileID: 1474284981994161219}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 2c6aa97f9e385914e9f2e898242bf68a, type: 2}
+  m_Controller: {fileID: 9100000, guid: 15dc90c2a2a6ab3418658c0d9106c79c, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -493,7 +570,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.03, y: 0.86}
+  m_Offset: {x: -0.01963371, y: 0.71109957}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -503,7 +580,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.85, y: 1.2}
+  m_Size: {x: 0.5405204, y: 0.98394835}
   m_EdgeRadius: 0
 --- !u!1 &3221483142425514410
 GameObject:
@@ -603,11 +680,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4750130110337884741, guid: fe02030257054c548a0a8f1e09f2f665, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.034
+      value: 0.004
       objectReference: {fileID: 0}
     - target: {fileID: 4750130110337884741, guid: fe02030257054c548a0a8f1e09f2f665, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.257
+      value: 0.342
       objectReference: {fileID: 0}
     - target: {fileID: 4750130110337884741, guid: fe02030257054c548a0a8f1e09f2f665, type: 3}
       propertyPath: m_LocalPosition.z
@@ -641,6 +718,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5163916380359555627, guid: fe02030257054c548a0a8f1e09f2f665, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -2878024585921678656, guid: 12cca95684463824697f91af70df8fd7, type: 3}
     - target: {fileID: 5163916380359555627, guid: fe02030257054c548a0a8f1e09f2f665, type: 3}
       propertyPath: m_Color.a
       value: 0.5882353
@@ -689,7 +770,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 634602670860180719, guid: d10a319c85c09cd4aa88037a9112cab5, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.76
+      value: 1.642
       objectReference: {fileID: 0}
     - target: {fileID: 634602670860180719, guid: d10a319c85c09cd4aa88037a9112cab5, type: 3}
       propertyPath: m_LocalPosition.z

@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6302092c942ee1644bc4027ea868e779, type: 3}
   m_Name: RedInky
   m_EditorClassIdentifier: Assembly-CSharp::EnemyData
-  maxHealth: 6
+  maxHealth: 7
   moveSpeed: 2.8
   contactDamage: 3
   contactKnockback: 15
+  enemyName: 
   weapon: {fileID: 0}
   detectionRange: 20
   attackRange: 12
