@@ -1025,7 +1025,7 @@ TextureImporter:
         width: 8
         height: 11
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -1034,6 +1034,50 @@ TextureImporter:
       bones: []
       spriteID: 75d8a9842c117dd4da4d401f0e00bd5f
       internalID: -93596872
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: furniture-kitchen_41
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 12
+        width: 27
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2ce99b318658cbd47b5253068e6a6f2e
+      internalID: 1342730737
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: furniture-kitchen_42
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 66
+        width: 27
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3880b9378ed8323489a9515017624cbf
+      internalID: 825356078
       vertices: []
       indices: 
       edges: []
@@ -1090,6 +1134,8 @@ TextureImporter:
       furniture-kitchen_39: 2127315358
       furniture-kitchen_4: -1369149999
       furniture-kitchen_40: -93596872
+      furniture-kitchen_41: 1342730737
+      furniture-kitchen_42: 825356078
       furniture-kitchen_5: 1362373923
       furniture-kitchen_6: -1328767950
       furniture-kitchen_7: -610455566
