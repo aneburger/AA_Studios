@@ -328,6 +328,8 @@ public class PauseMenuManager : MonoBehaviour
 
         FindPlayerHealth()?.SetLowHealthAudioPaused(true);
 
+        FindFirstObjectByType<SporeBar>()?.SetReadyAudioPaused(true);
+
         AudioManager.Instance?.SetMusicDampenMultiplier(0.2f);
 
         if (playerInput != null) playerInput.enabled = false;
@@ -345,6 +347,8 @@ public class PauseMenuManager : MonoBehaviour
         FindPlayerMover()?.SetInputLocked(false);
 
         FindPlayerHealth()?.SetLowHealthAudioPaused(false);
+
+        FindFirstObjectByType<SporeBar>()?.SetReadyAudioPaused(false);
 
         PlayUiSound(clickClip, clickVolume);
         AudioManager.Instance?.SetMusicDampenMultiplier(1f);
