@@ -21,5 +21,6 @@ public class LevelEntryController : MonoBehaviour
         PlayerHealth playerHealth = player.GetComponent<PlayerHealth>();
         playerHealth?.ResetHealth();
         playerHealth?.UpdateLowHealthEffect();
+        ScreenEffects.Instance?.SetLowHealth(false);
     }
 }

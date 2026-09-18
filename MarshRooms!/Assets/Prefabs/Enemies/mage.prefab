@@ -323,45 +323,43 @@ MonoBehaviour:
   spawnGraceMin: 1
   spawnGraceMax: 2
   debugLogging: 0
-  attackRange: 20
-  windupDurationMin: 0.4
-  windupDurationMax: 0.8
+  attackRange: 17
   summonWeight: 1
   burstWeight: 1
-  specialChance: 0.4
-  summonCooldown: 8
-  burstCooldown: 8
-  specialActionTimeout: 5
-  healDelayAfterDamage: 4
+  specialChance: 0.5
+  specialCheckInterval: 3
+  summonCooldown: 7
+  burstCooldown: 7
+  specialActionTimeout: 3
+  healDelayAfterDamage: 3
   healCooldown: 7
-  healAmount: 15
-  healHpThreshold: 0.65
-  healChance: 0.5
+  healAmount: 20
+  healHpThreshold: 0.75
   healTrigger: Heal
-  healWindupClip: {fileID: 8300000, guid: fe9c5a1744380084196c74d3137ebe9b, type: 3}
-  healWindupVolume: 0.5
-  healActionClip: {fileID: 8300000, guid: 5b3c449f1dfce654080b33e0fa2fd32a, type: 3}
-  healActionVolume: 0.51
+  healWindupClip: {fileID: 8300000, guid: 1d61335d412ea9041bc30059b0ecc7d4, type: 3}
+  healWindupVolume: 0.9
+  healActionClip: {fileID: 8300000, guid: a092317ed2dc38144b5e404b0a01f9f9, type: 3}
+  healActionVolume: 1
   minionPrefabs:
-  - {fileID: 988082134135583188, guid: 39d6ae334eb4f5e4e859bc4deb21e400, type: 3}
+  - {fileID: 988082134135583188, guid: 3e7fbf6dfdbc410408c5460cfb074511, type: 3}
   minionCountMin: 2
   minionCountMax: 5
   minionSpawnRadius: 2.5
   minionSpawnStaggerMin: 0.15
   minionSpawnStaggerMax: 0.4
   summonTrigger: Summon
-  summonWindupClip: {fileID: 8300000, guid: fe9c5a1744380084196c74d3137ebe9b, type: 3}
-  summonWindupVolume: 0.5
-  summonActionClip: {fileID: 8300000, guid: 7b1998c87d386fd4d8fe239bdaf45f72, type: 3}
-  summonActionVolume: 0.48
+  summonWindupClip: {fileID: 8300000, guid: 1d61335d412ea9041bc30059b0ecc7d4, type: 3}
+  summonWindupVolume: 0.9
+  summonActionClip: {fileID: 8300000, guid: 268398b940108cc4e8c57d4e6312c541, type: 3}
+  summonActionVolume: 1
   magicBurstWeapon: {fileID: 11400000, guid: 67110785cd6a26248ba4f9608c1d4a75, type: 2}
   burstTrigger: Burst
-  burstWindupClip: {fileID: 8300000, guid: fe9c5a1744380084196c74d3137ebe9b, type: 3}
-  burstWindupVolume: 0.5
-  burstActionClip: {fileID: 8300000, guid: f865e391e169eed4ba0873e315343b5e, type: 3}
-  burstActionVolume: 0.47
-  hitSlowMultiplier: 0.6
-  hitSlowDuration: 0.15
+  burstWindupClip: {fileID: 8300000, guid: 1d61335d412ea9041bc30059b0ecc7d4, type: 3}
+  burstWindupVolume: 0.9
+  burstActionClip: {fileID: 8300000, guid: f58e88fc3ff5dc74f94fdd5e6eaacb68, type: 3}
+  burstActionVolume: 1
+  hitSlowMultiplier: 1
+  hitSlowDuration: 0
 --- !u!195 &345462243566778897
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -645,7 +643,7 @@ Transform:
   m_GameObject: {fileID: 3221483142425514410}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0.10088569, w: 0.994898}
-  m_LocalPosition: {x: 0.025, y: 0.71, z: 0}
+  m_LocalPosition: {x: 0.1, y: 0.9, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -756,16 +754,20 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5163916380359555627, guid: fe02030257054c548a0a8f1e09f2f665, type: 3}
+      propertyPath: m_Color.a
+      value: 0.5882353
+      objectReference: {fileID: 0}
+    - target: {fileID: 5163916380359555627, guid: fe02030257054c548a0a8f1e09f2f665, type: 3}
       propertyPath: m_Color.b
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5163916380359555627, guid: fe02030257054c548a0a8f1e09f2f665, type: 3}
       propertyPath: m_Color.g
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5163916380359555627, guid: fe02030257054c548a0a8f1e09f2f665, type: 3}
       propertyPath: m_Color.r
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5163916380359555627, guid: fe02030257054c548a0a8f1e09f2f665, type: 3}
       propertyPath: m_Enabled
