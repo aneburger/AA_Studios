@@ -14,21 +14,13 @@ public class SporeBar : MonoBehaviour
     [Header("Ready Audio")]
     [SerializeField] private AudioClip sporeReadyClip;
     [Range(0f, 1f)] [SerializeField] private float sporeReadyVolume = 0.5f;
-    [SerializeField] private float sporeReadyPitch = 1f;
 
-    private AudioSource sporeReadyLoopingSource;
     private bool isSporeReadyActive = false;
 
     [Header("Shake")]
     [SerializeField] private RectTransform shakeTarget;
     [SerializeField] private float shakeAmplitude = 1.5f;
     [SerializeField] private float shakeSpeed = 18f;
-
-    //[Header("Glow")]
-    //[SerializeField] private Image glowImage;
-    //[SerializeField] private float glowPulseSpeed = 2f;
-    //[SerializeField] private float glowMinAlpha = 0.15f;
-    //[SerializeField] private float glowMaxAlpha = 0.35f;
 
     private float targetFillAmount = 0f;
     private Vector2 originalAnchoredPosition;
@@ -62,12 +54,6 @@ public class SporeBar : MonoBehaviour
             readyPrompt.SetActive(false);
         }
 
-        //if (glowImage != null)
-        //{
-        //    SetGlowAlpha(0f);
-        //    glowImage.enabled = false;
-        //}
-
         if (SporeManager.Instance != null)
         {
             SporeManager.Instance.OnSporeCountChanged += UpdateSporeBar;
@@ -89,8 +75,6 @@ public class SporeBar : MonoBehaviour
             SporeManager.Instance.OnMutatedEnded -= OnMutatedEnded;
             SporeManager.Instance.OnMutatedDrainTick -= UpdateDrain;
         }
-
-        AudioManager.Instance?.StopLoopingSFX(ref sporeReadyLoopingSource);
     }
 
     // -- UPDATE --
@@ -100,7 +84,6 @@ public class SporeBar : MonoBehaviour
             fillImage.fillAmount = Mathf.Lerp(fillImage.fillAmount, targetFillAmount, meterConfig.fillSmoothSpeed * Time.deltaTime);
 
         UpdateShake();
-        //UpdateGlow();
     }
 
     // -- UPDATE SPORE BAR --
@@ -152,7 +135,6 @@ public class SporeBar : MonoBehaviour
         if (!isSporeReadyActive)
         {
             isSporeReadyActive = true;
-            //AudioManager.Instance?.PlayLoopingSFX(ref sporeReadyLoopingSource, sporeReadyClip, sporeReadyVolume, sporeReadyPitch);
             AudioManager.Instance?.PlaySFX(sporeReadyClip, sporeReadyVolume);
         }
     }
@@ -165,21 +147,8 @@ public class SporeBar : MonoBehaviour
 
         if (isSporeReadyActive)
         {
-            isSporeReadyActive = false;
-            //AudioManager.Instance?.StopLoopingSFX(ref sporeReadyLoopingSource);
-            
+            isSporeReadyActive = false;  
         }
-    }
-
-    // -- SET READY AUDIO PAUSED --
-    public void SetReadyAudioPaused(bool paused)
-    {
-        if (sporeReadyLoopingSource == null) return;
-
-        if (paused)
-            sporeReadyLoopingSource.Pause();
-        else
-            sporeReadyLoopingSource.UnPause();
     }
 
     // -- UPDATE SHAKE --
@@ -208,39 +177,6 @@ public class SporeBar : MonoBehaviour
 
         shakeTarget.anchoredPosition = originalAnchoredPosition + new Vector2(xOffset, yOffset);
     }
-
-    //// -- UPDATE GLOW --
-    //private void UpdateGlow()
-    //{
-    //    if (glowImage == null || SporeManager.Instance == null)
-    //        return;
-
-    //    bool shouldGlow = SporeManager.Instance.IsFull || SporeManager.Instance.IsMutated;
-
-    //    if (!shouldGlow)
-    //    {
-    //        glowImage.enabled = false;
-    //        SetGlowAlpha(0f);
-    //        return;
-    //    }
-
-    //    glowImage.enabled = true;
-
-    //    float pulse = (Mathf.Sin(Time.unscaledTime * glowPulseSpeed) + 1f) * 0.5f;
-    //    float alpha = Mathf.Lerp(glowMinAlpha, glowMaxAlpha, pulse);
-    //    SetGlowAlpha(alpha);
-    //}
-
-    //// -- SET GLOW ALPHA --
-    //private void SetGlowAlpha(float alpha)
-    //{
-    //    if (glowImage == null)
-    //        return;
-
-    //    Color color = glowImage.color;
-    //    color.a = alpha;
-    //    glowImage.color = color;
-    //}
 
     // -- UPDATE COLOR --
     private void UpdateColor(float fillPercent)

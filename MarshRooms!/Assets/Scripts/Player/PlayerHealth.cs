@@ -26,7 +26,6 @@ public class PlayerHealth : BaseHealth
     [Range(0f, 1f)] public float lowHealthVolume = 0.5f;
     [SerializeField] private float lowHealthPitch = 1f;
 
-    private AudioSource lowHealthLoopingSource;
     private bool isLowHealthActive = false;
 
     private float damageCooldownTimer;
@@ -248,22 +247,13 @@ public class PlayerHealth : BaseHealth
         isLowHealthActive = isLow;
 
         ScreenEffects.Instance?.SetLowHealth(isLow);
-
-        if (isLow)
-            AudioManager.Instance?.PlayLoopingSFX(ref lowHealthLoopingSource, lowHealthClip, lowHealthVolume, lowHealthPitch);
-        else
-            AudioManager.Instance?.StopLoopingSFX(ref lowHealthLoopingSource);
+        AudioManager.Instance?.SetLowHealthActive(isLow, lowHealthClip, lowHealthVolume, lowHealthPitch);
     }
 
     // -- SET LOW HEALTH AUDIO PAUSED --
     public void SetLowHealthAudioPaused(bool paused)
     {
-        if (lowHealthLoopingSource == null) return;
-
-        if (paused)
-            lowHealthLoopingSource.Pause();
-        else
-            lowHealthLoopingSource.UnPause();
+        AudioManager.Instance?.SetLowHealthAudioPaused(paused);
     }
 
     // -- REVIVE --
@@ -340,7 +330,7 @@ public class PlayerHealth : BaseHealth
     // -- ON DISABLE --
     private void OnDisable()
     {
-        AudioManager.Instance?.StopLoopingSFX(ref lowHealthLoopingSource);
+        AudioManager.Instance?.SetLowHealthActive(false);
         isLowHealthActive = false;
     }
 }

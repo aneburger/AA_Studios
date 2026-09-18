@@ -12,6 +12,7 @@ public sealed class AudioManager : MonoBehaviour
     [Header("Sources")]
     [SerializeField] private AudioSource sfxSource;
     [SerializeField] private AudioSource musicSource;
+    [SerializeField] private AudioSource lowHealthSource;
     [SerializeField] public AudioClip musicClip;
 
     [Header("Mixer")]
@@ -272,13 +273,6 @@ public sealed class AudioManager : MonoBehaviour
         musicSource.Play();
 
         float elapsed = 0f;
-        //while (elapsed < duration)
-        //{
-        //    elapsed += Time.unscaledDeltaTime;
-        //    musicSource.volume = Mathf.Lerp(0f, targetVolume, elapsed / duration);
-        //    yield return null;
-        //}
-        //musicSource.volume = targetVolume;
         float finalVolume = Mathf.Clamp01(targetVolume) * musicVolume * musicDampenMultiplier;
 
         while (elapsed < duration)
@@ -303,6 +297,33 @@ public sealed class AudioManager : MonoBehaviour
             yield return null;
         }
         musicSource.Stop();
+    }
+
+    // -- LOW HEALTH LOOP --
+    public void SetLowHealthActive(bool active, AudioClip clip = null, float volume = 1f, float pitch = 1f)
+    {
+        if (lowHealthSource == null) return;
+
+        if (active)
+        {
+            lowHealthSource.clip = clip;
+            lowHealthSource.volume = volume * sfxVolume;
+            lowHealthSource.pitch = pitch;
+            lowHealthSource.loop = true;
+            lowHealthSource.Play();
+        }
+        else
+        {
+            lowHealthSource.Stop();
+        }
+    }
+
+    public void SetLowHealthAudioPaused(bool paused)
+    {
+        if (lowHealthSource == null) return;
+
+        if (paused) lowHealthSource.Pause();
+        else lowHealthSource.UnPause();
     }
 
 }

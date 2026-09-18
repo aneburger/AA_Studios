@@ -38,12 +38,8 @@ public class InkyAI : EnemyAIBase
     [SerializeField] private AudioClip bumpClip;
     [Range(0f, 1f)] [SerializeField] private float bumpVolume;
     [SerializeField] private float bumpCooldown;
-    [SerializeField] private AudioClip rollLoopClip;
-    [Range(0f, 1f)] [SerializeField] private float rollLoopVolume;
-    [SerializeField] private float rollLoopPitchVariation;
 
     private float lastBumpTime = -999f;
-    private AudioSource rollLoopSource;
 
     private Vector2 rollDirection;
     private Vector2 rollTargetDirection;
@@ -159,9 +155,6 @@ public class InkyAI : EnemyAIBase
         rollDirection = rollTargetDirection;
         rollDirectionRefreshTimer = rollDirectionRefreshInterval;
         mover.SetSpeedMultiplier(rollSpeedStart);
-
-        float pitch = 1f + Random.Range(-rollLoopPitchVariation, rollLoopPitchVariation);
-        AudioManager.Instance?.PlayLoopingSFX(ref rollLoopSource, rollLoopClip, rollLoopVolume, pitch);
     }
 
     // -- END ROLL --
@@ -170,8 +163,6 @@ public class InkyAI : EnemyAIBase
         mover.SetSpeedMultiplier(1f);
         mover.Stop();
         rollTimer = Random.Range(rollTimerMin, rollTimerMax);
-
-        AudioManager.Instance?.StopLoopingSFX(ref rollLoopSource);
 
         if (instant)
         {
@@ -230,13 +221,11 @@ public class InkyAI : EnemyAIBase
     // -- PLAYER DEATH --
     protected override void HandlePlayerDeath()
     {
-        AudioManager.Instance?.StopLoopingSFX(ref rollLoopSource);
         base.HandlePlayerDeath();
     }
 
     // -- ON DESTROY --
     private void OnDestroy()
     {
-        AudioManager.Instance?.StopLoopingSFX(ref rollLoopSource);
     }
 }
