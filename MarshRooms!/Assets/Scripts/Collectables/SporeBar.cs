@@ -11,6 +11,14 @@ public class SporeBar : MonoBehaviour
     [SerializeField] private GameObject readyPrompt;
     [SerializeField] private Vector2 readyPromptOffset = new Vector2(38f, 20f);
 
+    [Header("Ready Audio")]
+    [SerializeField] private AudioClip sporeReadyClip;
+    [Range(0f, 1f)] [SerializeField] private float sporeReadyVolume = 0.5f;
+    [SerializeField] private float sporeReadyPitch = 1f;
+
+    private AudioSource sporeReadyLoopingSource;
+    private bool isSporeReadyActive = false;
+
     [Header("Shake")]
     [SerializeField] private RectTransform shakeTarget;
     [SerializeField] private float shakeAmplitude = 1.5f;
@@ -81,6 +89,8 @@ public class SporeBar : MonoBehaviour
             SporeManager.Instance.OnMutatedEnded -= OnMutatedEnded;
             SporeManager.Instance.OnMutatedDrainTick -= UpdateDrain;
         }
+
+        AudioManager.Instance?.StopLoopingSFX(ref sporeReadyLoopingSource);
     }
 
     // -- UPDATE --
@@ -138,6 +148,13 @@ public class SporeBar : MonoBehaviour
             promptRect.SetParent(parentRect, false);
             promptRect.anchoredPosition = originalAnchoredPosition + readyPromptOffset;
         }
+
+        if (!isSporeReadyActive)
+        {
+            isSporeReadyActive = true;
+            //AudioManager.Instance?.PlayLoopingSFX(ref sporeReadyLoopingSource, sporeReadyClip, sporeReadyVolume, sporeReadyPitch);
+            AudioManager.Instance?.PlaySFX(sporeReadyClip, sporeReadyVolume);
+        }
     }
 
     // -- HIDE READY PROMPT --
@@ -145,6 +162,24 @@ public class SporeBar : MonoBehaviour
     {
         if (readyPrompt != null && readyPrompt.activeSelf)
             readyPrompt.SetActive(false);
+
+        if (isSporeReadyActive)
+        {
+            isSporeReadyActive = false;
+            //AudioManager.Instance?.StopLoopingSFX(ref sporeReadyLoopingSource);
+            
+        }
+    }
+
+    // -- SET READY AUDIO PAUSED --
+    public void SetReadyAudioPaused(bool paused)
+    {
+        if (sporeReadyLoopingSource == null) return;
+
+        if (paused)
+            sporeReadyLoopingSource.Pause();
+        else
+            sporeReadyLoopingSource.UnPause();
     }
 
     // -- UPDATE SHAKE --

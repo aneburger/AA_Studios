@@ -60,6 +60,8 @@ public class Elevator : MonoBehaviour
         interactable.SetInteractionLocked(true);
         AudioManager.Instance.CrossfadeMusic(elevatorTuneClip, 0.5f, elevatorTuneClipVolume);
 
+        FindFirstObjectByType<PlayerHealth>()?.StopLowHealthEffect();
+
         int floorNumber = LevelLoader.Instance.GetCurrentFloorNumber();
         List<BoonCardData> offers = BoonManager.Instance.GetThreeCardOffers(floorNumber);
 

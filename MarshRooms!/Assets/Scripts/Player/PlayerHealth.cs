@@ -125,9 +125,6 @@ public class PlayerHealth : BaseHealth
         base.TakeDamage(amount);
         UpdateHUD();
 
-        // If this hit was fatal, base.TakeDamage() has already triggered Die(),
-        // which stops the low-health loop - don't immediately re-arm it here just
-        // because currentHealth (now 0) is still numerically "low".
         if (!IsDead())
             UpdateLowHealthEffect();
     }
@@ -238,9 +235,13 @@ public class PlayerHealth : BaseHealth
         SetLowHealthState(currentHealth < 4f);
     }
 
+    // -- STOP LOW HEALTH EFFECT --
+    public void StopLowHealthEffect()
+    {
+        SetLowHealthState(false);
+    }
+
     // -- SET LOW HEALTH STATE --
-    // Single source of truth for both the screen vignette and the looping sound,
-    // so they can never drift out of sync with each other.
     private void SetLowHealthState(bool isLow)
     {
         if (isLow == isLowHealthActive) return;
@@ -255,8 +256,6 @@ public class PlayerHealth : BaseHealth
     }
 
     // -- SET LOW HEALTH AUDIO PAUSED --
-    // Called by PauseMenuManager so the looping sound pauses/resumes with the game,
-    // since AudioSource playback isn't affected by Time.timeScale on its own.
     public void SetLowHealthAudioPaused(bool paused)
     {
         if (lowHealthLoopingSource == null) return;
