@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4335018509098030027}
   - component: {fileID: 2765967550098509236}
   m_Layer: 0
-  m_Name: Pistol1
+  m_Name: Knife1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13b096589fb396d47a2fc316fa7a799e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WeaponPickup
-  weaponData: {fileID: 11400000, guid: ae5f0808f91f61b4db927c47cb2de3a0, type: 2}
+  weaponData: {fileID: 11400000, guid: 03427708e4414264b95f51930160efcd, type: 2}
   setsAsDefault: 0
   isMinigunTutorialPickup: 0
   ammo: -1
@@ -99,7 +99,7 @@ SpriteRenderer:
   m_SortingLayer: 3
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: -4854829337826818713, guid: 6e0dd451b4501c54da27a492414f70a4, type: 3}
+  m_Sprite: {fileID: -3098567156317091213, guid: eef326d630ed9454a858a54699638fcc, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -147,7 +147,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.75, y: 0.5625}
+    oldSize: {x: 1.25, y: 1.25}
     newSize: {x: 1.25, y: 0.6875}
     adaptiveTilingThreshold: 0.5
     drawMode: 0

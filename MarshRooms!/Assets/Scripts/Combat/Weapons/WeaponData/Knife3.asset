@@ -10,27 +10,27 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 36776f04a1ca3d8449b04b532f7a016e, type: 3}
-  m_Name: Pistol2
+  m_Name: Knife3
   m_EditorClassIdentifier: Assembly-CSharp::WeaponData
   weaponId: 
-  gunName: Pistol 2
-  bulletPrefab: {fileID: 6894130498819508759, guid: a39c1ac104b6d094498500cecc7bfd24, type: 3}
+  gunName: Knife 3
+  bulletPrefab: {fileID: 6894130498819508759, guid: a1613f97a3522b0429fa595bfca983f6, type: 3}
   shellsPrefab: {fileID: 3331065470414262999, guid: b2b9e163261c23b418b6fc5856cd3a3c, type: 3}
-  hitPrefab: {fileID: 4081999799842582576, guid: a1a081b6f887bac44b78da706df05dc0, type: 3}
-  muzzleFlashPrefab: {fileID: 4081999799842582576, guid: 0904047496256e44586456f8a20d959a, type: 3}
+  hitPrefab: {fileID: 4081999799842582576, guid: e773c246afbaad0449a0403a3d1fdc0e, type: 3}
+  muzzleFlashPrefab: {fileID: 4081999799842582576, guid: f0ca991bb0a95564d93caef8afb825f8, type: 3}
   pickupPrefab: {fileID: 0}
   fireRate: 2.2
   minDamage: 2
   maxDamage: 2
-  bulletSpeed: 6
+  bulletSpeed: 8
   maxAmmo: -1
   burstCount: 1
   burstInterval: 0.08
   firePointOffset: {x: 0, y: -0.1}
   flipOffsetOnAimFlip: 0
-  bulletCount: 3
-  spreadAngle: 8
-  sprite: {fileID: 7952680805879045788, guid: 64e60c74a6d45d2469dc2514cd51f035, type: 3}
+  bulletCount: 1
+  spreadAngle: 15
+  sprite: {fileID: -8600978074705911406, guid: 512b8942b7bcee640a4bc31406c4fd4a, type: 3}
   hudSprite: {fileID: 0}
   ammoDisplaySprite: {fileID: 0}
   shootClip: {fileID: 8300000, guid: d82fd3063321ffb44af8a9ae49c5adaa, type: 3}
