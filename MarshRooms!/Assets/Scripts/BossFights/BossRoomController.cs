@@ -1,6 +1,3 @@
-// Boss floor flow: randomized gun room + door-threshold seal sequence.
-// Later steps add the intro (dialogue, title card, health bar), the fight, and the outro.
-
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -28,10 +25,30 @@ public class BossRoomController : MonoBehaviour
     [SerializeField] private float slamSoundDelay = 0.2f;
     [SerializeField] private float postSlamBeat = 0.6f;
 
-    [Header("Audio / FX")]
+    [Header("Door Audio / FX")]
     [SerializeField] private AudioClip doorSlamClip;
     [Range(0f, 1f)] [SerializeField] private float doorSlamVolume = 1f;
     [SerializeField] private float slamShakeForce = 0.5f;
+
+    [Header("Intro")]
+    [SerializeField] private BossHealth boss;
+    [SerializeField] private float pauseBeforeDialogue = 0.4f;
+    [SerializeField] private DialogueSequence introDialogue;
+    [SerializeField] private BossIntroCardUI introCard;
+    [SerializeField] private float pauseBeforeCard = 0.4f;
+    [SerializeField] private float pauseAfterCard = 0.2f;
+
+    [Header("Boss Music")]
+    [SerializeField] private AudioClip bossMusic;
+    [Range(0f, 1f)] [SerializeField] private float bossMusicVolume = 0.5f;
+    [SerializeField] private float musicFadeInDuration = 1.5f;
+
+    [Header("Boss Health Bar")]
+    [SerializeField] private BossHealthBarUI healthBar;
+    [Tooltip("Also the countdown before the boss is allowed to act.")]
+    [SerializeField] private float healthBarFillDuration = 2.5f;
+
+    public event System.Action OnFightStarted;
 
     private GameObject player;
     private PlayerMover mover;
@@ -40,6 +57,7 @@ public class BossRoomController : MonoBehaviour
 
     private bool sequenceStarted;
     private bool playerLocked;
+    private bool hudHiddenByUs;
     private Coroutine sealRoutine;
 
     // -- ENABLE / DISABLE --
@@ -65,8 +83,14 @@ public class BossRoomController : MonoBehaviour
             aimer = player.GetComponent<PlayerAimer>();
             shooter = player.GetComponent<PlayerShooter>();
         }
+        else
+        {
+            Debug.LogError("[BossRoom] No player found.");
+        }
 
         if (doorBlocker != null) doorBlocker.SetActive(false);
+        if (healthBar != null) healthBar.Hide();
+        if (introCard != null) introCard.gameObject.SetActive(false);
 
         SpawnGunRoomWeapons();
     }
@@ -118,7 +142,6 @@ public class BossRoomController : MonoBehaviour
         LockPlayer();
         yield return WalkToStandPoint();
 
-        // Music out, a beat of silence, then the slam
         AudioManager.Instance?.FadeOutMusic(musicFadeDuration);
         yield return new WaitForSeconds(musicFadeDuration + silenceBeforeSlam);
 
@@ -128,10 +151,11 @@ public class BossRoomController : MonoBehaviour
         AudioManager.Instance?.PlaySFX(doorSlamClip, doorSlamVolume);
         ScreenEffects.Instance?.ShakeScreen(slamShakeForce);
         if (doorBlocker != null) doorBlocker.SetActive(true);
+        Debug.Log("[BossRoom] Door sealed.");
 
         yield return new WaitForSeconds(postSlamBeat);
 
-        ReleasePlayer(restoreWeapon: true);
+        yield return IntroSequence();
         sealRoutine = null;
     }
 
@@ -143,7 +167,7 @@ public class BossRoomController : MonoBehaviour
 
         float elapsed = 0f;
         while (elapsed < walkTimeout &&
-       Vector2.Distance(player.transform.position, playerStandPoint.position) > arriveDistance)
+               Vector2.Distance(player.transform.position, playerStandPoint.position) > arriveDistance)
         {
             Vector2 dir = ((Vector2)playerStandPoint.position - (Vector2)player.transform.position).normalized;
 
@@ -160,6 +184,65 @@ public class BossRoomController : MonoBehaviour
         mover.ClearFacingOverride();
         mover.FaceDirection(faceDirectionAfterWalk);
         mover.ForceIdleAnimation();
+    }
+
+    // ==================== INTRO ====================
+    private IEnumerator IntroSequence()
+    {
+        // Dialogue between Marsh and Chef Puffs
+        yield return new WaitForSeconds(pauseBeforeDialogue);
+        yield return PlayDialogue(introDialogue);
+        yield return new WaitForSeconds(pauseBeforeCard);
+
+        // Boss music in
+        if (bossMusic != null)
+            AudioManager.Instance?.FadeInMusic(bossMusic, musicFadeInDuration, bossMusicVolume);
+
+        // "Marsh vs Chef Puffs" overlay, with the HUD hidden
+        if (introCard != null)
+        {
+            SetHUDHidden(true);
+            yield return introCard.Play();
+            SetHUDHidden(false);
+            yield return new WaitForSeconds(pauseAfterCard);
+        }
+
+        // Control back
+        ReleasePlayer(restoreWeapon: true);
+
+        // Health bar fills. It doubles as the countdown before the boss can act.
+        if (healthBar != null && boss != null)
+        {
+            healthBar.Bind(boss);
+            healthBar.Show();
+            yield return healthBar.PlayIntroFill(healthBarFillDuration);
+        }
+        else
+        {
+            yield return new WaitForSeconds(healthBarFillDuration);
+        }
+
+        if (boss != null) boss.SetInvulnerable(BossHealth.ReasonIntro, false);
+
+        OnFightStarted?.Invoke();
+    }
+
+    private IEnumerator PlayDialogue(DialogueSequence sequence)
+    {
+        if (sequence == null || DialogueManager.Instance == null) yield break;
+
+        while (DialogueManager.Instance.IsRunning)
+            yield return null;
+
+        bool done = false;
+        DialogueManager.Instance.StartDialogue(sequence, () => done = true);
+        yield return new WaitUntil(() => done);
+    }
+
+    private void SetHUDHidden(bool hidden)
+    {
+        hudHiddenByUs = hidden;
+        HUDManager.Instance?.SetHUDVisible(!hidden);
     }
 
     // ==================== PLAYER LOCK ====================
@@ -197,6 +280,9 @@ public class BossRoomController : MonoBehaviour
             sealRoutine = null;
         }
 
+        if (hudHiddenByUs) SetHUDHidden(false);
+
+        // PlayerHealth hides the weapon itself when dying
         ReleasePlayer(restoreWeapon: false);
     }
 }

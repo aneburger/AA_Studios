@@ -625,12 +625,7 @@ public class MenuManager : MonoBehaviour
     // -- QUIT GAME --
     private void OnQuitGame()
     {
-        Debug.Log("Quitting game...");
         PlayUiSound(clickClip, clickVolume);
-
-        // Resume time before quitting
-        //Time.timeScale = 1f;
-
         quitConfirmManager?.Open(QuitConfirmManager.QuitConfirmSource.MainMenuQuit);
 
 

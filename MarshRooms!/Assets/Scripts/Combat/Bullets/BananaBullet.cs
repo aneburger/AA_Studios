@@ -88,9 +88,11 @@ public class BananaBullet : BaseBullet
         foreach (var hit in hits)
         {
             EnemyHealth health = hit.GetComponentInParent<EnemyHealth>();
+            BossHealth bossHeealth = hit.GetComponentInParent<BossHealth>();
             if (health != null)
             {
                 health.TakeDamage(damage * splashDamageMultiplier);
+                bossHeealth.TakeDamage(damage * splashDamageMultiplier);
             }
         }
 
