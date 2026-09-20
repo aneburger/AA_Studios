@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using TopDown.Movement;
 
@@ -85,15 +86,13 @@ public class BananaBullet : BaseBullet
             : (Vector2)transform.position;
 
         Collider2D[] hits = Physics2D.OverlapCircleAll(splashCenter, currentSplashRadius);
+        HashSet<BaseHealth> alreadyHit = new HashSet<BaseHealth>();
         foreach (var hit in hits)
         {
-            EnemyHealth health = hit.GetComponentInParent<EnemyHealth>();
-            BossHealth bossHeealth = hit.GetComponentInParent<BossHealth>();
-            if (health != null)
-            {
-                health.TakeDamage(damage * splashDamageMultiplier);
-                bossHeealth.TakeDamage(damage * splashDamageMultiplier);
-            }
+            if (!DamageTargets.TryGetEnemyHealth(hit, out BaseHealth target)) continue;
+            if (!alreadyHit.Add(target)) continue;
+
+            target.TakeDamage(damage * splashDamageMultiplier);
         }
 
         int splatCount = Random.Range(currentMinSplats, currentMaxSplats + 1);

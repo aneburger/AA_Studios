@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using TopDown.Movement;
 
@@ -44,11 +45,9 @@ public class SporeBullet : BaseBullet
 
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
-        EnemyHealth enemyHealth = collision.GetComponentInParent<EnemyHealth>();
-        
-        if (enemyHealth != null)
+        if (DamageTargets.TryGetEnemyHealth(collision, out BaseHealth target))
         {
-            enemyHealth.TakeDamage(damage);
+            target.TakeDamage(damage);
 
             BaseMover mover = collision.GetComponentInParent<BaseMover>();
             if (mover != null)
@@ -67,18 +66,18 @@ public class SporeBullet : BaseBullet
         float currentRadius = mutated ? explosionRadius * mutatedRadiusMultiplier : explosionRadius;
         float currentTickDamage = mutated ? tickDamage * mutatedTickDamageMultiplier : tickDamage;
 
-        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, currentRadius, LayerMask.GetMask("EnemyPhysics"));
+        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, currentRadius);
+        HashSet<BaseHealth> alreadyHit = new HashSet<BaseHealth>();
         foreach (var hit in hits)
         {
-            EnemyHealth health = hit.GetComponentInParent<EnemyHealth>();
-            if (health != null && !health.IsDead())
-            {
-                SporeTick tick = hit.GetComponentInParent<SporeTick>();
-                if (tick == null)
-                    tick = hit.GetComponentInParent<Transform>().gameObject.AddComponent<SporeTick>();
+            if (!DamageTargets.TryGetEnemyHealth(hit, out BaseHealth target)) continue;
+            if (target.IsDead() || !alreadyHit.Add(target)) continue;
 
-                tick.Apply(currentTickDamage, tickInterval, tickDuration, poisonTint);
-            }
+            SporeTick tick = target.GetComponent<SporeTick>();
+            if (tick == null)
+                tick = target.gameObject.AddComponent<SporeTick>();
+
+            tick.Apply(currentTickDamage, tickInterval, tickDuration, poisonTint);
         }
 
         VFXManager.Instance.SpawnHitVFX(hitVFX, transform.position, weaponSortingOrder);
