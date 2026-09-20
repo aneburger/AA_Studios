@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36776f04a1ca3d8449b04b532f7a016e, type: 3}
+  m_Name: CroissantCannon
+  m_EditorClassIdentifier: Assembly-CSharp::WeaponData
+  weaponId: 
+  gunName: Croissant Cannon
+  bulletPrefab: {fileID: 6894130498819508759, guid: 44e3dc769fc680547ad9ce57e7548f95, type: 3}
+  shellsPrefab: {fileID: 3331065470414262999, guid: b2b9e163261c23b418b6fc5856cd3a3c, type: 3}
+  hitPrefab: {fileID: 4081999799842582576, guid: e773c246afbaad0449a0403a3d1fdc0e, type: 3}
+  muzzleFlashPrefab: {fileID: 4081999799842582576, guid: e773c246afbaad0449a0403a3d1fdc0e, type: 3}
+  pickupPrefab: {fileID: 0}
+  fireRate: 0.9
+  minDamage: 2
+  maxDamage: 2
+  bulletSpeed: 8.5
+  maxAmmo: -1
+  burstCount: 10
+  burstInterval: 0.2
+  firePointOffset: {x: 1, y: -0.4}
+  flipOffsetOnAimFlip: 0
+  bulletCount: 1
+  spreadAngle: 15
+  sprite: {fileID: -3329793325075816863, guid: 7dd732bd1d20f294bb926a6919dc5b53, type: 3}
+  hudSprite: {fileID: 0}
+  ammoDisplaySprite: {fileID: 0}
+  shootClip: {fileID: 8300000, guid: e847d1e518ed601409bd94b0066f200c, type: 3}
+  shootClips: []
+  shootVolume: 0.8
+  wallHitClip: {fileID: 8300000, guid: 277cfd5237e689d44b4f267a3990a69e, type: 3}
+  wallHitVolume: 0.1
+  shakeForce: 0
+  knockbackForce: 1
+  hitKnockback: 3
+  recoilAmount: -35
+  recoilDecay: 25

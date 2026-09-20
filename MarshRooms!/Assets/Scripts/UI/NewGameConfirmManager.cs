@@ -39,6 +39,9 @@ public class NewGameConfirmManager : MonoBehaviour
     [SerializeField] private Color selectedColor = new Color(255f / 255f, 225f / 255f, 213f / 255f, 255f / 255f);
     [SerializeField] private Color normalColor = new Color(0.78f, 0.78f, 0.78f, 1f);
 
+    [Header("Start Floor")]
+    [SerializeField] private string startFloor = "Floor_01";
+
     private Button[] buttons;
     private TMP_Text[] texts;
     private GameObject[] arrows;
@@ -190,7 +193,7 @@ public class NewGameConfirmManager : MonoBehaviour
         MenuManager menuManager = FindFirstObjectByType<MenuManager>();
         if (menuManager != null)
         {
-            menuManager.OnBeginGame("Floor_01");
+            menuManager.OnBeginGame(startFloor);
         }
     }
 
