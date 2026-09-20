@@ -125,6 +125,7 @@ public class TutorialDirector : MonoBehaviour
     private PlayerAimer playerAimer;
     private PlayerHealth playerHealth;
     private PlayerSporeActivator playerSporeActivator;
+    private PlayerWeaponSlot playerWeaponSlot;
 
     // -- Internal State --
     private bool plungerPickedUp = false;
@@ -172,6 +173,7 @@ public class TutorialDirector : MonoBehaviour
             playerBaseMover = player.GetComponent<BaseMover>();
             playerHealth = player.GetComponent<PlayerHealth>();
             playerSporeActivator = player.GetComponent<PlayerSporeActivator>();
+            playerWeaponSlot = player.GetComponent<PlayerWeaponSlot>();
 
             if (playerInput != null) playerInput.enabled = false;
             if (playerMover != null) playerMover.enabled = false;
@@ -595,6 +597,7 @@ public class TutorialDirector : MonoBehaviour
     private void LockPlayer()
     {
         playerShooter.HideWeapon(true);
+        playerWeaponSlot.SetCanSwitch(false);
         playerMover?.ForceIdleAnimation();
         playerBaseMover?.StopMovement();
         if (playerInput != null) playerInput.enabled = false;
@@ -606,6 +609,7 @@ public class TutorialDirector : MonoBehaviour
     private void UnlockPlayer()
     {   
         playerShooter.HideWeapon(false);
+        playerWeaponSlot.SetCanSwitch(true);
         if (playerMover != null) playerMover.enabled = true;
         if (playerInput != null) playerInput.enabled = true;
         if (playerAimer != null) playerAimer.enabled = true;
@@ -616,6 +620,7 @@ public class TutorialDirector : MonoBehaviour
     private void LockPlayerKeepInput()
     {   
         playerShooter.HideWeapon(true);
+        playerWeaponSlot.SetCanSwitch(false);
         playerMover?.ForceIdleAnimation();
         playerBaseMover?.StopMovement();
         playerMover?.SetCanMove(false);
@@ -628,6 +633,7 @@ public class TutorialDirector : MonoBehaviour
     // -- PARTIAL UNLOCK --
     private void UnlockPlayerFull()
     {
+        playerWeaponSlot.SetCanSwitch(true);
         playerShooter.HideWeapon(false);
         if (playerMover != null) playerMover.enabled = true;
         playerMover?.SetCanMove(true);

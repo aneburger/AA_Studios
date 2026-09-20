@@ -25,6 +25,10 @@ public class PlayerWeaponSlot : MonoBehaviour
 
     public event System.Action<WeaponData> OnWeaponChanged;
     private List<WeaponPickup> nearbyPickups = new List<WeaponPickup>();
+
+    private bool canSwitch = true;
+    public bool CanSwitch => canSwitch;
+    public void SetCanSwitch(bool value) => canSwitch = value;
     
     // -- AWAKE --
     private void Awake()
@@ -88,6 +92,8 @@ public class PlayerWeaponSlot : MonoBehaviour
     // -- SCROLL UP --
     public void ScrollUp()
     {
+        if (!canSwitch) return;
+
         SaveCurrentAmmo();
 
         int newSlot = (currentSlot - 1 + maxWeapons) % maxWeapons;
@@ -102,6 +108,8 @@ public class PlayerWeaponSlot : MonoBehaviour
     // -- SCROLL DOWN --
     public void ScrollDown()
     {
+        if (!canSwitch) return;
+
         SaveCurrentAmmo();
 
         int newSlot = (currentSlot + 1) % maxWeapons;
@@ -263,6 +271,8 @@ public class PlayerWeaponSlot : MonoBehaviour
     // -- EQUIP SPECIFIC SLOT --
     public void EquipSlot(int slot)
     {
+        if (!canSwitch) return;
+        
         if (slot < 0 || slot >= maxWeapons) return;
         if (slots[slot] == null) return;
         if (slot == currentSlot) return;

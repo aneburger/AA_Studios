@@ -6,8 +6,9 @@ using System.Collections.Generic;
 
 public class RoomManager : MonoBehaviour
 {   
-    // The currently active room - lets enemy prefabs (spawned without a per-prefab
-    // reference to any specific room) find whichever RoomManager/dropZone is live.
+    [Header("Boss Mode")]
+    [SerializeField] private bool manualControl = false;
+
     public static RoomManager Current { get; private set; }
 
     [Header("Settings")]
@@ -107,7 +108,8 @@ public class RoomManager : MonoBehaviour
         weaponDropsThisFloor = 0;
         weaponDropCandidatesThisFloor.Clear();
         player = GameObject.FindWithTag("Player").transform;
-        EnemyManager.OnAllEnemiesDead += OnWaveCleared;
+
+        if (!manualControl) EnemyManager.OnAllEnemiesDead += OnWaveCleared;
 
         // capture the player's current spores/weapons when entering room
         if (LevelLoader.Instance != null && !LevelLoader.Instance.HasPendingRestore)
@@ -391,6 +393,12 @@ public class RoomManager : MonoBehaviour
         Instantiate(weaponPrefab, safePos, Quaternion.identity);
         weaponDropsThisFloor++;
         weaponDropsThisWave++;
+    }
+
+    // -- FORCE WEAPON DROP --
+    public void ForceWeaponDrop(GameObject weaponPrefab, Vector2 position)
+    {
+        SpawnWeaponDrop(weaponPrefab, position);
     }
 
     // -- SAFE DROP POSITION --

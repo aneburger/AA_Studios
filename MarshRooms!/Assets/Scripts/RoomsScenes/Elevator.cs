@@ -12,6 +12,9 @@ public class Elevator : MonoBehaviour
     [SerializeField] private AudioClip elevatorTuneClip;
     [Range(0f, 1f)] public float elevatorTuneClipVolume;
 
+    [Header("Manual Opening")]
+    [SerializeField] private bool manualOpenOnly;
+
     private Animator anim;
     private bool isOpen = false;
 
@@ -27,7 +30,7 @@ public class Elevator : MonoBehaviour
 
     private void OnEnable()
     {
-        RoomManager.OnRoomCleared += Open;
+        if (!manualOpenOnly) RoomManager.OnRoomCleared += Open;
         interactable.OnInteract += OnElevatorEntered;
     }
 
@@ -37,8 +40,11 @@ public class Elevator : MonoBehaviour
         interactable.OnInteract -= OnElevatorEntered;
     }
 
+    public void OpenManually() => Open();
+
     private void Open()
     {
+        if (isOpen) return;
         StartCoroutine(OpenSequence());
     }
 

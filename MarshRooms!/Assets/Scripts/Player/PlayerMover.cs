@@ -56,9 +56,12 @@ namespace TopDown.Movement
         private bool preLockCanDodge;
         private bool preLockCanShoot;
         private bool preLockCanActivateSpore;
+        private bool preLockCanSwitchWeapons;
         
         private float scrollCooldown = 0.35f;
         private float scrollCooldownTimer;
+
+        private PlayerInput playerInput;
 
         // -- AWAKE --
         protected override void Awake()
@@ -69,6 +72,7 @@ namespace TopDown.Movement
             anim = GetComponentInChildren<Animator>();
             playerHealth = GetComponent<PlayerHealth>();
             weaponSlot = GetComponent<PlayerWeaponSlot>();
+            playerInput = GetComponent<PlayerInput>();
 
             if (sporeActivator == null)
                 sporeActivator = GetComponent<PlayerSporeActivator>();
@@ -170,22 +174,34 @@ namespace TopDown.Movement
                 preLockCanDodge = canDodge;
                 preLockCanShoot = shooter == null || shooter.CanShoot;
                 preLockCanActivateSpore = sporeActivator == null || sporeActivator.CanActivate;
+                preLockCanSwitchWeapons = weaponSlot == null || weaponSlot.CanSwitch;
 
                 SetCanMove(false);
                 canDodge = false;
                 shooter?.SetCanShoot(false);
                 sporeActivator?.SetCanActivate(false);
+                weaponSlot?.SetCanSwitch(false);
             }
             else
             {
                 if (!isInputLocked) return;
+                if (canMove) moveInput = ReadHeldMoveInput();
                 isInputLocked = false;
 
                 SetCanMove(preLockCanMove);
                 canDodge = preLockCanDodge;
                 shooter?.SetCanShoot(preLockCanShoot);
                 sporeActivator?.SetCanActivate(preLockCanActivateSpore);
+                weaponSlot?.SetCanSwitch(preLockCanSwitchWeapons);
             }
+        }
+
+        // -- READ HELD INPUT --
+        private Vector2 ReadHeldMoveInput()
+        {
+            InputAction move = (playerInput != null && playerInput.actions != null)
+                ? playerInput.actions.FindAction("Move") : null;
+            return move != null ? move.ReadValue<Vector2>() : Vector2.zero;
         }
 
         // -- MOVE INPUT --
