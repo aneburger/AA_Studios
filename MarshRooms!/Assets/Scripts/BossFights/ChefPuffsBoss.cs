@@ -1,6 +1,7 @@
 // Chef Puffs' brain.
 
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public enum ChefAttack { Roll, Croissant, Knives }
@@ -8,7 +9,7 @@ public enum ChefAttack { Roll, Croissant, Knives }
 [System.Serializable]
 public class ChefPhaseSettings
 {
-    [Header("Attack Weights")]
+    [Header("Attack Weights (0 = never picked)")]
     public float rollWeight = 1f;
     public float croissantWeight = 1f;
     public float knivesWeight = 1f;
@@ -30,6 +31,17 @@ public class ChefPhaseSettings
     public float finalRollPause = 0.7f;
     public float finalRollSpeed = 11f;
     public float dazeDuration = 3f;
+
+    [Header("Croissant Cannon")]
+    public int croissantVolleys = 1;
+    public float croissantWindup = 0.7f;
+    public int croissantShots = 0;
+    public float croissantShotInterval = 0f;
+    public float croissantVolleyPause = 0f;
+    public int croissantBulletsPerShot = 0;
+    public float croissantSpread = 10f;
+    public float croissantBulletSpeedMultiplier = 1f;
+    public float croissantAimTurnRate = 0f;
 }
 
 public class ChefPuffsBoss : BossBrain
@@ -60,7 +72,13 @@ public class ChefPuffsBoss : BossBrain
         rollSpeedMax = 9f,
         finalRollPause = 0.45f,
         finalRollSpeed = 13.5f,
-        dazeDuration = 2.4f
+        dazeDuration = 2.4f,
+        croissantVolleys = 2,
+        croissantWindup = 0.5f,
+        croissantShots = 14,
+        croissantShotInterval = 0.16f,
+        croissantVolleyPause = 0.6f,
+        croissantBulletSpeedMultiplier = 1.15f
     };
 
     [Header("Counter Phase")]
@@ -76,6 +94,7 @@ public class ChefPuffsBoss : BossBrain
     [SerializeField] private float rollInaccuracyMax = 20f;
     [SerializeField] private float rollDirectionRefresh = 0.6f;
     [SerializeField] private float bounceSteerLock = 0.3f;
+
     [SerializeField] private float rollBrakeTime = 0.35f;
     [SerializeField] private float windupEventTimeout = 3f;
 
@@ -110,7 +129,17 @@ public class ChefPuffsBoss : BossBrain
     [SerializeField] private AudioClip getUpClip;
     [Range(0f, 1f)] [SerializeField] private float getUpVolume = 0.8f;
 
-    [Header("Stubs (Croissant / Knives until steps 5)")]
+    [Header("Croissant Cannon")]
+    [SerializeField] private WeaponData croissantCannon;
+    [SerializeField] private Transform[] shootSpots;
+    [SerializeField] private float shootSpotMinPlayerDistance = 2.5f;
+    [SerializeField] private float shootSpotMinMoveDistance = 1.5f;
+    [SerializeField] private float croissantWeaponShowDelay = 0.2f;
+    [SerializeField] private AudioClip croissantWindupClip;
+    [Range(0f, 1f)] [SerializeField] private float croissantWindupVolume = 1f;
+    [SerializeField] private int croissantWindupPulses = 2;
+
+    [Header("Stubs (Knives until the next step)")]
     [SerializeField] private float stubAttackDuration = 1.5f;
 
     private ChefPhaseSettings CurrentSettings => phase <= 1 ? phase1 : phase2;
@@ -125,6 +154,12 @@ public class ChefPuffsBoss : BossBrain
     private Rigidbody2D body;
     private BossRollMover rollMover;
     private BossContactDamage contact;
+    private EnemyShooter shooter;
+    private WeaponAimer weaponAimer;
+
+    // Croissant state
+    private Vector2 currentAim = Vector2.right;
+    private int lastShootSpot = -1;
 
     // Roll state
     private bool rollWindupEnded;
@@ -142,6 +177,8 @@ public class ChefPuffsBoss : BossBrain
         body = GetComponent<Rigidbody2D>();
         rollMover = GetComponent<BossRollMover>();
         contact = GetComponent<BossContactDamage>();
+        shooter = GetComponent<EnemyShooter>();
+        weaponAimer = GetComponentInChildren<WeaponAimer>();
     }
 
     protected override void OnEnable()
@@ -216,6 +253,14 @@ public class ChefPuffsBoss : BossBrain
         StopRollLoopSound();
         if (rollMover != null) rollMover.StopRolling();
         if (health != null) health.SetInvulnerable(BossHealth.ReasonCharging, false);
+        if (health != null) health.SetInvulnerable(BossHealth.ReasonHidden, false);
+
+        if (shooter != null)
+        {
+            shooter.HideWeapon(true);
+            ClearCroissantSettings();
+        }
+
         DisableContact();
     }
 
@@ -561,12 +606,235 @@ public class ChefPuffsBoss : BossBrain
         if (contact != null) contact.SetContact(0f, 0f);
     }
 
-    // ==================== STUB ATTACKS ====================
+    // ==================== CROISSANT CANNON ====================
+    // Vanish -> reappear on a different spot with the cannon in hand -> windup (squish + sound)
+    // -> a stream of shots aimed at Marsh -> repeat per volley -> put the cannon away.
     private IEnumerator CroissantAttack()
     {
-        Log("  [stub] Croissant cannon (step 5)");
-        yield return new WaitForSeconds(stubAttackDuration);
+        if (shooter == null || croissantCannon == null)
+        {
+            Debug.LogWarning($"[{name}] Croissant needs an EnemyShooter on the boss root and a Croissant Cannon WeaponData assigned. Skipping.", this);
+            yield return new WaitForSeconds(stubAttackDuration);
+            yield break;
+        }
+
+        ChefPhaseSettings s = CurrentSettings;
+
+        // Equip while hidden, so the cannon only appears together with him
+        shooter.EquipWeapon(croissantCannon, isPickup: true, playSound: false);
+        shooter.HideWeapon(true);
+        ApplyCroissantSettings(s);
+
+        // 1. Vanish and reappear somewhere else, cannon in hand
+        yield return RepositionWithCannon();
+
+        // 2. Windup + stream, once per volley
+        int volleys = Mathf.Max(1, s.croissantVolleys);
+        for (int v = 0; v < volleys; v++)
+        {
+            yield return CroissantWindup(s);
+            yield return CroissantStream(s);
+
+            if (v < volleys - 1)
+                yield return HoldAim(VolleyPause(s), s);
+        }
+
+        // 3. Put the cannon away
+        shooter.SquishEffect();
+        yield return new WaitForSeconds(0.15f);
+        shooter.HideWeapon(true);
+        ClearCroissantSettings();
     }
+
+    private void ApplyCroissantSettings(ChefPhaseSettings s)
+    {
+        shooter.SetBulletSpeedMultiplier(s.croissantBulletSpeedMultiplier);
+
+        if (s.croissantBulletsPerShot > 0)
+            shooter.SetBulletOverrides(s.croissantBulletsPerShot, s.croissantSpread);
+        else
+            shooter.ClearBulletOverrides();
+    }
+
+    private void ClearCroissantSettings()
+    {
+        shooter.SetBulletSpeedMultiplier(1f);
+        shooter.ClearBulletOverrides();
+    }
+
+    // Spawn protection while he vanishes and reappears, so he can't be hit mid-teleport
+    private IEnumerator RepositionWithCannon()
+    {
+        health.SetInvulnerable(BossHealth.ReasonHidden, true);
+        DisableContact();
+        facePlayer = true;
+
+        yield return WaitUntilIdle();
+        Trigger(TrigDespawn);
+        yield return WaitForStateFinished();
+
+        TeleportTo(PickShootSpot());
+
+        // Point the cannon at Marsh before it appears so it doesn't swing round
+        currentAim = AimTarget();
+        if (weaponAimer != null) weaponAimer.SetAimDirection(currentAim);
+
+        Trigger(TrigSpawn);
+        yield return new WaitForSeconds(croissantWeaponShowDelay);
+        shooter.HideWeapon(false);
+        yield return WaitForReturnToIdle();
+
+        SetIdleContact();
+        health.SetInvulnerable(BossHealth.ReasonHidden, false);
+    }
+
+    // Picks a random spot that isn't the one used last time, isn't where he's standing,
+    // and (when possible) isn't right next to Marsh.
+    private Transform PickShootSpot()
+    {
+        if (shootSpots == null || shootSpots.Length == 0)
+        {
+            Log("  (no shoot spots assigned, reappearing in place)");
+            return null;
+        }
+
+        if (shootSpots.Length < 2)
+            Debug.LogWarning($"[{name}] Only {shootSpots.Length} shoot spot assigned. He needs at least 2 to never repeat.", this);
+
+        bool canAvoidRepeat = shootSpots.Length > 1;
+        List<int> allowed = new List<int>();
+
+        for (int i = 0; i < shootSpots.Length; i++)
+        {
+            if (shootSpots[i] == null) continue;
+            if (canAvoidRepeat && i == lastShootSpot) continue;
+            if (canAvoidRepeat && Vector2.Distance(shootSpots[i].position, transform.position) < shootSpotMinMoveDistance) continue;
+            allowed.Add(i);
+        }
+
+        // The distance rule ruled everything out: any spot except the last one will do
+        if (allowed.Count == 0)
+        {
+            for (int i = 0; i < shootSpots.Length; i++)
+            {
+                if (shootSpots[i] == null) continue;
+                if (canAvoidRepeat && i == lastShootSpot) continue;
+                allowed.Add(i);
+            }
+
+            if (allowed.Count == 0) return null;
+        }
+
+        List<int> preferred = allowed.FindAll(i =>
+            player == null || Vector2.Distance(shootSpots[i].position, player.position) >= shootSpotMinPlayerDistance);
+
+        List<int> pool = preferred.Count > 0 ? preferred : allowed;
+        lastShootSpot = pool[Random.Range(0, pool.Count)];
+        return shootSpots[lastShootSpot];
+    }
+
+    // Same windup as the button mushrooms: a sound, and the weapon squishing a couple of times,
+    // while the cannon keeps pointing at Marsh.
+    private IEnumerator CroissantWindup(ChefPhaseSettings s)
+    {
+        float duration = Mathf.Max(0.05f, s.croissantWindup);
+        AudioManager.Instance?.PlaySFXWithPitch(croissantWindupClip, croissantWindupVolume, 0.1f);
+
+        int pulses = Mathf.Max(1, croissantWindupPulses);
+        float pulseInterval = duration / pulses;
+        float nextPulse = 0f;
+        int pulsesDone = 0;
+
+        float t = 0f;
+        while (t < duration)
+        {
+            TrackAim(s.croissantAimTurnRate);
+
+            if (pulsesDone < pulses && t >= nextPulse)
+            {
+                shooter.SquishEffect();
+                pulsesDone++;
+                nextPulse += pulseInterval;
+            }
+
+            t += Time.deltaTime;
+            yield return null;
+        }
+    }
+
+    // The stream: shots fired one after another while the aim keeps following Marsh
+    private IEnumerator CroissantStream(ChefPhaseSettings s)
+    {
+        int shots = s.croissantShots > 0 ? s.croissantShots : Mathf.Max(1, croissantCannon.burstCount);
+        float interval = s.croissantShotInterval > 0f ? s.croissantShotInterval : croissantCannon.burstInterval;
+
+        int fired = 0;
+        float nextShot = Time.time;
+
+        while (fired < shots)
+        {
+            TrackAim(s.croissantAimTurnRate);
+
+            if (Time.time >= nextShot)
+            {
+                shooter.Shoot();
+                fired++;
+                nextShot = Time.time + interval;
+            }
+
+            yield return null;
+        }
+    }
+
+    private float VolleyPause(ChefPhaseSettings s)
+    {
+        return s.croissantVolleyPause > 0f ? s.croissantVolleyPause : croissantCannon.fireRate;
+    }
+
+    private IEnumerator HoldAim(float duration, ChefPhaseSettings s)
+    {
+        float t = 0f;
+        while (t < duration)
+        {
+            TrackAim(s.croissantAimTurnRate);
+            t += Time.deltaTime;
+            yield return null;
+        }
+    }
+
+    // Direction from the cannon to Marsh
+    private Vector2 AimTarget()
+    {
+        if (player == null) return Vector2.right;
+
+        Vector2 origin = weaponAimer != null ? (Vector2)weaponAimer.transform.position : (Vector2)transform.position;
+        Vector2 d = (Vector2)player.position - origin;
+        return d.sqrMagnitude > 0.0001f ? d.normalized : Vector2.right;
+    }
+
+    // turnRate 0 = point straight at Marsh every frame (bullets fire along this direction instantly).
+    // Above 0 the aim can only turn that fast, so the stream sweeps and lags behind a moving Marsh.
+    private void TrackAim(float turnRate)
+    {
+        if (weaponAimer == null) return;
+
+        Vector2 target = AimTarget();
+
+        if (turnRate <= 0f || currentAim.sqrMagnitude < 0.001f)
+        {
+            currentAim = target;
+        }
+        else
+        {
+            float angle = Vector2.SignedAngle(currentAim, target);
+            float step = turnRate * Time.deltaTime;
+            currentAim = Rotate(currentAim, Mathf.Clamp(angle, -step, step));
+        }
+
+        weaponAimer.SetAimDirection(currentAim);
+    }
+
+    // ==================== STUB ATTACKS ====================
 
     private IEnumerator KnivesAttack()
     {
