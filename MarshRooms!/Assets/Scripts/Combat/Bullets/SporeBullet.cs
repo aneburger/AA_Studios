@@ -65,13 +65,14 @@ public class SporeBullet : BaseBullet
         bool mutated = SporeManager.Instance != null && SporeManager.Instance.IsMutated;
         float currentRadius = mutated ? explosionRadius * mutatedRadiusMultiplier : explosionRadius;
         float currentTickDamage = mutated ? tickDamage * mutatedTickDamageMultiplier : tickDamage;
-
+        
         Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, currentRadius);
         HashSet<BaseHealth> alreadyHit = new HashSet<BaseHealth>();
         foreach (var hit in hits)
         {
             if (!DamageTargets.TryGetEnemyHealth(hit, out BaseHealth target)) continue;
-            if (target.IsDead() || !alreadyHit.Add(target)) continue;
+            if (target.IsDead() || DamageTargets.IsImmune(target)) continue;
+            if (!alreadyHit.Add(target)) continue;
 
             SporeTick tick = target.GetComponent<SporeTick>();
             if (tick == null)

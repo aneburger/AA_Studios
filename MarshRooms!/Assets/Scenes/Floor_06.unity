@@ -6847,6 +6847,18 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 345296001}
     - target: {fileID: 7788961182222442091, guid: c2ec80757c23d484499ea01eab15bddc, type: 3}
+      propertyPath: bumpClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 277cfd5237e689d44b4f267a3990a69e, type: 3}
+    - target: {fileID: 7788961182222442091, guid: c2ec80757c23d484499ea01eab15bddc, type: 3}
+      propertyPath: bumpShake
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7788961182222442091, guid: c2ec80757c23d484499ea01eab15bddc, type: 3}
+      propertyPath: getUpClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 98c6727c639b2da4493ac39c8da8f444, type: 3}
+    - target: {fileID: 7788961182222442091, guid: c2ec80757c23d484499ea01eab15bddc, type: 3}
       propertyPath: healthBar
       value: 
       objectReference: {fileID: 6534127505684719259}
@@ -6855,9 +6867,141 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 965803513}
     - target: {fileID: 7788961182222442091, guid: c2ec80757c23d484499ea01eab15bddc, type: 3}
+      propertyPath: bumpVolume
+      value: 0.65
+      objectReference: {fileID: 0}
+    - target: {fileID: 7788961182222442091, guid: c2ec80757c23d484499ea01eab15bddc, type: 3}
+      propertyPath: impactClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 9373152f3e175c54bae290fd19502afc, type: 3}
+    - target: {fileID: 7788961182222442091, guid: c2ec80757c23d484499ea01eab15bddc, type: 3}
+      propertyPath: windupClip
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7788961182222442091, guid: c2ec80757c23d484499ea01eab15bddc, type: 3}
+      propertyPath: getUpVolume
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 7788961182222442091, guid: c2ec80757c23d484499ea01eab15bddc, type: 3}
+      propertyPath: impactShake
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7788961182222442091, guid: c2ec80757c23d484499ea01eab15bddc, type: 3}
+      propertyPath: visualsRoot
+      value: 
+      objectReference: {fileID: 345296002}
+    - target: {fileID: 7788961182222442091, guid: c2ec80757c23d484499ea01eab15bddc, type: 3}
       propertyPath: counterPoint
       value: 
       objectReference: {fileID: 1506485521}
+    - target: {fileID: 7788961182222442091, guid: c2ec80757c23d484499ea01eab15bddc, type: 3}
+      propertyPath: openingDelay
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7788961182222442091, guid: c2ec80757c23d484499ea01eab15bddc, type: 3}
+      propertyPath: rollLoopClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 0f1287fc4a59e2745955b41b74f446d7, type: 3}
+    - target: {fileID: 7788961182222442091, guid: c2ec80757c23d484499ea01eab15bddc, type: 3}
+      propertyPath: rollTurnRate
+      value: 130
+      objectReference: {fileID: 0}
+    - target: {fileID: 7788961182222442091, guid: c2ec80757c23d484499ea01eab15bddc, type: 3}
+      propertyPath: finalRollRamp
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7788961182222442091, guid: c2ec80757c23d484499ea01eab15bddc, type: 3}
+      propertyPath: transitionClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 268398b940108cc4e8c57d4e6312c541, type: 3}
+    - target: {fileID: 7788961182222442091, guid: c2ec80757c23d484499ea01eab15bddc, type: 3}
+      propertyPath: transitionVolume
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7788961182222442091, guid: c2ec80757c23d484499ea01eab15bddc, type: 3}
+      propertyPath: rollInaccuracyMax
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7788961182222442091, guid: c2ec80757c23d484499ea01eab15bddc, type: 3}
+      propertyPath: rollInaccuracyMin
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7788961182222442091, guid: c2ec80757c23d484499ea01eab15bddc, type: 3}
+      propertyPath: impactFallbackTime
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7788961182222442091, guid: c2ec80757c23d484499ea01eab15bddc, type: 3}
+      propertyPath: phase1.downtimeMax
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7788961182222442091, guid: c2ec80757c23d484499ea01eab15bddc, type: 3}
+      propertyPath: phase1.downtimeMin
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7788961182222442091, guid: c2ec80757c23d484499ea01eab15bddc, type: 3}
+      propertyPath: impactFallbackSpeed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7788961182222442091, guid: c2ec80757c23d484499ea01eab15bddc, type: 3}
+      propertyPath: phase1.dazeDuration
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7788961182222442091, guid: c2ec80757c23d484499ea01eab15bddc, type: 3}
+      propertyPath: phase1.rollSpeedMax
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 7788961182222442091, guid: c2ec80757c23d484499ea01eab15bddc, type: 3}
+      propertyPath: rollDirectionRefresh
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7788961182222442091, guid: c2ec80757c23d484499ea01eab15bddc, type: 3}
+      propertyPath: phase1.finalRollPause
+      value: 1.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7788961182222442091, guid: c2ec80757c23d484499ea01eab15bddc, type: 3}
+      propertyPath: phase1.finalRollSpeed
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 7788961182222442091, guid: c2ec80757c23d484499ea01eab15bddc, type: 3}
+      propertyPath: phase2.finalRollPause
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7788961182222442091, guid: c2ec80757c23d484499ea01eab15bddc, type: 3}
+      propertyPath: transitionFlashColor.a
+      value: 0.69411767
+      objectReference: {fileID: 0}
+    - target: {fileID: 7788961182222442091, guid: c2ec80757c23d484499ea01eab15bddc, type: 3}
+      propertyPath: transitionFlashColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7788961182222442091, guid: c2ec80757c23d484499ea01eab15bddc, type: 3}
+      propertyPath: transitionFlashColor.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7788961182222442091, guid: c2ec80757c23d484499ea01eab15bddc, type: 3}
+      propertyPath: transitionFlashColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7788961182222442091, guid: c2ec80757c23d484499ea01eab15bddc, type: 3}
+      propertyPath: phase1.rollChaseDuration
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 7788961182222442091, guid: c2ec80757c23d484499ea01eab15bddc, type: 3}
+      propertyPath: phase2.rollChaseDuration
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8169478559265794274, guid: c2ec80757c23d484499ea01eab15bddc, type: 3}
+      propertyPath: maxHealth
+      value: 333
+      objectReference: {fileID: 0}
+    - target: {fileID: 8169478559265794274, guid: c2ec80757c23d484499ea01eab15bddc, type: 3}
+      propertyPath: deflectClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 5f442536ef2f2b043a8a7f640c2ddeba, type: 3}
+    - target: {fileID: 8169478559265794274, guid: c2ec80757c23d484499ea01eab15bddc, type: 3}
+      propertyPath: deflectVolume
+      value: 0.6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -6877,6 +7021,11 @@ MonoBehaviour:
 --- !u!95 &345296001 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 803806091724421615, guid: c2ec80757c23d484499ea01eab15bddc, type: 3}
+  m_PrefabInstance: {fileID: 345295999}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &345296002 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4698166982508756797, guid: c2ec80757c23d484499ea01eab15bddc, type: 3}
   m_PrefabInstance: {fileID: 345295999}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &357181089

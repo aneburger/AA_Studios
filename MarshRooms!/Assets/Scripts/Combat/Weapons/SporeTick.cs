@@ -41,6 +41,9 @@ public class SporeTick : MonoBehaviour
             elapsed += tickInterval;
 
             if (health == null || health.IsDead()) break;
+
+            if (DamageTargets.IsImmune(health)) break;
+
             health.TakeDamage(tickDamage);
         }
 
