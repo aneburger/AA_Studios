@@ -106,6 +106,7 @@ GameObject:
   - component: {fileID: 8169478559265794274}
   - component: {fileID: 7585961510317227088}
   - component: {fileID: -7909860762766624888}
+  - component: {fileID: 7788961182222442091}
   - component: {fileID: -194479625385808466}
   m_Layer: 7
   m_Name: chef-puffs-boss
@@ -215,7 +216,15 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   phaseTwoThreshold: 0.4
+  protectUntilPhaseTwo: 1
   startInvulnerable: 1
+  flinchCooldown: 0.4
+  sporePrefab: {fileID: 7129025776932877359, guid: b8874dc0a3c605d419413a967c2f2c17, type: 3}
+  sporeDropChance: 0.15
+  minSporesPerDrop: 1
+  maxSporesPerDrop: 5
+  sporeScatterRadius: 1
+  sporeDropCooldown: 0.5
   hurtClip: {fileID: 8300000, guid: 3ef1eef1e125ae04ca5e0053211ce2c1, type: 3}
   hurtVolume: 0.8
 --- !u!114 &7585961510317227088
@@ -261,6 +270,61 @@ MonoBehaviour:
   separationRadius: 1.2
   separationStrength: 1
   directionSmoothSpeed: 10
+--- !u!114 &7788961182222442091
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 988082134135583188}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8952e0f03cc3aa349aa6871ceeca7bdc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ChefPuffsBoss
+  room: {fileID: 0}
+  health: {fileID: 0}
+  healthBar: {fileID: 0}
+  animator: {fileID: 0}
+  idleStateName: IdleBlend
+  angryTrigger: Angry
+  animSpeedParameter: AnimSpeed
+  openingDelay: 1
+  facePlayer: 1
+  transitionEffectDelay: 0.35
+  transitionShake: 0.9
+  transitionFlashColor: {r: 1, g: 1, b: 1, a: 1}
+  transitionFlashAlpha: 0.6
+  transitionFlashDuration: 0.35
+  hitStopDuration: 0.07
+  transitionClip: {fileID: 0}
+  transitionVolume: 1
+  debugLogging: 1
+  showDebugOverlay: 1
+  attacksBeforeCounterMin: 2
+  attacksBeforeCounterMax: 3
+  phase1:
+    rollWeight: 1
+    croissantWeight: 1
+    knivesWeight: 1
+    downtimeMin: 1.5
+    downtimeMax: 2.5
+    animSpeed: 1
+    summonChargeTime: 1.2
+    counterHoldTime: 3
+  phase2:
+    rollWeight: 1
+    croissantWeight: 1
+    knivesWeight: 1
+    downtimeMin: 0.8
+    downtimeMax: 1.5
+    animSpeed: 1.25
+    summonChargeTime: 0.8
+    counterHoldTime: 3
+  counterPoint: {fileID: 0}
+  arenaPoint: {fileID: 0}
+  summonEventTimeout: 3
+  stubAttackDuration: 1.5
 --- !u!195 &-194479625385808466
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -296,6 +360,7 @@ GameObject:
   - component: {fileID: 803806091724421615}
   - component: {fileID: 5285933926964467797}
   - component: {fileID: 3493981120691389104}
+  - component: {fileID: 4898600272660648916}
   m_Layer: 7
   m_Name: Visuals
   m_TagString: Untagged
@@ -426,6 +491,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpriteYSorter
   sortingOffset: 0
+--- !u!114 &4898600272660648916
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1474284981994161219}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d94c7a77119ca694c81e75a513b3c75d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BossAnimationRelay
 --- !u!1 &2223798187010705781
 GameObject:
   m_ObjectHideFlags: 0

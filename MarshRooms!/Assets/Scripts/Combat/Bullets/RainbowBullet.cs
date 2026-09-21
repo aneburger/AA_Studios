@@ -32,6 +32,11 @@ public class RainbowBullet : BaseBullet
             if (health != null)
             {
                 health.TakeDamage(currentDamage);
+
+                BaseMover mover = hit.collider.GetComponentInParent<BaseMover>();
+                if (mover != null)
+                    mover.ApplyKnockback(direction * knockback);
+
                 VFXManager.Instance.SpawnHitVFX(hitVFX, hit.point, weaponSortingOrder);
             }
             else

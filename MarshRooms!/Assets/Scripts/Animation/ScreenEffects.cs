@@ -25,6 +25,7 @@ public class ScreenEffects : MonoBehaviour
     private float flashTimer = 0f;
     private float flashDuration = 0f;
     private float flashAlpha = 0f;
+    private Color flashBaseColor;
 
     private float vignetteTargetAlpha = 0f;
     private float vignetteCurrentAlpha = 0f;
@@ -44,6 +45,8 @@ public class ScreenEffects : MonoBehaviour
         DontDestroyOnLoad(gameObject);
 
         SetFadeImage();
+
+        flashBaseColor = flashImage.color;
 
         SetFlashAlpha(0f);
         SetVignetteAlpha(0f);
@@ -90,6 +93,18 @@ public class ScreenEffects : MonoBehaviour
     public void Flash(Sprite sprite, float alpha, float duration)
     {
         flashImage.sprite = sprite;
+        flashImage.color = flashBaseColor;
+        flashAlpha = alpha;
+        flashDuration = duration;
+        flashTimer = duration;
+        SetFlashAlpha(alpha);
+    }
+
+    // -- FLASH COLOUR --
+    public void FlashColor(Color color, float alpha, float duration)
+    {
+        flashImage.sprite = null;
+        flashImage.color = color;
         flashAlpha = alpha;
         flashDuration = duration;
         flashTimer = duration;
