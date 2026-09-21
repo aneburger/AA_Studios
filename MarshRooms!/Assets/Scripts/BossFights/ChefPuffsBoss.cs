@@ -1,4 +1,5 @@
-// Chef Puffs' brain.
+// Chef Puffs' brain. Step 4: Roll + daze are real. Croissant and Knives are still stubs.
+// Needs BossRollMover and BossContactDamage on the same GameObject (the boss root).
 
 using System.Collections;
 using System.Collections.Generic;
@@ -6,6 +7,7 @@ using UnityEngine;
 
 public enum ChefAttack { Roll, Croissant, Knives }
 
+// Everything that differs between phases. Later steps add fields here (fire rate, spike count...).
 [System.Serializable]
 public class ChefPhaseSettings
 {
@@ -19,29 +21,53 @@ public class ChefPhaseSettings
     public float downtimeMax = 2.5f;
 
     [Header("Animation")]
+    [Tooltip("Value for the animator's AnimSpeed parameter.")]
     public float animSpeed = 1f;
 
     [Header("Counter Phase (placeholder timings)")]
+    [Tooltip("How long the summoning charge-up loops before the summon.")]
     public float summonChargeTime = 1.2f;
+    [Tooltip("Stub: how long he stays behind the counter. Step 6 replaces this with the real wave logic.")]
     public float counterHoldTime = 3f;
 
     [Header("Roll")]
+    [Tooltip("How long the bouncing chase roll lasts before he brakes for the final roll.")]
     public float rollChaseDuration = 3.5f;
+    [Tooltip("Top speed of the chase roll (units per second).")]
     public float rollSpeedMax = 7f;
+    [Tooltip("Pause in the windup pose before the final roll. The direction locks at the end of it.")]
     public float finalRollPause = 0.7f;
+    [Tooltip("Speed of the final straight roll.")]
     public float finalRollSpeed = 11f;
+    [Tooltip("Total time from the wall impact until he starts getting up.")]
     public float dazeDuration = 3f;
 
     [Header("Croissant Cannon")]
+    [Tooltip("How many windup + stream volleys per attack.")]
     public int croissantVolleys = 1;
+    [Tooltip("Windup before each volley (weapon squish + sound), like the button mushrooms.")]
     public float croissantWindup = 0.7f;
+    [Tooltip("Shots per volley. 0 = use the weapon's burst count.")]
     public int croissantShots = 0;
+    [Tooltip("Seconds between shots in a volley. 0 = use the weapon's burst interval.")]
     public float croissantShotInterval = 0f;
+    [Tooltip("Pause between volleys. 0 = use the weapon's fire rate.")]
     public float croissantVolleyPause = 0f;
+    [Tooltip("Bullets per shot. 0 = use the weapon's own bullet count.")]
     public int croissantBulletsPerShot = 0;
+    [Tooltip("Spread in degrees between those bullets (only used when Bullets Per Shot is above 0).")]
     public float croissantSpread = 10f;
     public float croissantBulletSpeedMultiplier = 1f;
+    [Tooltip("Degrees per second his aim can turn while firing. 0 = instant tracking (like the button mushrooms).")]
     public float croissantAimTurnRate = 0f;
+
+    [Header("Knives")]
+    public int knifeThrows = 3;
+    public float knifeReloadTime = 0.6f;
+    public float knifeThrowPause = 0.5f;
+    public float knifeSpeedMultiplier = 1f;
+    public float knifeCountMultiplier = 1f;
+    public float knifeHangMultiplier = 1f;
 }
 
 public class ChefPuffsBoss : BossBrain
@@ -78,40 +104,53 @@ public class ChefPuffsBoss : BossBrain
         croissantShots = 14,
         croissantShotInterval = 0.16f,
         croissantVolleyPause = 0.6f,
-        croissantBulletSpeedMultiplier = 1.15f
+        croissantBulletSpeedMultiplier = 1.15f,
+        knifeThrows = 4,
+        knifeReloadTime = 0.4f,
+        knifeThrowPause = 0.3f,
+        knifeSpeedMultiplier = 1.2f,
+        knifeCountMultiplier = 1.35f,
+        knifeHangMultiplier = 0.7f
     };
 
     [Header("Counter Phase")]
+    [Tooltip("Where he stands behind the counter. Empty = he stays put (still vanishes and reappears).")]
     [SerializeField] private Transform counterPoint;
+    [Tooltip("Where he returns to in the arena. Also used to escape if a roll gets pinned. Empty = stays put / random.")]
     [SerializeField] private Transform arenaPoint;
     [SerializeField] private float summonEventTimeout = 3f;
 
     [Header("Roll: Chase")]
     [SerializeField] private float rollSpeedStart = 3f;
     [SerializeField] private float rollRampDuration = 1.2f;
+    [Tooltip("Degrees per second he can turn toward Marsh while chasing.")]
     [SerializeField] private float rollTurnRate = 110f;
     [SerializeField] private float rollInaccuracyMin = 5f;
     [SerializeField] private float rollInaccuracyMax = 20f;
     [SerializeField] private float rollDirectionRefresh = 0.6f;
+    [Tooltip("Steering is disabled this long after a bounce so it reads as a bounce.")]
     [SerializeField] private float bounceSteerLock = 0.3f;
-
+    [Tooltip("How long he takes to slow to a stop after the chase.")]
     [SerializeField] private float rollBrakeTime = 0.35f;
     [SerializeField] private float windupEventTimeout = 3f;
 
     [Header("Roll: Charge Vibrate")]
+    [Tooltip("Sprite shake while he holds the windup pose before the final roll. Ramps from start to end. World units.")]
     [SerializeField] private float chargeShakeStart = 0.02f;
     [SerializeField] private float chargeShakeEnd = 0.08f;
+    [Tooltip("Seconds between jitters. Smaller = faster buzz.")]
     [SerializeField] private float chargeShakeInterval = 0.03f;
 
     [Header("Roll: Final + Impact")]
     [SerializeField] private float finalRollRamp = 0.2f;
+    [Tooltip("If the final roll hits nothing in this time, he goes into the daze anyway.")]
     [SerializeField] private float finalRollTimeout = 2.5f;
     [SerializeField] private float impactFallbackSpeed = 4f;
     [SerializeField] private float impactFallbackTime = 0.35f;
     [SerializeField] private float impactShake = 0.7f;
     [SerializeField] private float bumpShake = 0.15f;
 
-    [Header("Contact Damage")]
+    [Header("Contact Damage (a heart is 4 HP - match your enemy data)")]
     [SerializeField] private float idleContactDamage = 2f;
     [SerializeField] private float idleContactKnockback = 5f;
     [SerializeField] private float rollContactDamage = 4f;
@@ -130,16 +169,30 @@ public class ChefPuffsBoss : BossBrain
     [Range(0f, 1f)] [SerializeField] private float getUpVolume = 0.8f;
 
     [Header("Croissant Cannon")]
+    [Tooltip("The croissant cannon's WeaponData asset. He equips it at the start of the attack and puts it away at the end.")]
     [SerializeField] private WeaponData croissantCannon;
+    [Tooltip("Arena spots he can reappear at. Needs at least 2. He never picks the same spot twice in a row.")]
     [SerializeField] private Transform[] shootSpots;
+    [Tooltip("Spots closer than this to Marsh are avoided when possible. 0 = ignore.")]
     [SerializeField] private float shootSpotMinPlayerDistance = 2.5f;
+    [Tooltip("Spots closer than this to where he's standing are skipped, so he visibly moves.")]
     [SerializeField] private float shootSpotMinMoveDistance = 1.5f;
+    [Tooltip("Delay after he starts reappearing before the cannon shows in his hand.")]
     [SerializeField] private float croissantWeaponShowDelay = 0.2f;
     [SerializeField] private AudioClip croissantWindupClip;
     [Range(0f, 1f)] [SerializeField] private float croissantWindupVolume = 1f;
+    [Tooltip("Weapon squishes during each windup.")]
     [SerializeField] private int croissantWindupPulses = 2;
 
-    [Header("Stubs (Knives until the next step)")]
+    [Header("Knives")]
+    [SerializeField] private WeaponData[] knifeWeapons;
+    [SerializeField] private KnifePatternData[] knifePatterns;
+    [SerializeField] private bool knifeRepeatSameShape = false;
+    [SerializeField] private AudioClip knifeReloadClip;
+    [Range(0f, 1f)] [SerializeField] private float knifeReloadVolume = 1f;
+    [SerializeField] private float knifeThrowShake = 0.3f;
+
+    [Header("Fallback (used when an attack is missing its setup)")]
     [SerializeField] private float stubAttackDuration = 1.5f;
 
     private ChefPhaseSettings CurrentSettings => phase <= 1 ? phase1 : phase2;
@@ -161,6 +214,11 @@ public class ChefPuffsBoss : BossBrain
     private Vector2 currentAim = Vector2.right;
     private int lastShootSpot = -1;
 
+    // Knife state
+    private BossPatternShooter patternShooter;
+    private int lastKnifeIndex = -1;
+    private int lastPatternIndex = -1;
+
     // Roll state
     private bool rollWindupEnded;
     private bool finalRollActive;
@@ -179,6 +237,7 @@ public class ChefPuffsBoss : BossBrain
         contact = GetComponent<BossContactDamage>();
         shooter = GetComponent<EnemyShooter>();
         weaponAimer = GetComponentInChildren<WeaponAimer>();
+        patternShooter = GetComponent<BossPatternShooter>();
     }
 
     protected override void OnEnable()
@@ -192,6 +251,7 @@ public class ChefPuffsBoss : BossBrain
         }
 
         if (rollMover != null) rollMover.Bumped += HandleBumped;
+        if (patternShooter != null) patternShooter.BulletSpawned += RegisterHazard;
     }
 
     protected override void OnDisable()
@@ -205,6 +265,7 @@ public class ChefPuffsBoss : BossBrain
         }
 
         if (rollMover != null) rollMover.Bumped -= HandleBumped;
+        if (patternShooter != null) patternShooter.BulletSpawned -= RegisterHazard;
         StopRollLoopSound();
     }
 
@@ -224,6 +285,7 @@ public class ChefPuffsBoss : BossBrain
     {
         lastBumpNormal = normal;
 
+        // The final roll ends on its first bump. The impact itself is played by ImpactAndDaze.
         if (finalRollActive)
         {
             finalRollHit = true;
@@ -260,6 +322,8 @@ public class ChefPuffsBoss : BossBrain
             shooter.HideWeapon(true);
             ClearCroissantSettings();
         }
+
+        if (patternShooter != null) patternShooter.StopAll();
 
         DisableContact();
     }
@@ -793,10 +857,15 @@ public class ChefPuffsBoss : BossBrain
 
     private IEnumerator HoldAim(float duration, ChefPhaseSettings s)
     {
+        yield return HoldAim(duration, s.croissantAimTurnRate);
+    }
+
+    private IEnumerator HoldAim(float duration, float turnRate)
+    {
         float t = 0f;
         while (t < duration)
         {
-            TrackAim(s.croissantAimTurnRate);
+            TrackAim(turnRate);
             t += Time.deltaTime;
             yield return null;
         }
@@ -834,12 +903,82 @@ public class ChefPuffsBoss : BossBrain
         weaponAimer.SetAimDirection(currentAim);
     }
 
-    // ==================== STUB ATTACKS ====================
+    // ==================== KNIVES ====================
 
+    // Reload (a random knife appears in his hand) -> throw (the knives fly out in a shape and the knife
+    // vanishes from his hand at once) -> reload another knife -> throw again.
     private IEnumerator KnivesAttack()
     {
-        Log("  [stub] Knife pattern (step 5)");
-        yield return new WaitForSeconds(stubAttackDuration);
+        bool missingSetup = shooter == null || patternShooter == null
+            || knifeWeapons == null || knifeWeapons.Length == 0
+            || knifePatterns == null || knifePatterns.Length == 0;
+
+        if (missingSetup)
+        {
+            Debug.LogWarning($"[{name}] Knives need an EnemyShooter and a BossPatternShooter on the boss root, plus Knife Weapons and Knife Patterns assigned. Skipping.", this);
+            yield return new WaitForSeconds(stubAttackDuration);
+            yield break;
+        }
+
+        ChefPhaseSettings s = CurrentSettings;
+        int throws = Mathf.Max(1, s.knifeThrows);
+
+        facePlayer = true;
+        SetIdleContact();
+        shooter.HideWeapon(true);
+
+        // Only used when Knife Repeat Same Shape is ticked
+        KnifePatternData fixedPattern = knifeRepeatSameShape
+            ? knifePatterns[PickDifferentIndex(knifePatterns.Length, ref lastPatternIndex)]
+            : null;
+
+        for (int i = 0; i < throws; i++)
+        {
+            // 1. Reload: a random knife appears in his hand, pointing at Marsh
+            WeaponData knife = knifeWeapons[PickDifferentIndex(knifeWeapons.Length, ref lastKnifeIndex)];
+            if (knife == null) continue;
+
+            shooter.EquipWeapon(knife, isPickup: true, playSound: false);
+            currentAim = AimTarget();
+            if (weaponAimer != null) weaponAimer.SetAimDirection(currentAim);
+            shooter.HideWeapon(false);
+            shooter.SquishEffect();
+            AudioManager.Instance?.PlaySFXWithPitch(knifeReloadClip, knifeReloadVolume, 0.1f);
+
+            yield return HoldAim(s.knifeReloadTime, 0f);
+
+            // 2. Throw: the knives spawn in a shape around him and the knife vanishes from his hand
+            KnifePatternData pattern = fixedPattern != null
+                ? fixedPattern
+                : knifePatterns[PickDifferentIndex(knifePatterns.Length, ref lastPatternIndex)];
+
+            if (pattern == null) continue;
+
+            patternShooter.Throw(knife, pattern, AimTarget(),
+                s.knifeSpeedMultiplier, s.knifeCountMultiplier, s.knifeHangMultiplier, OnKnivesThrown);
+
+            yield return new WaitForSeconds(s.knifeThrowPause);
+        }
+
+        shooter.HideWeapon(true);
+    }
+
+    private void OnKnivesThrown()
+    {
+        shooter.HideWeapon(true);
+        ScreenEffects.Instance?.ShakeScreen(knifeThrowShake);
+    }
+
+    // Random index that differs from the last one picked (when there's more than one to choose from)
+    private static int PickDifferentIndex(int count, ref int last)
+    {
+        int index = Random.Range(0, count);
+
+        if (count > 1 && index == last)
+            index = (index + Random.Range(1, count)) % count;
+
+        last = index;
+        return index;
     }
 
     // ==================== COUNTER PHASE ====================

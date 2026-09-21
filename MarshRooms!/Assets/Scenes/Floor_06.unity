@@ -6919,12 +6919,20 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: f4c2334e4f3ccdd4f86dd4d52f00c186, type: 2}
     - target: {fileID: 7788961182222442091, guid: c2ec80757c23d484499ea01eab15bddc, type: 3}
+      propertyPath: knifeReloadClip
+      value: 
+      objectReference: {fileID: 8300000, guid: a527855533f5d12459c64a12ff200b56, type: 3}
+    - target: {fileID: 7788961182222442091, guid: c2ec80757c23d484499ea01eab15bddc, type: 3}
       propertyPath: phase2.animSpeed
       value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 7788961182222442091, guid: c2ec80757c23d484499ea01eab15bddc, type: 3}
       propertyPath: transitionVolume
       value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7788961182222442091, guid: c2ec80757c23d484499ea01eab15bddc, type: 3}
+      propertyPath: phase1.rollWeight
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7788961182222442091, guid: c2ec80757c23d484499ea01eab15bddc, type: 3}
       propertyPath: rollInaccuracyMax
@@ -6945,6 +6953,10 @@ PrefabInstance:
     - target: {fileID: 7788961182222442091, guid: c2ec80757c23d484499ea01eab15bddc, type: 3}
       propertyPath: phase1.downtimeMin
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7788961182222442091, guid: c2ec80757c23d484499ea01eab15bddc, type: 3}
+      propertyPath: phase2.knifeThrows
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7788961182222442091, guid: c2ec80757c23d484499ea01eab15bddc, type: 3}
       propertyPath: croissantWindupClip
@@ -6969,6 +6981,10 @@ PrefabInstance:
     - target: {fileID: 7788961182222442091, guid: c2ec80757c23d484499ea01eab15bddc, type: 3}
       propertyPath: phase2.rollSpeedMax
       value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 7788961182222442091, guid: c2ec80757c23d484499ea01eab15bddc, type: 3}
+      propertyPath: knifeRepeatSameShape
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7788961182222442091, guid: c2ec80757c23d484499ea01eab15bddc, type: 3}
       propertyPath: rollDirectionRefresh
@@ -6999,6 +7015,10 @@ PrefabInstance:
       value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 7788961182222442091, guid: c2ec80757c23d484499ea01eab15bddc, type: 3}
+      propertyPath: phase1.croissantWeight
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7788961182222442091, guid: c2ec80757c23d484499ea01eab15bddc, type: 3}
       propertyPath: transitionFlashColor.a
       value: 0.69411767
       objectReference: {fileID: 0}
@@ -7015,6 +7035,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7788961182222442091, guid: c2ec80757c23d484499ea01eab15bddc, type: 3}
+      propertyPath: knifeWeapons.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7788961182222442091, guid: c2ec80757c23d484499ea01eab15bddc, type: 3}
       propertyPath: phase1.croissantVolleys
       value: 3
       objectReference: {fileID: 0}
@@ -7025,6 +7049,10 @@ PrefabInstance:
     - target: {fileID: 7788961182222442091, guid: c2ec80757c23d484499ea01eab15bddc, type: 3}
       propertyPath: croissantWeaponShowDelay
       value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7788961182222442091, guid: c2ec80757c23d484499ea01eab15bddc, type: 3}
+      propertyPath: knifePatterns.Array.size
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7788961182222442091, guid: c2ec80757c23d484499ea01eab15bddc, type: 3}
       propertyPath: phase1.rollChaseDuration
@@ -7062,6 +7090,30 @@ PrefabInstance:
       propertyPath: 'shootSpots.Array.data[6]'
       value: 
       objectReference: {fileID: 2140742326}
+    - target: {fileID: 7788961182222442091, guid: c2ec80757c23d484499ea01eab15bddc, type: 3}
+      propertyPath: 'knifeWeapons.Array.data[0]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 03427708e4414264b95f51930160efcd, type: 2}
+    - target: {fileID: 7788961182222442091, guid: c2ec80757c23d484499ea01eab15bddc, type: 3}
+      propertyPath: 'knifeWeapons.Array.data[1]'
+      value: 
+      objectReference: {fileID: 11400000, guid: b756a8734f8c3fa43963fd3f01af4dac, type: 2}
+    - target: {fileID: 7788961182222442091, guid: c2ec80757c23d484499ea01eab15bddc, type: 3}
+      propertyPath: 'knifeWeapons.Array.data[2]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 930c6d84ee78534449294c65ca8805c3, type: 2}
+    - target: {fileID: 7788961182222442091, guid: c2ec80757c23d484499ea01eab15bddc, type: 3}
+      propertyPath: 'knifePatterns.Array.data[0]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 088f9f98d649a4c498966c462b358460, type: 2}
+    - target: {fileID: 7788961182222442091, guid: c2ec80757c23d484499ea01eab15bddc, type: 3}
+      propertyPath: 'knifePatterns.Array.data[1]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 77b40cc60159c6041a99e299d21c35f3, type: 2}
+    - target: {fileID: 7788961182222442091, guid: c2ec80757c23d484499ea01eab15bddc, type: 3}
+      propertyPath: 'knifePatterns.Array.data[2]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 66cf11e803150224c9bd937344dc43dc, type: 2}
     - target: {fileID: 7788961182222442091, guid: c2ec80757c23d484499ea01eab15bddc, type: 3}
       propertyPath: phase2.croissantVolleyPause
       value: 0.5

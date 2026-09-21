@@ -108,6 +108,7 @@ GameObject:
   - component: {fileID: 2492847535121490606}
   - component: {fileID: 9056498895987517654}
   - component: {fileID: 7585961510317227088}
+  - component: {fileID: 3846074695851464617}
   m_Layer: 7
   m_Name: chef-puffs-boss
   m_TagString: Untagged
@@ -212,6 +213,7 @@ MonoBehaviour:
   health: {fileID: 0}
   healthBar: {fileID: 0}
   animator: {fileID: 0}
+  visualsRoot: {fileID: 0}
   idleStateName: IdleBlend
   angryTrigger: Angry
   animSpeedParameter: AnimSpeed
@@ -243,6 +245,21 @@ MonoBehaviour:
     finalRollPause: 0.7
     finalRollSpeed: 11
     dazeDuration: 3
+    croissantVolleys: 1
+    croissantWindup: 0.7
+    croissantShots: 0
+    croissantShotInterval: 0
+    croissantVolleyPause: 0
+    croissantBulletsPerShot: 0
+    croissantSpread: 10
+    croissantBulletSpeedMultiplier: 1
+    croissantAimTurnRate: 0
+    knifeThrows: 3
+    knifeReloadTime: 0.6
+    knifeThrowPause: 0.5
+    knifeSpeedMultiplier: 1
+    knifeCountMultiplier: 1
+    knifeHangMultiplier: 1
   phase2:
     rollWeight: 1
     croissantWeight: 1
@@ -257,6 +274,21 @@ MonoBehaviour:
     finalRollPause: 0.45
     finalRollSpeed: 13.5
     dazeDuration: 2.4
+    croissantVolleys: 2
+    croissantWindup: 0.5
+    croissantShots: 14
+    croissantShotInterval: 0.16
+    croissantVolleyPause: 0.6
+    croissantBulletsPerShot: 0
+    croissantSpread: 10
+    croissantBulletSpeedMultiplier: 1.15
+    croissantAimTurnRate: 0
+    knifeThrows: 4
+    knifeReloadTime: 0.4
+    knifeThrowPause: 0.3
+    knifeSpeedMultiplier: 1.2
+    knifeCountMultiplier: 1.35
+    knifeHangMultiplier: 0.7
   counterPoint: {fileID: 0}
   arenaPoint: {fileID: 0}
   summonEventTimeout: 3
@@ -269,6 +301,9 @@ MonoBehaviour:
   bounceSteerLock: 0.3
   rollBrakeTime: 0.35
   windupEventTimeout: 3
+  chargeShakeStart: 0.02
+  chargeShakeEnd: 0.08
+  chargeShakeInterval: 0.03
   finalRollRamp: 0.2
   finalRollTimeout: 2.5
   impactFallbackSpeed: 4
@@ -289,6 +324,20 @@ MonoBehaviour:
   impactVolume: 1
   getUpClip: {fileID: 0}
   getUpVolume: 0.8
+  croissantCannon: {fileID: 0}
+  shootSpots: []
+  shootSpotMinPlayerDistance: 2.5
+  shootSpotMinMoveDistance: 1.5
+  croissantWeaponShowDelay: 0.2
+  croissantWindupClip: {fileID: 0}
+  croissantWindupVolume: 1
+  croissantWindupPulses: 2
+  knifeWeapons: []
+  knifePatterns: []
+  knifeRepeatSameShape: 0
+  knifeReloadClip: {fileID: 0}
+  knifeReloadVolume: 1
+  knifeThrowShake: 0.3
   stubAttackDuration: 1.5
 --- !u!114 &8169478559265794274
 MonoBehaviour:
@@ -321,6 +370,9 @@ MonoBehaviour:
   sporeDropCooldown: 0.5
   hurtClip: {fileID: 8300000, guid: 3ef1eef1e125ae04ca5e0053211ce2c1, type: 3}
   hurtVolume: 0.8
+  deflectClip: {fileID: 0}
+  deflectVolume: 1
+  deflectCooldown: 0.08
 --- !u!114 &2492847535121490606
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -372,6 +424,19 @@ MonoBehaviour:
   pickupVolume: 0
   emptyClip: {fileID: 0}
   emptyVolume: 0
+--- !u!114 &3846074695851464617
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 988082134135583188}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8074bebd8454fd4c9fa6edb7eb044bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BossPatternShooter
+  origin: {fileID: 0}
 --- !u!1 &1474284981994161219
 GameObject:
   m_ObjectHideFlags: 0

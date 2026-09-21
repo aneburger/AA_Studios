@@ -1,6 +1,4 @@
-// Reusable boss "brain". Runs the fight loop, tracks it so it can be cancelled cleanly, handles the
-// queued phase transition (effects, hit-stop, angry beat) and cleanup of hazards/minions.
-// A specific boss (e.g. ChefPuffsBoss) extends this and supplies the attacks and the director rules.
+// Reusable boss "brain".
 
 using System.Collections;
 using System.Collections.Generic;
@@ -13,15 +11,12 @@ public abstract class BossBrain : MonoBehaviour
     [SerializeField] protected BossRoomController room;
     [SerializeField] protected BossHealth health;
     [SerializeField] protected BossHealthBarUI healthBar;
-    [Tooltip("Leave empty to find it on a child.")]
     [SerializeField] protected Animator animator;
-    [Tooltip("The object shaken during charge-ups (the sprite side, not the physics body). Leave empty to use the Animator's object.")]
     [SerializeField] protected Transform visualsRoot;
 
     [Header("Animator Names")]
     [SerializeField] protected string idleStateName = "IdleBlend";
     [SerializeField] protected string angryTrigger = "Angry";
-    [Tooltip("Optional float parameter used as the speed multiplier on states (phase 2 speeds animations up).")]
     [SerializeField] protected string animSpeedParameter = "AnimSpeed";
 
     [Header("Fight")]
@@ -29,13 +24,11 @@ public abstract class BossBrain : MonoBehaviour
     [SerializeField] protected bool facePlayer = true;
 
     [Header("Phase Transition")]
-    [Tooltip("Delay after the Angry animation starts until the roar lands (shake, flash, sound).")]
     [SerializeField] private float transitionEffectDelay = 0.35f;
     [SerializeField] private float transitionShake = 0.9f;
     [SerializeField] private Color transitionFlashColor = Color.white;
     [Range(0f, 1f)] [SerializeField] private float transitionFlashAlpha = 0.6f;
     [SerializeField] private float transitionFlashDuration = 0.35f;
-    [Tooltip("Real-time freeze on the roar. 0 disables it.")]
     [SerializeField] private float hitStopDuration = 0.07f;
     [SerializeField] private AudioClip transitionClip;
     [Range(0f, 1f)] [SerializeField] private float transitionVolume = 1f;
@@ -121,7 +114,7 @@ public abstract class BossBrain : MonoBehaviour
         RestoreTimeScale();
     }
 
-    // -- UPDATE -- (face the player while idle; attacks turn this off when they need to)
+    // -- UPDATE --
     private void Update()
     {
         if (!facePlayer || directionalAnimator == null) return;
@@ -183,8 +176,6 @@ public abstract class BossBrain : MonoBehaviour
     {
         if (!fightActive || phase >= LastPhase || transitionQueued) return;
 
-        // Don't cut anything off. The loop finishes the current attack, runs a counter phase,
-        // and plays the transition as he comes back out.
         transitionQueued = true;
         Log("Phase threshold crossed: transition queued.");
     }
@@ -258,7 +249,12 @@ public abstract class BossBrain : MonoBehaviour
     // ==================== HAZARDS / MINIONS ====================
     public void RegisterHazard(GameObject hazard)
     {
-        if (hazard != null) hazards.Add(hazard);
+        if (hazard == null) return;
+
+        // Knives destroy themselves on impact, so drop dead references now and then
+        if (hazards.Count > 256) hazards.RemoveAll(h => h == null);
+
+        hazards.Add(hazard);
     }
 
     public void RegisterMinion(GameObject minion)
@@ -337,15 +333,12 @@ public abstract class BossBrain : MonoBehaviour
         }
     }
 
-    // After setting a trigger whose state returns to idle by itself (Spawn, Summon, Angry, GetUp).
-    // The one-frame wait lets the trigger take effect first. Scales automatically with AnimSpeed.
     protected IEnumerator WaitForReturnToIdle(float timeout = 4f)
     {
         yield return null;
         yield return WaitUntilIdle(timeout);
     }
 
-    // After setting a trigger whose state holds its last frame (Despawn, Die).
     protected IEnumerator WaitForStateFinished(float timeout = 4f)
     {
         if (animator == null) yield break;
@@ -366,8 +359,6 @@ public abstract class BossBrain : MonoBehaviour
     }
 
     // ==================== VISUAL EFFECTS ====================
-    // Vibrates the visuals (not the physics body or hitbox) for `duration` seconds, ramping the amplitude
-    // from start to end. Mostly horizontal, jittering every `interval` seconds like a charging tremble.
     protected IEnumerator VibrateVisuals(float duration, float startAmplitude, float endAmplitude, float interval)
     {
         Transform target = visualsRoot != null ? visualsRoot : (animator != null ? animator.transform : null);
