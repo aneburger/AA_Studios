@@ -19635,12 +19635,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: HUD
       objectReference: {fileID: 0}
-    - target: {fileID: 7253058207320896486, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
-      propertyPath: m_IsActive
-      value: 0
     - target: {fileID: 7115363292743406181, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
       propertyPath: startFloor
       value: Floor_06
+      objectReference: {fileID: 0}
+    - target: {fileID: 7253058207320896486, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
