@@ -11,7 +11,8 @@ public class QuitConfirmManager : MonoBehaviour
     {
         MainMenuQuit,
         PauseMenuMainMenu,
-        PauseMenuQuit
+        PauseMenuQuit,
+        DeathScreenMainMenu
     }
 
     [Header("Panel")]
@@ -19,6 +20,7 @@ public class QuitConfirmManager : MonoBehaviour
 
     [Header("Owning Panels")]
     [SerializeField] private GameObject pauseMenuPanel;
+    [SerializeField] private GameObject deathScreenPanel;
     //[SerializeField] private GameObject mainMenuPanel;
 
     [Header("Buttons")]
@@ -46,6 +48,7 @@ public class QuitConfirmManager : MonoBehaviour
     [Header("Menu References")]
     [SerializeField] private MenuManager menuManager;
     [SerializeField] private PauseMenuManager pauseMenuManager;
+    [SerializeField] private DeathScreenManager deathScreenManager;
     public bool IsOpen => quitConfirmPanel != null && quitConfirmPanel.activeSelf;
 
     private Button[] buttons;
@@ -160,6 +163,11 @@ public class QuitConfirmManager : MonoBehaviour
                 if (pauseMenuPanel != null)
                     pauseMenuPanel.SetActive(false);
                 break;
+
+            case QuitConfirmSource.DeathScreenMainMenu:
+                if (deathScreenPanel != null)
+                    deathScreenPanel.SetActive(false);
+                break;
         }
     }
 
@@ -221,6 +229,10 @@ public class QuitConfirmManager : MonoBehaviour
             case QuitConfirmSource.PauseMenuQuit:
                 QuitGame();
                 break;
+
+            case QuitConfirmSource.DeathScreenMainMenu:
+                LevelLoader.Instance?.ReturnToMainMenu();
+                break;
         }
     }
 
@@ -243,6 +255,10 @@ public class QuitConfirmManager : MonoBehaviour
             case QuitConfirmSource.PauseMenuMainMenu:
             case QuitConfirmSource.PauseMenuQuit:
                 pauseMenuManager?.RestoreAfterQuitConfirm(currentSource);
+                break;
+
+            case QuitConfirmSource.DeathScreenMainMenu:
+                deathScreenManager?.RestoreAfterQuitConfirm();
                 break;
         }
     }

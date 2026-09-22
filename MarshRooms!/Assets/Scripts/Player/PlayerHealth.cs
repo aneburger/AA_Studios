@@ -2,6 +2,7 @@
 
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
@@ -36,6 +37,10 @@ public class PlayerHealth : BaseHealth
 
     private float bonusIFrameDuration = 0f;
     private float dodgeDamageChance = 0f;
+
+    // Name shown on the death screen. Defaults to "Unknown" in case the player
+    // dies from something that never calls SetLastAttacker (e.g. a hazard).
+    private string lastAttackerName = "Unknown";
 
     public static event System.Action OnPlayerDeath;
 
@@ -88,6 +93,16 @@ public class PlayerHealth : BaseHealth
     public void SetDodgeDamageChance(float chance)
     {
         dodgeDamageChance = chance;
+    }
+
+    // -- SET LAST ATTACKER --
+    // Call this from wherever enemy contact/projectile damage is applied to the
+    // player (e.g. an EnemyData-driven contact damage script), right before or
+    // alongside the TakeDamage call, so the death screen can show who killed you.
+    public void SetLastAttacker(string attackerName)
+    {
+        if (!string.IsNullOrEmpty(attackerName))
+            lastAttackerName = attackerName;
     }
 
     // -- INCREASE MAX HEALTH --
@@ -317,16 +332,32 @@ public class PlayerHealth : BaseHealth
     {
         SetLowHealthState(false);
 
+        RunStatsTracker.Instance?.RegisterDeath();
+        RunStatsTracker.Instance?.PauseTimer();
+
         yield return new WaitForSeconds(2.5f);
 
         bool fadeComplete = false;
         ScreenEffects.Instance?.FadeToBlack(1f, () => fadeComplete = true);
         yield return new WaitUntil(() => fadeComplete);
 
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(0.5f);
 
-        LevelLoader.Instance.ReloadCurrentLevel();
+        DeathScreenManager.Instance?.Show(BuildDeathScreenStats());
 
+        // Retry / Main Menu are now handled by DeathScreenManager. When Retry is
+        // pressed it calls LevelLoader.ReloadCurrentLevel() and then
+        // RestoreAfterRetry() below on this same PlayerHealth instance - the
+        // player object lives outside the floor scene (LevelLoader.ReturnToMainMenu
+        // has to explicitly Destroy it), so it survives a level reload and this
+        // is safe to call right away without waiting for the reload to finish,
+        // same as the original code did.
+    }
+
+    // -- RESTORE AFTER RETRY --
+    // Called by DeathScreenManager once the player presses "Retry".
+    public void RestoreAfterRetry()
+    {
         GetComponent<PlayerInput>().enabled = true;
         GetComponent<PlayerWeaponSlot>()?.ResetToDefaultWeapon();
         shooter.HideWeapon(false);
@@ -335,8 +366,45 @@ public class PlayerHealth : BaseHealth
         LevelLoader.Instance?.SaveCurrentLevel();
 
         ResetHealth();
-        
-        StartCoroutine(RespawnInvincibility()); 
+
+        StartCoroutine(RespawnInvincibility());
+    }
+
+    // -- BUILD DEATH SCREEN STATS --
+    private DeathScreenStats BuildDeathScreenStats()
+    {
+        PlayerWeaponSlot weaponSlot = GetComponent<PlayerWeaponSlot>();
+        Sprite[] lostWeapons = new Sprite[2];
+
+        if (weaponSlot != null)
+        {
+            for (int i = 1; i <= 2; i++)
+            {
+                WeaponData weapon = weaponSlot.GetWeaponAtSlot(i);
+                lostWeapons[i - 1] = weapon != null ? weapon.hudSprite : null;
+            }
+        }
+
+        List<Sprite> cardSprites = new List<Sprite>();
+        if (RunStatsTracker.Instance != null)
+        {
+            foreach (BoonCardData card in RunStatsTracker.Instance.CollectedCards)
+            {
+                if (card == null) continue;
+                cardSprites.Add(card.icon);
+            }
+        }
+
+        return new DeathScreenStats
+        {
+            deathCount = RunStatsTracker.Instance != null ? RunStatsTracker.Instance.DeathCount : 0,
+            killerEnemyName = lastAttackerName,
+            floorName = LevelLoader.Instance != null ? LevelLoader.Instance.GetCurrentFloorDisplayName() : "",
+            timePlayedSeconds = RunStatsTracker.Instance != null ? RunStatsTracker.Instance.ElapsedPlayTime : 0f,
+            killCount = RunStatsTracker.Instance != null ? RunStatsTracker.Instance.KillCount : 0,
+            lostWeaponSprites = lostWeapons,
+            collectedCardSprites = cardSprites.ToArray()
+        };
     }
 
     // -- ON DISABLE --
