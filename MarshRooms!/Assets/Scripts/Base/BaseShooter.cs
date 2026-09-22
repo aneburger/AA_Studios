@@ -241,7 +241,7 @@ public abstract class BaseShooter : MonoBehaviour
             if (Random.value <= critChance)
                 rolledDamage *= 2f;
 
-            GameObject bullet = Instantiate(currentWeapon.bulletPrefab, spawnPosition, Quaternion.identity);
+            GameObject bullet = Instantiate(currentWeapon.GetBulletPrefab(), spawnPosition, Quaternion.identity);
             BaseBullet b = bullet.GetComponent<BaseBullet>();
             b.SetDirection(spreadDirection);
             b.SetAimOrigin(firePoint.position);

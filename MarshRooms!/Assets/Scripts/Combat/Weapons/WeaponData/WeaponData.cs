@@ -15,6 +15,7 @@ public class WeaponData : ScriptableObject
 
     [Header("Prefabs")]
     public GameObject bulletPrefab;
+    public GameObject[] bulletVariants;
     public GameObject shellsPrefab;
     public GameObject hitPrefab;
     public GameObject muzzleFlashPrefab;
@@ -49,7 +50,7 @@ public class WeaponData : ScriptableObject
     public AudioClip[] shootClips;
     [Range(0f, 1f)] public float shootVolume;
     public AudioClip wallHitClip;
-    [Range(0f, 1f)] public float wallHitVolume = 0.7f;
+    [Range(0f, 1f)] public float wallHitVolume;
 
     [Header("Feel")]
     public float shakeForce;
@@ -57,4 +58,17 @@ public class WeaponData : ScriptableObject
     public float hitKnockback;
     public float recoilAmount;
     public float recoilDecay;
+
+    // -- GET BULLET PREFAB --
+    public GameObject GetBulletPrefab()
+    {
+        if (bulletVariants != null && bulletVariants.Length > 0)
+        {
+            GameObject pick = bulletVariants[Random.Range(0, bulletVariants.Length)];
+            if (pick != null) return pick;
+        }
+
+        return bulletPrefab;
+    }
 }
+

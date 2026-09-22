@@ -24,11 +24,22 @@ public class ChefPhaseSettings
     [Tooltip("Value for the animator's AnimSpeed parameter.")]
     public float animSpeed = 1f;
 
-    [Header("Counter Phase (placeholder timings)")]
-    [Tooltip("How long the summoning charge-up loops before the summon.")]
+    [Header("Counter Phase")]
+    [Tooltip("How long the summoning charge-up loops before each action (enemy wave or spike batch).")]
     public float summonChargeTime = 1.2f;
-    [Tooltip("Stub: how long he stays behind the counter. Step 6 replaces this with the real wave logic.")]
-    public float counterHoldTime = 3f;
+    public int counterActionsMin = 2;
+    public int counterActionsMax = 3;
+    public float counterActionPause = 0.4f;
+
+    public int spikeCountMin = 4;
+    public int spikeCountMax = 6;
+    public float spikeWarningTime = 0.6f;
+    public int spikeRoundsMin = 1;
+    public int spikeRoundsMax = 1;
+    public float spikeRoundInterval = 0.5f;
+
+    public int enemyCountMin = 2;
+    public int enemyCountMax = 3;
 
     [Header("Roll")]
     [Tooltip("How long the bouncing chase roll lasts before he brakes for the final roll.")]
@@ -110,7 +121,18 @@ public class ChefPuffsBoss : BossBrain
         knifeThrowPause = 0.3f,
         knifeSpeedMultiplier = 1.2f,
         knifeCountMultiplier = 1.35f,
-        knifeHangMultiplier = 0.7f
+        knifeHangMultiplier = 0.7f,
+        counterActionsMin = 3,
+        counterActionsMax = 4,
+        counterActionPause = 0.25f,
+        spikeCountMin = 6,
+        spikeCountMax = 9,
+        spikeWarningTime = 0.45f,
+        spikeRoundsMin = 2,
+        spikeRoundsMax = 3,
+        spikeRoundInterval = 0.35f,
+        enemyCountMin = 3,
+        enemyCountMax = 4
     };
 
     [Header("Counter Phase")]
@@ -192,6 +214,24 @@ public class ChefPuffsBoss : BossBrain
     [Range(0f, 1f)] [SerializeField] private float knifeReloadVolume = 1f;
     [SerializeField] private float knifeThrowShake = 0.3f;
 
+    [Header("Counter Phase: Enemies")]
+    [SerializeField] private BossMinionSpawner minionSpawner;
+    [SerializeField] private GameObject minionPrefab;
+    [SerializeField] private Transform[] enemySpawnPoints;
+    [Range(0f, 1f)] [SerializeField] private float weaponGuaranteeChance = 0.7f;
+    [Range(0f, 1f)] [SerializeField] private float healthGuaranteeChance = 0.4f;
+    [SerializeField] private float enemySpawnIntervalMin = 0.15f;
+    [SerializeField] private float enemySpawnIntervalMax = 0.4f;
+
+    [Header("Counter Phase: Spikes")]
+    [SerializeField] private BossSpikeSpawner spikeSpawner;
+
+    [Header("Spawn / Despawn Audio")]
+    [SerializeField] private AudioClip despawnClip;
+    [Range(0f, 1f)] [SerializeField] private float despawnVolume = 1f;
+    [SerializeField] private AudioClip spawnClip;
+    [Range(0f, 1f)] [SerializeField] private float spawnVolume = 1f;
+
     [Header("Fallback (used when an attack is missing its setup)")]
     [SerializeField] private float stubAttackDuration = 1.5f;
 
@@ -203,6 +243,9 @@ public class ChefPuffsBoss : BossBrain
     private int attacksBeforeCounter;
     private int attacksSinceCounter;
     private bool summonActionFired;
+
+    private enum CounterAction { Enemies, Spikes }
+    private CounterAction? lastCounterAction;
 
     private Rigidbody2D body;
     private BossRollMover rollMover;
@@ -227,6 +270,27 @@ public class ChefPuffsBoss : BossBrain
     private Vector2 lastBumpNormal = Vector2.up;
     private Vector2 lockedRollDirection;
     private AudioSource rollLoopSource;
+    private bool rollLoopPausedByUs;
+
+    // AudioSources keep playing in real time regardless of Time.timeScale, so without this the roll
+    // loop sound would keep looping while the game is paused.
+    private void Update()
+    {
+        if (rollLoopSource == null) return;
+
+        bool shouldPause = Time.timeScale <= 0f;
+
+        if (shouldPause && !rollLoopPausedByUs)
+        {
+            rollLoopSource.Pause();
+            rollLoopPausedByUs = true;
+        }
+        else if (!shouldPause && rollLoopPausedByUs)
+        {
+            rollLoopSource.UnPause();
+            rollLoopPausedByUs = false;
+        }
+    }
 
     // -- AWAKE --
     protected override void Awake()
@@ -252,6 +316,8 @@ public class ChefPuffsBoss : BossBrain
 
         if (rollMover != null) rollMover.Bumped += HandleBumped;
         if (patternShooter != null) patternShooter.BulletSpawned += RegisterHazard;
+        if (spikeSpawner != null) spikeSpawner.SpikeSpawned += RegisterHazard;
+        if (minionSpawner != null) minionSpawner.MinionSpawned += RegisterMinion;
     }
 
     protected override void OnDisable()
@@ -266,6 +332,8 @@ public class ChefPuffsBoss : BossBrain
 
         if (rollMover != null) rollMover.Bumped -= HandleBumped;
         if (patternShooter != null) patternShooter.BulletSpawned -= RegisterHazard;
+        if (spikeSpawner != null) spikeSpawner.SpikeSpawned -= RegisterHazard;
+        if (minionSpawner != null) minionSpawner.MinionSpawned -= RegisterMinion;
         StopRollLoopSound();
     }
 
@@ -299,11 +367,27 @@ public class ChefPuffsBoss : BossBrain
         VFXManager.Instance?.SpawnWalkDust(transform.position);
     }
 
+    // Sounds that go with the Spawn / Despawn animations, wherever they're triggered from
+    protected override void OnAnimTrigger(string triggerName)
+    {
+        if (triggerName == TrigDespawn)
+            AudioManager.Instance?.PlaySFXWithPitch(despawnClip, despawnVolume, 0.1f);
+        else if (triggerName == TrigSpawn)
+            AudioManager.Instance?.PlaySFXWithPitch(spawnClip, spawnVolume, 0.1f);
+    }
+
     // -- PHASE --
     protected override void ApplyPhase(int newPhase)
     {
         SetAnimSpeed(CurrentSettings.animSpeed);
         Log($"Phase {newPhase} settings applied (animSpeed {CurrentSettings.animSpeed}).");
+    }
+
+    // Minions cleared by a phase transition or a cancelled fight must unregister from EnemyManager
+    // themselves, since Destroy() alone skips EnemyHealth.Die() (which is what normally does that).
+    protected override void OnMinionCleared(GameObject minion)
+    {
+        EnemyManager.Instance?.UnregisterEnemy(minion);
     }
 
     protected override void OnFightCancelled()
@@ -334,6 +418,7 @@ public class ChefPuffsBoss : BossBrain
         yield return new WaitForSeconds(openingDelay);
 
         SetIdleContact();
+        minionSpawner?.ResetGuarantees();
         attacksBeforeCounter = RollAttacksBeforeCounter();
         attacksSinceCounter = 0;
         lastAttack = null;
@@ -341,16 +426,12 @@ public class ChefPuffsBoss : BossBrain
 
         while (true)
         {
-            // A queued phase transition always goes through a counter phase first
-            if (transitionQueued || attacksSinceCounter >= attacksBeforeCounter)
+            if (attacksSinceCounter >= attacksBeforeCounter)
             {
                 yield return CounterPhase();
 
                 attacksSinceCounter = 0;
                 attacksBeforeCounter = RollAttacksBeforeCounter();
-
-                if (transitionQueued)
-                    yield return PlayPhaseTransition();
 
                 nextAttack = PickNextAttack();
                 yield return Downtime();
@@ -416,8 +497,7 @@ public class ChefPuffsBoss : BossBrain
         float wait = Random.Range(CurrentSettings.downtimeMin, CurrentSettings.downtimeMax);
         float t = 0f;
 
-        // A queued transition skips the rest of the downtime
-        while (t < wait && !transitionQueued)
+        while (t < wait)
         {
             t += Time.deltaTime;
             yield return null;
@@ -653,6 +733,7 @@ public class ChefPuffsBoss : BossBrain
     private void StopRollLoopSound()
     {
         AudioManager.Instance?.StopLoopingSFX(ref rollLoopSource);
+        rollLoopPausedByUs = false;
     }
 
     private void SetIdleContact()
@@ -690,7 +771,7 @@ public class ChefPuffsBoss : BossBrain
         ApplyCroissantSettings(s);
 
         // 1. Vanish and reappear somewhere else, cannon in hand
-        yield return RepositionWithCannon();
+        yield return Reposition(true);
 
         // 2. Windup + stream, once per volley
         int volleys = Mathf.Max(1, s.croissantVolleys);
@@ -727,7 +808,7 @@ public class ChefPuffsBoss : BossBrain
     }
 
     // Spawn protection while he vanishes and reappears, so he can't be hit mid-teleport
-    private IEnumerator RepositionWithCannon()
+    private IEnumerator Reposition(bool cannonInHand)
     {
         health.SetInvulnerable(BossHealth.ReasonHidden, true);
         DisableContact();
@@ -739,13 +820,19 @@ public class ChefPuffsBoss : BossBrain
 
         TeleportTo(PickShootSpot());
 
-        // Point the cannon at Marsh before it appears so it doesn't swing round
+        // Point the weapon at Marsh before he appears so it doesn't swing round
         currentAim = AimTarget();
         if (weaponAimer != null) weaponAimer.SetAimDirection(currentAim);
 
         Trigger(TrigSpawn);
-        yield return new WaitForSeconds(croissantWeaponShowDelay);
-        shooter.HideWeapon(false);
+
+        // The cannon shows up mid-spawn. Knives aren't equipped until he's fully back.
+        if (cannonInHand)
+        {
+            yield return new WaitForSeconds(croissantWeaponShowDelay);
+            shooter.HideWeapon(false);
+        }
+
         yield return WaitForReturnToIdle();
 
         SetIdleContact();
@@ -927,6 +1014,9 @@ public class ChefPuffsBoss : BossBrain
         SetIdleContact();
         shooter.HideWeapon(true);
 
+        // Vanish and reappear at a preset spot first. The first knife only appears once he's fully back.
+        yield return Reposition(false);
+
         // Only used when Knife Repeat Same Shape is ticked
         KnifePatternData fixedPattern = knifeRepeatSameShape
             ? knifePatterns[PickDifferentIndex(knifePatterns.Length, ref lastPatternIndex)]
@@ -954,7 +1044,7 @@ public class ChefPuffsBoss : BossBrain
 
             if (pattern == null) continue;
 
-            patternShooter.Throw(knife, pattern, AimTarget(),
+            patternShooter.Throw(knife, pattern, AimTarget,
                 s.knifeSpeedMultiplier, s.knifeCountMultiplier, s.knifeHangMultiplier, OnKnivesThrown);
 
             yield return new WaitForSeconds(s.knifeThrowPause);
@@ -986,6 +1076,8 @@ public class ChefPuffsBoss : BossBrain
     // Uses the real Despawn / Spawn / SummonCharge / Summon animations; the summon itself is a stub.
     private IEnumerator CounterPhase()
     {
+        ChefPhaseSettings s = CurrentSettings;
+
         currentActionName = "Counter phase";
         Log("Counter phase: start.");
 
@@ -1004,18 +1096,31 @@ public class ChefPuffsBoss : BossBrain
         Trigger(TrigSpawn);
         yield return WaitForReturnToIdle();
 
-        // Charge up, then summon on the animation event
-        Trigger(TrigSummonCharge);
-        yield return new WaitForSeconds(CurrentSettings.summonChargeTime);
+        // Alternating sequence of enemy waves and spike batches. Never the same kind twice in a row.
+        int actions = Random.Range(Mathf.Max(1, s.counterActionsMin), Mathf.Max(1, s.counterActionsMax) + 1);
+        lastCounterAction = null;
 
-        summonActionFired = false;
-        Trigger(TrigSummon);
-        yield return WaitForSummonAction();
-        Log("  [stub] Would summon minions + spikes here (steps 6 and 7)");
-        yield return WaitForReturnToIdle();
+        for (int i = 0; i < actions; i++)
+        {
+            CounterAction action = PickCounterAction();
 
-        // Placeholder for "wait while the player deals with the wave"
-        yield return new WaitForSeconds(CurrentSettings.counterHoldTime);
+            Trigger(TrigSummonCharge);
+            yield return new WaitForSeconds(s.summonChargeTime);
+
+            summonActionFired = false;
+            Trigger(TrigSummon);
+            yield return WaitForSummonAction();
+
+            if (action == CounterAction.Enemies)
+                yield return SpawnEnemyWave(s);
+            else
+                yield return SpawnSpikeBatch(s);
+
+            yield return WaitForReturnToIdle();
+
+            if (i < actions - 1)
+                yield return new WaitForSeconds(s.counterActionPause);
+        }
 
         // Come back out
         yield return WaitUntilIdle();
@@ -1026,12 +1131,65 @@ public class ChefPuffsBoss : BossBrain
         Trigger(TrigSpawn);
         yield return WaitForReturnToIdle();
 
-        // If the phase transition is next, hand straight over from Hidden to Transition with no gap
-        if (transitionQueued)
-            health.SetInvulnerable(BossHealth.ReasonTransition, true);
-
         health.SetInvulnerable(BossHealth.ReasonHidden, false);
         Log("Counter phase: end.");
+    }
+
+    // Alternates between enemies and spikes, never repeating. Falls back to whichever is set up
+    // if one option is missing (e.g. no spike prefabs assigned yet).
+    private CounterAction PickCounterAction()
+    {
+        bool enemiesReady = minionSpawner != null && minionPrefab != null && enemySpawnPoints != null && enemySpawnPoints.Length > 0;
+        bool spikesReady = spikeSpawner != null;
+
+        if (!enemiesReady && !spikesReady)
+        {
+            Debug.LogWarning($"[{name}] Neither enemy spawning nor spikes are set up. Skipping this counter phase action.", this);
+            return CounterAction.Spikes; // caller no-ops if spikeSpawner is null
+        }
+
+        if (!enemiesReady) return CounterAction.Spikes;
+        if (!spikesReady) return CounterAction.Enemies;
+
+        CounterAction pick = lastCounterAction == CounterAction.Enemies ? CounterAction.Spikes
+                            : lastCounterAction == CounterAction.Spikes ? CounterAction.Enemies
+                            : (Random.value < 0.5f ? CounterAction.Enemies : CounterAction.Spikes);
+
+        lastCounterAction = pick;
+        return pick;
+    }
+
+    private IEnumerator SpawnEnemyWave(ChefPhaseSettings s)
+    {
+        if (minionSpawner == null || minionPrefab == null || enemySpawnPoints == null || enemySpawnPoints.Length == 0)
+        {
+            Log("  (enemy spawning not set up, skipping)");
+            yield break;
+        }
+
+        int count = Random.Range(Mathf.Max(1, s.enemyCountMin), Mathf.Max(1, s.enemyCountMax) + 1);
+        Log($"  Spawning {count} enem{(count == 1 ? "y" : "ies")}.");
+
+        yield return minionSpawner.SpawnWave(minionPrefab, count, enemySpawnPoints,
+            weaponGuaranteeChance, healthGuaranteeChance, enemySpawnIntervalMin, enemySpawnIntervalMax);
+    }
+
+    private IEnumerator SpawnSpikeBatch(ChefPhaseSettings s)
+    {
+        if (spikeSpawner == null || player == null)
+        {
+            Log("  (spikes not set up, skipping)");
+            yield break;
+        }
+
+        int count = Random.Range(Mathf.Max(1, s.spikeCountMin), Mathf.Max(1, s.spikeCountMax) + 1);
+        int rounds = Random.Range(Mathf.Max(1, s.spikeRoundsMin), Mathf.Max(1, s.spikeRoundsMax) + 1);
+        Log($"  Spawning {count} spike(s) x{rounds} round(s).");
+
+        yield return spikeSpawner.SpawnRounds(count, rounds, s.spikeWarningTime, s.spikeRoundInterval, player);
+
+        // Don't move on until every spike from this action has actually finished playing out
+        yield return spikeSpawner.WaitForAllSpikesFinished();
     }
 
     private IEnumerator WaitForSummonAction()
@@ -1064,6 +1222,6 @@ public class ChefPuffsBoss : BossBrain
     {
         return $"Phase {phase} | Now: {currentActionName} | Next: {nextAttack} | " +
                $"Attacks since counter: {attacksSinceCounter}/{attacksBeforeCounter}" +
-               (transitionQueued ? " | TRANSITION QUEUED" : "");
+               (transitionActive ? " | TRANSITION" : "");
     }
 }

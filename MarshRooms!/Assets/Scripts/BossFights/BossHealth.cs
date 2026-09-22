@@ -1,5 +1,4 @@
-// Boss health. Extends BaseHealth directly (NOT EnemyHealth, which destroys the object and drops loot).
-// The boss must NOT have a BaseMover/EnemyMover, otherwise player bullets will knock him back.
+// Boss health. Extends BaseHealth directly
 
 using System;
 using System.Collections.Generic;
@@ -8,8 +7,6 @@ using Random = UnityEngine.Random;
 
 public class BossHealth : BaseHealth
 {
-    // Invulnerability is tracked by reason so overlapping windows (e.g. hidden + phase transition)
-    // can't accidentally clear each other.
     public const string ReasonIntro = "Intro";
     public const string ReasonHidden = "Hidden";
     public const string ReasonTransition = "Transition";
@@ -18,24 +15,21 @@ public class BossHealth : BaseHealth
 
     [Header("Phases")]
     [Range(0.05f, 0.95f)] [SerializeField] private float phaseTwoThreshold = 0.4f;
-    [Tooltip("Health can't drop below 1 until phase two has actually started, so a big hit can't skip the counter phase and the transition.")]
     [SerializeField] private bool protectUntilPhaseTwo = true;
+    [SerializeField] private bool phaseBars = true;
 
     [Header("Start State")]
-    [Tooltip("Boss can't be hurt until the intro finishes (stops shots from the hallway).")]
     [SerializeField] private bool startInvulnerable = true;
 
     [Header("Hit Reaction")]
-    [Tooltip("Minimum time between hurt animations, so rapid fire can't lock him in the flinch.")]
     [SerializeField] private float flinchCooldown = 0.4f;
 
-    [Header("Spore Drops (on hit)")]
+    [Header("Spore Drops")]
     [SerializeField] private GameObject sporePrefab;
     [Range(0f, 1f)] [SerializeField] private float sporeDropChance = 0.12f;
     [SerializeField] private int minSporesPerDrop = 1;
     [SerializeField] private int maxSporesPerDrop = 1;
     [SerializeField] private float sporeScatterRadius = 1f;
-    [Tooltip("Minimum time between drops, so fast weapons can't flood the floor.")]
     [SerializeField] private float sporeDropCooldown = 0.5f;
 
     [Header("Audio")]
@@ -43,15 +37,13 @@ public class BossHealth : BaseHealth
     [Range(0f, 1f)] [SerializeField] private float hurtVolume = 1f;
 
     [Header("Invulnerable Feedback")]
-    [Tooltip("Played when a hit lands while he's invulnerable, so it's clear the shot did nothing.")]
     [SerializeField] private AudioClip deflectClip;
     [Range(0f, 1f)] [SerializeField] private float deflectVolume = 1f;
-    [Tooltip("Minimum time between deflect sounds, so rapid fire can't spam it.")]
     [SerializeField] private float deflectCooldown = 0.08f;
 
-    public event Action<float, float> OnHealthChanged;   // current, max
-    public event Action OnTookDamage;                     // same name as EnemyHealth's
-    public event Action OnPhaseTwoThreshold;              // fires once
+    public event Action<float, float> OnHealthChanged;
+    public event Action OnTookDamage; 
+    public event Action OnPhaseTwoThreshold;
     public event Action OnDied;
 
     private readonly HashSet<string> invulnerableReasons = new HashSet<string>();
@@ -66,6 +58,24 @@ public class BossHealth : BaseHealth
     public bool PhaseTwoTriggered => phaseTwoTriggered;
     public bool PhaseTwoStarted => phaseTwoStarted;
     public float HealthFraction => maxHealth > 0f ? Mathf.Clamp01(currentHealth / maxHealth) : 0f;
+    public float ThresholdHealth => maxHealth * phaseTwoThreshold;
+
+    public float PhaseFraction
+    {
+        get
+        {
+            if (!phaseBars) return HealthFraction;
+            if (maxHealth <= 0f) return 0f;
+
+            float threshold = ThresholdHealth;
+
+            if (phaseTwoStarted)
+                return threshold > 0f ? Mathf.Clamp01(currentHealth / threshold) : 0f;
+
+            float span = maxHealth - threshold;
+            return span > 0f ? Mathf.Clamp01((currentHealth - threshold) / span) : 0f;
+        }
+    }
 
     // -- AWAKE --
     protected override void Awake()
@@ -81,13 +91,13 @@ public class BossHealth : BaseHealth
         else invulnerableReasons.Remove(reason);
     }
 
-    // -- FLINCH -- (the brain turns this off during attacks so the hurt animation can't interrupt them)
+    // -- FLINCH --
     public void SetFlinchEnabled(bool value)
     {
         flinchEnabled = value;
     }
 
-    // -- PHASE TWO STARTED -- (called by the brain when the transition finishes; lifts the 1 HP floor)
+    // -- PHASE TWO STARTED --
     public void NotifyPhaseTwoStarted()
     {
         phaseTwoStarted = true;
@@ -98,26 +108,29 @@ public class BossHealth : BaseHealth
     {
         if (IsDead()) return;
 
-        // The bullet is still absorbed by the boss, but the player gets audio feedback that it did nothing
+        // The bullet is still absorbed by the boss,
         if (IsInvulnerable)
         {
             PlayDeflect();
             return;
         }
 
-        // Can't die before phase two has started, however hard the hit is
         if (protectUntilPhaseTwo && !phaseTwoStarted)
         {
-            amount = Mathf.Min(amount, currentHealth - 1f);
-            if (amount <= 0f) return;
+            amount = Mathf.Min(amount, currentHealth - ThresholdHealth);
+
+            if (amount <= 0f)
+            {
+                PlayDeflect();
+                return;
+            }
         }
 
-        // Hurt animation only if allowed right now and not on cooldown
         bool canFlinch = flinchEnabled && Time.time >= nextFlinchTime;
         SetSuppressHitAnimation(!canFlinch);
         if (canFlinch) nextFlinchTime = Time.time + flinchCooldown;
 
-        base.TakeDamage(amount);      // subtracts, hurt animation trigger, OnHitEffect, Die() if dead
+        base.TakeDamage(amount);
 
         VFXManager.Instance?.SpawnDamageNumber(amount * 10, GetTopPosition());
 
@@ -128,7 +141,7 @@ public class BossHealth : BaseHealth
         CheckPhaseThreshold();
     }
 
-    // -- HIT EFFECT -- (called by base after health is reduced, before Die)
+    // -- HIT EFFECT --
     protected override void OnHitEffect()
     {
         OnHealthChanged?.Invoke(currentHealth, maxHealth);
@@ -173,19 +186,17 @@ public class BossHealth : BaseHealth
     private void CheckPhaseThreshold()
     {
         if (phaseTwoTriggered) return;
-        if (HealthFraction > phaseTwoThreshold) return;
+        if (currentHealth > ThresholdHealth + 0.001f) return;
 
         phaseTwoTriggered = true;
-        Debug.Log($"[BossHealth] Phase threshold crossed at {HealthFraction:P0}.");
         OnPhaseTwoThreshold?.Invoke();
     }
 
-    // -- DIE -- (no Destroy: the boss plays his death animation and the outro takes over)
+    // -- DIE --
     protected override void Die()
     {
         SetInvulnerable(ReasonDeath, true);
         base.Die();
-        Debug.Log("[BossHealth] Boss died.");
         OnDied?.Invoke();
     }
 

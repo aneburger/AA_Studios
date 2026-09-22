@@ -51,7 +51,12 @@ namespace TopDown.Movement
         public bool IsDodging => isDodging;
         public bool CanMove => canMove;
 
-        private bool isInputLocked = false;
+        // Reference-counted: each SetInputLocked(true) call must be matched by a SetInputLocked(false)
+        // from the SAME caller. Whoever locks it last to unlock releases control - this stops one system
+        // (e.g. the pause menu) from prematurely restoring input that another system (e.g. the boss room
+        // intro) is still holding locked.
+        private int inputLockCount = 0;
+        private bool IsInputLocked => inputLockCount > 0;
         private bool preLockCanMove;
         private bool preLockCanDodge;
         private bool preLockCanShoot;
@@ -167,8 +172,8 @@ namespace TopDown.Movement
         {
             if (locked)
             {
-                if (isInputLocked) return;
-                isInputLocked = true;
+                inputLockCount++;
+                if (inputLockCount > 1) return;
 
                 preLockCanMove = canMove;
                 preLockCanDodge = canDodge;
@@ -184,9 +189,11 @@ namespace TopDown.Movement
             }
             else
             {
-                if (!isInputLocked) return;
+                if (inputLockCount <= 0) return;
+                inputLockCount--;
+                if (inputLockCount > 0) return;
+
                 if (canMove) moveInput = ReadHeldMoveInput();
-                isInputLocked = false;
 
                 SetCanMove(preLockCanMove);
                 canDodge = preLockCanDodge;
