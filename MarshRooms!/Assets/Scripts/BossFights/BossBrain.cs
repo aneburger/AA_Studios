@@ -1,4 +1,5 @@
 // Reusable boss "brain".
+// Runs the fight loop, tracks it so it can be cancelled cleanly, handles the phase transition
 
 using System.Collections;
 using System.Collections.Generic;
@@ -33,6 +34,9 @@ public abstract class BossBrain : MonoBehaviour
     [SerializeField] private AudioClip transitionClip;
     [Range(0f, 1f)] [SerializeField] private float transitionVolume = 1f;
 
+    [Header("Phase Two Look")]
+    [SerializeField] private float phaseRefillDuration = 1.5f;
+
     [Header("Debug")]
     [SerializeField] private bool debugLogging = true;
     [SerializeField] private bool showDebugOverlay = true;
@@ -43,9 +47,10 @@ public abstract class BossBrain : MonoBehaviour
 
     protected int phase = 1;
     protected bool fightActive;
-    protected bool transitionQueued;
+    protected bool transitionActive;
 
     private Coroutine fightRoutine;
+    private Coroutine transitionRoutine;
     private bool hitStopActive;
     private Transform vibrateTarget;
     private Vector3 vibrateHome;
@@ -75,9 +80,6 @@ public abstract class BossBrain : MonoBehaviour
             foreach (AnimatorControllerParameter p in animator.parameters)
                 animParameters.Add(p.name);
         }
-
-        if (room == null)
-            Debug.LogWarning($"[{name}] No BossRoomController assigned: the fight will never start.", this);
     }
 
     // -- ENABLE / DISABLE --
@@ -107,6 +109,7 @@ public abstract class BossBrain : MonoBehaviour
         PlayerHealth.OnPlayerDeath -= HandlePlayerDeath;
         RestoreTimeScale();
         StopVibrate();
+        StopPhaseTwoLook(0f);
     }
 
     private void OnDestroy()
@@ -144,15 +147,14 @@ public abstract class BossBrain : MonoBehaviour
         FindPlayer();
         fightActive = true;
         phase = 1;
-        transitionQueued = false;
+        transitionActive = false;
 
         ApplyPhase(phase);
         Log("Fight started.");
         fightRoutine = StartCoroutine(FightLoop());
     }
 
-    // Stops everything the boss is doing and runs cleanup. Used for player death and boss death.
-    protected void CancelFight()
+    protected void CancelFight(bool clearHazardsImmediately = true)
     {
         if (fightRoutine != null)
         {
@@ -160,13 +162,26 @@ public abstract class BossBrain : MonoBehaviour
             fightRoutine = null;
         }
 
+        if (transitionRoutine != null)
+        {
+            StopCoroutine(transitionRoutine);
+            transitionRoutine = null;
+        }
+
         fightActive = false;
-        transitionQueued = false;
+        transitionActive = false;
 
         RestoreTimeScale();
         StopVibrate();
+        StopPhaseTwoLook(0.4f);
         ResetAnimTriggers();
-        ClearHazards();
+
+        if (clearHazardsImmediately)
+        {
+            ClearHazards();
+            ClearMinions();
+        }
+
         OnFightCancelled();
 
         Log("Fight cancelled.");
@@ -174,10 +189,33 @@ public abstract class BossBrain : MonoBehaviour
 
     private void HandleThresholdCrossed()
     {
-        if (!fightActive || phase >= LastPhase || transitionQueued) return;
+        if (!fightActive || phase >= LastPhase || transitionActive) return;
 
-        transitionQueued = true;
-        Log("Phase threshold crossed: transition queued.");
+        transitionActive = true;
+
+        // Protect him this instant, before anything else runs
+        health.SetInvulnerable(BossHealth.ReasonTransition, true);
+
+        // Stop the fight loop and run the boss's cleanup
+        if (fightRoutine != null)
+        {
+            StopCoroutine(fightRoutine);
+            fightRoutine = null;
+        }
+
+        StopVibrate();
+        ResetAnimTriggers();
+        OnFightCancelled();
+
+        transitionRoutine = StartCoroutine(TransitionThenResume());
+    }
+
+    private IEnumerator TransitionThenResume()
+    {
+        yield return PlayPhaseTransition();
+
+        transitionRoutine = null;
+        fightRoutine = StartCoroutine(FightLoop());
     }
 
     private void HandleBossDied()
@@ -188,7 +226,7 @@ public abstract class BossBrain : MonoBehaviour
 
     private void HandlePlayerDeath()
     {
-        CancelFight();
+        CancelFight(clearHazardsImmediately: false);
     }
 
     // ==================== PHASE TRANSITION ====================
@@ -198,7 +236,6 @@ public abstract class BossBrain : MonoBehaviour
         health.SetInvulnerable(BossHealth.ReasonTransition, true);
         health.SetFlinchEnabled(false);
 
-        yield return WaitUntilIdle();
         Trigger(angryTrigger);
 
         yield return new WaitForSeconds(transitionEffectDelay);
@@ -215,16 +252,23 @@ public abstract class BossBrain : MonoBehaviour
 
         yield return WaitForReturnToIdle(5f);
 
+        health.NotifyPhaseTwoStarted();
+
+        if (healthBar != null)
+            yield return healthBar.PlayPhaseRefill(phaseRefillDuration);
+        else
+            yield return new WaitForSeconds(phaseRefillDuration);
+
         phase++;
         ApplyPhase(phase);
-        health.NotifyPhaseTwoStarted();
-        transitionQueued = false;
+        transitionActive = false;
         health.SetInvulnerable(BossHealth.ReasonTransition, false);
 
+        StartPhaseTwoLook();
         Log($"Phase {phase} started.");
     }
 
-    // Short real-time freeze. Guarded so it never fights the dialogue system or a pause.
+    // Short real-time freeze
     protected IEnumerator HitStop(float duration)
     {
         if (duration <= 0f || hitStopActive) yield break;
@@ -249,9 +293,7 @@ public abstract class BossBrain : MonoBehaviour
     // ==================== HAZARDS / MINIONS ====================
     public void RegisterHazard(GameObject hazard)
     {
-        if (hazard == null) return;
-
-        // Knives destroy themselves on impact, so drop dead references now and then
+        if (hazard == null) return; 
         if (hazards.Count > 256) hazards.RemoveAll(h => h == null);
 
         hazards.Add(hazard);
@@ -270,29 +312,30 @@ public abstract class BossBrain : MonoBehaviour
         hazards.Clear();
     }
 
-    // Placeholder: step 6 overrides this to unregister minions from EnemyManager and skip their drops.
     protected virtual void ClearMinions()
     {
         foreach (GameObject m in minions)
-            if (m != null) Destroy(m);
+        {
+            if (m == null) continue;
+            OnMinionCleared(m);
+            Destroy(m);
+        }
 
         minions.Clear();
     }
+
+    protected virtual void OnMinionCleared(GameObject minion) { }
 
     // ==================== ANIMATOR HELPERS ====================
     protected void Trigger(string triggerName)
     {
         if (animator == null) return;
 
-        if (!animParameters.Contains(triggerName))
-        {
-            if (warnedParameters.Add(triggerName))
-                Debug.LogWarning($"[{name}] Animator has no parameter '{triggerName}'.", this);
-            return;
-        }
-
         animator.SetTrigger(triggerName);
+        OnAnimTrigger(triggerName);
     }
+
+    protected virtual void OnAnimTrigger(string triggerName) { }
 
     protected void ResetAnimTriggers()
     {
@@ -317,7 +360,7 @@ public abstract class BossBrain : MonoBehaviour
         return animator.GetCurrentAnimatorStateInfo(0).IsName(idleStateName) && !animator.IsInTransition(0);
     }
 
-    // Waits until the animator is back in the idle state (e.g. before triggering Despawn, which only leaves Idle).
+    // Waits until the animator is back in the idle state
     protected IEnumerator WaitUntilIdle(float timeout = 4f)
     {
         float t = 0f;
@@ -326,7 +369,6 @@ public abstract class BossBrain : MonoBehaviour
             t += Time.deltaTime;
             if (t > timeout)
             {
-                Debug.LogWarning($"[{name}] Timed out waiting for the '{idleStateName}' state. Is idleStateName correct?", this);
                 yield break;
             }
             yield return null;
@@ -354,8 +396,17 @@ public abstract class BossBrain : MonoBehaviour
             t += Time.deltaTime;
             yield return null;
         }
+    }
 
-        Debug.LogWarning($"[{name}] Timed out waiting for an animation to finish.", this);
+    // ==================== PHASE TWO LOOK ====================
+    private void StartPhaseTwoLook()
+    {
+        if (healthBar != null) healthBar.SetSkullPulse(true);
+    }
+
+    protected void StopPhaseTwoLook(float fadeDuration)
+    {
+        if (healthBar != null) healthBar.SetSkullPulse(false);
     }
 
     // ==================== VISUAL EFFECTS ====================
@@ -409,10 +460,10 @@ public abstract class BossBrain : MonoBehaviour
 
     protected virtual string DebugSummary()
     {
-        return $"Phase {phase}" + (transitionQueued ? " | TRANSITION QUEUED" : "");
+        return $"Phase {phase}" + (transitionActive ? " | TRANSITION" : "");
     }
 
-    [ContextMenu("Debug: Queue Phase Transition")]
+    [ContextMenu("Debug: Trigger Phase Transition")]
     private void DebugQueueTransition()
     {
         HandleThresholdCrossed();

@@ -13,6 +13,8 @@ public class BossPatternShooter : MonoBehaviour
     private struct PendingKnife
     {
         public BaseBullet bullet;
+        public Vector2 offset;
+        public Vector2 direction;
         public float speed;
         public float damage;
     }
@@ -35,10 +37,10 @@ public class BossPatternShooter : MonoBehaviour
     }
 
     // -- THROW --
-    public Coroutine Throw(WeaponData weapon, KnifePatternData pattern, Vector2 aimDirection,
+    public Coroutine Throw(WeaponData weapon, KnifePatternData pattern, System.Func<Vector2> aimProvider,
         float speedMultiplier, float countMultiplier, float hangMultiplier, System.Action onSpawned)
     {
-        return StartCoroutine(ThrowRoutine(weapon, pattern, aimDirection, speedMultiplier, countMultiplier, hangMultiplier, onSpawned));
+        return StartCoroutine(ThrowRoutine(weapon, pattern, aimProvider, speedMultiplier, countMultiplier, hangMultiplier, onSpawned));
     }
 
     public void StopAll()
@@ -46,16 +48,19 @@ public class BossPatternShooter : MonoBehaviour
         StopAllCoroutines();
     }
 
-    private IEnumerator ThrowRoutine(WeaponData weapon, KnifePatternData pattern, Vector2 aimDirection,
+    private IEnumerator ThrowRoutine(WeaponData weapon, KnifePatternData pattern, System.Func<Vector2> aimProvider,
         float speedMultiplier, float countMultiplier, float hangMultiplier, System.Action onSpawned)
     {
-        if (weapon == null || pattern == null || weapon.bulletPrefab == null)
+        if (weapon == null || pattern == null)
         {
             onSpawned?.Invoke();
             yield break;
         }
 
-        pattern.BuildPoints(aimDirection, countMultiplier, points);
+        Vector2 aim = aimProvider != null ? aimProvider() : Vector2.right;
+        float spawnAngle = AngleOf(aim);
+
+        pattern.BuildPoints(aim, countMultiplier, points);
 
         Vector2 center = origin.position;
         int sortingOrder = sortingReference != null ? sortingReference.sortingOrder + 100 : 0;
@@ -70,7 +75,10 @@ public class BossPatternShooter : MonoBehaviour
             Vector2 spawnPos = center + p.offset;
             if (Physics2D.OverlapPoint(spawnPos, wallMask) != null) continue;
 
-            GameObject go = Instantiate(weapon.bulletPrefab, spawnPos, Quaternion.identity);
+            GameObject prefab = weapon.GetBulletPrefab();
+            if (prefab == null) continue;
+
+            GameObject go = Instantiate(prefab, spawnPos, Quaternion.identity);
             BaseBullet bullet = go.GetComponent<BaseBullet>();
             if (bullet == null)
             {
@@ -86,7 +94,7 @@ public class BossPatternShooter : MonoBehaviour
             bullet.SetBullet(hangs ? 0f : speed, damage, weapon.hitKnockback, weapon.hitPrefab, sortingOrder, weapon.wallHitClip, weapon.wallHitVolume);
 
             BulletSpawned?.Invoke(go);
-            knives.Add(new PendingKnife { bullet = bullet, speed = speed, damage = damage });
+            knives.Add(new PendingKnife { bullet = bullet, offset = p.offset, direction = p.direction, speed = speed, damage = damage });
         }
 
         PlayThrowSound(weapon);
@@ -94,9 +102,31 @@ public class BossPatternShooter : MonoBehaviour
 
         if (!hangs) yield break;
 
-        // Hang in formation so the shape can be read, then launch
-        yield return new WaitForSeconds(hang);
+        bool tracks = aimProvider != null
+            && pattern.alignToPlayer
+            && pattern.trackWhileHanging
+            && pattern.trackTurnRate > 0f;
 
+        float trackedAngle = spawnAngle;
+        float elapsed = 0f;
+
+        while (elapsed < hang)
+        {
+            elapsed += Time.deltaTime;
+
+            if (tracks && elapsed < hang - pattern.trackLockTime)
+            {
+                float targetAngle = AngleOf(aimProvider());
+                float step = pattern.trackTurnRate * Time.deltaTime;
+                trackedAngle += Mathf.Clamp(Mathf.DeltaAngle(trackedAngle, targetAngle), -step, step);
+
+                ApplyFormation(knives, center, trackedAngle - spawnAngle);
+            }
+
+            yield return null;
+        }
+
+        // Launch
         foreach (PendingKnife k in knives)
         {
             if (k.bullet != null)
@@ -105,6 +135,30 @@ public class BossPatternShooter : MonoBehaviour
             if (pattern.launchStagger > 0f)
                 yield return new WaitForSeconds(pattern.launchStagger);
         }
+    }
+
+    private static void ApplyFormation(List<PendingKnife> knives, Vector2 center, float deltaDegrees)
+    {
+        foreach (PendingKnife k in knives)
+        {
+            if (k.bullet == null) continue;
+
+            k.bullet.transform.position = center + Rotate(k.offset, deltaDegrees);
+            k.bullet.SetDirection(Rotate(k.direction, deltaDegrees));
+        }
+    }
+
+    private static float AngleOf(Vector2 v)
+    {
+        return Mathf.Atan2(v.y, v.x) * Mathf.Rad2Deg;
+    }
+
+    private static Vector2 Rotate(Vector2 v, float degrees)
+    {
+        float rad = degrees * Mathf.Deg2Rad;
+        float cos = Mathf.Cos(rad);
+        float sin = Mathf.Sin(rad);
+        return new Vector2(v.x * cos - v.y * sin, v.x * sin + v.y * cos);
     }
 
     private void PlayThrowSound(WeaponData weapon)

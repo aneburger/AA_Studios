@@ -1,3 +1,5 @@
+// Boss health bar.
+
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,19 +10,24 @@ public class BossHealthBarUI : MonoBehaviour
     [SerializeField] private Image fillImage;
     [SerializeField] private RectTransform skullIcon;
 
-    [Header("Colours")]
-    [SerializeField] private Color fullColor;
-    [SerializeField] private Color halfColor;
-    [SerializeField] private Color lowColor;
+    [Header("Colours (same idea as EnemyHealthBar)")]
+    [SerializeField] private Color fullColor = new Color(0.35f, 0.85f, 0.35f);
+    [SerializeField] private Color halfColor = new Color(1f, 0.6f, 0.15f);
+    [SerializeField] private Color lowColor = new Color(0.9f, 0.2f, 0.2f);
 
     [Header("Behaviour")]
     [SerializeField] private float followSpeed = 12f;
     [SerializeField] private float punchScale = 0.35f;
     [SerializeField] private float punchDuration = 0.3f;
 
+    [Header("Skull Pulse (phase two)")]
+    [SerializeField] private float skullPulseScale = 0.15f;
+    [SerializeField] private float skullPulseSpeed = 5f;
+
     private BossHealth boundBoss;
     private float targetFill = 1f;
-    private bool introRunning;
+    private bool holdFollow;
+    private bool pulsing;
     private Coroutine punchRoutine;
 
     // -- BIND --
@@ -31,7 +38,7 @@ public class BossHealthBarUI : MonoBehaviour
         if (boundBoss == null) return;
 
         boundBoss.OnHealthChanged += HandleHealthChanged;
-        targetFill = boundBoss.HealthFraction;
+        targetFill = boundBoss.PhaseFraction;
     }
 
     private void Unbind()
@@ -42,42 +49,69 @@ public class BossHealthBarUI : MonoBehaviour
 
     private void HandleHealthChanged(float current, float max)
     {
-        targetFill = max > 0f ? Mathf.Clamp01(current / max) : 0f;
+        targetFill = boundBoss != null ? boundBoss.PhaseFraction : 0f;
     }
 
     // -- SHOW / HIDE --
     public void Show()
     {
         gameObject.SetActive(true);
-        introRunning = true;
+        holdFollow = true;
+        pulsing = false;
         SetFill(0f);
     }
 
     public void Hide()
     {
+        pulsing = false;
         gameObject.SetActive(false);
     }
 
     // -- INTRO FILL --
     public IEnumerator PlayIntroFill(float duration)
     {
-        introRunning = true;
-        float goal = boundBoss != null ? boundBoss.HealthFraction : 1f;
+        yield return FillRoutine(0f, GoalFill(), duration);
+    }
+
+    // -- PHASE REFILL --
+    public IEnumerator PlayPhaseRefill(float duration)
+    {
+        float start = fillImage != null ? fillImage.fillAmount : 0f;
+        yield return FillRoutine(start, GoalFill(), duration);
+    }
+
+    private float GoalFill()
+    {
+        return boundBoss != null ? boundBoss.PhaseFraction : 1f;
+    }
+
+    private IEnumerator FillRoutine(float from, float to, float duration)
+    {
+        holdFollow = true;
 
         float t = 0f;
         while (t < duration)
         {
             t += Time.unscaledDeltaTime;
             float e = Mathf.SmoothStep(0f, 1f, Mathf.Clamp01(t / duration));
-            SetFill(goal * e);
+            SetFill(Mathf.Lerp(from, to, e));
             yield return null;
         }
 
-        SetFill(goal);
-        targetFill = goal;
+        SetFill(to);
+        targetFill = to;
         Punch();
 
-        introRunning = false;
+        holdFollow = false;
+    }
+
+    // -- SKULL PULSE --
+    public void SetSkullPulse(bool on)
+    {
+        pulsing = on;
+
+        if (!on && skullIcon != null && punchRoutine == null)
+            skullIcon.localScale = Vector3.one;
     }
 
     // -- PUNCH --
@@ -98,13 +132,21 @@ public class BossHealthBarUI : MonoBehaviour
             skullIcon.localScale = Vector3.one * (1f + punchScale * (1f - k));
             yield return null;
         }
+
         skullIcon.localScale = Vector3.one;
+        punchRoutine = null;
     }
 
     // -- UPDATE --
     private void Update()
     {
-        if (introRunning || fillImage == null) return;
+        if (pulsing && skullIcon != null && punchRoutine == null)
+        {
+            float wave = (Mathf.Sin(Time.unscaledTime * skullPulseSpeed) + 1f) * 0.5f;
+            skullIcon.localScale = Vector3.one * (1f + skullPulseScale * wave);
+        }
+
+        if (holdFollow || fillImage == null) return;
 
         float current = fillImage.fillAmount;
         float next = Mathf.Lerp(current, targetFill, 1f - Mathf.Exp(-followSpeed * Time.unscaledDeltaTime));
@@ -120,7 +162,6 @@ public class BossHealthBarUI : MonoBehaviour
         fillImage.color = GetHealthColor(value);
     }
 
-    // Same blend as EnemyHealthBar:
     private Color GetHealthColor(float t)
     {
         Color c = t > 0.5f
