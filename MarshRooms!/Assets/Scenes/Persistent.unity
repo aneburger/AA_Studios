@@ -2037,7 +2037,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 8.4375
+  orthographic size: 13.133179
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -2124,17 +2124,6 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
   CustomBlends: {fileID: 0}
---- !u!114 &520362131 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 487237154865427361, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
-  m_PrefabInstance: {fileID: 3537630140295722637}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
 --- !u!1 &522003120
 GameObject:
   m_ObjectHideFlags: 0
@@ -19602,22 +19591,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 570986402307348023, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
-      propertyPath: sporeReadyClip
-      value: 
-      objectReference: {fileID: 8300000, guid: 2a7fd0f3e567c8b49af3699916dfeefd, type: 3}
-    - target: {fileID: 570986402307348023, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
-      propertyPath: sporeReadyVolume
-      value: 0.8
-      objectReference: {fileID: 0}
-    - target: {fileID: 655135478597897466, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
-      propertyPath: 'inventorySlots.Array.data[0]'
-      value: 
-      objectReference: {fileID: 520362131}
-    - target: {fileID: 655135478597897466, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
-      propertyPath: 'inventorySlotsBackgrounds.Array.data[0]'
-      value: 
-      objectReference: {fileID: 3537630140295722639}
     - target: {fileID: 675943994774310337, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.07288
@@ -19658,82 +19631,19 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1746857018157071998, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
-      propertyPath: offsetFromSlot.x
-      value: -43
-      objectReference: {fileID: 0}
-    - target: {fileID: 1746857018157071998, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
-      propertyPath: offsetFromSlot.y
-      value: -10.9
-      objectReference: {fileID: 0}
-    - target: {fileID: 2670592061080289921, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
-      propertyPath: m_fontAsset
-      value: 
-      objectReference: {fileID: 11400000, guid: b3d881c31a3df254baf241ecaf54e9da, type: 2}
-    - target: {fileID: 2670592061080289921, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
-      propertyPath: m_sharedMaterial
-      value: 
-      objectReference: {fileID: 7835370868060652561, guid: b3d881c31a3df254baf241ecaf54e9da, type: 2}
-    - target: {fileID: 2670592061080289921, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
-      propertyPath: m_hasFontAssetChanged
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3175020114139684294, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
-      propertyPath: m_fontAsset
-      value: 
-      objectReference: {fileID: 11400000, guid: b3d881c31a3df254baf241ecaf54e9da, type: 2}
-    - target: {fileID: 3175020114139684294, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
-      propertyPath: m_sharedMaterial
-      value: 
-      objectReference: {fileID: 7835370868060652561, guid: b3d881c31a3df254baf241ecaf54e9da, type: 2}
-    - target: {fileID: 3175020114139684294, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
-      propertyPath: m_hasFontAssetChanged
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4908183722122372763, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
-      propertyPath: startFloor
-      value: Floor_01
-      objectReference: {fileID: 0}
-    - target: {fileID: 5227668294910895540, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
-      propertyPath: m_fontAsset
-      value: 
-      objectReference: {fileID: 11400000, guid: b3d881c31a3df254baf241ecaf54e9da, type: 2}
-    - target: {fileID: 5227668294910895540, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
-      propertyPath: m_sharedMaterial
-      value: 
-      objectReference: {fileID: 7835370868060652561, guid: b3d881c31a3df254baf241ecaf54e9da, type: 2}
-    - target: {fileID: 5227668294910895540, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
-      propertyPath: m_hasFontAssetChanged
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6330156949571340651, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
-      propertyPath: m_Color.a
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 7085789729006638418, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
       propertyPath: m_Name
       value: HUD
       objectReference: {fileID: 0}
-    - target: {fileID: 7115363292743406181, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
-      propertyPath: startFloor
-      value: Floor_01
+    - target: {fileID: 7253058207320896486, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
---- !u!114 &3537630140295722639 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 233896131535970191, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
-  m_PrefabInstance: {fileID: 3537630140295722637}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
