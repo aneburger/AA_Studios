@@ -18,7 +18,6 @@ public class LevelLoader : MonoBehaviour
     [SerializeField] private float fadeDuration = 0.5f;
 
     [Header("Floor Display Names")]
-    // Shown on the death screen. Add one entry per floor (index 0 = floor 1).
     [SerializeField] private string[] floorDisplayNames;
 
     private const string SaveFileName = "savegame.json";
@@ -80,7 +79,6 @@ public class LevelLoader : MonoBehaviour
     }
 
     // -- GET CURRENT FLOOR DISPLAY NAME --
-    // Falls back to "Floor N" if you haven't filled in a name for that index yet.
     public string GetCurrentFloorDisplayName()
     {
         int floorNumber = GetCurrentFloorNumber();

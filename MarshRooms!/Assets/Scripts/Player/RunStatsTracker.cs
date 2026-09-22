@@ -1,15 +1,5 @@
 // Tracks stats that need to survive across level reloads within a single run:
 // death count, kill count, elapsed play time, and cards collected in elevators.
-//
-// This is a separate concern from the "RunStats" referenced in SaveGameData -
-// that one (BoonManager.Stats) holds gameplay modifiers from boons (e.g.
-// healthDropRateMultiplier), not play-session analytics, so there's no overlap.
-//
-// This does NOT currently persist to your save file, so death count / kills /
-// time / cards will reset to zero if the player quits the app and later
-// continues a saved game. If you want those to survive that, add fields to
-// SaveGameData and read/write them in LevelLoader's SaveCurrentLevel /
-// ApplyPendingRestore.
 
 using System.Collections.Generic;
 using UnityEngine;
@@ -64,10 +54,6 @@ public class RunStatsTracker : MonoBehaviour
             collectedCards.Add(card);
     }
 
-    // Call this when a brand new run starts (new game), NOT on retry/reload
-    // after a death - death count and cards collected should persist through
-    // a retry, since the death screen for THIS run needs to show them.
-    // TODO: call this from wherever your "New Game" button logic lives.
     public void ResetForNewRun()
     {
         DeathCount = 0;

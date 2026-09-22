@@ -5,8 +5,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using UnityEngine.Events;
 
-// Data needed to populate the death screen. Built by PlayerHealth right
-// before it calls DeathScreenManager.Instance.Show(...).
+// Data needed to populate the death screen. 
 [System.Serializable]
 public struct DeathScreenStats
 {
@@ -16,8 +15,6 @@ public struct DeathScreenStats
     public float timePlayedSeconds;
     public int killCount;
 
-    // Only the two non-default slots can ever be "lost" - the plunger is
-    // permanent. Index 0 = slot 1, index 1 = slot 2. Null entries = empty slot.
     public Sprite[] lostWeaponSprites;
 
     public Sprite[] collectedCardSprites;
@@ -50,12 +47,9 @@ public class DeathScreenManager : MonoBehaviour
     [SerializeField] private TMP_Text killsText;
 
     [Header("Weapons Lost")]
-    // Drag weapon-lost-1 and weapon-lost-2 in here, in that order.
     [SerializeField] private Image[] weaponLostSlots;
 
     [Header("Cards Collected")]
-    // Container with a HorizontalLayoutGroup (or similar) under the
-    // "Cards Collected" panel, plus a simple Image prefab to instantiate per card.
     [SerializeField] private Transform cardsCollectedContainer;
     [SerializeField] private Image cardIconPrefab;
 
@@ -163,7 +157,6 @@ public class DeathScreenManager : MonoBehaviour
     }
 
     // -- SHOW --
-    // Call this from PlayerHealth once the death fade / animation has finished.
     public void Show(DeathScreenStats stats)
     {
         PopulateStats(stats);
@@ -296,8 +289,6 @@ public class DeathScreenManager : MonoBehaviour
         quitConfirmManager?.Open(QuitConfirmManager.QuitConfirmSource.DeathScreenMainMenu);
     }
 
-    // Called by QuitConfirmManager when the player picks "No" on the quit
-    // confirm that was opened from the death screen.
     public void RestoreAfterQuitConfirm()
     {
         if (deathScreenPanel != null)

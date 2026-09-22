@@ -38,8 +38,6 @@ public class PlayerHealth : BaseHealth
     private float bonusIFrameDuration = 0f;
     private float dodgeDamageChance = 0f;
 
-    // Name shown on the death screen. Defaults to "Unknown" in case the player
-    // dies from something that never calls SetLastAttacker (e.g. a hazard).
     private string lastAttackerName = "Unknown";
 
     public static event System.Action OnPlayerDeath;
@@ -96,9 +94,6 @@ public class PlayerHealth : BaseHealth
     }
 
     // -- SET LAST ATTACKER --
-    // Call this from wherever enemy contact/projectile damage is applied to the
-    // player (e.g. an EnemyData-driven contact damage script), right before or
-    // alongside the TakeDamage call, so the death screen can show who killed you.
     public void SetLastAttacker(string attackerName)
     {
         if (!string.IsNullOrEmpty(attackerName))
@@ -344,18 +339,9 @@ public class PlayerHealth : BaseHealth
         yield return new WaitForSeconds(0.5f);
 
         DeathScreenManager.Instance?.Show(BuildDeathScreenStats());
-
-        // Retry / Main Menu are now handled by DeathScreenManager. When Retry is
-        // pressed it calls LevelLoader.ReloadCurrentLevel() and then
-        // RestoreAfterRetry() below on this same PlayerHealth instance - the
-        // player object lives outside the floor scene (LevelLoader.ReturnToMainMenu
-        // has to explicitly Destroy it), so it survives a level reload and this
-        // is safe to call right away without waiting for the reload to finish,
-        // same as the original code did.
     }
 
     // -- RESTORE AFTER RETRY --
-    // Called by DeathScreenManager once the player presses "Retry".
     public void RestoreAfterRetry()
     {
         GetComponent<PlayerInput>().enabled = true;
