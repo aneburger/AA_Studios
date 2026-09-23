@@ -94366,7 +94366,7 @@ MonoBehaviour:
   transitionFlashAlpha: 0.802
   transitionFlashDuration: 0.35
   hitStopDuration: 0.07
-  transitionClip: {fileID: 8300000, guid: 268398b940108cc4e8c57d4e6312c541, type: 3}
+  transitionClip: {fileID: 8300000, guid: 7bca1f54037e45c4384d7f7c4cee9dda, type: 3}
   transitionVolume: 1
   phaseRefillDuration: 1.5
   attacksBeforeCounterMin: 1
@@ -94679,9 +94679,17 @@ MonoBehaviour:
   bossAnimator: {fileID: 803806091381290384}
   dazeTrigger: FallIntoDaze
   deathTrigger: Die
-  dazeDuration: 1.5
-  deathAnimDuration: 1
+  dazeDuration: 0.5
   musicFadeDuration: 2
+  hitStopDuration: 0.08
+  hitStopFlashColor: {r: 1, g: 1, b: 1, a: 1}
+  hitStopFlashAlpha: 0.7
+  hitStopFlashDuration: 0.3
+  deathThudDelay: 0.3
+  rumbleShakeCount: 4
+  rumbleShakeInterval: 0.15
+  rumbleShakeMin: 0.2
+  rumbleShakeMax: 0.5
   dialoguePart1: {fileID: 11400000, guid: 1954eda3e5ed7164daab18093a41debd, type: 2}
   dialoguePart2: {fileID: 11400000, guid: e59e4f59ba9952e4a95a4c96d331171e, type: 2}
   croissantVisualPrefab: {fileID: 3345141146099082011, guid: 905436c330035dd40aee67a6a2fe23f8, type: 3}
@@ -94690,9 +94698,9 @@ MonoBehaviour:
   croissantAppearVolume: 0.6
   croissantAppearPause: 3
   rewardPopup: {fileID: 1710673102}
-  rewardTitle: 'New ability: Croissant of Chaos!'
+  rewardTitle: 'New ability: Croissant of Chaos'
   rewardDescription: Dodging deals damage to nearby enemies.
-  pauseBeforeDialogue: 1
+  pauseBeforeDialogue: 1.5
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

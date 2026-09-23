@@ -13,15 +13,51 @@ MonoBehaviour:
   m_Name: bossOutroDialoguePart1
   m_EditorClassIdentifier: Assembly-CSharp::DialogueSequence
   lines:
+  - speakerName: Chef Puffs
+    portrait: {fileID: -439438027, guid: 2da342deb6060304594530c431c490c0, type: 3}
+    talkingPortrait: {fileID: -1456663116, guid: 2da342deb6060304594530c431c490c0, type: 3}
+    text: <shake>AHHHHHH!</shake>! <i>C'est impossible</i>!
+    voiceClip: {fileID: 8300000, guid: 678841f3703764b47a153c56f9ef5f3e, type: 3}
+    typewriterSpeedOverride: 0
   - speakerName: Marsh
-    portrait: {fileID: 63140439, guid: 96f423fd58af20743ab60c2815e095a2, type: 3}
-    talkingPortrait: {fileID: 0}
-    text: ...
-    voiceClip: {fileID: 0}
+    portrait: {fileID: 1163481806, guid: 96f423fd58af20743ab60c2815e095a2, type: 3}
+    talkingPortrait: {fileID: 63140439, guid: 96f423fd58af20743ab60c2815e095a2, type: 3}
+    text: Take that you overgrown shroom! Now tell me where my friend is!
+    voiceClip: {fileID: 8300000, guid: df7007f5c2931ba42a0f9a98f90e1a32, type: 3}
     typewriterSpeedOverride: 0
   - speakerName: Chef Puffs
-    portrait: {fileID: -3127762171316729299, guid: 2da342deb6060304594530c431c490c0, type: 3}
-    talkingPortrait: {fileID: 0}
-    text: ...
-    voiceClip: {fileID: 0}
+    portrait: {fileID: -6685546810934331548, guid: 2da342deb6060304594530c431c490c0, type: 3}
+    talkingPortrait: {fileID: -8512850532406554754, guid: 2da342deb6060304594530c431c490c0, type: 3}
+    text: 'You''ll never survive in zere... '
+    voiceClip: {fileID: 8300000, guid: 41d20ca518da23b40bcd9d0557c44280, type: 3}
+    typewriterSpeedOverride: 0
+  - speakerName: Marsh
+    portrait: {fileID: 1730539990, guid: 96f423fd58af20743ab60c2815e095a2, type: 3}
+    talkingPortrait: {fileID: -1870950988, guid: 96f423fd58af20743ab60c2815e095a2, type: 3}
+    text: TELL ME!
+    voiceClip: {fileID: 8300000, guid: a1611a890bdacd24e9b286940f5df967, type: 3}
+    typewriterSpeedOverride: 0
+  - speakerName: Chef Puffs
+    portrait: {fileID: -6685546810934331548, guid: 2da342deb6060304594530c431c490c0, type: 3}
+    talkingPortrait: {fileID: -8512850532406554754, guid: 2da342deb6060304594530c431c490c0, type: 3}
+    text: 'He''s in.. '
+    voiceClip: {fileID: 8300000, guid: 3c372763b0f8c5145ba9e0971772dbc8, type: 3}
+    typewriterSpeedOverride: 0
+  - speakerName: Chef Puffs
+    portrait: {fileID: -7808003101643997847, guid: 2da342deb6060304594530c431c490c0, type: 3}
+    talkingPortrait: {fileID: -3127762171316729299, guid: 2da342deb6060304594530c431c490c0, type: 3}
+    text: <b>ZE SNAIL JAIL!</b>
+    voiceClip: {fileID: 8300000, guid: 366a49af7a97e8b4e90e33c85f4830e5, type: 3}
+    typewriterSpeedOverride: 0
+  - speakerName: Marsh
+    portrait: {fileID: -4332381428540570747, guid: 96f423fd58af20743ab60c2815e095a2, type: 3}
+    talkingPortrait: {fileID: -1126149774, guid: 96f423fd58af20743ab60c2815e095a2, type: 3}
+    text: 'Then that''s where I''m going! '
+    voiceClip: {fileID: 8300000, guid: 1f39d4a2a00bc754eb4652b84cd6905e, type: 3}
+    typewriterSpeedOverride: 0
+  - speakerName: Chef Puffs
+    portrait: {fileID: -6685546810934331548, guid: 2da342deb6060304594530c431c490c0, type: 3}
+    talkingPortrait: {fileID: -8512850532406554754, guid: 2da342deb6060304594530c431c490c0, type: 3}
+    text: 'Wait! Take zis. '
+    voiceClip: {fileID: 8300000, guid: 6adde4f13bef6d94f8be530d003cb1cd, type: 3}
     typewriterSpeedOverride: 0

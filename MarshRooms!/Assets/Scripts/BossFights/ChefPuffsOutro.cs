@@ -8,8 +8,20 @@ public class ChefPuffsOutro : BossOutroSequence
     [SerializeField] private string dazeTrigger = "FallIntoDaze";
     [SerializeField] private string deathTrigger = "Death";
     [SerializeField] private float dazeDuration = 1f;
-    [SerializeField] private float deathAnimDuration = 1.5f;
     [SerializeField] private float musicFadeDuration = 1.5f;
+
+    [Header("Kill Hit-Stop")]
+    [SerializeField] private float hitStopDuration = 0.08f;
+    [SerializeField] private Color hitStopFlashColor = Color.white;
+    [Range(0f, 1f)] [SerializeField] private float hitStopFlashAlpha = 0.7f;
+    [SerializeField] private float hitStopFlashDuration = 0.3f;
+
+    [Header("Death Rumble")]
+    [SerializeField] private float deathThudDelay = 0.3f;
+    [SerializeField] private int rumbleShakeCount = 4;
+    [SerializeField] private float rumbleShakeInterval = 0.15f;
+    [SerializeField] private float rumbleShakeMin = 0.2f;
+    [SerializeField] private float rumbleShakeMax = 0.5f;
 
     [Header("Dialogue")]
     [SerializeField] private DialogueSequence dialoguePart1;
@@ -34,6 +46,13 @@ public class ChefPuffsOutro : BossOutroSequence
     {
         yield return null;
 
+        // Kill hit-stop, right as he dies
+        Time.timeScale = 0f;
+        ScreenEffects.Instance?.FlashColor(hitStopFlashColor, hitStopFlashAlpha, hitStopFlashDuration);
+        yield return new WaitForSecondsRealtime(hitStopDuration);
+        Time.timeScale = 1f;
+        yield return DeathRumble();
+
         AudioManager.Instance?.FadeOutMusic(musicFadeDuration);
         room.HealthBar?.Hide();
 
@@ -43,9 +62,10 @@ public class ChefPuffsOutro : BossOutroSequence
 
         // 2. Death
         if (bossAnimator != null) bossAnimator.SetTrigger(deathTrigger);
-        yield return new WaitForSeconds(deathAnimDuration);
-
         room.LockPlayerExternally();
+
+        yield return new WaitForSeconds(deathThudDelay);
+        
 
         yield return new WaitForSeconds(pauseBeforeDialogue);
 
@@ -77,5 +97,15 @@ public class ChefPuffsOutro : BossOutroSequence
         // Unlock the ability
         PlayerDodgeAttack dodgeAttack = room.Player != null ? room.Player.GetComponent<PlayerDodgeAttack>() : null;
         dodgeAttack?.SetUnlocked(true);
+    }
+
+    private IEnumerator DeathRumble()
+    {
+        for (int i = 0; i < rumbleShakeCount; i++)
+        {
+            float strength = Mathf.Lerp(rumbleShakeMax, rumbleShakeMin, (float)i / Mathf.Max(1, rumbleShakeCount - 1));
+            ScreenEffects.Instance?.ShakeScreen(strength);
+            yield return new WaitForSeconds(rumbleShakeInterval);
+        }
     }
 }
