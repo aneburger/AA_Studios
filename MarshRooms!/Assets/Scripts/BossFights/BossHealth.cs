@@ -200,7 +200,7 @@ public class BossHealth : BaseHealth
         OnDied?.Invoke();
     }
 
-    // -- TOP POSITION -- (for damage numbers)
+    // -- TOP POSITION --
     private Vector2 GetTopPosition()
     {
         SpriteRenderer sr = GetComponentInChildren<SpriteRenderer>();
@@ -208,16 +208,5 @@ public class BossHealth : BaseHealth
             return new Vector2(transform.position.x, sr.bounds.max.y);
 
         return transform.position;
-    }
-
-    // -- DEBUG --
-    [ContextMenu("Debug: Reset Health")]
-    private void DebugResetHealth()
-    {
-        Initialise(maxHealth);
-        phaseTwoTriggered = false;
-        phaseTwoStarted = false;
-        invulnerableReasons.Remove(ReasonDeath);
-        OnHealthChanged?.Invoke(currentHealth, maxHealth);
     }
 }

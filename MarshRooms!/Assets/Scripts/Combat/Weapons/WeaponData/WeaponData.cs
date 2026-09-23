@@ -16,7 +16,6 @@ public class WeaponData : ScriptableObject
     [Header("Prefabs")]
     public GameObject bulletPrefab;
     public GameObject[] bulletVariants;
-    public GameObject shellsPrefab;
     public GameObject hitPrefab;
     public GameObject muzzleFlashPrefab;
     public GameObject pickupPrefab;

@@ -160,6 +160,18 @@ namespace TopDown.Movement
             anim.Play("IdleBlend", 0, 0f);
         }
 
+        // -- PLAY LOOK UP ANIMATION --
+        public void PlayLookUpTrigger()
+        {
+            anim.SetTrigger("LookUp");
+        }
+
+        // STOP LOOK UP ANIMATION
+        public void EndLookUpHold()
+        {
+            anim.SetTrigger("LookUpEnd");
+        }
+
         // -- SET CAN MOVE --
         public void SetCanMove(bool value)
         {

@@ -1,4 +1,5 @@
-// Boss health bar.
+// Boss health bar
+// The bar shows the health of the CURRENT phase
 
 using System.Collections;
 using UnityEngine;
@@ -24,6 +25,10 @@ public class BossHealthBarUI : MonoBehaviour
     [SerializeField] private float skullPulseScale = 0.15f;
     [SerializeField] private float skullPulseSpeed = 5f;
 
+    [Header("Fill Shake (intro fill + phase refill)")]
+    [SerializeField] private float fillShakeInterval = 0.15f;
+    [SerializeField] private float fillShakeForce = 0.1f;
+
     private BossHealth boundBoss;
     private float targetFill = 1f;
     private bool holdFollow;
@@ -40,7 +45,7 @@ public class BossHealthBarUI : MonoBehaviour
         boundBoss.OnHealthChanged += HandleHealthChanged;
         targetFill = boundBoss.PhaseFraction;
     }
-
+    
     private void Unbind()
     {
         if (boundBoss != null) boundBoss.OnHealthChanged -= HandleHealthChanged;
@@ -90,11 +95,20 @@ public class BossHealthBarUI : MonoBehaviour
         holdFollow = true;
 
         float t = 0f;
+        float nextShake = 0f;
+
         while (t < duration)
         {
             t += Time.unscaledDeltaTime;
             float e = Mathf.SmoothStep(0f, 1f, Mathf.Clamp01(t / duration));
             SetFill(Mathf.Lerp(from, to, e));
+
+            if (t >= nextShake)
+            {
+                ScreenEffects.Instance?.ShakeScreen(fillShakeForce);
+                nextShake += fillShakeInterval;
+            }
+
             yield return null;
         }
 
@@ -154,15 +168,17 @@ public class BossHealthBarUI : MonoBehaviour
         SetFill(next);
     }
 
+    // -- SET FILL --
     private void SetFill(float value)
     {
         if (fillImage == null) return;
 
         fillImage.fillAmount = value;
-        fillImage.color = GetHealthColor(value);
+        fillImage.color = GetHealthColour(value);
     }
 
-    private Color GetHealthColor(float t)
+    // -- GET HEALTH COLOUR --
+    private Color GetHealthColour(float t)
     {
         Color c = t > 0.5f
             ? Color.Lerp(halfColor, fullColor, (t - 0.5f) * 2f)

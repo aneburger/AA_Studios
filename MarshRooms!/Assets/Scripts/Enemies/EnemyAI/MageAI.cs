@@ -22,7 +22,6 @@ public class MageAI : EnemyAIBase
     [SerializeField] private float attackRange = 6f;
 
     [Header("Special Attack Weights")]
-    [Tooltip("Relative chance of picking Summon vs Burst when a special is due (Heal takes priority over both when it's available).")]
     [SerializeField] private float summonWeight = 1f;
     [SerializeField] private float burstWeight = 1f;
     [SerializeField, Range(0f, 1f)] private float specialChance = 0.35f;
@@ -43,7 +42,7 @@ public class MageAI : EnemyAIBase
     [SerializeField] private float healDelayAfterDamage = 4f;
     [SerializeField] private float healCooldown = 12f;
     [SerializeField] private float healAmount = 15f;
-    [SerializeField, Range(0f, 1f)] private float healHpThreshold = 0.5f; // only eligible below this % of max HP
+    [SerializeField, Range(0f, 1f)] private float healHpThreshold = 0.5f;
     [SerializeField] private string healTrigger = "Heal";
     [SerializeField] private AudioClip healWindupClip;
     [Range(0f, 1f)] [SerializeField] private float healWindupVolume;
@@ -103,7 +102,7 @@ public class MageAI : EnemyAIBase
         mover.SetFacingOverride(dir);
     }
 
-    // -- CHASE -- (keeps closing distance and firing every frame; only breaks off to cast a special)
+    // -- CHASE --
     protected override void HandleChase(float distance)
     {
         mover.ClearFacingOverride();
@@ -135,7 +134,7 @@ public class MageAI : EnemyAIBase
         CheckLeash(distance);
     }
 
-    // -- SHOULD ENGAGE -- (unused: MageAI decides specials directly in HandleChase above)
+    // -- SHOULD ENGAGE --
     protected override bool ShouldEngage(float distance) => false;
 
     // -- ENTER ENGAGE --
@@ -201,11 +200,10 @@ public class MageAI : EnemyAIBase
             return;
         }
 
-        // Shouldn't happen since HasSpecialAvailable() already checked, but bail safely.
         EnterChase();
     }
 
-    // -- START SPECIAL -- (Animator drives Windup -> Action -> Idle; OnXAction fires via Animation Event)
+    // -- START SPECIAL --
     private void StartSpecial(SpecialType type)
     {
         activeSpecial = type;
@@ -243,7 +241,7 @@ public class MageAI : EnemyAIBase
         AudioManager.Instance?.PlaySFXWithPitch(windupClip, windupVolume, 0.1f);
     }
 
-    // -- HANDLE SPECIAL ACTIVE -- (specialFailsafeTimer forces recovery if the Action Animation Event never fires)
+    // -- HANDLE SPECIAL ACTIVE --
     private void HandleSpecialActive()
     {
         AimAtPlayer();
@@ -251,8 +249,6 @@ public class MageAI : EnemyAIBase
         specialFailsafeTimer -= Time.deltaTime;
         if (specialFailsafeTimer <= 0f)
         {
-            if (debugLogging)
-                Debug.LogWarning($"[{name}] {activeSpecial} special timed out before its Action Animation Event fired - forcing recovery.");
             EnterRecover();
         }
     }

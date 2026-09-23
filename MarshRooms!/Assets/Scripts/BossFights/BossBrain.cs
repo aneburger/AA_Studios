@@ -37,10 +37,6 @@ public abstract class BossBrain : MonoBehaviour
     [Header("Phase Two Look")]
     [SerializeField] private float phaseRefillDuration = 1.5f;
 
-    [Header("Debug")]
-    [SerializeField] private bool debugLogging = true;
-    [SerializeField] private bool showDebugOverlay = true;
-
     protected Transform player;
     protected DirectionalAnimator directionalAnimator;
     protected BossAnimationRelay relay;
@@ -96,6 +92,7 @@ public abstract class BossBrain : MonoBehaviour
         PlayerHealth.OnPlayerDeath += HandlePlayerDeath;
     }
 
+     // -- DISABLE --
     protected virtual void OnDisable()
     {
         if (room != null) room.OnFightStarted -= BeginFight;
@@ -112,6 +109,7 @@ public abstract class BossBrain : MonoBehaviour
         StopPhaseTwoLook(0f);
     }
 
+    // -- DESTROY --
     private void OnDestroy()
     {
         RestoreTimeScale();
@@ -133,6 +131,7 @@ public abstract class BossBrain : MonoBehaviour
             directionalAnimator.SetDirection(toPlayer);
     }
 
+     // -- FIND PLAYER --
     private void FindPlayer()
     {
         GameObject p = GameObject.FindGameObjectWithTag("Player");
@@ -150,7 +149,6 @@ public abstract class BossBrain : MonoBehaviour
         transitionActive = false;
 
         ApplyPhase(phase);
-        Log("Fight started.");
         fightRoutine = StartCoroutine(FightLoop());
     }
 
@@ -183,8 +181,6 @@ public abstract class BossBrain : MonoBehaviour
         }
 
         OnFightCancelled();
-
-        Log("Fight cancelled.");
     }
 
     private void HandleThresholdCrossed()
@@ -221,7 +217,6 @@ public abstract class BossBrain : MonoBehaviour
     private void HandleBossDied()
     {
         CancelFight();
-        Log("Boss died. (Death sequence comes in step 8.)");
     }
 
     private void HandlePlayerDeath()
@@ -232,7 +227,6 @@ public abstract class BossBrain : MonoBehaviour
     // ==================== PHASE TRANSITION ====================
     protected IEnumerator PlayPhaseTransition()
     {
-        Log("Phase transition: start.");
         health.SetInvulnerable(BossHealth.ReasonTransition, true);
         health.SetFlinchEnabled(false);
 
@@ -265,7 +259,6 @@ public abstract class BossBrain : MonoBehaviour
         health.SetInvulnerable(BossHealth.ReasonTransition, false);
 
         StartPhaseTwoLook();
-        Log($"Phase {phase} started.");
     }
 
     // Short real-time freeze
@@ -445,44 +438,9 @@ public abstract class BossBrain : MonoBehaviour
         StopVibrate();
     }
 
-    // Puts the visuals back where they belong. Safe to call any time.
     protected void StopVibrate()
     {
         if (vibrateTarget != null) vibrateTarget.localPosition = vibrateHome;
         vibrateTarget = null;
     }
-
-    // ==================== DEBUG ====================
-    protected void Log(string message)
-    {
-        if (debugLogging) Debug.Log($"[{name}] {message}", this);
-    }
-
-    protected virtual string DebugSummary()
-    {
-        return $"Phase {phase}" + (transitionActive ? " | TRANSITION" : "");
-    }
-
-    [ContextMenu("Debug: Trigger Phase Transition")]
-    private void DebugQueueTransition()
-    {
-        HandleThresholdCrossed();
-    }
-
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
-    private GUIStyle debugStyle;
-
-    private void OnGUI()
-    {
-        if (!showDebugOverlay || !fightActive) return;
-
-        if (debugStyle == null)
-        {
-            debugStyle = new GUIStyle(GUI.skin.label) { fontSize = 16, fontStyle = FontStyle.Bold };
-            debugStyle.normal.textColor = Color.yellow;
-        }
-
-        GUI.Label(new Rect(12f, 12f, 1000f, 30f), DebugSummary(), debugStyle);
-    }
-#endif
 }

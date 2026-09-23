@@ -9,7 +9,6 @@ public class BossSpikeSpawner : MonoBehaviour
     [SerializeField] private GameObject[] spikePrefabs;
     [SerializeField] private float minSpacing = 1f;
     [SerializeField] private int placementAttemptsPerSpike = 12;
-    [Tooltip("How far from the player a spike can land. Keeps them aimed near him without stacking exactly on him.")]
     [SerializeField] private float spreadRadius = 1.2f;
 
     public event System.Action<GameObject> SpikeSpawned;
@@ -100,10 +99,6 @@ public class BossSpikeSpawner : MonoBehaviour
         {
             activeSpikes.Add(go);
             hazard.Begin(warningTime);
-        }
-        else
-        {
-            Debug.LogWarning($"[{name}] Spike prefab '{prefab.name}' has no SpikeHazard component.", this);
         }
 
         SpikeSpawned?.Invoke(go);

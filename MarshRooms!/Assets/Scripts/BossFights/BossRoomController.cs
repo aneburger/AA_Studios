@@ -38,6 +38,12 @@ public class BossRoomController : MonoBehaviour
     [SerializeField] private float pauseBeforeCard = 0.4f;
     [SerializeField] private float pauseAfterCard = 0.2f;
 
+    [Header("Outro")]
+    [SerializeField] private BossOutroSequence outro;
+    [SerializeField] private AudioClip doorOpenClip;
+    [Range(0f, 1f)] [SerializeField] private float doorOpenVolume = 1f;
+    [SerializeField] private Elevator elevator;
+
     [Header("Boss Music")]
     [SerializeField] private AudioClip bossMusic;
     [Range(0f, 1f)] [SerializeField] private float bossMusicVolume = 0.5f;
@@ -45,7 +51,6 @@ public class BossRoomController : MonoBehaviour
 
     [Header("Boss Health Bar")]
     [SerializeField] private BossHealthBarUI healthBar;
-    [Tooltip("Also the countdown before the boss is allowed to act.")]
     [SerializeField] private float healthBarFillDuration = 2.5f;
 
     public event System.Action OnFightStarted;
@@ -60,16 +65,23 @@ public class BossRoomController : MonoBehaviour
     private bool hudHiddenByUs;
     private Coroutine sealRoutine;
 
+    // Expose
+    public GameObject Player => player;
+    public PlayerMover Mover => mover;
+    public BossHealthBarUI HealthBar => healthBar;
+
     // -- ENABLE / DISABLE --
     private void OnEnable()
     {
         if (doorTrigger != null) doorTrigger.OnPlayerCrossed += BeginSealSequence;
+        if (boss != null) boss.OnDied += HandleBossDeath;
         PlayerHealth.OnPlayerDeath += HandlePlayerDeath;
     }
 
     private void OnDisable()
     {
         if (doorTrigger != null) doorTrigger.OnPlayerCrossed -= BeginSealSequence;
+        if (boss != null) boss.OnDied -= HandleBossDeath;
         PlayerHealth.OnPlayerDeath -= HandlePlayerDeath;
     }
 
@@ -83,10 +95,7 @@ public class BossRoomController : MonoBehaviour
             aimer = player.GetComponent<PlayerAimer>();
             shooter = player.GetComponent<PlayerShooter>();
         }
-        else
-        {
-            Debug.LogError("[BossRoom] No player found.");
-        }
+    
 
         if (doorBlocker != null) doorBlocker.SetActive(false);
         if (healthBar != null) healthBar.Hide();
@@ -151,7 +160,6 @@ public class BossRoomController : MonoBehaviour
         AudioManager.Instance?.PlaySFX(doorSlamClip, doorSlamVolume);
         ScreenEffects.Instance?.ShakeScreen(slamShakeForce);
         if (doorBlocker != null) doorBlocker.SetActive(true);
-        Debug.Log("[BossRoom] Door sealed.");
 
         yield return new WaitForSeconds(postSlamBeat);
 
@@ -189,7 +197,7 @@ public class BossRoomController : MonoBehaviour
     // ==================== INTRO ====================
     private IEnumerator IntroSequence()
     {
-        // Dialogue between Marsh and Chef Puffs
+        // Dialogue between Boss and Marsh
         yield return new WaitForSeconds(pauseBeforeDialogue);
         yield return PlayDialogue(introDialogue);
         yield return new WaitForSeconds(pauseBeforeCard);
@@ -198,7 +206,7 @@ public class BossRoomController : MonoBehaviour
         if (bossMusic != null)
             AudioManager.Instance?.FadeInMusic(bossMusic, musicFadeInDuration, bossMusicVolume);
 
-        // "Marsh vs Chef Puffs" overlay, with the HUD hidden
+        // VS Overlay
         if (introCard != null)
         {
             SetHUDHidden(true);
@@ -227,7 +235,7 @@ public class BossRoomController : MonoBehaviour
         OnFightStarted?.Invoke();
     }
 
-    private IEnumerator PlayDialogue(DialogueSequence sequence)
+    public IEnumerator PlayDialogue(DialogueSequence sequence)
     {
         if (sequence == null || DialogueManager.Instance == null) yield break;
 
@@ -254,6 +262,8 @@ public class BossRoomController : MonoBehaviour
         if (shooter != null) shooter.HideWeapon(true);
         mover.SetInputLocked(true);
     }
+
+    public void LockPlayerExternally() => LockPlayer();
 
     private void ReleasePlayer(bool restoreWeapon)
     {
@@ -282,7 +292,30 @@ public class BossRoomController : MonoBehaviour
 
         if (hudHiddenByUs) SetHUDHidden(false);
 
-        // PlayerHealth hides the weapon itself when dying
         ReleasePlayer(restoreWeapon: false);
+    }
+
+    // ==================== DEATH SEQUENCE ====================
+    private void HandleBossDeath()
+    {
+        StartCoroutine(DeathSequence());
+    }
+
+    private IEnumerator DeathSequence()
+    {
+
+        if (outro != null)
+            yield return outro.Play(this);
+
+        ReleasePlayer(restoreWeapon: true);
+        OpenDoor();
+        elevator?.OpenManually();
+    }
+
+    private void OpenDoor()
+    {
+        if (doorBlocker != null) doorBlocker.SetActive(false);
+        doorAnimator?.SetTrigger("Open");
+        AudioManager.Instance?.PlaySFX(doorOpenClip, doorOpenVolume);
     }
 }

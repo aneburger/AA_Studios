@@ -1,4 +1,4 @@
-// Spawns a weapon's bullets in a shape
+// Spawns a weapon's bullets in a shape that shoots outwards
 
 using System.Collections;
 using System.Collections.Generic;
@@ -43,6 +43,7 @@ public class BossPatternShooter : MonoBehaviour
         return StartCoroutine(ThrowRoutine(weapon, pattern, aimProvider, speedMultiplier, countMultiplier, hangMultiplier, onSpawned));
     }
 
+    // -- STOP ALL --
     public void StopAll()
     {
         StopAllCoroutines();
@@ -137,6 +138,7 @@ public class BossPatternShooter : MonoBehaviour
         }
     }
 
+    // -- APPLY FORMATION --
     private static void ApplyFormation(List<PendingKnife> knives, Vector2 center, float deltaDegrees)
     {
         foreach (PendingKnife k in knives)

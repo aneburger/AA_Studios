@@ -13,24 +13,26 @@ public class BossMinionSpawner : MonoBehaviour
     private bool hasForcedHealthDrop;
     private int lastSpawnPointIndex = -1;
 
+    // -- RESET --
     public void ResetGuarantees()
     {
         hasForcedWeaponDrop = false;
         hasForcedHealthDrop = false;
     }
 
+    // -- SPAWN WAVE --
     public Coroutine SpawnWave(GameObject prefab, int count, Transform[] points,
         float weaponGuaranteeChance, float healthGuaranteeChance, float intervalMin, float intervalMax)
     {
         return StartCoroutine(SpawnWaveRoutine(prefab, count, points, weaponGuaranteeChance, healthGuaranteeChance, intervalMin, intervalMax));
     }
 
+    // -- SPAWN WAVE ROUTINE --
     private IEnumerator SpawnWaveRoutine(GameObject prefab, int count, Transform[] points,
         float weaponGuaranteeChance, float healthGuaranteeChance, float intervalMin, float intervalMax)
     {
         if (prefab == null || points == null || points.Length == 0)
         {
-            Debug.LogWarning($"[{name}] SpawnWave needs a prefab and at least one spawn point.", this);
             yield break;
         }
 
@@ -44,6 +46,7 @@ public class BossMinionSpawner : MonoBehaviour
         }
     }
 
+    // -- PICK POINT --
     private Transform PickPoint(Transform[] points)
     {
         if (points.Length == 1) return points[0];
@@ -56,6 +59,7 @@ public class BossMinionSpawner : MonoBehaviour
         return points[index];
     }
 
+    // -- SPAWN ONE --
     private GameObject SpawnOne(GameObject prefab, Vector2 position, float weaponGuaranteeChance, float healthGuaranteeChance)
     {
         GameObject go = Instantiate(prefab, position, Quaternion.identity);
@@ -71,6 +75,7 @@ public class BossMinionSpawner : MonoBehaviour
         return go;
     }
 
+    // -- HANDLEMINION DIED --
     private void HandleMinionDied(EnemyController controller, Vector2 position, float weaponGuaranteeChance, float healthGuaranteeChance)
     {
         if (controller == null || controller.Data == null) return;
