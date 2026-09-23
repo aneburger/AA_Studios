@@ -53,9 +53,9 @@ MonoBehaviour:
   retractTimeout: 1.5
   damage: 4
   hitRadius: 0.5
-  hitOffset: {x: 0, y: 0}
+  hitOffset: {x: 0, y: 1}
   targetClip: {fileID: 8300000, guid: e8188d007437c43459ed63255348d5fa, type: 3}
-  targetVolume: 0.997
+  targetVolume: 0.7
   eruptClip: {fileID: 8300000, guid: c64a8592cae41b24497dde03df319eae, type: 3}
   eruptVolume: 1
   retractClip: {fileID: 0}

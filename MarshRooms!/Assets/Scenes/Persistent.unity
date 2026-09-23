@@ -411,6 +411,7 @@ GameObject:
   - component: {fileID: 319489620}
   - component: {fileID: 319489622}
   - component: {fileID: 319489625}
+  - component: {fileID: 319489626}
   - component: {fileID: 319489604}
   - component: {fileID: 319489623}
   m_Layer: 6
@@ -533,7 +534,7 @@ MonoBehaviour:
   sporeActivator: {fileID: 319489615}
   dodgeForce: 9
   dodgeDuration: 0.25
-  dodgeCooldown: 0.25
+  dodgeCooldown: 0.1
   stationaryDodgeForceMultiplier: 1.4
   dustDistance: 3
   dodgeClip: {fileID: 8300000, guid: d5e454f6514e0974eb5a29576bf2c883, type: 3}
@@ -1043,6 +1044,28 @@ MonoBehaviour:
   maxLightIntensity: 0.4
   pulseSpeed: 3.5
   rampUpDuration: 0.6
+--- !u!114 &319489626
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 319489603}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ea9445b4fe40b645b2f64de8b5f3e41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerDodgeAttack
+  unlocked: 0
+  damage: 4
+  hitRadius: 2
+  knockback: 8
+  centerOffset: {x: 0, y: 0.7, z: 0}
+  trailParticles: {fileID: 993365935}
+  hitVFX: {fileID: 4081999799842582576, guid: dc8fb2c33870fde40865e140d3713b79, type: 3}
+  hitVFXSortingOrder: 50
+  hitClip: {fileID: 0}
+  hitVolume: 1
 --- !u!1 &356983338
 GameObject:
   m_ObjectHideFlags: 0
@@ -2038,7 +2061,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 13.133179
+  orthographic size: 8.4375
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -19683,6 +19706,10 @@ PrefabInstance:
     - target: {fileID: 7085789729006638418, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
       propertyPath: m_Name
       value: HUD
+      objectReference: {fileID: 0}
+    - target: {fileID: 7115363292743406181, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
+      propertyPath: startFloor
+      value: Floor_01
       objectReference: {fileID: 0}
     - target: {fileID: 7253058207320896486, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
       propertyPath: m_IsActive

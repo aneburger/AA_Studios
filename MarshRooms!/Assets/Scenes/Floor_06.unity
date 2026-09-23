@@ -94065,7 +94065,7 @@ MonoBehaviour:
   transitionClip: {fileID: 8300000, guid: 268398b940108cc4e8c57d4e6312c541, type: 3}
   transitionVolume: 1
   phaseRefillDuration: 1.5
-  attacksBeforeCounterMin: 2
+  attacksBeforeCounterMin: 1
   attacksBeforeCounterMax: 3
   phase1:
     rollWeight: 1
@@ -94081,8 +94081,8 @@ MonoBehaviour:
     spikeCountMin: 1
     spikeCountMax: 1
     spikeWarningTime: 0.7
-    spikeRoundsMin: 3
-    spikeRoundsMax: 6
+    spikeRoundsMin: 4
+    spikeRoundsMax: 8
     spikeRoundInterval: 0.7
     enemyCountMin: 2
     enemyCountMax: 3
@@ -94120,8 +94120,8 @@ MonoBehaviour:
     spikeCountMin: 1
     spikeCountMax: 1
     spikeWarningTime: 0.5
-    spikeRoundsMin: 3
-    spikeRoundsMax: 6
+    spikeRoundsMin: 5
+    spikeRoundsMax: 8
     spikeRoundInterval: 0.5
     enemyCountMin: 3
     enemyCountMax: 4
@@ -94282,7 +94282,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19f7135adf0332d46b73bc1509c9a879, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BossHealth
-  maxHealth: 333
+  maxHealth: 350
   onDeath:
     m_PersistentCalls:
       m_Calls: []
@@ -94376,7 +94376,7 @@ MonoBehaviour:
   dazeTrigger: FallIntoDaze
   deathTrigger: Die
   dazeDuration: 1.5
-  deathAnimDuration: 2
+  deathAnimDuration: 1
   musicFadeDuration: 2
   dialoguePart1: {fileID: 11400000, guid: 1954eda3e5ed7164daab18093a41debd, type: 2}
   dialoguePart2: {fileID: 11400000, guid: e59e4f59ba9952e4a95a4c96d331171e, type: 2}
@@ -94388,7 +94388,7 @@ MonoBehaviour:
   rewardPopup: {fileID: 1710673102}
   rewardTitle: 'New ability: Croissant of Chaos!'
   rewardDescription: Dodging deals damage to nearby enemies.
-  pauseBeforeDialogue: 1.5
+  pauseBeforeDialogue: 1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
