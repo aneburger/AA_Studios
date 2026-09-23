@@ -81,9 +81,9 @@ public class BoonCardSlotUI : MonoBehaviour, IPointerEnterHandler, IPointerExitH
                 backgroundImage.sprite = bg;
         }
 
-        if (card.icon != null)
+        if (card.image != null)
         {
-            iconImage.sprite = card.icon;
+            iconImage.sprite = card.image;
             iconImage.enabled = true;
         }
         else

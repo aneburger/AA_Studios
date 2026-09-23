@@ -12,6 +12,7 @@ public class BoonCardData : ScriptableObject
     [TextArea] public string description;
 
     [Header("Visuals")]
+    public Sprite image;
     public Sprite icon;
 
     [Header("Classification")]
