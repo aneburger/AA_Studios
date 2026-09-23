@@ -414,6 +414,8 @@ public class MenuManager : MonoBehaviour
         PlayUiSound(clickClip, clickVolume);
         AudioManager.Instance?.PlayMusic(AudioManager.Instance.musicClip);
 
+        RunStatsTracker.Instance?.ResetForNewRun();
+
         // Resume time
         Time.timeScale = 1f;
         GameObject player = GameObject.FindGameObjectWithTag("Player");

@@ -17,6 +17,9 @@ public class LevelLoader : MonoBehaviour
     [Header("Transition")]
     [SerializeField] private float fadeDuration = 0.5f;
 
+    [Header("Floor Display Names")]
+    [SerializeField] private string[] floorDisplayNames;
+
     private const string SaveFileName = "savegame.json";
     private string SaveFilePath => Path.Combine(Application.persistentDataPath, SaveFileName);
 
@@ -73,6 +76,18 @@ public class LevelLoader : MonoBehaviour
     {
         int nextFloor = GetCurrentFloorNumber() + 1;
         return $"Floor_{nextFloor:D2}";
+    }
+
+    // -- GET CURRENT FLOOR DISPLAY NAME --
+    public string GetCurrentFloorDisplayName()
+    {
+        int floorNumber = GetCurrentFloorNumber();
+        int index = floorNumber - 1;
+
+        if (floorDisplayNames != null && index >= 0 && index < floorDisplayNames.Length && !string.IsNullOrEmpty(floorDisplayNames[index]))
+            return floorDisplayNames[index];
+
+        return $"Floor {floorNumber}";
     }
 
     // -- RETURN TO MAIN MENU --

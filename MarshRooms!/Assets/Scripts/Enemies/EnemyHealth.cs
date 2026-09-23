@@ -147,6 +147,7 @@ public class EnemyHealth : BaseHealth
 
         OnDied?.Invoke(transform.position);
         EnemyManager.Instance.UnregisterEnemy(gameObject);
+        RunStatsTracker.Instance?.RegisterKill();
 
         SpawnSpores();
         Destroy(gameObject);

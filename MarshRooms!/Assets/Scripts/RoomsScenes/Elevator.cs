@@ -76,6 +76,7 @@ public class Elevator : MonoBehaviour
             chosenCard =>
             {
                 BoonManager.Instance.ApplyBoonById(chosenCard.boonId);
+                RunStatsTracker.Instance?.RegisterCardCollected(chosenCard);
                 ProceedToNextFloor();
             },
             onSkipped: ProceedToNextFloor
