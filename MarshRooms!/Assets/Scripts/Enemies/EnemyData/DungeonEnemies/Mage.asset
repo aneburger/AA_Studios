@@ -12,14 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6302092c942ee1644bc4027ea868e779, type: 3}
   m_Name: Mage
   m_EditorClassIdentifier: Assembly-CSharp::EnemyData
-  maxHealth: 35
+  maxHealth: 50
   moveSpeed: 3.5
   contactDamage: 2
   contactKnockback: 25
   enemyName: Magic Mushroom
   weapon: {fileID: 11400000, guid: 74712fb004535a14080797496a356898, type: 2}
-  detectionRange: 18
-  attackRange: 15
+  detectionRange: 20
+  attackRange: 20
   possibleWeaponDrops:
   - weaponPickupPrefab: {fileID: 1303430737314922756, guid: ecb11ea6b86a8244688f6cc913226356, type: 3}
     dropChance: 0.15

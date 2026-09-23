@@ -94338,6 +94338,7 @@ MonoBehaviour:
   pickupVolume: 0
   emptyClip: {fileID: 0}
   emptyVolume: 0
+  extraBulletDamageMultiplier: 0.6
 --- !u!114 &7788961182013461012
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -94586,14 +94587,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19f7135adf0332d46b73bc1509c9a879, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BossHealth
-  maxHealth: 333
+  maxHealth: 350
   onDeath:
     m_PersistentCalls:
       m_Calls: []
   onTakeDamage:
     m_PersistentCalls:
       m_Calls: []
-  phaseTwoThreshold: 0.4
+  phaseTwoThreshold: 0.45
   protectUntilPhaseTwo: 1
   phaseBars: 1
   startInvulnerable: 1

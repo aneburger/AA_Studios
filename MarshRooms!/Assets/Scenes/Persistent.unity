@@ -497,6 +497,7 @@ MonoBehaviour:
   pickupVolume: 0.8
   emptyClip: {fileID: 8300000, guid: d18e8ca6f92695c459ca1d6fcc86ebdb, type: 3}
   emptyVolume: 0.8
+  extraBulletDamageMultiplier: 0.6
   aim: {fileID: 319489606}
   impulseSource: {fileID: 319489604}
   playerMover: {fileID: 319489607}
@@ -1056,7 +1057,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ea9445b4fe40b645b2f64de8b5f3e41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerDodgeAttack
-  unlocked: 1
+  unlocked: 0
   damage: 5
   hitRadius: 2.5
   knockback: 8

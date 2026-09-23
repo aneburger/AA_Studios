@@ -16,9 +16,12 @@ public class BoonManager : MonoBehaviour
     // Card rarity weight per floors
     private static readonly (float normal, float rare, float epic)[] rarityWeightsByTier = new[]
     {
-        (0.60f, 0.30f, 0.10f), // floors 1-2
-        (0.60f, 0.275f, 0.125f), // floors 3-4
-        (0.50f, 0.30f, 0.20f), // floors 5-6
+        (0.70f, 0.30f, 0f),    // floors 1-2
+        (0.65f, 0.35f, 0f),    // floors 3-4
+        (0.60f, 0.30f, 0.10f), // floors 5-6
+        (0.50f, 0.35f, 0.15f), // floors 7-8
+        (0.45f, 0.35f, 0.20f), // floors 9-10
+        (0.35f, 0.35f, 0.30f), // floors 11-12
     };
 
     // -- AWAKE --
@@ -197,7 +200,7 @@ public class BoonManager : MonoBehaviour
 
     private BoonRarity RollRarity(int floorNumber)
     {
-        int tier = floorNumber <= 2 ? 0 : (floorNumber <= 4 ? 1 : 2);
+        int tier = Mathf.Clamp((floorNumber - 1) / 2, 0, rarityWeightsByTier.Length - 1);
         var weights = rarityWeightsByTier[tier];
 
         float roll = Random.value;

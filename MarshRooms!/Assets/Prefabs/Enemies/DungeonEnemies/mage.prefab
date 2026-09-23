@@ -328,10 +328,10 @@ MonoBehaviour:
   burstWeight: 1
   specialChance: 0.5
   specialCheckInterval: 3
-  summonCooldown: 7
-  burstCooldown: 7
-  specialActionTimeout: 3
-  healDelayAfterDamage: 3
+  summonCooldown: 6
+  burstCooldown: 6
+  specialActionTimeout: 2.5
+  healDelayAfterDamage: 2
   healCooldown: 7
   healAmount: 20
   healHpThreshold: 0.75
@@ -342,8 +342,8 @@ MonoBehaviour:
   healActionVolume: 1
   minionPrefabs:
   - {fileID: 988082134135583188, guid: 3e7fbf6dfdbc410408c5460cfb074511, type: 3}
-  minionCountMin: 2
-  minionCountMax: 5
+  minionCountMin: 3
+  minionCountMax: 6
   minionSpawnRadius: 2.5
   minionSpawnStaggerMin: 0.15
   minionSpawnStaggerMax: 0.4

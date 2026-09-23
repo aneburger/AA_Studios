@@ -24,6 +24,9 @@ public abstract class BaseShooter : MonoBehaviour
     [SerializeField] private AudioClip emptyClip; 
     [Range(0f, 1f)] public float emptyVolume;
 
+    [Header("Split Shot")]
+    [SerializeField] private float extraBulletDamageMultiplier = 0.6f;
+    
     public bool IsArmed => currentWeapon != null;
 
     protected float nextFireTime = 0f;
@@ -203,7 +206,8 @@ public abstract class BaseShooter : MonoBehaviour
 
         BaseBullet lastBullet = null;
 
-        int count = (bulletCountOverride > 0 ? bulletCountOverride : currentWeapon.bulletCount) + permanentBulletCountBonus;
+        int baseCount = bulletCountOverride > 0 ? bulletCountOverride : currentWeapon.bulletCount;
+        int count = baseCount + permanentBulletCountBonus;
         float spread = spreadAngleOverride >= 0 ? spreadAngleOverride : currentWeapon.spreadAngle;
         float startAngle = -(spread * (count - 1) / 2f);
 
@@ -237,9 +241,9 @@ public abstract class BaseShooter : MonoBehaviour
             float rolledDamage = Random.Range(minDmg, maxDmg);
             rolledDamage *= GetDamageMultiplier();
 
-            // Apply crit damage
-            if (Random.value <= critChance)
-                rolledDamage *= 2f;
+            // Extra bullets from a bonus (e.g. Split Shot boon) do reduced damage each
+            if (i >= baseCount)
+                rolledDamage *= extraBulletDamageMultiplier;
 
             GameObject bullet = Instantiate(currentWeapon.GetBulletPrefab(), spawnPosition, Quaternion.identity);
             BaseBullet b = bullet.GetComponent<BaseBullet>();
