@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4335018509098030027}
   - component: {fileID: 2765967550098509236}
   m_Layer: 0
-  m_Name: Pistol2-purple
+  m_Name: globber-gun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13b096589fb396d47a2fc316fa7a799e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WeaponPickup
-  weaponData: {fileID: 11400000, guid: 83dbe672d81c88f449382074c1dd233d, type: 2}
+  weaponData: {fileID: 11400000, guid: 46e7fc4d40a83ad4c8e1898bda65122f, type: 2}
   setsAsDefault: 0
   isMinigunTutorialPickup: 0
   ammo: -1

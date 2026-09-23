@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36776f04a1ca3d8449b04b532f7a016e, type: 3}
+  m_Name: GlobberGun
+  m_EditorClassIdentifier: Assembly-CSharp::WeaponData
+  weaponId: 
+  gunName: Globber Gun
+  bulletPrefab: {fileID: 6894130498819508759, guid: 16719251fbcce7d42af90221c26b7a54, type: 3}
+  bulletVariants: []
+  hitPrefab: {fileID: 4081999799842582576, guid: 91ad3baabe5a4524da2afb76bfb40071, type: 3}
+  muzzleFlashPrefab: {fileID: 4081999799842582576, guid: 6b810ad89c7cf144f869a571f5ae7837, type: 3}
+  pickupPrefab: {fileID: 0}
+  fireRate: 1.9
+  minDamage: 3
+  maxDamage: 3
+  bulletSpeed: 7.3
+  maxAmmo: -1
+  burstCount: 1
+  burstInterval: 0.08
+  firePointOffset: {x: 0, y: -0.1}
+  flipOffsetOnAimFlip: 0
+  bulletCount: 2
+  spreadAngle: 8
+  sprite: {fileID: 7952680805879045788, guid: 88ccc003a9bdde848b3b5cb7406a0178, type: 3}
+  hudSprite: {fileID: 0}
+  ammoDisplaySprite: {fileID: 0}
+  shootClip: {fileID: 8300000, guid: d82fd3063321ffb44af8a9ae49c5adaa, type: 3}
+  shootClips: []
+  shootVolume: 0.6
+  wallHitClip: {fileID: 8300000, guid: 277cfd5237e689d44b4f267a3990a69e, type: 3}
+  wallHitVolume: 0.1
+  shakeForce: 0
+  knockbackForce: 1
+  hitKnockback: 3
+  recoilAmount: -35
+  recoilDecay: 25

@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 6097866240677807103}
   - component: {fileID: 5717465801929208006}
   - component: {fileID: 1194510614602569093}
-  - component: {fileID: 43877468385842577}
+  - component: {fileID: 8190293042900705785}
   m_Layer: 8
-  m_Name: purple-bullet
+  m_Name: green-bullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -84,7 +84,7 @@ SpriteRenderer:
   m_SortingLayer: 4
   m_SortingOrder: 1
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 2208703988740019828, guid: eccfec3b063d4104d8ec3bed482c3e1f, type: 3}
+  m_Sprite: {fileID: 2208703988740019828, guid: fee2fa1364b6f7240a4de9d173baee09, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -157,7 +157,7 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.25
---- !u!114 &43877468385842577
+--- !u!114 &8190293042900705785
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -166,6 +166,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 6894130498819508759}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0c3dd22c4a9b0924b8be593f7593d16d, type: 3}
+  m_Script: {fileID: 11500000, guid: 6c928f62179a93d4d86505c5e56ccdaa, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Bullet
+  m_EditorClassIdentifier: Assembly-CSharp::BounceBullet
+  maxBounces: 2
+  wallMask:
+    serializedVersion: 2
+    m_Bits: 163840
+  bounceClip: {fileID: 8300000, guid: 98c6727c639b2da4493ac39c8da8f444, type: 3}
+  bounceVolume: 0.5

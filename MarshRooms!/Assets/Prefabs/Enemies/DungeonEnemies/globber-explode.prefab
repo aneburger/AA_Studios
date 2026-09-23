@@ -156,30 +156,26 @@ PrefabInstance:
     - target: {fileID: 803806091724421615, guid: 9dd4fa7122095964ab53544fb04bb88e, type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 9100000, guid: d7e354e2ff548214d9ee5bc3c4147683, type: 2}
+      objectReference: {fileID: 9100000, guid: 79c51d22699af114cb833e18fb1f19cc, type: 2}
     - target: {fileID: 988082134135583188, guid: 9dd4fa7122095964ab53544fb04bb88e, type: 3}
       propertyPath: m_Name
-      value: purple-button-mushroom-explode
+      value: globber-explode
       objectReference: {fileID: 0}
     - target: {fileID: 2905366087901206073, guid: 9dd4fa7122095964ab53544fb04bb88e, type: 3}
       propertyPath: enemyData
       value: 
-      objectReference: {fileID: 11400000, guid: 229cded49130d9c4a918dcba56c3c919, type: 2}
+      objectReference: {fileID: 11400000, guid: d6ecf887aae72b24bb3aa3aabe649623, type: 2}
     - target: {fileID: 4474422017556449794, guid: 9dd4fa7122095964ab53544fb04bb88e, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: -3797592573390126543, guid: 56b66be3407dc78459269375ca8d6d0a, type: 3}
+      objectReference: {fileID: 3068956249751633813, guid: e23c2b396e0021544aaaed098d566d84, type: 3}
     - target: {fileID: 7585961510317227088, guid: 9dd4fa7122095964ab53544fb04bb88e, type: 3}
       propertyPath: currentWeapon
       value: 
-      objectReference: {fileID: 11400000, guid: 228a03579c54a894ebb61e3ab0535259, type: 2}
-    - target: {fileID: 8471073151134515050, guid: 9dd4fa7122095964ab53544fb04bb88e, type: 3}
-      propertyPath: spawnGraceMax
-      value: 1
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 11400000, guid: 46e7fc4d40a83ad4c8e1898bda65122f, type: 2}
     - target: {fileID: 8471073151134515050, guid: 9dd4fa7122095964ab53544fb04bb88e, type: 3}
       propertyPath: chanceToShootWhileMoving
-      value: 0.75
+      value: 0.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -242,7 +238,7 @@ MonoBehaviour:
   primingDuration: 1.7
   flickerStartInterval: 0.3
   flickerEndInterval: 0.01
-  primingSpeedMultiplier: 1.5
+  primingSpeedMultiplier: 1.2
   tickClip: {fileID: 8300000, guid: 8daf8d3e58f3f784d9bbff7a9c25c99c, type: 3}
   tickStartVolume: 0.5
   tickMaxVolume: 1
