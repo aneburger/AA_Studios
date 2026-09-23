@@ -532,7 +532,7 @@ MonoBehaviour:
   aim: {fileID: 319489606}
   shooter: {fileID: 319489605}
   sporeActivator: {fileID: 319489615}
-  dodgeForce: 9
+  dodgeForce: 10
   dodgeDuration: 0.25
   dodgeCooldown: 0.1
   stationaryDodgeForceMultiplier: 1.4
@@ -1056,9 +1056,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ea9445b4fe40b645b2f64de8b5f3e41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerDodgeAttack
-  unlocked: 0
+  unlocked: 1
   damage: 5
-  hitRadius: 2
+  hitRadius: 2.5
   knockback: 8
   centerOffset: {x: 0, y: 0.7, z: 0}
   trailParticles: {fileID: 993365935}

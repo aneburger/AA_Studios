@@ -121,7 +121,7 @@ public class PlayerHealth : BaseHealth
         gameObject.layer = LayerMask.NameToLayer(value ? "PlayerInvincible" : "Player");
     }
 
-    // -- TAKE DAMAGE -- 
+    // -- TAKE DAMAGE --  
     public override void TakeDamage(float amount)
     {   
         if (IsDead()) return;
@@ -131,6 +131,8 @@ public class PlayerHealth : BaseHealth
         // Change to not take damage
         if (Random.value <= dodgeDamageChance)
             return;
+
+        amount = Mathf.Ceil(amount);
 
         damageCooldownTimer = damageCooldown + bonusIFrameDuration;
         base.TakeDamage(amount);

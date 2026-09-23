@@ -15,14 +15,14 @@ MonoBehaviour:
   weaponId: 
   gunName: Pistol Purple 1
   bulletPrefab: {fileID: 6894130498819508759, guid: 69924905709c7684cb965ee1934d4d8c, type: 3}
-  shellsPrefab: {fileID: 3331065470414262999, guid: b2b9e163261c23b418b6fc5856cd3a3c, type: 3}
+  bulletVariants: []
   hitPrefab: {fileID: 4081999799842582576, guid: f3fb2799471e50644919e5464a868be7, type: 3}
   muzzleFlashPrefab: {fileID: 4081999799842582576, guid: e4d518779a0ad1941ae4b48c28db2b82, type: 3}
   pickupPrefab: {fileID: 0}
   fireRate: 2.5
   minDamage: 3
   maxDamage: 3
-  bulletSpeed: 7.5
+  bulletSpeed: 7.2
   maxAmmo: -1
   burstCount: 3
   burstInterval: 0.15
