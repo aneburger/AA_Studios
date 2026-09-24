@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36776f04a1ca3d8449b04b532f7a016e, type: 3}
+  m_Name: MegaGun
+  m_EditorClassIdentifier: Assembly-CSharp::WeaponData
+  weaponId: minigun
+  gunName: MEGA Gun
+  bulletPrefab: {fileID: 6894130498819508759, guid: 58a5457b2b9c17a40a73cdf0caa9f1da, type: 3}
+  bulletVariants: []
+  hitPrefab: {fileID: 4081999799842582576, guid: c904ccd69bb38fb4e835b6a03e41e4dd, type: 3}
+  muzzleFlashPrefab: {fileID: 4081999799842582576, guid: f737e1bb8c3cd79479a4faeaa4343d2b, type: 3}
+  pickupPrefab: {fileID: 1303430737314922756, guid: df60fd66b3dcf2047bca1049f6b58218, type: 3}
+  fireRate: 0.22
+  minDamage: 3
+  maxDamage: 6
+  bulletSpeed: 17
+  maxAmmo: 80
+  burstCount: 1
+  burstInterval: 0.08
+  firePointOffset: {x: -0.2, y: -0.2}
+  flipOffsetOnAimFlip: 0
+  bulletCount: 1
+  spreadAngle: 15
+  sprite: {fileID: 242826433, guid: 8599a56d566eb3d4b9959c85f2dc0f10, type: 3}
+  hudSprite: {fileID: 242826433, guid: 8599a56d566eb3d4b9959c85f2dc0f10, type: 3}
+  ammoDisplaySprite: {fileID: 0}
+  shootClip: {fileID: 8300000, guid: 1c9fe815bc52d544889f2629a13e8cad, type: 3}
+  shootClips: []
+  shootVolume: 0.5
+  wallHitClip: {fileID: 0}
+  wallHitVolume: 0.7
+  shakeForce: 0.18
+  knockbackForce: 6
+  hitKnockback: 6
+  recoilAmount: -40
+  recoilDecay: 15
