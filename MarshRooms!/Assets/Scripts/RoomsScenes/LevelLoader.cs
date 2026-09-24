@@ -114,6 +114,12 @@ public class LevelLoader : MonoBehaviour
         SceneManager.LoadScene(persistentScene, LoadSceneMode.Single);
     }
     
+    
+    private void OnApplicationQuit()
+    {
+        SaveCurrentLevel();
+    }
+
     private IEnumerator LoadLevelRoutine(string sceneName)
     {
         ScreenEffects.Instance?.SetFadeImage();
@@ -242,6 +248,11 @@ public class LevelLoader : MonoBehaviour
             Debug.LogWarning("LevelLoader: no player found while saving, weapons will not be saved.");
         }
 
+        if (RunStatsTracker.Instance != null)
+        {
+            data.runStatsTrackerData = RunStatsTracker.Instance.GetSaveData();
+        }
+
         try
         {
             string json = JsonUtility.ToJson(data);
@@ -321,6 +332,11 @@ public class LevelLoader : MonoBehaviour
         else
         {
             Debug.LogWarning("LevelLoader: no player found while restoring, weapons were not restored.");
+        }
+
+        if (RunStatsTracker.Instance != null && data.runStatsTrackerData != null)
+        {
+            RunStatsTracker.Instance.RestoreFromSave(data.runStatsTrackerData);
         }
     }
 }

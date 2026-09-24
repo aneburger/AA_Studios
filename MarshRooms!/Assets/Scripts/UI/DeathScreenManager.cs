@@ -4,8 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using UnityEngine.Events;
-
-// Data needed to populate the death screen. 
+ 
 [System.Serializable]
 public struct DeathScreenStats
 {
@@ -50,8 +49,7 @@ public class DeathScreenManager : MonoBehaviour
     [SerializeField] private Image[] weaponLostSlots;
 
     [Header("Cards Collected")]
-    [SerializeField] private Transform cardsCollectedContainer;
-    [SerializeField] private Image cardIconPrefab;
+    [SerializeField] private Image[] cardCollectedSlots;
 
     [Header("UI Audio")]
     [SerializeField] private AudioClip hoverClip;
@@ -72,8 +70,6 @@ public class DeathScreenManager : MonoBehaviour
     private TMP_Text[] texts;
     private GameObject[] arrows;
     private int currentIndex = -1;
-
-    private readonly List<Image> spawnedCardIcons = new List<Image>();
 
     private void Awake()
     {
@@ -210,25 +206,29 @@ public class DeathScreenManager : MonoBehaviour
 
     private void PopulateCardsCollected(Sprite[] collectedCardSprites)
     {
-        foreach (Image icon in spawnedCardIcons)
-        {
-            if (icon != null)
-                Destroy(icon.gameObject);
-        }
-        spawnedCardIcons.Clear();
-
-        if (cardsCollectedContainer == null || cardIconPrefab == null || collectedCardSprites == null)
+        if (cardCollectedSlots == null)
             return;
 
-        foreach (Sprite sprite in collectedCardSprites)
+        for (int i = 0; i < cardCollectedSlots.Length; i++)
         {
-            if (sprite == null)
+            if (cardCollectedSlots[i] == null)
                 continue;
 
-            Image icon = Instantiate(cardIconPrefab, cardsCollectedContainer);
-            icon.sprite = sprite;
-            icon.gameObject.SetActive(true);
-            spawnedCardIcons.Add(icon);
+            Sprite sprite = (collectedCardSprites != null && i < collectedCardSprites.Length)
+                ? collectedCardSprites[i]
+                : null;
+
+            if (sprite != null)
+            {
+                cardCollectedSlots[i].sprite = sprite;
+                cardCollectedSlots[i].enabled = true;
+                cardCollectedSlots[i].color = Color.white;
+            }
+            else
+            {
+                cardCollectedSlots[i].sprite = null;
+                cardCollectedSlots[i].enabled = false;
+            }
         }
     }
 
