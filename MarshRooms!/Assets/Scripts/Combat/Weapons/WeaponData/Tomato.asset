@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36776f04a1ca3d8449b04b532f7a016e, type: 3}
+  m_Name: Tomato
+  m_EditorClassIdentifier: Assembly-CSharp::WeaponData
+  weaponId: tomato
+  gunName: Tomato Gun
+  bulletPrefab: {fileID: 6894130498819508759, guid: 80428dfa4b072b146a8e88c70dd3f53c, type: 3}
+  bulletVariants: []
+  hitPrefab: {fileID: 4081999799842582576, guid: 2d41fe47afc4aca40b69e320c7c5df6b, type: 3}
+  muzzleFlashPrefab: {fileID: 4081999799842582576, guid: bfd647eb4d30edf4ca77e999559e3891, type: 3}
+  pickupPrefab: {fileID: 1303430737314922756, guid: 3d43bd427e9ea7645a30f7ae52c53575, type: 3}
+  fireRate: 0.5
+  minDamage: 2
+  maxDamage: 5
+  bulletSpeed: 14
+  maxAmmo: 40
+  burstCount: 1
+  burstInterval: 0.08
+  firePointOffset: {x: 0, y: 0}
+  flipOffsetOnAimFlip: 0
+  bulletCount: 1
+  spreadAngle: 13
+  sprite: {fileID: -1644694228, guid: c52aaba4e2043ad4babd4b369737951a, type: 3}
+  hudSprite: {fileID: -1644694228, guid: c52aaba4e2043ad4babd4b369737951a, type: 3}
+  ammoDisplaySprite: {fileID: 0}
+  shootClip: {fileID: 8300000, guid: 9f439c78db02252429b381b54cbb6756, type: 3}
+  shootClips: []
+  shootVolume: 0.6
+  wallHitClip: {fileID: 0}
+  wallHitVolume: 0.7
+  shakeForce: 0.1
+  knockbackForce: 4
+  hitKnockback: 5
+  recoilAmount: -35
+  recoilDecay: 10
