@@ -223,14 +223,17 @@ public class QuitConfirmManager : MonoBehaviour
                 break;
 
             case QuitConfirmSource.PauseMenuMainMenu:
+                LevelLoader.Instance?.SaveCurrentLevel();
                 LevelLoader.Instance?.ReturnToMainMenu();
                 break;
 
             case QuitConfirmSource.PauseMenuQuit:
+                LevelLoader.Instance?.SaveCurrentLevel();
                 QuitGame();
                 break;
 
             case QuitConfirmSource.DeathScreenMainMenu:
+                LevelLoader.Instance?.SaveCurrentLevel();
                 LevelLoader.Instance?.ReturnToMainMenu();
                 break;
         }

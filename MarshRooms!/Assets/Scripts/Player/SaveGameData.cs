@@ -15,6 +15,9 @@ public class SaveGameData
     // Weapons
     public List<WeaponSaveEntry> weapons = new List<WeaponSaveEntry>();
     public int currentWeaponSlot;
+
+    // Death screen stats
+    public RunStatsSaveData runStatsTrackerData;
 }
 
 [System.Serializable]
