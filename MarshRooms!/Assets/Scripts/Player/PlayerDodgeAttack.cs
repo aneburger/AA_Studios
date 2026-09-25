@@ -16,6 +16,7 @@ public class PlayerDodgeAttack : MonoBehaviour
     [Header("VFX")]
     [SerializeField] private ParticleSystem trailParticles;
     [SerializeField] private GameObject hitVFX;
+    [SerializeField] private GameObject dodgeAttackVFX;
     [SerializeField] private int hitVFXSortingOrder = 50;
 
     [Header("Audio")]
@@ -50,16 +51,27 @@ public class PlayerDodgeAttack : MonoBehaviour
         bool isDodging = mover.IsDodging;
 
         if (isDodging && !wasDodging)
-            hitThisDodge.Clear();
+        {
+            hitThisDodge.Clear();    
+        }
 
         if (unlocked)
         {
             if (isDodging && !wasDodging) trailParticles?.Play();
             if (!isDodging && wasDodging) trailParticles?.Stop();
+
             if (isDodging) DealDamageAroundMarsh();
+            if (isDodging) SpawnDodgeVFX();
         }
 
         wasDodging = isDodging;
+    }
+
+    private void SpawnDodgeVFX()
+    {
+        if (dodgeAttackVFX == null) return;
+
+        Instantiate(dodgeAttackVFX, Center, Quaternion.identity);
     }
 
     private void DealDamageAroundMarsh()

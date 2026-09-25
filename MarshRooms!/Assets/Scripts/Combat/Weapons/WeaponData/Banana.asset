@@ -15,7 +15,7 @@ MonoBehaviour:
   weaponId: banana
   gunName: B-NANA
   bulletPrefab: {fileID: 6894130498819508759, guid: 9ab4e2f5c7bd5b94f8b9a790ce4ca601, type: 3}
-  shellsPrefab: {fileID: 0}
+  bulletVariants: []
   hitPrefab: {fileID: 4081999799842582576, guid: 9223993810704a64baf6fc20725813ba, type: 3}
   muzzleFlashPrefab: {fileID: 4081999799842582576, guid: fffbe85e55d35fc40a4c778c6597b252, type: 3}
   pickupPrefab: {fileID: 1303430737314922756, guid: 8b6717c7fcf618d48a9c81e5c6d876de, type: 3}
@@ -35,7 +35,7 @@ MonoBehaviour:
   ammoDisplaySprite: {fileID: 0}
   shootClip: {fileID: 8300000, guid: 9f439c78db02252429b381b54cbb6756, type: 3}
   shootClips: []
-  shootVolume: 0.6
+  shootVolume: 0.5
   wallHitClip: {fileID: 0}
   wallHitVolume: 0.7
   shakeForce: 0.08

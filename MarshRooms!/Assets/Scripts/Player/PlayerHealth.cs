@@ -33,10 +33,9 @@ public class PlayerHealth : BaseHealth
     private bool isLowHealthActive = false;
 
     private float damageCooldownTimer;
-    private bool isInvincible = false;
 
-    private float bonusIFrameDuration = 0f;
-    private float dodgeDamageChance = 0f;
+    private bool isInvincible = false;
+    private bool cheatInvincible = false;
 
     private string lastAttackerName = "Unknown";
 
@@ -81,18 +80,6 @@ public class PlayerHealth : BaseHealth
         UpdateHUD();
     }
 
-    // -- SET BONUS I-FRAME DURATION --
-    public void SetBonusIFrameDuration(float bonus)
-    {
-        bonusIFrameDuration = bonus;
-    }
-
-    // -- SET DODGE DAMAGE CHANCE --
-    public void SetDodgeDamageChance(float chance)
-    {
-        dodgeDamageChance = chance;
-    }
-
     // -- SET LAST ATTACKER --
     public void SetLastAttacker(string attackerName)
     {
@@ -105,6 +92,14 @@ public class PlayerHealth : BaseHealth
     {
         base.IncreaseMaxHealth(amount, healToFull);
         HUDManager.Instance?.RefreshHearts();
+    }
+
+    // -- DECREASE MAX HEALTH --
+    public override void DecreaseMaxHealth(float amount)
+    {
+        base.DecreaseMaxHealth(amount);
+        HUDManager.Instance?.RefreshHearts();
+        UpdateHUD();
     }
 
     // -- SET INVINCIBILITY -- 
@@ -121,20 +116,22 @@ public class PlayerHealth : BaseHealth
         gameObject.layer = LayerMask.NameToLayer(value ? "PlayerInvincible" : "Player");
     }
 
+    // -- SET CHEAT INVINCIBLE --
+    public void SetCheatInvincible(bool value)
+    {
+        cheatInvincible = value;
+    }
+
     // -- TAKE DAMAGE --  
     public override void TakeDamage(float amount)
     {   
         if (IsDead()) return;
-        if (isInvincible) return;
+        if (isInvincible || cheatInvincible) return;
         if (damageCooldownTimer > 0f) return;
-
-        // Change to not take damage
-        if (Random.value <= dodgeDamageChance)
-            return;
 
         amount = Mathf.Ceil(amount);
 
-        damageCooldownTimer = damageCooldown + bonusIFrameDuration;
+        damageCooldownTimer = damageCooldown;
         base.TakeDamage(amount);
         UpdateHUD();
 
@@ -186,7 +183,7 @@ public class PlayerHealth : BaseHealth
     // -- IS ON COOLDOWN -- 
     public bool IsOnCooldown()
     {
-        return damageCooldownTimer > 0f || isInvincible;
+        return damageCooldownTimer > 0f || isInvincible || cheatInvincible;
     }
 
     // -- UPDATE HUD --
@@ -218,7 +215,7 @@ public class PlayerHealth : BaseHealth
         yield return new WaitForSeconds(0.2f);
 
         float elapsed = 0f;
-        float totalDuration = damageCooldown + bonusIFrameDuration;
+        float totalDuration = damageCooldown;
 
         while (elapsed < totalDuration)
         {

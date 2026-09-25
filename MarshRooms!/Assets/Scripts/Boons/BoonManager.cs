@@ -12,6 +12,7 @@ public class BoonManager : MonoBehaviour
     private Dictionary<string, int> ownedCounts = new Dictionary<string, int>();
 
     public event System.Action<string> OnBoonApplied;
+    public event System.Action<string> OnBoonRemoved;
 
     // Card rarity weight per floors
     private static readonly (float normal, float rare, float epic)[] rarityWeightsByTier = new[]
@@ -56,77 +57,113 @@ public class BoonManager : MonoBehaviour
         }
 
         ownedCounts.TryGetValue(boonId, out int current);
-        ownedCounts[boonId] = current + 1;
+        int newCount = current + 1;
 
+        if (!ApplyEffect(boonId, newCount, +1))
+            return; // unknown id, nothing changed
+
+        ownedCounts[boonId] = newCount;
+        OnBoonApplied?.Invoke(boonId);
+    }
+
+    // -- REMOVE BOON (one copy) --
+    public void RemoveBoonById(string boonId)
+    {
+        if (!ownedCounts.TryGetValue(boonId, out int current) || current <= 0)
+            return;
+
+        if (!ApplyEffect(boonId, current, -1))
+            return;
+
+        ownedCounts[boonId] = current - 1;
+        OnBoonRemoved?.Invoke(boonId);
+        OnBoonApplied?.Invoke(boonId);
+    }
+
+    // -- APPLY/REMOVE EFFECT --
+    private bool ApplyEffect(string boonId, int copyIndex, int sign)
+    {
         switch (boonId)
         {
             case "bonus_heart":
-                Stats.bonusMaxHearts++;
-                ApplyBonusHeart(healToFull: false);
+                Stats.bonusMaxHearts += sign;
+                ApplyHeartDelta(sign);
                 break;
 
             case "heal_on_mutate":
-                Stats.healOnMutateAmount += 4;
+                Stats.healOnMutateAmount += 4 * sign;
                 break;
 
             case "health_drop_rate":
-                Stats.healthDropRateMultiplier *= 1.3f;
+                Stats.healthDropRateMultiplier = sign > 0
+                    ? Stats.healthDropRateMultiplier * 1.3f
+                    : Stats.healthDropRateMultiplier / 1.3f;
                 break;
 
             case "iframe_extension":
-                Stats.bonusIFrameDuration += 2f;
+                Stats.bonusIFrameDuration += 2f * sign;
                 break;
 
             case "dodge_damage_chance":
-                Stats.dodgeDamageChance += 0.1f;
+                Stats.dodgeDamageChance += 0.1f * sign;
                 break;
 
             case "mutation_duration":
-                Stats.bonusMutationDuration += 2f;
+                Stats.bonusMutationDuration += 2f * sign;
                 break;
 
             case "mutation_damage":
-                if (ownedCounts["mutation_damage"] == 1)
-                    Stats.mutationDamageBonus += 0.2f;
-                else
-                    Stats.mutationDamageBonus += 0.1f;
+                Stats.mutationDamageBonus += (copyIndex == 1 ? 0.2f : 0.1f) * sign;
                 break;
 
             case "mushroom_bomb":
-                Stats.hasMushroomBomb = true;
+                Stats.hasMushroomBomb = sign > 0;
                 break;
 
             case "faster_spore_fill":
-                Stats.sporeGainAmount += 1;
+                Stats.sporeGainAmount += 1 * sign;
                 break;
 
             case "fire_rate":
-                Stats.permanentFireRateMultiplier += 0.18f;
+                Stats.permanentFireRateMultiplier += 0.18f * sign;
                 break;
 
             case "crit_chance":
-                Stats.critChance += 0.1f;
+                Stats.critChance += 0.1f * sign;
                 break;
 
             case "overall_damage":
-                Stats.permanentDamageMultiplier += 0.2f;
+                Stats.permanentDamageMultiplier += 0.2f * sign;
                 break;
 
             case "extra_bullet":
-                Stats.permanentBulletCountBonus += 1;
+                Stats.permanentBulletCountBonus += 1 * sign;
                 break;
 
             default:
                 Debug.LogWarning($"BoonManager: unknown boonId '{boonId}'");
-                return;
+                return false;
         }
 
-        //.Log($"[BoonManager] Applied '{boonId}' (owned x{ownedCounts[boonId]})");
-        OnBoonApplied?.Invoke(boonId);
+        return true;
+    }
+
+    // -- APPLY HEART DELTA (+1 or -1 hearts) --
+    private void ApplyHeartDelta(int sign)
+    {
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        if (player == null) return;
+
+        PlayerHealth playerHealth = player.GetComponent<PlayerHealth>();
+        if (playerHealth == null) return;
+
+        if (sign > 0)
+            playerHealth.IncreaseMaxHealth(4, healToFull: false);
+        else
+            playerHealth.DecreaseMaxHealth(4);
     }
 
     // -- GET SAVE SNAPSHOT --
-    // Returns the owned boon counts as a serializable list.
     public List<BoonCountEntry> GetOwnedCountsSnapshot()
     {
         List<BoonCountEntry> list = new List<BoonCountEntry>();
@@ -138,7 +175,6 @@ public class BoonManager : MonoBehaviour
     }
 
     // -- RESTORE FROM SAVE --
-    // Restores Stats and ownedCounts wholesale rather than replaying ApplyBoonById.
     public void RestoreFromSave(RunStats savedStats, List<BoonCountEntry> savedCounts)
     {
         Stats = savedStats ?? new RunStats();
@@ -150,23 +186,7 @@ public class BoonManager : MonoBehaviour
                 ownedCounts[entry.boonId] = entry.count;
         }
 
-        // Reuse the existing event so PlayerBoonStats.ApplyAllStats() re-syncs
-        // shooter/spore/health bonuses to the restored stats.
         OnBoonApplied?.Invoke(null);
-    }
-
-    // -- APPLY BONUS HEART --
-    private void ApplyBonusHeart(bool healToFull)
-    {
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
-        if (player == null)
-        {
-            return;
-        }
-
-        PlayerHealth playerHealth = player.GetComponent<PlayerHealth>();
-        if (playerHealth != null)
-            playerHealth.IncreaseMaxHealth(4, healToFull: healToFull);
     }
 
     public List<BoonCardData> GetThreeCardOffers(int floorNumber)
@@ -221,13 +241,3 @@ public class BoonManager : MonoBehaviour
         return candidates[Random.Range(0, candidates.Count)];
     }
 }
-
-
-
-
-
-
-
-
-
-

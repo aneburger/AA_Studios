@@ -42,7 +42,7 @@ public class BossRewardPopupUI : MonoBehaviour
         if (okButton != null) okButton.onClick.AddListener(HandleOkClicked);
     }
 
-    // -- VISIBILITY -- (alpha-based, not SetActive, so this object never goes inactive)
+    // -- VISIBILITY --
     private void SetVisible(bool visible)
     {
         if (rootGroup == null) return;

@@ -252,6 +252,7 @@ MonoBehaviour:
   pickupVolume: 0
   emptyClip: {fileID: 0}
   emptyVolume: 0
+  extraBulletDamageMultiplier: 0.6
 --- !u!114 &7672455363216179369
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -326,15 +327,15 @@ MonoBehaviour:
   attackRange: 17
   summonWeight: 1
   burstWeight: 1
-  specialChance: 0.5
+  specialChance: 0.65
   specialCheckInterval: 3
-  summonCooldown: 6
-  burstCooldown: 6
+  summonCooldown: 5
+  burstCooldown: 5
   specialActionTimeout: 2.5
-  healDelayAfterDamage: 2
-  healCooldown: 7
-  healAmount: 20
-  healHpThreshold: 0.75
+  healDelayAfterDamage: 0.5
+  healCooldown: 4
+  healAmount: 30
+  healHpThreshold: 0.8
   healTrigger: Heal
   healWindupClip: {fileID: 8300000, guid: 1d61335d412ea9041bc30059b0ecc7d4, type: 3}
   healWindupVolume: 0.9

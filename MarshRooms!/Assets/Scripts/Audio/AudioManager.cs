@@ -22,6 +22,11 @@ public sealed class AudioManager : MonoBehaviour
     [SerializeField] private AudioClip[] footstepClips;
     [SerializeField] private float footstepVolume = 0.5f;
 
+    [Header("Overlap Protection")]
+    [SerializeField] private float minReplayInterval = 0.04f;
+
+    private readonly System.Collections.Generic.Dictionary<AudioClip, float> lastPlayTime = new System.Collections.Generic.Dictionary<AudioClip, float>();
+
     private AudioSource runningSFX;
     private float musicVolume = 1f;
     private float sfxVolume = 1f;
@@ -52,10 +57,22 @@ public sealed class AudioManager : MonoBehaviour
             musicSource.volume = musicBaseVolume * musicVolume * musicDampenMultiplier;
     }
 
+    // -- CAN PLAY --
+    private bool CanPlayClip(AudioClip clip)
+    {
+        if (lastPlayTime.TryGetValue(clip, out float last) && Time.unscaledTime - last < minReplayInterval)
+            return false;
+
+        lastPlayTime[clip] = Time.unscaledTime;
+        return true;
+    }
+
     // -- PLAY SFX --
     public void PlaySFX(AudioClip clip, float volume = 1f)
     {
         if (clip == null || sfxSource == null) return;
+        if (!CanPlayClip(clip)) return;
+
         sfxSource.PlayOneShot(clip, volume * sfxVolume);
     }
 
@@ -63,14 +80,6 @@ public sealed class AudioManager : MonoBehaviour
     public void PlayMusic(AudioClip clip, float volume = 0.5f)
     {
         if (clip == null || musicSource.clip == clip) return;
-
-        //if (musicSource.clip == clip && musicSource.isPlaying)
-        //    return;
-
-        //musicSource.clip = clip;
-        //musicSource.volume = Mathf.Clamp01(volume) * musicVolume;
-        //musicSource.loop = true;
-        //musicSource.Play();
 
         musicBaseVolume = Mathf.Clamp01(volume);
 
@@ -184,6 +193,7 @@ public sealed class AudioManager : MonoBehaviour
     public void PlaySFXWithPitch(AudioClip clip, float volume = 1f, float pitchVariation = 0.1f)
     {
         if (clip == null) return;
+        if (!CanPlayClip(clip)) return;
 
         GameObject tempAudio = new GameObject("TempAudio");
         AudioSource source = tempAudio.AddComponent<AudioSource>();

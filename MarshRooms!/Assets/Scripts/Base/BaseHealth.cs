@@ -67,6 +67,14 @@ public abstract class BaseHealth : MonoBehaviour
         }      
     }
 
+    // -- DECREASE MAX HEALTH --
+    public virtual void DecreaseMaxHealth(float amount)
+    {
+        maxHealth = Mathf.Max(1f, maxHealth - amount);
+        if (currentHealth > maxHealth)
+            currentHealth = maxHealth;
+    }
+
     // -- IS DEAD
     public bool IsDead()
     {

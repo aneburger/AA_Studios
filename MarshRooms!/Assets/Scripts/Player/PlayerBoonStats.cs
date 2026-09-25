@@ -44,9 +44,5 @@ public class PlayerBoonStats : MonoBehaviour
         // Spore/mutation side (SporeManager)
         SporeManager.Instance.SetBonusMutatedDuration(stats.bonusMutationDuration);
         SporeManager.Instance.SetSporeGainAmount(stats.sporeGainAmount);
-
-        // Health side (PlayerHealth)
-        playerHealth.SetBonusIFrameDuration(stats.bonusIFrameDuration);
-        playerHealth.SetDodgeDamageChance(stats.dodgeDamageChance);
     }
 }

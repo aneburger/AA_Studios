@@ -355,6 +355,8 @@ public abstract class BaseShooter : MonoBehaviour
     // -- USE AMMO --
     public bool UseAmmo()
     {   
+        if (CheatManager.Instance != null && CheatManager.Instance.InfiniteAmmo) return true;
+
         // return true if there is ammo left, and false if not
         if (currentAmmo == -1) return true; // Check for infinite ammo
         if (currentAmmo <= 0) return false;

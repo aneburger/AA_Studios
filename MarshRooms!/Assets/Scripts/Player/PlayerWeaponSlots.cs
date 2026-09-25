@@ -283,6 +283,28 @@ public class PlayerWeaponSlot : MonoBehaviour
         TutorialDirector.Instance?.OnWeaponScrolled();
     }
 
+    // -- CHEAT: FORCE EQUIP WEAPON
+    public void CheatEquipWeapon(WeaponData weapon)
+    {
+        if (weapon == null) return;
+
+        SaveCurrentAmmo();
+
+        int targetSlot = -1;
+        for (int i = 1; i < slots.Length; i++)
+        {
+            if (slots[i] == null) { targetSlot = i; break; }
+        }
+
+        if (targetSlot == -1)
+            targetSlot = 1;
+
+        slots[targetSlot] = weapon;
+        ammo[targetSlot] = weapon.maxAmmo;
+        currentSlot = targetSlot;
+        EquipCurrentSlot(isPickup: true, playSound: false);
+    }
+
     // -- SKIP EMPTY SLOTS --
     private void SkipEmptySlots(int direction, ref int slot)
     {
