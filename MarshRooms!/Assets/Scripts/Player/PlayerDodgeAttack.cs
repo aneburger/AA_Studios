@@ -57,11 +57,15 @@ public class PlayerDodgeAttack : MonoBehaviour
 
         if (unlocked)
         {
-            if (isDodging && !wasDodging) trailParticles?.Play();
+            if (isDodging && !wasDodging)
+            {
+                trailParticles?.Play();
+                SpawnDodgeVFX();
+            }
+
             if (!isDodging && wasDodging) trailParticles?.Stop();
 
             if (isDodging) DealDamageAroundMarsh();
-            if (isDodging) SpawnDodgeVFX();
         }
 
         wasDodging = isDodging;

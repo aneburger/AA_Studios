@@ -94379,18 +94379,18 @@ MonoBehaviour:
     downtimeMin: 1
     downtimeMax: 1.5
     animSpeed: 1
-    summonChargeTime: 1.2
+    summonChargeTime: 1
     counterActionsMin: 2
     counterActionsMax: 3
-    counterActionPause: 2
+    counterActionPause: 1.5
     spikeCountMin: 1
     spikeCountMax: 1
-    spikeWarningTime: 0.7
+    spikeWarningTime: 0.65
     spikeRoundsMin: 4
     spikeRoundsMax: 8
-    spikeRoundInterval: 0.7
-    enemyCountMin: 2
-    enemyCountMax: 3
+    spikeRoundInterval: 0.6
+    enemyCountMin: 3
+    enemyCountMax: 4
     rollChaseDuration: 9
     rollSpeedMax: 11
     finalRollPause: 1.7
@@ -94405,7 +94405,7 @@ MonoBehaviour:
     croissantSpread: 10
     croissantBulletSpeedMultiplier: 1
     croissantAimTurnRate: 0
-    knifeThrows: 3
+    knifeThrows: 4
     knifeReloadTime: 0.6
     knifeThrowPause: 0.5
     knifeSpeedMultiplier: 1
@@ -94416,20 +94416,20 @@ MonoBehaviour:
     croissantWeight: 1
     knivesWeight: 1
     downtimeMin: 0.5
-    downtimeMax: 1.5
-    animSpeed: 1.25
+    downtimeMax: 1
+    animSpeed: 1.3
     summonChargeTime: 0.8
     counterActionsMin: 1
     counterActionsMax: 3
-    counterActionPause: 1.5
+    counterActionPause: 1
     spikeCountMin: 1
-    spikeCountMax: 1
-    spikeWarningTime: 0.5
+    spikeCountMax: 3
+    spikeWarningTime: 0.55
     spikeRoundsMin: 5
     spikeRoundsMax: 8
-    spikeRoundInterval: 0.5
+    spikeRoundInterval: 0.55
     enemyCountMin: 3
-    enemyCountMax: 4
+    enemyCountMax: 6
     rollChaseDuration: 8
     rollSpeedMax: 13
     finalRollPause: 1
@@ -94448,7 +94448,7 @@ MonoBehaviour:
     knifeReloadTime: 0.4
     knifeThrowPause: 0.3
     knifeSpeedMultiplier: 1.2
-    knifeCountMultiplier: 1.35
+    knifeCountMultiplier: 1.3
     knifeHangMultiplier: 0.8
   counterPoint: {fileID: 1506485521}
   arenaPoint: {fileID: 965803513}
@@ -94587,7 +94587,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19f7135adf0332d46b73bc1509c9a879, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BossHealth
-  maxHealth: 350
+  maxHealth: 370
   onDeath:
     m_PersistentCalls:
       m_Calls: []

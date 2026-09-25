@@ -327,14 +327,14 @@ MonoBehaviour:
   attackRange: 17
   summonWeight: 1
   burstWeight: 1
-  specialChance: 0.65
-  specialCheckInterval: 3
-  summonCooldown: 5
-  burstCooldown: 5
+  specialChance: 0.6
+  specialCheckInterval: 4
+  summonCooldown: 6
+  burstCooldown: 6
   specialActionTimeout: 2.5
-  healDelayAfterDamage: 0.5
-  healCooldown: 4
-  healAmount: 30
+  healDelayAfterDamage: 3
+  healCooldown: 5
+  healAmount: 25
   healHpThreshold: 0.8
   healTrigger: Heal
   healWindupClip: {fileID: 8300000, guid: 1d61335d412ea9041bc30059b0ecc7d4, type: 3}
