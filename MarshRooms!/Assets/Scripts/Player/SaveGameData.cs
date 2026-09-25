@@ -18,6 +18,9 @@ public class SaveGameData
 
     // Death screen stats
     public RunStatsSaveData runStatsTrackerData;
+
+    // Abilities
+    public bool dodgeAttackUnlocked;
 }
 
 [System.Serializable]

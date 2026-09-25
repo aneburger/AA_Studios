@@ -114,7 +114,7 @@ public class LevelLoader : MonoBehaviour
         SceneManager.LoadScene(persistentScene, LoadSceneMode.Single);
     }
     
-    
+    // -- ON APPLICATION QUIT --
     private void OnApplicationQuit()
     {
         SaveCurrentLevel();
@@ -242,6 +242,12 @@ public class LevelLoader : MonoBehaviour
                 data.weapons = weaponSlot.GetSaveData(out int currentSlot);
                 data.currentWeaponSlot = currentSlot;
             }
+
+            PlayerDodgeAttack dodgeAttack = player.GetComponent<PlayerDodgeAttack>();
+            if (dodgeAttack != null)
+            {
+                data.dodgeAttackUnlocked = dodgeAttack.GetSaveData();
+            }
         }
         else
         {
@@ -328,6 +334,9 @@ public class LevelLoader : MonoBehaviour
         {
             PlayerWeaponSlot weaponSlot = player.GetComponent<PlayerWeaponSlot>();
             weaponSlot?.RestoreFromSave(data.weapons, data.currentWeaponSlot);
+
+            PlayerDodgeAttack dodgeAttack = player.GetComponent<PlayerDodgeAttack>();
+            dodgeAttack?.RestoreFromSave(data.dodgeAttackUnlocked);
         }
         else
         {

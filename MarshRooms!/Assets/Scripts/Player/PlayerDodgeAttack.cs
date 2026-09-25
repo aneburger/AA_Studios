@@ -42,6 +42,18 @@ public class PlayerDodgeAttack : MonoBehaviour
     {
         unlocked = value;
     }
+
+    // -- GET SAVE DATA --
+    public bool GetSaveData()
+    {
+        return unlocked;
+    }
+
+    // -- RESTORE FROM SAVE --
+    public void RestoreFromSave(bool savedUnlocked)
+    {
+        unlocked = savedUnlocked;
+    }
     
     // -- UPDATE --
     private void Update()
