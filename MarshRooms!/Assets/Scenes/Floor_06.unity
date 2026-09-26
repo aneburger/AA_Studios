@@ -83961,7 +83961,7 @@ MonoBehaviour:
   maxElitesPerWave: 2
   explodeChance: 0.3
   maxExplodersPerWave: 1
-  minWeaponDrops: 1
+  minWeaponDrops: 0
   maxWeaponDrops: 100
   dropZone: {fileID: 1288310429}
   maxWeaponDropsPerWave: 1
@@ -93923,6 +93923,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 266754408495121334, guid: cb4fd50bda7e18c45b535875c629ff47, type: 3}
+      propertyPath: manualOpenOnly
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 266754408495121334, guid: cb4fd50bda7e18c45b535875c629ff47, type: 3}
       propertyPath: elevatorTuneClip
       value: 

@@ -227,8 +227,7 @@ MonoBehaviour:
   hitStopDuration: 0.07
   transitionClip: {fileID: 0}
   transitionVolume: 1
-  debugLogging: 1
-  showDebugOverlay: 1
+  phaseRefillDuration: 1.5
   attacksBeforeCounterMin: 2
   attacksBeforeCounterMax: 3
   phase1:
@@ -239,7 +238,17 @@ MonoBehaviour:
     downtimeMax: 2.5
     animSpeed: 1
     summonChargeTime: 1.2
-    counterHoldTime: 3
+    counterActionsMin: 2
+    counterActionsMax: 3
+    counterActionPause: 0.4
+    spikeCountMin: 4
+    spikeCountMax: 6
+    spikeWarningTime: 0.6
+    spikeRoundsMin: 1
+    spikeRoundsMax: 1
+    spikeRoundInterval: 0.5
+    enemyCountMin: 2
+    enemyCountMax: 3
     rollChaseDuration: 3.5
     rollSpeedMax: 7
     finalRollPause: 0.7
@@ -268,7 +277,17 @@ MonoBehaviour:
     downtimeMax: 1.5
     animSpeed: 1.25
     summonChargeTime: 0.8
-    counterHoldTime: 3
+    counterActionsMin: 3
+    counterActionsMax: 4
+    counterActionPause: 0.25
+    spikeCountMin: 6
+    spikeCountMax: 9
+    spikeWarningTime: 0.45
+    spikeRoundsMin: 2
+    spikeRoundsMax: 3
+    spikeRoundInterval: 0.35
+    enemyCountMin: 3
+    enemyCountMax: 4
     rollChaseDuration: 3.5
     rollSpeedMax: 9
     finalRollPause: 0.45
@@ -338,6 +357,18 @@ MonoBehaviour:
   knifeReloadClip: {fileID: 0}
   knifeReloadVolume: 1
   knifeThrowShake: 0.3
+  minionSpawner: {fileID: 0}
+  minionPrefab: {fileID: 0}
+  enemySpawnPoints: []
+  weaponGuaranteeChance: 0.7
+  healthGuaranteeChance: 0.4
+  enemySpawnIntervalMin: 0.15
+  enemySpawnIntervalMax: 0.4
+  spikeSpawner: {fileID: 0}
+  despawnClip: {fileID: 0}
+  despawnVolume: 1
+  spawnClip: {fileID: 0}
+  spawnVolume: 1
   stubAttackDuration: 1.5
 --- !u!114 &8169478559265794274
 MonoBehaviour:
@@ -360,6 +391,7 @@ MonoBehaviour:
       m_Calls: []
   phaseTwoThreshold: 0.4
   protectUntilPhaseTwo: 1
+  phaseBars: 1
   startInvulnerable: 1
   flinchCooldown: 0.4
   sporePrefab: {fileID: 7129025776932877359, guid: b8874dc0a3c605d419413a967c2f2c17, type: 3}
@@ -424,6 +456,7 @@ MonoBehaviour:
   pickupVolume: 0
   emptyClip: {fileID: 0}
   emptyVolume: 0
+  extraBulletDamageMultiplier: 0.6
 --- !u!114 &3846074695851464617
 MonoBehaviour:
   m_ObjectHideFlags: 0

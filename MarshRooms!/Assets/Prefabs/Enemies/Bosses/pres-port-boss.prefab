@@ -103,9 +103,8 @@ GameObject:
   - component: {fileID: 208003371081328597}
   - component: {fileID: 8831653329582606974}
   - component: {fileID: 2233625664831475049}
-  - component: {fileID: 7788961182222442091}
+  - component: {fileID: 8465027221499930036}
   - component: {fileID: 8169478559265794274}
-  - component: {fileID: 2492847535121490606}
   - component: {fileID: 9056498895987517654}
   - component: {fileID: 7585961510317227088}
   - component: {fileID: 3846074695851464617}
@@ -195,9 +194,9 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 1}
-  m_Radius: 0.73
---- !u!114 &7788961182222442091
+  m_Offset: {x: 0, y: 1.96}
+  m_Radius: 1
+--- !u!114 &8465027221499930036
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -206,9 +205,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 988082134135583188}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8952e0f03cc3aa349aa6871ceeca7bdc, type: 3}
+  m_Script: {fileID: 11500000, guid: 5ea81845c07855a43ba267659943c84a, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ChefPuffsBoss
+  m_EditorClassIdentifier: Assembly-CSharp::PortobelloBoss
   room: {fileID: 0}
   health: {fileID: 0}
   healthBar: {fileID: 0}
@@ -228,148 +227,18 @@ MonoBehaviour:
   transitionClip: {fileID: 0}
   transitionVolume: 1
   phaseRefillDuration: 1.5
-  attacksBeforeCounterMin: 2
-  attacksBeforeCounterMax: 3
   phase1:
-    rollWeight: 1
-    croissantWeight: 1
-    knivesWeight: 1
     downtimeMin: 1.5
     downtimeMax: 2.5
     animSpeed: 1
-    summonChargeTime: 1.2
-    counterActionsMin: 2
-    counterActionsMax: 3
-    counterActionPause: 0.4
-    spikeCountMin: 4
-    spikeCountMax: 6
-    spikeWarningTime: 0.6
-    spikeRoundsMin: 1
-    spikeRoundsMax: 1
-    spikeRoundInterval: 0.5
-    enemyCountMin: 2
-    enemyCountMax: 3
-    rollChaseDuration: 3.5
-    rollSpeedMax: 7
-    finalRollPause: 0.7
-    finalRollSpeed: 11
-    dazeDuration: 3
-    croissantVolleys: 1
-    croissantWindup: 0.7
-    croissantShots: 0
-    croissantShotInterval: 0
-    croissantVolleyPause: 0
-    croissantBulletsPerShot: 0
-    croissantSpread: 10
-    croissantBulletSpeedMultiplier: 1
-    croissantAimTurnRate: 0
-    knifeThrows: 3
-    knifeReloadTime: 0.6
-    knifeThrowPause: 0.5
-    knifeSpeedMultiplier: 1
-    knifeCountMultiplier: 1
-    knifeHangMultiplier: 1
   phase2:
-    rollWeight: 1
-    croissantWeight: 1
-    knivesWeight: 1
-    downtimeMin: 0.8
-    downtimeMax: 1.5
-    animSpeed: 1.25
-    summonChargeTime: 0.8
-    counterActionsMin: 3
-    counterActionsMax: 4
-    counterActionPause: 0.25
-    spikeCountMin: 6
-    spikeCountMax: 9
-    spikeWarningTime: 0.45
-    spikeRoundsMin: 2
-    spikeRoundsMax: 3
-    spikeRoundInterval: 0.35
-    enemyCountMin: 3
-    enemyCountMax: 4
-    rollChaseDuration: 3.5
-    rollSpeedMax: 9
-    finalRollPause: 0.45
-    finalRollSpeed: 13.5
-    dazeDuration: 2.4
-    croissantVolleys: 2
-    croissantWindup: 0.5
-    croissantShots: 14
-    croissantShotInterval: 0.16
-    croissantVolleyPause: 0.6
-    croissantBulletsPerShot: 0
-    croissantSpread: 10
-    croissantBulletSpeedMultiplier: 1.15
-    croissantAimTurnRate: 0
-    knifeThrows: 4
-    knifeReloadTime: 0.4
-    knifeThrowPause: 0.3
-    knifeSpeedMultiplier: 1.2
-    knifeCountMultiplier: 1.35
-    knifeHangMultiplier: 0.7
-  counterPoint: {fileID: 0}
-  arenaPoint: {fileID: 0}
-  summonEventTimeout: 3
-  rollSpeedStart: 3
-  rollRampDuration: 1.2
-  rollTurnRate: 110
-  rollInaccuracyMin: 5
-  rollInaccuracyMax: 20
-  rollDirectionRefresh: 0.6
-  bounceSteerLock: 0.3
-  rollBrakeTime: 0.35
-  windupEventTimeout: 3
-  chargeShakeStart: 0.02
-  chargeShakeEnd: 0.08
-  chargeShakeInterval: 0.03
-  finalRollRamp: 0.2
-  finalRollTimeout: 2.5
-  impactFallbackSpeed: 4
-  impactFallbackTime: 0.35
-  impactShake: 0.7
-  bumpShake: 0.15
-  idleContactDamage: 2
-  idleContactKnockback: 5
-  rollContactDamage: 4
-  rollContactKnockback: 10
-  windupClip: {fileID: 0}
-  windupVolume: 1
-  rollLoopClip: {fileID: 0}
-  rollLoopVolume: 0.7
-  bumpClip: {fileID: 0}
-  bumpVolume: 0.8
-  impactClip: {fileID: 0}
-  impactVolume: 1
-  getUpClip: {fileID: 0}
-  getUpVolume: 0.8
-  croissantCannon: {fileID: 0}
-  shootSpots: []
-  shootSpotMinPlayerDistance: 2.5
-  shootSpotMinMoveDistance: 1.5
-  croissantWeaponShowDelay: 0.2
-  croissantWindupClip: {fileID: 0}
-  croissantWindupVolume: 1
-  croissantWindupPulses: 2
-  knifeWeapons: []
-  knifePatterns: []
-  knifeRepeatSameShape: 0
-  knifeReloadClip: {fileID: 0}
-  knifeReloadVolume: 1
-  knifeThrowShake: 0.3
-  minionSpawner: {fileID: 0}
-  minionPrefab: {fileID: 0}
-  enemySpawnPoints: []
-  weaponGuaranteeChance: 0.7
-  healthGuaranteeChance: 0.4
-  enemySpawnIntervalMin: 0.15
-  enemySpawnIntervalMax: 0.4
-  spikeSpawner: {fileID: 0}
-  despawnClip: {fileID: 0}
-  despawnVolume: 1
-  spawnClip: {fileID: 0}
-  spawnVolume: 1
-  stubAttackDuration: 1.5
+    downtimeMin: 1
+    downtimeMax: 1.8
+    animSpeed: 1.15
+  phase3:
+    downtimeMin: 0.7
+    downtimeMax: 1.3
+    animSpeed: 1.3
 --- !u!114 &8169478559265794274
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -405,22 +274,6 @@ MonoBehaviour:
   deflectClip: {fileID: 0}
   deflectVolume: 1
   deflectCooldown: 0.08
---- !u!114 &2492847535121490606
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 988082134135583188}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3cb74e13d9873a94aadba970ab8a344e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::BossRollMover
-  bumpMask:
-    serializedVersion: 2
-    m_Bits: 163840
-  bumpEventCooldown: 0.08
 --- !u!114 &9056498895987517654
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -556,7 +409,7 @@ SpriteRenderer:
   m_SortingLayer: 3
   m_SortingOrder: 1
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 4194268402133393728, guid: 46305afaa6ef4b3458c62eb3785cced2, type: 3}
+  m_Sprite: {fileID: 4747737961246356050, guid: 1ac9868338760f140a8b3c52aa37ab84, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -576,7 +429,7 @@ Animator:
   m_GameObject: {fileID: 1474284981994161219}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 2c6aa97f9e385914e9f2e898242bf68a, type: 2}
+  m_Controller: {fileID: 9100000, guid: edd86149fe678f346b29640c31caead6, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -635,7 +488,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7866796958824413751}
-  - component: {fileID: 1811900954029987988}
+  - component: {fileID: 4781514753774294185}
+  - component: {fileID: 7395519946870887071}
   m_Layer: 9
   m_Name: Hitbox
   m_TagString: Untagged
@@ -652,14 +506,14 @@ Transform:
   m_GameObject: {fileID: 2223798187010705781}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.064, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 208003371081328597}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &1811900954029987988
-BoxCollider2D:
+--- !u!58 &4781514753774294185
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -692,18 +546,45 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.03, y: 0.86}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Size: {x: 0.85, y: 1.2}
-  m_EdgeRadius: 0
+  m_Offset: {x: 0, y: 1.92}
+  m_Radius: 0.72
+--- !u!70 &7395519946870887071
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2223798187010705781}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0.031713363, y: 2.945192}
+  m_Size: {x: 2.5267107, y: 1.0586826}
+  m_Direction: 1
 --- !u!1 &3221483142425514410
 GameObject:
   m_ObjectHideFlags: 0
@@ -796,17 +677,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: Shadow
       objectReference: {fileID: 0}
-    - target: {fileID: 1525218423229736197, guid: fe02030257054c548a0a8f1e09f2f665, type: 3}
-      propertyPath: m_Layer
-      value: 7
-      objectReference: {fileID: 0}
     - target: {fileID: 4750130110337884741, guid: fe02030257054c548a0a8f1e09f2f665, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.034
+      value: 0.001
       objectReference: {fileID: 0}
     - target: {fileID: 4750130110337884741, guid: fe02030257054c548a0a8f1e09f2f665, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.257
+      value: 1.127
       objectReference: {fileID: 0}
     - target: {fileID: 4750130110337884741, guid: fe02030257054c548a0a8f1e09f2f665, type: 3}
       propertyPath: m_LocalPosition.z
@@ -841,25 +718,9 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5163916380359555627, guid: fe02030257054c548a0a8f1e09f2f665, type: 3}
-      propertyPath: m_Color.a
-      value: 0.5882353
-      objectReference: {fileID: 0}
-    - target: {fileID: 5163916380359555627, guid: fe02030257054c548a0a8f1e09f2f665, type: 3}
-      propertyPath: m_Color.b
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5163916380359555627, guid: fe02030257054c548a0a8f1e09f2f665, type: 3}
-      propertyPath: m_Color.g
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5163916380359555627, guid: fe02030257054c548a0a8f1e09f2f665, type: 3}
-      propertyPath: m_Color.r
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5163916380359555627, guid: fe02030257054c548a0a8f1e09f2f665, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 67297232, guid: 687b2d6160ce7db41803647497bda900, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
