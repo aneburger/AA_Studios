@@ -19,7 +19,7 @@ public class BaseBullet : MonoBehaviour
     protected virtual void Start() { }
 
     // -- SET DIRECTION --
-    public void SetDirection(Vector2 dir)
+    public virtual void SetDirection(Vector2 dir)
     {
         direction = dir.normalized;
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
@@ -33,7 +33,7 @@ public class BaseBullet : MonoBehaviour
     }
 
     // --  SET BULLET --
-    public void SetBullet(float speed, float damage, float knockback, GameObject hitVFX, int sortingOrder, AudioClip wallHitClip = null, float wallHitVolume = 0.7f)
+    public virtual void SetBullet(float speed, float damage, float knockback, GameObject hitVFX, int sortingOrder, AudioClip wallHitClip = null, float wallHitVolume = 0.7f)
     {
         this.speed = speed;
         this.damage = damage;

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5717465801929208006}
   - component: {fileID: 1194510614602569093}
   - component: {fileID: 4472710118913368873}
-  - component: {fileID: 1518832567164945737}
+  - component: {fileID: -3934310350786891682}
   m_Layer: 8
   m_Name: coin-bullet
   m_TagString: Untagged
@@ -180,7 +180,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &1518832567164945737
+--- !u!114 &-3934310350786891682
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -189,6 +189,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 6894130498819508759}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0c3dd22c4a9b0924b8be593f7593d16d, type: 3}
+  m_Script: {fileID: 11500000, guid: 54382db79604e614eabf5baf02c4ed23, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::BaseBullet
+  m_EditorClassIdentifier: Assembly-CSharp::SprayBullet
+  angleJitter: 15
+  minSpeedMultiplier: 0.8
+  maxSpeedMultiplier: 1.1

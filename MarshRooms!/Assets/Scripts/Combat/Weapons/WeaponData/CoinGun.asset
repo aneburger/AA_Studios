@@ -22,14 +22,14 @@ MonoBehaviour:
   fireRate: 1
   minDamage: 2
   maxDamage: 2
-  bulletSpeed: 8
+  bulletSpeed: 5.7
   maxAmmo: -1
   burstCount: 15
   burstInterval: 0.19
   firePointOffset: {x: 1, y: -0.4}
   flipOffsetOnAimFlip: 0
-  bulletCount: 3
-  spreadAngle: 10
+  bulletCount: 1
+  spreadAngle: 5
   sprite: {fileID: -950518265, guid: 1eec7d81dabf22749950945a638fcef3, type: 3}
   hudSprite: {fileID: 0}
   ammoDisplaySprite: {fileID: 0}

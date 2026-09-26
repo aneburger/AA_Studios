@@ -5,6 +5,7 @@ public class BossAnimationRelay : MonoBehaviour
 {
     public event Action RollWindupEnded;
     public event Action SummonAction;
+    public event Action SummonReady;
 
     public void OnRollWindupEnd()
     {
@@ -15,4 +16,10 @@ public class BossAnimationRelay : MonoBehaviour
     {
         SummonAction?.Invoke();
     }
+
+    public void OnSummonReady()
+    {
+        SummonReady?.Invoke();
+    }
+
 }

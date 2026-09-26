@@ -1,4 +1,5 @@
-// Portobello's brain — Step 2: Gold Bar Gun added.
+// Portobello's brain.
+// Step 1: skeleton. Step 2: Gold Bar Gun. Step 3: Coin Spray Gun.
 
 using System.Collections;
 using System.Collections.Generic;
@@ -31,6 +32,16 @@ public class PortobelloPhaseSettings
     public float goldBarVolleyPause = 0.5f;
     public float goldBarBulletSpeedMultiplier = 1f;
     public float goldBarAimTurnRate = 0f;
+
+    [Header("Coin Spray Gun")]
+    public int coinVolleys = 1;
+    public float coinVolleyPause = 0.5f;
+    public int coinShots = 14;
+    public float coinShotInterval = 0.12f;
+    public float coinBulletSpeedMultiplier = 1f;
+    public float coinAimTurnRate = 0f;
+    public int coinBulletsPerShot = 1;
+    public float coinSpread = 8f;
 }
 
 public class PortobelloBoss : BossBrain
@@ -38,7 +49,6 @@ public class PortobelloBoss : BossBrain
     // Animator trigger names
     private const string TrigDespawn = "Despawn";
     private const string TrigSpawn = "Spawn";
-    private const string TrigGunWindup = "GunWindup";
 
     [Header("Phase Settings")]
     [SerializeField] private PortobelloPhaseSettings phase1 = new PortobelloPhaseSettings();
@@ -89,6 +99,11 @@ public class PortobelloBoss : BossBrain
     [Range(0f, 1f)] [SerializeField] private float gunWindupVolume = 1f;
     [SerializeField] private int gunWindupPulses = 2;
 
+    [Header("Coin Spray Gun")]
+    [SerializeField] private WeaponData coinSprayGun;
+    [SerializeField] private float coinMoveSpeed = 1.5f;
+    [SerializeField] private float coinMinDistanceToPlayer = 1.5f;
+
     [Header("Fallback")]
     [SerializeField] private float stubAttackDuration = 1.5f;
 
@@ -122,6 +137,7 @@ public class PortobelloBoss : BossBrain
     protected override void ApplyPhase(int newPhase)
     {
         SetAnimSpeed(CurrentSettings.animSpeed);
+        // Statue spawning on phase 2/3 entry hooks in here later.
     }
 
     protected override void OnFightCancelled()
@@ -134,16 +150,17 @@ public class PortobelloBoss : BossBrain
         SetIdleContact();
     }
 
-    // ==================== DIRECTOR ====================
+    // ==================== DIRECTOR (temporary test harness) ====================
     protected override IEnumerator FightLoop()
     {
         yield return new WaitForSeconds(openingDelay);
-
         SetIdleContact();
 
+        bool useCoin = false;
         while (true)
         {
-            yield return GoldBarGunAttack();
+            yield return useCoin ? CoinSprayGunAttack() : GoldBarGunAttack();
+            useCoin = !useCoin;
             yield return Downtime();
         }
     }
@@ -202,7 +219,102 @@ public class PortobelloBoss : BossBrain
         shooter.ClearBulletOverrides();
     }
 
-    // Vanish, reappear at a shoot point, gun in hand
+    // ==================== COIN SPRAY GUN ====================
+    private IEnumerator CoinSprayGunAttack()
+    {
+        if (shooter == null || coinSprayGun == null)
+        {
+            yield return new WaitForSeconds(stubAttackDuration);
+            yield break;
+        }
+
+        PortobelloPhaseSettings s = CurrentSettings;
+
+        shooter.EquipWeapon(coinSprayGun, isPickup: true, playSound: false);
+        shooter.HideWeapon(true);
+        ApplyCoinSettings(s);
+
+        yield return Reposition();
+
+        int volleys = Mathf.Max(1, s.coinVolleys);
+        for (int v = 0; v < volleys; v++)
+        {
+            yield return GunWindup(s.goldBarWindup);
+            yield return CoinStream(s);
+
+            if (v < volleys - 1)
+                yield return HoldAim(s.coinVolleyPause, s.coinAimTurnRate);
+        }
+
+        shooter.SquishEffect();
+        yield return new WaitForSeconds(0.15f);
+        shooter.HideWeapon(true);
+        ClearCoinSettings();
+    }
+
+    private void ApplyCoinSettings(PortobelloPhaseSettings s)
+    {
+        shooter.SetBulletSpeedMultiplier(s.coinBulletSpeedMultiplier);
+
+        if (s.coinBulletsPerShot > 0)
+            shooter.SetBulletOverrides(s.coinBulletsPerShot, s.coinSpread);
+        else
+            shooter.ClearBulletOverrides();
+    }
+
+    private void ClearCoinSettings()
+    {
+        shooter.SetBulletSpeedMultiplier(1f);
+        shooter.ClearBulletOverrides();
+    }
+
+    private IEnumerator CoinStream(PortobelloPhaseSettings s)
+    {
+        int shots = Mathf.Max(1, s.coinShots);
+        float interval = s.coinShotInterval > 0f ? s.coinShotInterval : coinSprayGun.burstInterval;
+
+        int fired = 0;
+        float nextShot = Time.time;
+        bool wasMoving = false;
+
+        while (fired < shots)
+        {
+            TrackAim(s.coinAimTurnRate);
+
+            bool isMoving = false;
+            if (player != null)
+            {
+                float dist = Vector2.Distance(transform.position, player.position);
+                if (dist > coinMinDistanceToPlayer)
+                {
+                    isMoving = true;
+                    Vector2 dir = ((Vector2)player.position - (Vector2)transform.position).normalized;
+                    transform.position += (Vector3)(dir * coinMoveSpeed * Time.deltaTime);
+                }
+            }
+
+            if (isMoving != wasMoving)
+            {
+                directionalAnimator?.SetWalking(isMoving);
+                wasMoving = isMoving;
+            }
+
+            if (Time.time >= nextShot)
+            {
+                shooter.Shoot();
+                fired++;
+                nextShot = Time.time + interval;
+            }
+
+            yield return null;
+        }
+
+        if (wasMoving) directionalAnimator?.SetWalking(false);
+    }
+
+    // ==================== SHARED GUN HELPERS ====================
+
+    // Vanish, reappear at a shoot point
     private IEnumerator Reposition()
     {
         health.SetInvulnerable(BossHealth.ReasonHidden, true);
@@ -266,7 +378,6 @@ public class PortobelloBoss : BossBrain
     private IEnumerator GunWindup(float duration)
     {
         duration = Mathf.Max(0.05f, duration);
-        Trigger(TrigGunWindup);
         AudioManager.Instance?.PlaySFXWithPitch(gunWindupClip, gunWindupVolume, 0.1f);
 
         int pulses = Mathf.Max(1, gunWindupPulses);
