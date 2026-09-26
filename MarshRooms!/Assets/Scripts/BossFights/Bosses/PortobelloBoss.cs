@@ -1,5 +1,4 @@
 // Portobello's brain.
-// Step 1: skeleton. Step 2: Gold Bar Gun. Step 3: Coin Spray Gun.
 
 using System.Collections;
 using System.Collections.Generic;
@@ -21,6 +20,11 @@ public class PortobelloPhaseSettings
     public float downtimeMin = 1.5f;
     public float downtimeMax = 2.5f;
 
+    [Header("Attack Weights (0 = never picked this phase)")]
+    public float goldBarWeight = 1f;
+    public float coinGunWeight = 1f;
+    public float dollarBurstsWeight = 1f;
+
     [Header("Animation")]
     public float animSpeed = 1f;
 
@@ -31,7 +35,7 @@ public class PortobelloPhaseSettings
     public float goldBarShotInterval = 0.18f;
     public float goldBarVolleyPause = 0.5f;
     public float goldBarBulletSpeedMultiplier = 1f;
-    public float goldBarAimTurnRate = 0f;
+    public float goldBarAimTurnRate = 0f; // 0 = snap to player
 
     [Header("Coin Spray Gun")]
     public int coinVolleys = 1;
@@ -42,6 +46,14 @@ public class PortobelloPhaseSettings
     public float coinAimTurnRate = 0f;
     public int coinBulletsPerShot = 1;
     public float coinSpread = 8f;
+    public float coinMoveSpeed = 1.5f;
+
+    [Header("Dollar Bursts")]
+    public int dollarThrows = 3;
+    public float dollarSummonPause = 0.5f;
+    public float dollarSpeedMultiplier = 1f;
+    public float dollarCountMultiplier = 1f;
+    public float dollarHangMultiplier = 1f;
 }
 
 public class PortobelloBoss : BossBrain
@@ -49,9 +61,13 @@ public class PortobelloBoss : BossBrain
     // Animator trigger names
     private const string TrigDespawn = "Despawn";
     private const string TrigSpawn = "Spawn";
+    private const string TrigBillSummon = "bill-summon";
 
     [Header("Phase Settings")]
-    [SerializeField] private PortobelloPhaseSettings phase1 = new PortobelloPhaseSettings();
+    [SerializeField] private PortobelloPhaseSettings phase1 = new PortobelloPhaseSettings
+    {
+        coinGunWeight = 0f
+    };
     [SerializeField] private PortobelloPhaseSettings phase2 = new PortobelloPhaseSettings
     {
         downtimeMin = 1.0f,
@@ -101,8 +117,14 @@ public class PortobelloBoss : BossBrain
 
     [Header("Coin Spray Gun")]
     [SerializeField] private WeaponData coinSprayGun;
-    [SerializeField] private float coinMoveSpeed = 1.5f;
     [SerializeField] private float coinMinDistanceToPlayer = 1.5f;
+
+    [Header("Dollar Bursts")]
+    [SerializeField] private WeaponData dollarBillWeapon;
+    [SerializeField] private KnifePatternData[] dollarPatterns;
+    [SerializeField] private float dollarSummonEventTimeout = 3f;
+    [SerializeField] private AudioClip billSummonClip;
+    [Range(0f, 1f)] [SerializeField] private float billSummonVolume = 1f;
 
     [Header("Fallback")]
     [SerializeField] private float stubAttackDuration = 1.5f;
@@ -111,9 +133,13 @@ public class PortobelloBoss : BossBrain
     private Rigidbody2D body;
     private EnemyShooter shooter;
     private WeaponAimer weaponAimer;
+    private BossPatternShooter patternShooter;
 
     private Vector2 currentAim = Vector2.right;
     private int lastShootSpot = -1;
+    private int lastDollarPatternIndex = -1;
+    private bool summonReadyFired;
+    private PortobelloAttack? lastAttack;
 
     // -- AWAKE --
     protected override void Awake()
@@ -123,6 +149,26 @@ public class PortobelloBoss : BossBrain
         body = GetComponent<Rigidbody2D>();
         shooter = GetComponent<EnemyShooter>();
         weaponAimer = GetComponentInChildren<WeaponAimer>();
+        patternShooter = GetComponent<BossPatternShooter>();
+    }
+
+    // -- ENABLE --
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+        if (relay != null) relay.SummonReady += HandleSummonReady;
+    }
+
+    // -- DISABLE --
+    protected override void OnDisable()
+    {
+        base.OnDisable();
+        if (relay != null) relay.SummonReady -= HandleSummonReady;
+    }
+
+    private void HandleSummonReady()
+    {
+        summonReadyFired = true;
     }
 
     protected override void OnAnimTrigger(string triggerName)
@@ -131,6 +177,8 @@ public class PortobelloBoss : BossBrain
             AudioManager.Instance?.PlaySFXWithPitch(despawnClip, despawnVolume, 0.1f);
         else if (triggerName == TrigSpawn)
             AudioManager.Instance?.PlaySFXWithPitch(spawnClip, spawnVolume, 0.1f);
+        else if (triggerName == TrigBillSummon)
+            AudioManager.Instance?.PlaySFXWithPitch(billSummonClip, billSummonVolume, 0.1f);
     }
 
     // -- PHASE --
@@ -150,18 +198,70 @@ public class PortobelloBoss : BossBrain
         SetIdleContact();
     }
 
-    // ==================== DIRECTOR (temporary test harness) ====================
+    // ==================== DIRECTOR ====================
     protected override IEnumerator FightLoop()
     {
         yield return new WaitForSeconds(openingDelay);
         SetIdleContact();
 
-        bool useCoin = false;
+        lastAttack = null;
+
         while (true)
         {
-            yield return useCoin ? CoinSprayGunAttack() : GoldBarGunAttack();
-            useCoin = !useCoin;
+            PortobelloAttack attack = PickNextAttack();
+            yield return RunAttack(attack);
+            lastAttack = attack;
             yield return Downtime();
+        }
+    }
+
+    // Weighted pick that never repeats the previous attack.
+    // Only the attacks built so far (Gold Bar Gun, Coin Gun, Dollar Bursts) are included -
+    // Gold Spikes and Burrow join this list once they're built.
+    private PortobelloAttack PickNextAttack()
+    {
+        PortobelloPhaseSettings s = CurrentSettings;
+        PortobelloAttack[] options = { PortobelloAttack.GoldBarGun, PortobelloAttack.CoinGun, PortobelloAttack.DollarBursts };
+        float[] weights = { s.goldBarWeight, s.coinGunWeight, s.dollarBurstsWeight };
+
+        if (lastAttack.HasValue)
+        {
+            for (int i = 0; i < options.Length; i++)
+            {
+                if (options[i] == lastAttack.Value) weights[i] = 0f;
+            }
+        }
+
+        float total = weights[0] + weights[1] + weights[2];
+        if (total <= 0f)
+        {
+            // Only the previous attack has any weight this phase - allow it rather than stalling
+            weights = new[] { s.goldBarWeight, s.coinGunWeight, s.dollarBurstsWeight };
+            total = weights[0] + weights[1] + weights[2];
+            if (total <= 0f) return PortobelloAttack.GoldBarGun;
+        }
+
+        float pick = Random.value * total;
+        int fallback = 0;
+        for (int i = 0; i < weights.Length; i++)
+        {
+            if (weights[i] <= 0f) continue;
+
+            fallback = i;
+            if (pick < weights[i]) return options[i];
+            pick -= weights[i];
+        }
+
+        return options[fallback];
+    }
+
+    private IEnumerator RunAttack(PortobelloAttack attack)
+    {
+        switch (attack)
+        {
+            case PortobelloAttack.GoldBarGun: yield return GoldBarGunAttack(); break;
+            case PortobelloAttack.CoinGun: yield return CoinSprayGunAttack(); break;
+            case PortobelloAttack.DollarBursts: yield return DollarBurstsAttack(); break;
         }
     }
 
@@ -289,7 +389,7 @@ public class PortobelloBoss : BossBrain
                 {
                     isMoving = true;
                     Vector2 dir = ((Vector2)player.position - (Vector2)transform.position).normalized;
-                    transform.position += (Vector3)(dir * coinMoveSpeed * Time.deltaTime);
+                    transform.position += (Vector3)(dir * s.coinMoveSpeed * Time.deltaTime);
                 }
             }
 
@@ -312,9 +412,86 @@ public class PortobelloBoss : BossBrain
         if (wasMoving) directionalAnimator?.SetWalking(false);
     }
 
+    // ==================== DOLLAR BURSTS ====================
+    private IEnumerator DollarBurstsAttack()
+    {
+        if (patternShooter == null || dollarBillWeapon == null || dollarPatterns == null || dollarPatterns.Length == 0)
+        {
+            yield return new WaitForSeconds(stubAttackDuration);
+            yield break;
+        }
+
+        PortobelloPhaseSettings s = CurrentSettings;
+        int throws = Mathf.Max(1, s.dollarThrows);
+
+        facePlayer = true;
+        SetIdleContact();
+        shooter?.HideWeapon(true);
+
+        // Vanish and reappear at a spot - he never holds a weapon for this one
+        yield return RepositionNoWeapon();
+
+        for (int i = 0; i < throws; i++)
+        {
+            summonReadyFired = false;
+            Trigger(TrigBillSummon);
+            yield return WaitForSummonReady();
+
+            KnifePatternData pattern = dollarPatterns[PickDifferentIndex(dollarPatterns.Length, ref lastDollarPatternIndex)];
+            if (pattern == null) continue;
+
+            patternShooter.Throw(dollarBillWeapon, pattern, AimTarget,
+                s.dollarSpeedMultiplier, s.dollarCountMultiplier, s.dollarHangMultiplier, null);
+
+            if (i < throws - 1)
+                yield return new WaitForSeconds(s.dollarSummonPause);
+        }
+    }
+
+    // Vanish, reappear at a shoot point, but never show a weapon - the bills spawn from thin air
+    private IEnumerator RepositionNoWeapon()
+    {
+        health.SetInvulnerable(BossHealth.ReasonHidden, true);
+        DisableContact();
+        facePlayer = true;
+
+        yield return WaitUntilIdle();
+        Trigger(TrigDespawn);
+        yield return WaitForStateFinished();
+
+        TeleportTo(PickShootSpot());
+        Trigger(TrigSpawn);
+        yield return WaitForReturnToIdle();
+
+        SetIdleContact();
+        health.SetInvulnerable(BossHealth.ReasonHidden, false);
+    }
+
+    private IEnumerator WaitForSummonReady()
+    {
+        float t = 0f;
+        while (!summonReadyFired && t < dollarSummonEventTimeout)
+        {
+            t += Time.deltaTime;
+            yield return null;
+        }
+    }
+
+    // Random index that differs from the last
+    private static int PickDifferentIndex(int count, ref int last)
+    {
+        int index = Random.Range(0, count);
+
+        if (count > 1 && index == last)
+            index = (index + Random.Range(1, count)) % count;
+
+        last = index;
+        return index;
+    }
+
     // ==================== SHARED GUN HELPERS ====================
 
-    // Vanish, reappear at a shoot point
+    // Vanish, reappear at a shoot point (stationary — no movement toward player), gun in hand
     private IEnumerator Reposition()
     {
         health.SetInvulnerable(BossHealth.ReasonHidden, true);

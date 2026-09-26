@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36776f04a1ca3d8449b04b532f7a016e, type: 3}
+  m_Name: BillProjectile
+  m_EditorClassIdentifier: Assembly-CSharp::WeaponData
+  weaponId: 
+  gunName: BillProjectile
+  bulletPrefab: {fileID: 6894130498819508759, guid: 0322bd414d0813941b38305fe866578f, type: 3}
+  bulletVariants: []
+  hitPrefab: {fileID: 4081999799842582576, guid: e773c246afbaad0449a0403a3d1fdc0e, type: 3}
+  muzzleFlashPrefab: {fileID: 4081999799842582576, guid: f0ca991bb0a95564d93caef8afb825f8, type: 3}
+  pickupPrefab: {fileID: 0}
+  fireRate: 2
+  minDamage: 2
+  maxDamage: 2
+  bulletSpeed: 8
+  maxAmmo: -1
+  burstCount: 1
+  burstInterval: 0.08
+  firePointOffset: {x: 0, y: -0.1}
+  flipOffsetOnAimFlip: 0
+  bulletCount: 1
+  spreadAngle: 8
+  sprite: {fileID: 0}
+  hudSprite: {fileID: 0}
+  ammoDisplaySprite: {fileID: 0}
+  shootClip: {fileID: 8300000, guid: c64a8592cae41b24497dde03df319eae, type: 3}
+  shootClips: []
+  shootVolume: 0.793
+  wallHitClip: {fileID: 8300000, guid: 277cfd5237e689d44b4f267a3990a69e, type: 3}
+  wallHitVolume: 0.1
+  shakeForce: 0
+  knockbackForce: 1
+  hitKnockback: 3
+  recoilAmount: -35
+  recoilDecay: 25

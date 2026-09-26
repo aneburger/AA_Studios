@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a927150424a58714ea67e0daf874475c, type: 3}
+  m_Name: BillPattern
+  m_EditorClassIdentifier: Assembly-CSharp::KnifePatternData
+  shape: 0
+  knifeCount: 14
+  radius: 1.3
+  alignToPlayer: 1
+  rotationOffset: 15
+  randomRotation: 1
+  speedMultiplier: 1
+  hangTime: 0.5
+  launchStagger: 0
+  trackWhileHanging: 1
+  trackTurnRate: 180
+  trackLockTime: 0.15

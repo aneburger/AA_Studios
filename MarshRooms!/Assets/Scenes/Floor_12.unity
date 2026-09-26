@@ -145891,233 +145891,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: pres-port-boss
       objectReference: {fileID: 0}
-    - target: {fileID: 3068222108091938041, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4781575144476638892, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 2061830940, guid: 0f552d159566fe345855135e3ea97b09, type: 3}
-    - target: {fileID: 4781575144476638892, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5395735851033162757, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0.015
-      objectReference: {fileID: 0}
-    - target: {fileID: 5395735851033162757, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 1.95
-      objectReference: {fileID: 0}
-    - target: {fileID: 7866796958824413751, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.01
-      objectReference: {fileID: 0}
-    - target: {fileID: 8169478559265794274, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
-      propertyPath: maxHealth
-      value: 70
-      objectReference: {fileID: 0}
-    - target: {fileID: 8169478559265794274, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
-      propertyPath: phaseThresholds.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8169478559265794274, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
-      propertyPath: 'phaseThresholds.Array.data[0]'
-      value: 0.66
-      objectReference: {fileID: 0}
-    - target: {fileID: 8169478559265794274, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
-      propertyPath: 'phaseThresholds.Array.data[1]'
-      value: 0.33
-      objectReference: {fileID: 0}
-    - target: {fileID: 8431050919276464193, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 1.54
-      objectReference: {fileID: 0}
-    - target: {fileID: 8431050919276464193, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.137
-      objectReference: {fileID: 0}
     - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
       propertyPath: room
       value: 
       objectReference: {fileID: 1143521032}
     - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
-      propertyPath: health
-      value: 
-      objectReference: {fileID: 866544878}
-    - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
-      propertyPath: animator
-      value: 
-      objectReference: {fileID: 866544880}
-    - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
       propertyPath: healthBar
       value: 
       objectReference: {fileID: 192959932}
     - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
-      propertyPath: spawnClip
-      value: 
-      objectReference: {fileID: 8300000, guid: 5eb6fa0a9a7a684419120aa1b5b58937, type: 3}
+      propertyPath: phase2.coinMoveSpeed
+      value: 2.5
+      objectReference: {fileID: 0}
     - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
-      propertyPath: goldBarGun
-      value: 
-      objectReference: {fileID: 11400000, guid: 2c6028ccdb03081468033d7f44fa98a6, type: 2}
-    - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
-      propertyPath: despawnClip
-      value: 
-      objectReference: {fileID: 8300000, guid: 1fdcafced2d7d2e4699e3a200438c3f4, type: 3}
-    - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
-      propertyPath: visualsRoot
-      value: 
-      objectReference: {fileID: 866544879}
-    - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
-      propertyPath: coinSprayGun
-      value: 
-      objectReference: {fileID: 11400000, guid: 6bc1d5bb88aeb48499167fcf58c04824, type: 2}
-    - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
-      propertyPath: coinMoveSpeed
+      propertyPath: phase3.coinMoveSpeed
       value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
-      propertyPath: gunWindupClip
-      value: 
-      objectReference: {fileID: 8300000, guid: ab209789ecf1a3b4c903ff297d0c9dfa, type: 3}
-    - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
-      propertyPath: transitionClip
-      value: 
-      objectReference: {fileID: 8300000, guid: 7bca1f54037e45c4384d7f7c4cee9dda, type: 3}
-    - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
-      propertyPath: transitionShake
-      value: 0.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
-      propertyPath: weaponShowDelay
-      value: 0.8
-      objectReference: {fileID: 0}
-    - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
-      propertyPath: phase1.coinShots
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
-      propertyPath: phase2.coinShots
-      value: 25
-      objectReference: {fileID: 0}
-    - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
-      propertyPath: phase3.coinShots
-      value: 40
-      objectReference: {fileID: 0}
-    - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
-      propertyPath: phase2.coinSpread
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
-      propertyPath: phase3.coinSpread
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
-      propertyPath: phase1.coinVolleys
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
-      propertyPath: phase1.downtimeMax
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
-      propertyPath: phase1.downtimeMin
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
-      propertyPath: phase2.coinVolleys
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
-      propertyPath: phase2.downtimeMax
-      value: 1.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
-      propertyPath: phase2.downtimeMin
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
-      propertyPath: phase3.coinVolleys
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
-      propertyPath: phase3.downtimeMax
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
-      propertyPath: phase3.downtimeMin
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
-      propertyPath: phase1.goldBarShots
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
-      propertyPath: idleContactKnockback
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
-      propertyPath: phase1.goldBarWindup
-      value: 0.8
-      objectReference: {fileID: 0}
-    - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
-      propertyPath: phase2.goldBarWindup
-      value: 0.7
-      objectReference: {fileID: 0}
-    - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
-      propertyPath: phase3.goldBarWindup
-      value: 0.7
-      objectReference: {fileID: 0}
-    - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
-      propertyPath: phase1.goldBarVolleys
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
-      propertyPath: phase2.goldBarVolleys
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
-      propertyPath: phase3.goldBarVolleys
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
-      propertyPath: shootSpots.Array.size
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
-      propertyPath: phase1.coinAimTurnRate
-      value: 60
-      objectReference: {fileID: 0}
-    - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
-      propertyPath: phase2.coinAimTurnRate
-      value: 70
-      objectReference: {fileID: 0}
-    - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
-      propertyPath: phase3.coinAimTurnRate
-      value: 115
-      objectReference: {fileID: 0}
-    - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
-      propertyPath: phase3.coinVolleyPause
-      value: 0.7
-      objectReference: {fileID: 0}
-    - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
-      propertyPath: coinMinDistanceToPlayer
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
-      propertyPath: phase1.coinShotInterval
-      value: 0.12
-      objectReference: {fileID: 0}
-    - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
-      propertyPath: phase2.coinShotInterval
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
-      propertyPath: phase3.coinShotInterval
-      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
       propertyPath: 'shootSpots.Array.data[0]'
@@ -146144,48 +145932,16 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1660818596}
     - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
-      propertyPath: phase1.goldBarAimTurnRate
-      value: 60
+      propertyPath: dollarPatterns.Array.size
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
-      propertyPath: phase2.goldBarAimTurnRate
-      value: 70
-      objectReference: {fileID: 0}
-    - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
-      propertyPath: phase3.coinBulletsPerShot
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
-      propertyPath: phase3.goldBarAimTurnRate
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
-      propertyPath: phase1.goldBarShotInterval
-      value: 0.35
-      objectReference: {fileID: 0}
-    - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
-      propertyPath: phase2.goldBarShotInterval
-      value: 0.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
-      propertyPath: phase3.goldBarShotInterval
-      value: 0.28
-      objectReference: {fileID: 0}
+      propertyPath: 'dollarPatterns.Array.data[0]'
+      value: 
+      objectReference: {fileID: 11400000, guid: beb39c3cdbfbcc94fad0e1540d0dfc71, type: 2}
     - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
       propertyPath: phase2.coinBulletSpeedMultiplier
-      value: 1.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
-      propertyPath: phase3.coinBulletSpeedMultiplier
-      value: 1.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
-      propertyPath: phase2.goldBarBulletSpeedMultiplier
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
-      propertyPath: phase3.goldBarBulletSpeedMultiplier
-      value: 1
+      value: 1.25
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -146203,16 +145959,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19f7135adf0332d46b73bc1509c9a879, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BossHealth
---- !u!4 &866544879 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4698166982508756797, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
-  m_PrefabInstance: {fileID: 866544877}
-  m_PrefabAsset: {fileID: 0}
---- !u!95 &866544880 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 803806091724421615, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
-  m_PrefabInstance: {fileID: 866544877}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &882842618
 GameObject:
   m_ObjectHideFlags: 0

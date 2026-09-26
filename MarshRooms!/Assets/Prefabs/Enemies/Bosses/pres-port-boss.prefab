@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 792576986802620951}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.874, y: -0.137, z: 0}
+  m_LocalPosition: {x: 1.54, y: -0.137, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -82,7 +82,7 @@ SpriteRenderer:
   m_SortingLayer: 3
   m_SortingOrder: 238
   m_MaskInteraction: 0
-  m_Sprite: {fileID: -4854829337826818713, guid: 6e0dd451b4501c54da27a492414f70a4, type: 3}
+  m_Sprite: {fileID: 2061830940, guid: 0f552d159566fe345855135e3ea97b09, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -209,36 +209,139 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PortobelloBoss
   room: {fileID: 0}
-  health: {fileID: 0}
+  health: {fileID: 8169478559265794274}
   healthBar: {fileID: 0}
-  animator: {fileID: 0}
-  visualsRoot: {fileID: 0}
+  animator: {fileID: 803806091724421615}
+  visualsRoot: {fileID: 4698166982508756797}
   idleStateName: IdleBlend
   angryTrigger: Angry
   animSpeedParameter: AnimSpeed
   openingDelay: 1
   facePlayer: 1
   transitionEffectDelay: 0.35
-  transitionShake: 0.9
+  transitionShake: 0.3
   transitionFlashColor: {r: 1, g: 1, b: 1, a: 1}
   transitionFlashAlpha: 0.6
   transitionFlashDuration: 0.35
   hitStopDuration: 0.07
-  transitionClip: {fileID: 0}
+  transitionClip: {fileID: 8300000, guid: 7bca1f54037e45c4384d7f7c4cee9dda, type: 3}
   transitionVolume: 1
   phaseRefillDuration: 1.5
   phase1:
-    downtimeMin: 1.5
-    downtimeMax: 2.5
+    downtimeMin: 1
+    downtimeMax: 2
+    goldBarWeight: 0
+    coinGunWeight: 0
+    dollarBurstsWeight: 1
     animSpeed: 1
+    goldBarVolleys: 3
+    goldBarWindup: 0.8
+    goldBarShots: 10
+    goldBarShotInterval: 0.35
+    goldBarVolleyPause: 0.5
+    goldBarBulletSpeedMultiplier: 1
+    goldBarAimTurnRate: 60
+    coinVolleys: 3
+    coinVolleyPause: 0.5
+    coinShots: 25
+    coinShotInterval: 0.12
+    coinBulletSpeedMultiplier: 1
+    coinAimTurnRate: 60
+    coinBulletsPerShot: 1
+    coinSpread: 8
+    coinMoveSpeed: 1.5
+    dollarThrows: 3
+    dollarSummonPause: 0.5
+    dollarSpeedMultiplier: 1.2
+    dollarCountMultiplier: 1.2
+    dollarHangMultiplier: 1
   phase2:
     downtimeMin: 1
-    downtimeMax: 1.8
+    downtimeMax: 1.5
+    goldBarWeight: 1
+    coinGunWeight: 1
+    dollarBurstsWeight: 1
     animSpeed: 1.15
+    goldBarVolleys: 3
+    goldBarWindup: 0.7
+    goldBarShots: 12
+    goldBarShotInterval: 0.3
+    goldBarVolleyPause: 0.5
+    goldBarBulletSpeedMultiplier: 1
+    goldBarAimTurnRate: 70
+    coinVolleys: 3
+    coinVolleyPause: 0.5
+    coinShots: 25
+    coinShotInterval: 0.1
+    coinBulletSpeedMultiplier: 1.2
+    coinAimTurnRate: 70
+    coinBulletsPerShot: 1
+    coinSpread: 10
+    coinMoveSpeed: 1.5
+    dollarThrows: 3
+    dollarSummonPause: 0.5
+    dollarSpeedMultiplier: 1
+    dollarCountMultiplier: 1
+    dollarHangMultiplier: 1
   phase3:
-    downtimeMin: 0.7
-    downtimeMax: 1.3
+    downtimeMin: 0.5
+    downtimeMax: 1
+    goldBarWeight: 1
+    coinGunWeight: 1
+    dollarBurstsWeight: 1
     animSpeed: 1.3
+    goldBarVolleys: 4
+    goldBarWindup: 0.7
+    goldBarShots: 7
+    goldBarShotInterval: 0.28
+    goldBarVolleyPause: 0.4
+    goldBarBulletSpeedMultiplier: 1
+    goldBarAimTurnRate: 100
+    coinVolleys: 2
+    coinVolleyPause: 0.7
+    coinShots: 40
+    coinShotInterval: 0.1
+    coinBulletSpeedMultiplier: 1.3
+    coinAimTurnRate: 115
+    coinBulletsPerShot: 2
+    coinSpread: 12
+    coinMoveSpeed: 1.5
+    dollarThrows: 3
+    dollarSummonPause: 0.5
+    dollarSpeedMultiplier: 1
+    dollarCountMultiplier: 1
+    dollarHangMultiplier: 1
+  idleContactDamage: 2
+  idleContactKnockback: 20
+  despawnClip: {fileID: 8300000, guid: 1fdcafced2d7d2e4699e3a200438c3f4, type: 3}
+  despawnVolume: 1
+  spawnClip: {fileID: 8300000, guid: 5eb6fa0a9a7a684419120aa1b5b58937, type: 3}
+  spawnVolume: 1
+  goldBarGun: {fileID: 11400000, guid: 2c6028ccdb03081468033d7f44fa98a6, type: 2}
+  shootSpots:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  shootSpotMinPlayerDistance: 2.5
+  shootSpotMinMoveDistance: 1.5
+  weaponShowDelay: 0.8
+  gunWindupClip: {fileID: 8300000, guid: ab209789ecf1a3b4c903ff297d0c9dfa, type: 3}
+  gunWindupVolume: 1
+  gunWindupPulses: 2
+  coinSprayGun: {fileID: 11400000, guid: 6bc1d5bb88aeb48499167fcf58c04824, type: 2}
+  coinMinDistanceToPlayer: 1
+  dollarBillWeapon: {fileID: 11400000, guid: 19213c64363889e45913bfeb57be897d, type: 2}
+  dollarPatterns:
+  - {fileID: 11400000, guid: 088f9f98d649a4c498966c462b358460, type: 2}
+  - {fileID: 11400000, guid: 77b40cc60159c6041a99e299d21c35f3, type: 2}
+  - {fileID: 11400000, guid: 66cf11e803150224c9bd937344dc43dc, type: 2}
+  dollarSummonEventTimeout: 3
+  billSummonClip: {fileID: 8300000, guid: 116c66b79781ad84dbd5342a4e6e0eee, type: 3}
+  billSummonVolume: 1
+  stubAttackDuration: 1.5
 --- !u!114 &8169478559265794274
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -251,14 +354,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19f7135adf0332d46b73bc1509c9a879, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BossHealth
-  maxHealth: 1000
+  maxHealth: 70
   onDeath:
     m_PersistentCalls:
       m_Calls: []
   onTakeDamage:
     m_PersistentCalls:
       m_Calls: []
-  phaseTwoThreshold: 0.4
+  phaseThresholds:
+  - 0.66
+  - 0.33
   protectUntilPhaseTwo: 1
   phaseBars: 1
   startInvulnerable: 1
@@ -506,7 +611,7 @@ Transform:
   m_GameObject: {fileID: 2223798187010705781}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.064, z: 0}
+  m_LocalPosition: {x: 0.01, y: -0.064, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -611,7 +716,7 @@ Transform:
   m_GameObject: {fileID: 3221483142425514410}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0.10088569, w: 0.994898}
-  m_LocalPosition: {x: 0.025, y: 0.71, z: 0}
+  m_LocalPosition: {x: -0.015, y: 1.95, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
