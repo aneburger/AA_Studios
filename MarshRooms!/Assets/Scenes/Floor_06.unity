@@ -81043,7 +81043,7 @@ MonoBehaviour:
   - {fileID: 900989572}
   doorTrigger: {fileID: 269525756}
   playerStandPoint: {fileID: 672042008}
-  faceDirectionAfterWalk: {x: 1, y: 0}
+  faceDirectionAfterWalk: {x: 0, y: 1}
   walkSpeedScale: 0.65
   walkTimeout: 4
   arriveDistance: 0.1
@@ -94366,7 +94366,7 @@ MonoBehaviour:
   openingDelay: 0.5
   facePlayer: 1
   transitionEffectDelay: 0.35
-  transitionShake: 0.9
+  transitionShake: 0.3
   transitionFlashColor: {r: 1, g: 1, b: 1, a: 0.69411767}
   transitionFlashAlpha: 0.802
   transitionFlashDuration: 0.35
@@ -94598,7 +94598,8 @@ MonoBehaviour:
   onTakeDamage:
     m_PersistentCalls:
       m_Calls: []
-  phaseTwoThreshold: 0.45
+  phaseThresholds:
+  - 0.4
   protectUntilPhaseTwo: 1
   phaseBars: 1
   startInvulnerable: 1

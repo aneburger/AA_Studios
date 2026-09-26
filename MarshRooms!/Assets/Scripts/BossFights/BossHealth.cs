@@ -14,7 +14,7 @@ public class BossHealth : BaseHealth
     public const string ReasonDeath = "Death";
 
     [Header("Phases")]
-    [Range(0.05f, 0.95f)] [SerializeField] private float phaseTwoThreshold = 0.4f;
+    [SerializeField] private float[] phaseThresholds = new float[] { 0.4f };
     [SerializeField] private bool protectUntilPhaseTwo = true;
     [SerializeField] private bool phaseBars = true;
 
@@ -47,18 +47,23 @@ public class BossHealth : BaseHealth
     public event Action OnDied;
 
     private readonly HashSet<string> invulnerableReasons = new HashSet<string>();
-    private bool phaseTwoTriggered;
-    private bool phaseTwoStarted;
+    private int thresholdIndex;
+    private bool phaseTriggered;
+    private bool phaseStarted;
     private bool flinchEnabled = true;
     private float nextFlinchTime;
     private float nextSporeDropTime;
     private float nextDeflectTime;
 
     public bool IsInvulnerable => invulnerableReasons.Count > 0;
-    public bool PhaseTwoTriggered => phaseTwoTriggered;
-    public bool PhaseTwoStarted => phaseTwoStarted;
+    public bool PhaseTwoTriggered => phaseTriggered;
+    public bool PhaseTwoStarted => phaseStarted;
     public float HealthFraction => maxHealth > 0f ? Mathf.Clamp01(currentHealth / maxHealth) : 0f;
-    public float ThresholdHealth => maxHealth * phaseTwoThreshold;
+
+    private bool HasPendingThreshold => phaseThresholds != null && thresholdIndex < phaseThresholds.Length;
+    public float ThresholdHealth => HasPendingThreshold ? maxHealth * phaseThresholds[thresholdIndex] : 0f;
+
+    private float UpperBoundHealth => thresholdIndex == 0 ? maxHealth : maxHealth * phaseThresholds[thresholdIndex - 1];
 
     public float PhaseFraction
     {
@@ -67,13 +72,10 @@ public class BossHealth : BaseHealth
             if (!phaseBars) return HealthFraction;
             if (maxHealth <= 0f) return 0f;
 
-            float threshold = ThresholdHealth;
-
-            if (phaseTwoStarted)
-                return threshold > 0f ? Mathf.Clamp01(currentHealth / threshold) : 0f;
-
-            float span = maxHealth - threshold;
-            return span > 0f ? Mathf.Clamp01((currentHealth - threshold) / span) : 0f;
+            float upper = UpperBoundHealth;
+            float lower = ThresholdHealth;
+            float span = upper - lower;
+            return span > 0f ? Mathf.Clamp01((currentHealth - lower) / span) : 0f;
         }
     }
 
@@ -97,10 +99,12 @@ public class BossHealth : BaseHealth
         flinchEnabled = value;
     }
 
-    // -- PHASE TWO STARTED --
+    // Called by BossBrain once a phase's bar has finished refilling. Advances to the next threshold, if any.
     public void NotifyPhaseTwoStarted()
     {
-        phaseTwoStarted = true;
+        thresholdIndex++;
+        phaseTriggered = false;
+        phaseStarted = false;
     }
 
     // -- TAKE DAMAGE --
@@ -108,14 +112,13 @@ public class BossHealth : BaseHealth
     {
         if (IsDead()) return;
 
-        // The bullet is still absorbed by the boss,
         if (IsInvulnerable)
         {
             PlayDeflect();
             return;
         }
 
-        if (protectUntilPhaseTwo && !phaseTwoStarted)
+        if (protectUntilPhaseTwo && HasPendingThreshold && !phaseStarted)
         {
             amount = Mathf.Min(amount, currentHealth - ThresholdHealth);
 
@@ -185,10 +188,10 @@ public class BossHealth : BaseHealth
     // -- PHASE THRESHOLD --
     private void CheckPhaseThreshold()
     {
-        if (phaseTwoTriggered) return;
+        if (phaseTriggered || !HasPendingThreshold) return;
         if (currentHealth > ThresholdHealth + 0.001f) return;
 
-        phaseTwoTriggered = true;
+        phaseTriggered = true;
         OnPhaseTwoThreshold?.Invoke();
     }
 

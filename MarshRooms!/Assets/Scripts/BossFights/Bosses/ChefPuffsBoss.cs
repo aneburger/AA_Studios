@@ -976,7 +976,11 @@ public class ChefPuffsBoss : BossBrain
                 ? fixedPattern
                 : knifePatterns[PickDifferentIndex(knifePatterns.Length, ref lastPatternIndex)];
 
-            if (pattern == null) continue;
+            if (pattern == null)
+            {
+                shooter.HideWeapon(true);
+                continue;
+            }
 
             patternShooter.Throw(knife, pattern, AimTarget,
                 s.knifeSpeedMultiplier, s.knifeCountMultiplier, s.knifeHangMultiplier, OnKnivesThrown);
