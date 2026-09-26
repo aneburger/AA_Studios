@@ -38,9 +38,9 @@ public class BossPatternShooter : MonoBehaviour
 
     // -- THROW --
     public Coroutine Throw(WeaponData weapon, KnifePatternData pattern, System.Func<Vector2> aimProvider,
-        float speedMultiplier, float countMultiplier, float hangMultiplier, System.Action onSpawned)
+    float speedMultiplier, float countMultiplier, float hangMultiplier, System.Action onSpawned, System.Action onLaunched = null, float launchSoundLead = 0f)
     {
-        return StartCoroutine(ThrowRoutine(weapon, pattern, aimProvider, speedMultiplier, countMultiplier, hangMultiplier, onSpawned));
+        return StartCoroutine(ThrowRoutine(weapon, pattern, aimProvider, speedMultiplier, countMultiplier, hangMultiplier, onSpawned, onLaunched, launchSoundLead));
     }
 
     // -- STOP ALL --
@@ -50,7 +50,7 @@ public class BossPatternShooter : MonoBehaviour
     }
 
     private IEnumerator ThrowRoutine(WeaponData weapon, KnifePatternData pattern, System.Func<Vector2> aimProvider,
-        float speedMultiplier, float countMultiplier, float hangMultiplier, System.Action onSpawned)
+        float speedMultiplier, float countMultiplier, float hangMultiplier, System.Action onSpawned, System.Action onLaunched = null, float launchSoundLead = 0f)
     {
         if (weapon == null || pattern == null)
         {
@@ -101,7 +101,11 @@ public class BossPatternShooter : MonoBehaviour
         PlayThrowSound(weapon);
         onSpawned?.Invoke();
 
-        if (!hangs) yield break;
+        if (!hangs)
+        {
+            onLaunched?.Invoke();
+            yield break;
+        }
 
         bool tracks = aimProvider != null
             && pattern.alignToPlayer
@@ -110,10 +114,17 @@ public class BossPatternShooter : MonoBehaviour
 
         float trackedAngle = spawnAngle;
         float elapsed = 0f;
+        bool launchSoundFired = false;
 
         while (elapsed < hang)
         {
             elapsed += Time.deltaTime;
+
+            if (!launchSoundFired && elapsed >= hang - launchSoundLead)
+            {
+                onLaunched?.Invoke();
+                launchSoundFired = true;
+            }
 
             if (tracks && elapsed < hang - pattern.trackLockTime)
             {
@@ -126,6 +137,8 @@ public class BossPatternShooter : MonoBehaviour
 
             yield return null;
         }
+
+        if (!launchSoundFired) onLaunched?.Invoke();
 
         // Launch
         foreach (PendingKnife k in knives)

@@ -182,6 +182,9 @@ public class ChefPuffsBoss : BossBrain
     [SerializeField] private AudioClip knifeReloadClip;
     [Range(0f, 1f)] [SerializeField] private float knifeReloadVolume = 1f;
     [SerializeField] private float knifeThrowShake = 0.3f;
+    [SerializeField] private AudioClip knifeLaunchClip;
+    [Range(0f, 1f)] [SerializeField] private float knifeLaunchVolume = 1f;
+    [SerializeField] private float knifeLaunchSoundLead = 0.05f;
 
     [Header("Counter Phase: Enemies")]
     [SerializeField] private BossMinionSpawner minionSpawner;
@@ -983,7 +986,7 @@ public class ChefPuffsBoss : BossBrain
             }
 
             patternShooter.Throw(knife, pattern, AimTarget,
-                s.knifeSpeedMultiplier, s.knifeCountMultiplier, s.knifeHangMultiplier, OnKnivesThrown);
+                s.knifeSpeedMultiplier, s.knifeCountMultiplier, s.knifeHangMultiplier, OnKnivesThrown, OnKnivesLaunched, knifeLaunchSoundLead);
 
             yield return new WaitForSeconds(s.knifeThrowPause);
         }
@@ -994,7 +997,12 @@ public class ChefPuffsBoss : BossBrain
     private void OnKnivesThrown()
     {
         shooter.HideWeapon(true);
+    }
+
+    private void OnKnivesLaunched()
+    {
         ScreenEffects.Instance?.ShakeScreen(knifeThrowShake);
+        AudioManager.Instance?.PlaySFXWithPitch(knifeLaunchClip, knifeLaunchVolume, 0.1f);
     }
 
     // Random index that differs from the last

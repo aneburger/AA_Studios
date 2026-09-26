@@ -20,13 +20,24 @@ public class PortobelloPhaseSettings
     public float downtimeMin = 1.5f;
     public float downtimeMax = 2.5f;
 
-    [Header("Attack Weights (0 = never picked this phase)")]
+    [Header("Attack Weights")]
     public float goldBarWeight = 1f;
     public float coinGunWeight = 1f;
     public float dollarBurstsWeight = 1f;
+    public float spikeWeight = 1f;
 
     [Header("Animation")]
     public float animSpeed = 1f;
+
+    [Header("Gold Spikes")]
+    public int spikeCountMin = 4;
+    public int spikeCountMax = 6;
+    public float spikeWarningTime = 0.6f;
+    public int spikeRoundsMin = 1;
+    public int spikeRoundsMax = 1;
+    public float spikeRoundInterval = 0.5f;
+    public float spikeScreenShakeDuration = 0f;
+    public float spikeScreenShakeForce = 0.5f;
 
     [Header("Gold Bar Gun")]
     public int goldBarVolleys = 1;
@@ -35,7 +46,7 @@ public class PortobelloPhaseSettings
     public float goldBarShotInterval = 0.18f;
     public float goldBarVolleyPause = 0.5f;
     public float goldBarBulletSpeedMultiplier = 1f;
-    public float goldBarAimTurnRate = 0f; // 0 = snap to player
+    public float goldBarAimTurnRate = 0f;
 
     [Header("Coin Spray Gun")]
     public int coinVolleys = 1;
@@ -62,6 +73,7 @@ public class PortobelloBoss : BossBrain
     private const string TrigDespawn = "Despawn";
     private const string TrigSpawn = "Spawn";
     private const string TrigBillSummon = "bill-summon";
+    private const string TrigSpikeWindup = "spike-windup";
 
     [Header("Phase Settings")]
     [SerializeField] private PortobelloPhaseSettings phase1 = new PortobelloPhaseSettings
@@ -87,7 +99,9 @@ public class PortobelloBoss : BossBrain
         goldBarWindup = 0.45f,
         goldBarShots = 14,
         goldBarShotInterval = 0.13f,
-        goldBarVolleyPause = 0.4f
+        goldBarVolleyPause = 0.4f,
+        spikeScreenShakeDuration = 0.8f,
+        spikeScreenShakeForce = 0.6f
     };
 
     protected override int LastPhase => 3;
@@ -114,6 +128,7 @@ public class PortobelloBoss : BossBrain
     [SerializeField] private AudioClip gunWindupClip;
     [Range(0f, 1f)] [SerializeField] private float gunWindupVolume = 1f;
     [SerializeField] private int gunWindupPulses = 2;
+    [SerializeField] private float goldBarShotShakeForce = 0.1f;
 
     [Header("Coin Spray Gun")]
     [SerializeField] private WeaponData coinSprayGun;
@@ -125,6 +140,17 @@ public class PortobelloBoss : BossBrain
     [SerializeField] private float dollarSummonEventTimeout = 3f;
     [SerializeField] private AudioClip billSummonClip;
     [Range(0f, 1f)] [SerializeField] private float billSummonVolume = 1f;
+    [SerializeField] private AudioClip billLaunchClip;
+    [Range(0f, 1f)] [SerializeField] private float billLaunchVolume = 1f;
+    [Tooltip("Fires the launch sound this many seconds early, to compensate for audio latency.")]
+    [SerializeField] private float billLaunchSoundLead = 0.05f;
+    [SerializeField] private float dollarBurstShakeForce = 0.4f;
+
+    [Header("Gold Spikes")]
+    [SerializeField] private BossSpikeSpawner spikeSpawner;
+    [SerializeField] private float spikeSummonEventTimeout = 3f;
+    [SerializeField] private AudioClip spikeSummonClip;
+    [Range(0f, 1f)] [SerializeField] private float spikeSummonVolume = 1f;
 
     [Header("Fallback")]
     [SerializeField] private float stubAttackDuration = 1.5f;
@@ -157,6 +183,7 @@ public class PortobelloBoss : BossBrain
     {
         base.OnEnable();
         if (relay != null) relay.SummonReady += HandleSummonReady;
+        if (spikeSpawner != null) spikeSpawner.SpikeSpawned += RegisterHazard;
     }
 
     // -- DISABLE --
@@ -164,6 +191,7 @@ public class PortobelloBoss : BossBrain
     {
         base.OnDisable();
         if (relay != null) relay.SummonReady -= HandleSummonReady;
+        if (spikeSpawner != null) spikeSpawner.SpikeSpawned -= RegisterHazard;
     }
 
     private void HandleSummonReady()
@@ -179,6 +207,8 @@ public class PortobelloBoss : BossBrain
             AudioManager.Instance?.PlaySFXWithPitch(spawnClip, spawnVolume, 0.1f);
         else if (triggerName == TrigBillSummon)
             AudioManager.Instance?.PlaySFXWithPitch(billSummonClip, billSummonVolume, 0.1f);
+        else if (triggerName == TrigSpikeWindup)
+            AudioManager.Instance?.PlaySFXWithPitch(spikeSummonClip, spikeSummonVolume, 0.1f);
     }
 
     // -- PHASE --
@@ -216,13 +246,13 @@ public class PortobelloBoss : BossBrain
     }
 
     // Weighted pick that never repeats the previous attack.
-    // Only the attacks built so far (Gold Bar Gun, Coin Gun, Dollar Bursts) are included -
-    // Gold Spikes and Burrow join this list once they're built.
+    // Implemented so far: Gold Bar Gun, Coin Gun, Dollar Bursts, Gold Spikes.
+    // Burrow joins this list once it's built.
     private PortobelloAttack PickNextAttack()
     {
         PortobelloPhaseSettings s = CurrentSettings;
-        PortobelloAttack[] options = { PortobelloAttack.GoldBarGun, PortobelloAttack.CoinGun, PortobelloAttack.DollarBursts };
-        float[] weights = { s.goldBarWeight, s.coinGunWeight, s.dollarBurstsWeight };
+        PortobelloAttack[] options = { PortobelloAttack.GoldBarGun, PortobelloAttack.CoinGun, PortobelloAttack.DollarBursts, PortobelloAttack.GoldSpikes };
+        float[] weights = { s.goldBarWeight, s.coinGunWeight, s.dollarBurstsWeight, s.spikeWeight };
 
         if (lastAttack.HasValue)
         {
@@ -232,12 +262,12 @@ public class PortobelloBoss : BossBrain
             }
         }
 
-        float total = weights[0] + weights[1] + weights[2];
+        float total = weights[0] + weights[1] + weights[2] + weights[3];
         if (total <= 0f)
         {
             // Only the previous attack has any weight this phase - allow it rather than stalling
-            weights = new[] { s.goldBarWeight, s.coinGunWeight, s.dollarBurstsWeight };
-            total = weights[0] + weights[1] + weights[2];
+            weights = new[] { s.goldBarWeight, s.coinGunWeight, s.dollarBurstsWeight, s.spikeWeight };
+            total = weights[0] + weights[1] + weights[2] + weights[3];
             if (total <= 0f) return PortobelloAttack.GoldBarGun;
         }
 
@@ -257,17 +287,21 @@ public class PortobelloBoss : BossBrain
 
     private IEnumerator RunAttack(PortobelloAttack attack)
     {
+        health.SetFlinchEnabled(false);
+
         switch (attack)
         {
             case PortobelloAttack.GoldBarGun: yield return GoldBarGunAttack(); break;
             case PortobelloAttack.CoinGun: yield return CoinSprayGunAttack(); break;
             case PortobelloAttack.DollarBursts: yield return DollarBurstsAttack(); break;
+            case PortobelloAttack.GoldSpikes: yield return GoldSpikesAttack(); break;
         }
     }
 
     private IEnumerator Downtime()
     {
         facePlayer = true;
+        health.SetFlinchEnabled(true);
         SetIdleContact();
 
         float wait = Random.Range(CurrentSettings.downtimeMin, CurrentSettings.downtimeMax);
@@ -435,17 +469,23 @@ public class PortobelloBoss : BossBrain
         {
             summonReadyFired = false;
             Trigger(TrigBillSummon);
-            yield return WaitForSummonReady();
+            yield return WaitForSummonReady(dollarSummonEventTimeout);
 
             KnifePatternData pattern = dollarPatterns[PickDifferentIndex(dollarPatterns.Length, ref lastDollarPatternIndex)];
             if (pattern == null) continue;
 
             patternShooter.Throw(dollarBillWeapon, pattern, AimTarget,
-                s.dollarSpeedMultiplier, s.dollarCountMultiplier, s.dollarHangMultiplier, null);
+                s.dollarSpeedMultiplier, s.dollarCountMultiplier, s.dollarHangMultiplier, null, PlayBillLaunchSound, billLaunchSoundLead);
 
             if (i < throws - 1)
                 yield return new WaitForSeconds(s.dollarSummonPause);
         }
+    }
+
+    private void PlayBillLaunchSound()
+    {
+        AudioManager.Instance?.PlaySFXWithPitch(billLaunchClip, billLaunchVolume, 0.1f);
+        ScreenEffects.Instance?.ShakeScreen(dollarBurstShakeForce);
     }
 
     // Vanish, reappear at a shoot point, but never show a weapon - the bills spawn from thin air
@@ -467,10 +507,10 @@ public class PortobelloBoss : BossBrain
         health.SetInvulnerable(BossHealth.ReasonHidden, false);
     }
 
-    private IEnumerator WaitForSummonReady()
+    private IEnumerator WaitForSummonReady(float timeout)
     {
         float t = 0f;
-        while (!summonReadyFired && t < dollarSummonEventTimeout)
+        while (!summonReadyFired && t < timeout)
         {
             t += Time.deltaTime;
             yield return null;
@@ -487,6 +527,48 @@ public class PortobelloBoss : BossBrain
 
         last = index;
         return index;
+    }
+
+    // ==================== GOLD SPIKES ====================
+    private IEnumerator GoldSpikesAttack()
+    {
+        if (spikeSpawner == null || player == null)
+        {
+            yield return new WaitForSeconds(stubAttackDuration);
+            yield break;
+        }
+
+        PortobelloPhaseSettings s = CurrentSettings;
+
+        facePlayer = true;
+        SetIdleContact();
+
+        summonReadyFired = false;
+        Trigger(TrigSpikeWindup);
+        yield return WaitForSummonReady(spikeSummonEventTimeout);
+
+        if (s.spikeScreenShakeDuration > 0f)
+            yield return SustainedScreenShake(s.spikeScreenShakeDuration, s.spikeScreenShakeForce);
+
+        int count = Random.Range(Mathf.Max(1, s.spikeCountMin), Mathf.Max(1, s.spikeCountMax) + 1);
+        int rounds = Random.Range(Mathf.Max(1, s.spikeRoundsMin), Mathf.Max(1, s.spikeRoundsMax) + 1);
+
+        yield return spikeSpawner.SpawnRounds(count, rounds, s.spikeWarningTime, s.spikeRoundInterval, player);
+        yield return spikeSpawner.WaitForAllSpikesFinished();
+
+        facePlayer = true;
+    }
+
+    // A few repeated shake pulses across the duration, rather than one instant shake
+    private IEnumerator SustainedScreenShake(float duration, float force, float interval = 0.12f)
+    {
+        float t = 0f;
+        while (t < duration)
+        {
+            ScreenEffects.Instance?.ShakeScreen(force);
+            yield return new WaitForSeconds(interval);
+            t += interval;
+        }
     }
 
     // ==================== SHARED GUN HELPERS ====================
@@ -594,6 +676,7 @@ public class PortobelloBoss : BossBrain
             if (Time.time >= nextShot)
             {
                 shooter.Shoot();
+                ScreenEffects.Instance?.ShakeScreen(goldBarShotShakeForce);
                 fired++;
                 nextShot = Time.time + interval;
             }

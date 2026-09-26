@@ -145900,12 +145900,20 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 192959932}
     - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
-      propertyPath: phase2.coinMoveSpeed
-      value: 2.5
+      propertyPath: spikeSpawner
+      value: 
+      objectReference: {fileID: 1025199885}
+    - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
+      propertyPath: phase1.spikeWeight
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
-      propertyPath: phase3.coinMoveSpeed
-      value: 3
+      propertyPath: phase2.spikeWeight
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
+      propertyPath: phase3.spikeWeight
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
       propertyPath: 'shootSpots.Array.data[0]'
@@ -145932,16 +145940,16 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1660818596}
     - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
-      propertyPath: dollarPatterns.Array.size
-      value: 1
+      propertyPath: phase1.dollarBurstsWeight
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
-      propertyPath: 'dollarPatterns.Array.data[0]'
-      value: 
-      objectReference: {fileID: 11400000, guid: beb39c3cdbfbcc94fad0e1540d0dfc71, type: 2}
+      propertyPath: phase2.dollarBurstsWeight
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
-      propertyPath: phase2.coinBulletSpeedMultiplier
-      value: 1.25
+      propertyPath: phase3.dollarBurstsWeight
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -146507,7 +146515,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1025199885
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -146521,9 +146529,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BossSpikeSpawner
   spikePrefabs:
-  - {fileID: 68054988314619150, guid: 2a7417ed785fa84439e841c066e3af09, type: 3}
-  - {fileID: 68054988314619150, guid: 26cee66632d6ad240a8081abb5d86352, type: 3}
-  - {fileID: 68054988314619150, guid: 9f8ec25d552303f4f8bed6252405b192, type: 3}
+  - {fileID: 68054988314619150, guid: 2de610cc710257743bb5297b0bb1a96d, type: 3}
   minSpacing: 1
   placementAttemptsPerSpike: 12
   spreadRadius: 1.2
@@ -150465,7 +150471,7 @@ Transform:
   m_GameObject: {fileID: 1283171670}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -24.207, y: 39.6, z: 0}
+  m_LocalPosition: {x: -24.207, y: 38.34, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

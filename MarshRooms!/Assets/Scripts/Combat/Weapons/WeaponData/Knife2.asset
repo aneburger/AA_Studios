@@ -15,7 +15,7 @@ MonoBehaviour:
   weaponId: 
   gunName: Knife 2
   bulletPrefab: {fileID: 6894130498819508759, guid: e116135c7f918b1478d0f2e2322705b0, type: 3}
-  shellsPrefab: {fileID: 3331065470414262999, guid: b2b9e163261c23b418b6fc5856cd3a3c, type: 3}
+  bulletVariants: []
   hitPrefab: {fileID: 4081999799842582576, guid: e773c246afbaad0449a0403a3d1fdc0e, type: 3}
   muzzleFlashPrefab: {fileID: 4081999799842582576, guid: f0ca991bb0a95564d93caef8afb825f8, type: 3}
   pickupPrefab: {fileID: 0}
@@ -33,9 +33,9 @@ MonoBehaviour:
   sprite: {fileID: -6405695326635665434, guid: 5328e5bc58f77ae429a23349f321538a, type: 3}
   hudSprite: {fileID: 0}
   ammoDisplaySprite: {fileID: 0}
-  shootClip: {fileID: 8300000, guid: e9941f796a51259459fe6a69e367db2e, type: 3}
+  shootClip: {fileID: 0}
   shootClips: []
-  shootVolume: 0.6
+  shootVolume: 1
   wallHitClip: {fileID: 8300000, guid: 277cfd5237e689d44b4f267a3990a69e, type: 3}
   wallHitVolume: 0.1
   shakeForce: 0
