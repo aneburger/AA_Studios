@@ -195,6 +195,8 @@ public class DeathScreenManager : MonoBehaviour
                 weaponLostSlots[i].sprite = sprite;
                 weaponLostSlots[i].enabled = true;
                 weaponLostSlots[i].color = Color.white;
+                weaponLostSlots[i].preserveAspect = true;
+                weaponLostSlots[i].SetNativeSize();
             }
             else
             {

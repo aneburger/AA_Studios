@@ -59,6 +59,7 @@ public class PortobelloPhaseSettings
     public float throneSpikesWeight = 0f;
     public int throneEnemyCountMin = 2;
     public int throneEnemyCountMax = 3;
+    public int throneEnemyUsesPerVisit = 1;
 
     [Header("Laser Statues")]
     public float laserChargeDuration = 1f;
@@ -226,7 +227,6 @@ public class PortobelloBoss : BossBrain
     [SerializeField] private BossMinionSpawner minionSpawner;
     [SerializeField] private GameObject[] minionPrefabs;
     [SerializeField] private Transform[] enemySpawnPoints;
-    [SerializeField] private int throneEnemySpawnCap = 1;
     [Range(0f, 1f)] [SerializeField] private float weaponGuaranteeChance = 0.7f;
     [Range(0f, 1f)] [SerializeField] private float healthGuaranteeChance = 0.4f;
     [SerializeField] private float enemySpawnIntervalMin = 0.15f;
@@ -753,8 +753,6 @@ public class PortobelloBoss : BossBrain
         facePlayer = true;
     }
 
-    // Vanish, reappear at a dedicated spike stand spot (never a weapon-shoot spot) - same
-    // shape as RepositionNoWeapon, just pointed at its own spot pool.
     private IEnumerator RepositionToSpikeSpot()
     {
         health.SetInvulnerable(BossHealth.ReasonHidden, true);
@@ -867,21 +865,36 @@ public class PortobelloBoss : BossBrain
         Trigger(TrigThroneSummon);
         yield return WaitForSummonReady(throneSummonEventTimeout);
 
-        if (revealFrom.HasValue && revealToExclusive.HasValue)
+        bool isTransitionVisit = revealFrom.HasValue && revealToExclusive.HasValue;
+
+        if (isTransitionVisit)
             yield return RevealStatues(revealFrom.Value, revealToExclusive.Value);
 
         int min = Mathf.Max(1, s.throneActionsMin);
         int max = Mathf.Max(min, s.throneActionsMax);
         int actionCount = Random.Range(min, max + 1);
+
+        if (isTransitionVisit) actionCount = Mathf.Max(actionCount, 2);
+
         ThroneAction? lastThroneAction = null;
+        int enemyUsesSoFar = 0;
 
         for (int i = 0; i < actionCount; i++)
         {
-            ThroneAction action = PickThroneAction(s, lastThroneAction);
+            ThroneAction action;
+
+            if (i == 0 && s.throneEnemyUsesPerVisit > 0)
+                action = ThroneAction.Enemies;
+            else if (isTransitionVisit && i == 1 && activeStatueCount > 0)
+                action = ThroneAction.Statues;
+            else
+                action = PickThroneAction(s, lastThroneAction, enemyUsesSoFar);
+
             if (action == ThroneAction.None) break;
 
             yield return RunThroneAction(action, s);
             lastThroneAction = action;
+            if (action == ThroneAction.Enemies) enemyUsesSoFar++;
 
             if (i < actionCount - 1)
                 yield return new WaitForSeconds(s.throneActionPause);
@@ -891,10 +904,11 @@ public class PortobelloBoss : BossBrain
         SetIdleContact();
     }
 
-    private ThroneAction PickThroneAction(PortobelloPhaseSettings s, ThroneAction? last)
+    private ThroneAction PickThroneAction(PortobelloPhaseSettings s, ThroneAction? last, int enemyUsesSoFar)
     {
         List<ThroneAction> options = new List<ThroneAction>();
         List<float> weights = new List<float>();
+        bool enemiesAvailable = enemyUsesSoFar < Mathf.Max(0, s.throneEnemyUsesPerVisit);
 
         void AddOption(ThroneAction action, bool available, float weight, bool allowRepeat)
         {
@@ -905,14 +919,14 @@ public class PortobelloBoss : BossBrain
         }
 
         AddOption(ThroneAction.Statues, activeStatueCount > 0, s.throneStatuesWeight, allowRepeat: false);
-        AddOption(ThroneAction.Enemies, true, s.throneEnemiesWeight, allowRepeat: false);
+        AddOption(ThroneAction.Enemies, enemiesAvailable, s.throneEnemiesWeight, allowRepeat: false);
         AddOption(ThroneAction.Spikes, spikeSpawner != null, s.throneSpikesWeight, allowRepeat: false);
 
         // Nothing available without repeating
         if (options.Count == 0)
         {
             AddOption(ThroneAction.Statues, activeStatueCount > 0, s.throneStatuesWeight, allowRepeat: true);
-            AddOption(ThroneAction.Enemies, true, s.throneEnemiesWeight, allowRepeat: true);
+            AddOption(ThroneAction.Enemies, enemiesAvailable, s.throneEnemiesWeight, allowRepeat: true);
             AddOption(ThroneAction.Spikes, spikeSpawner != null, s.throneSpikesWeight, allowRepeat: true);
         }
 
@@ -947,16 +961,45 @@ public class PortobelloBoss : BossBrain
             || enemySpawnPoints == null || enemySpawnPoints.Length == 0)
             yield break;
 
-        GameObject prefab = minionPrefabs[Random.Range(0, minionPrefabs.Length)];
         int count = Random.Range(Mathf.Max(1, s.throneEnemyCountMin), Mathf.Max(1, s.throneEnemyCountMax) + 1);
-        count = Mathf.Min(count, Mathf.Max(1, throneEnemySpawnCap));
+        List<GameObject> toSpawn = BuildVariedMinionList(count);
 
-        yield return minionSpawner.SpawnWave(prefab, count, enemySpawnPoints,
-            weaponGuaranteeChance, healthGuaranteeChance, enemySpawnIntervalMin, enemySpawnIntervalMax);
+        for (int i = 0; i < toSpawn.Count; i++)
+        {
+            yield return minionSpawner.SpawnWave(toSpawn[i], 1, enemySpawnPoints,
+                weaponGuaranteeChance, healthGuaranteeChance, enemySpawnIntervalMin, enemySpawnIntervalMax);
+
+            if (i < toSpawn.Count - 1)
+                yield return new WaitForSeconds(Random.Range(enemySpawnIntervalMin, enemySpawnIntervalMax));
+        }
     }
 
-    // Fires every active statue simultaneously, for the configured number of volleys, using a
-    // randomly picked pattern per volley (cycling through distinct ones if requested).
+    private List<GameObject> BuildVariedMinionList(int count)
+    {
+        List<GameObject> pool = new List<GameObject>(minionPrefabs);
+        ShuffleList(pool);
+
+        List<GameObject> result = new List<GameObject>();
+        int guaranteed = Mathf.Min(count, pool.Count);
+        for (int i = 0; i < guaranteed; i++)
+            result.Add(pool[i]);
+
+        while (result.Count < count)
+            result.Add(minionPrefabs[Random.Range(0, minionPrefabs.Length)]);
+
+        ShuffleList(result);
+        return result;
+    }
+
+    private static void ShuffleList(List<GameObject> list)
+    {
+        for (int i = list.Count - 1; i > 0; i--)
+        {
+            int j = Random.Range(0, i + 1);
+            (list[i], list[j]) = (list[j], list[i]);
+        }
+    }
+
     private IEnumerator FireActiveStatues(PortobelloPhaseSettings s)
     {
         if (activeStatueCount <= 0 || statueSlots == null) yield break;

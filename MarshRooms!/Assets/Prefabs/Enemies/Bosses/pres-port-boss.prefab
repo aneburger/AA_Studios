@@ -233,10 +233,10 @@ MonoBehaviour:
     downtimeMax: 2
     goldBarWeight: 1
     coinGunWeight: 1
-    dollarBurstsWeight: 0
-    spikeWeight: 0
-    burrowWeight: 0
-    animSpeed: 1.2
+    dollarBurstsWeight: 1
+    spikeWeight: 1
+    burrowWeight: 1
+    animSpeed: 1
     spikeCountMin: 3
     spikeCountMax: 5
     spikeWarningTime: 0.6
@@ -246,24 +246,25 @@ MonoBehaviour:
     spikeScreenShakeDuration: 0
     spikeScreenShakeForce: 0.3
     burrowPops: 3
-    burrowChaseSpeed: 6
-    burrowChaseDuration: 3
-    burrowStopPause: 0.25
-    burrowSmashRadius: 4
+    burrowChaseSpeed: 6.2
+    burrowChaseDuration: 2
+    burrowStopPause: 0.14
+    burrowSmashRadius: 3
     burrowSmashDamage: 3
     burrowSmashKnockback: 8
     burrowSmashShake: 0.5
     burrowPopCooldown: 1.5
     throneActionsMin: 2
-    throneActionsMax: 3
+    throneActionsMax: 2
     throneActionPause: 1
     throneStatuesWeight: 1
     throneEnemiesWeight: 1
     throneSpikesWeight: 0
     throneEnemyCountMin: 2
     throneEnemyCountMax: 3
-    laserChargeDuration: 1
-    laserFiringDuration: 2
+    throneEnemyUsesPerVisit: 1
+    laserChargeDuration: 0.8
+    laserFiringDuration: 1
     laserVolleys: 1
     laserVolleyPause: 0.4
     laserCycleDifferentPattern: 1
@@ -293,39 +294,40 @@ MonoBehaviour:
     downtimeMax: 1.5
     goldBarWeight: 1
     coinGunWeight: 1
-    dollarBurstsWeight: 0
-    spikeWeight: 0
-    burrowWeight: 0
-    animSpeed: 1.4
+    dollarBurstsWeight: 1
+    spikeWeight: 1
+    burrowWeight: 1
+    animSpeed: 1.2
     spikeCountMin: 4
     spikeCountMax: 6
-    spikeWarningTime: 0.32
+    spikeWarningTime: 0.33
     spikeRoundsMin: 4
     spikeRoundsMax: 8
-    spikeRoundInterval: 0.63
+    spikeRoundInterval: 0.7
     spikeScreenShakeDuration: 0.5
     spikeScreenShakeForce: 0.3
-    burrowPops: 1
-    burrowChaseSpeed: 4
-    burrowChaseDuration: 2
-    burrowStopPause: 0.4
-    burrowSmashRadius: 2
+    burrowPops: 3
+    burrowChaseSpeed: 6.4
+    burrowChaseDuration: 1.8
+    burrowStopPause: 0.07
+    burrowSmashRadius: 3
     burrowSmashDamage: 3
     burrowSmashKnockback: 8
-    burrowSmashShake: 0.7
-    burrowPopCooldown: 1.5
+    burrowSmashShake: 0.6
+    burrowPopCooldown: 1.3
     throneActionsMin: 2
-    throneActionsMax: 3
+    throneActionsMax: 2
     throneActionPause: 1
     throneStatuesWeight: 1
     throneEnemiesWeight: 1
     throneSpikesWeight: 0
-    throneEnemyCountMin: 2
-    throneEnemyCountMax: 3
-    laserChargeDuration: 1
-    laserFiringDuration: 2
-    laserVolleys: 1
-    laserVolleyPause: 0.4
+    throneEnemyCountMin: 4
+    throneEnemyCountMax: 5
+    throneEnemyUsesPerVisit: 1
+    laserChargeDuration: 0.7
+    laserFiringDuration: 0.8
+    laserVolleys: 5
+    laserVolleyPause: 0.2
     laserCycleDifferentPattern: 1
     goldBarVolleys: 3
     goldBarWindup: 0.7
@@ -353,35 +355,36 @@ MonoBehaviour:
     downtimeMax: 1
     goldBarWeight: 1
     coinGunWeight: 1
-    dollarBurstsWeight: 0
-    spikeWeight: 0
-    burrowWeight: 0
-    animSpeed: 1.6
+    dollarBurstsWeight: 1
+    spikeWeight: 1
+    burrowWeight: 1
+    animSpeed: 1.4
     spikeCountMin: 5
     spikeCountMax: 8
-    spikeWarningTime: 0.28
+    spikeWarningTime: 0.35
     spikeRoundsMin: 5
     spikeRoundsMax: 8
-    spikeRoundInterval: 0.6
+    spikeRoundInterval: 0.7
     spikeScreenShakeDuration: 0.75
     spikeScreenShakeForce: 0.3
-    burrowPops: 1
-    burrowChaseSpeed: 4
-    burrowChaseDuration: 2
-    burrowStopPause: 0.4
-    burrowSmashRadius: 2
+    burrowPops: 3
+    burrowChaseSpeed: 6.8
+    burrowChaseDuration: 1.5
+    burrowStopPause: 0.05
+    burrowSmashRadius: 3
     burrowSmashDamage: 3
     burrowSmashKnockback: 8
     burrowSmashShake: 0.7
-    burrowPopCooldown: 1.5
+    burrowPopCooldown: 1.2
     throneActionsMin: 2
     throneActionsMax: 3
     throneActionPause: 1
     throneStatuesWeight: 1
     throneEnemiesWeight: 1
-    throneSpikesWeight: 1
-    throneEnemyCountMin: 2
-    throneEnemyCountMax: 3
+    throneSpikesWeight: 0.8
+    throneEnemyCountMin: 4
+    throneEnemyCountMax: 6
+    throneEnemyUsesPerVisit: 1
     laserChargeDuration: 1
     laserFiringDuration: 2
     laserVolleys: 2
@@ -400,7 +403,7 @@ MonoBehaviour:
     coinShotInterval: 0.11
     coinBulletSpeedMultiplier: 1.13
     coinAimTurnRate: 145
-    coinBulletsPerShot: 2
+    coinBulletsPerShot: 1
     coinSpread: 14
     coinMoveSpeed: 2.1
     dollarThrows: 4
@@ -442,7 +445,9 @@ MonoBehaviour:
   billLaunchSoundLead: 0.05
   dollarBurstShakeForce: 0.2
   spikeSpawner: {fileID: 0}
-  spikeStandSpots: []
+  spikeStandSpots:
+  - {fileID: 0}
+  - {fileID: 0}
   spikeStandSpotMinPlayerDistance: 2.5
   spikeStandSpotMinMoveDistance: 1.5
   spikeSummonEventTimeout: 3
@@ -458,8 +463,8 @@ MonoBehaviour:
   burrowLoopClip: {fileID: 8300000, guid: cadd02ef3eaed304cafa580ef12f9443, type: 3}
   burrowLoopVolume: 1
   stubAttackDuration: 1.5
-  attacksBeforeThroneMin: 15
-  attacksBeforeThroneMax: 15
+  attacksBeforeThroneMin: 2
+  attacksBeforeThroneMax: 3
   thronePoint: {fileID: 0}
   throneSummonEventTimeout: 3
   throneSummonClip: {fileID: 8300000, guid: 268398b940108cc4e8c57d4e6312c541, type: 3}
@@ -489,7 +494,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  weaponGuaranteeChance: 0.4
+  weaponGuaranteeChance: 0.5
   healthGuaranteeChance: 0.4
   enemySpawnIntervalMin: 0.15
   enemySpawnIntervalMax: 0.4
@@ -500,9 +505,28 @@ MonoBehaviour:
   - {fileID: 0}
   twoStatuePatterns:
   - {fileID: 11400000, guid: 7f57e2fbd52dc2e4c9ffae0c4804a57c, type: 2}
+  - {fileID: 11400000, guid: 366cbdf612ef6f54e9dcd516c09db6cf, type: 2}
+  - {fileID: 11400000, guid: 9a37dfb3cd8d35a49a75eccc45f8b4a1, type: 2}
+  - {fileID: 11400000, guid: 286d779ca30dc5f4d87900703d2ae5d0, type: 2}
+  - {fileID: 11400000, guid: 90afd393c69191d4c964b43a448f70b8, type: 2}
+  - {fileID: 11400000, guid: c245f0e3e738c8049b049704e2cf4bae, type: 2}
+  - {fileID: 11400000, guid: 1345c245496dccf49a1bc7a0c9be3236, type: 2}
+  - {fileID: 11400000, guid: ec1bd4cef3f2659498f142854f62534f, type: 2}
+  - {fileID: 11400000, guid: ef123684b4cbedb468bb5fb2d8040a5c, type: 2}
+  - {fileID: 11400000, guid: e6909563beca17e4e944c9d617778911, type: 2}
   fourStatuePatterns:
   - {fileID: 11400000, guid: 97435860d7b46804e84fe17b8930e05b, type: 2}
-  statueRevealInterval: 0.5
+  - {fileID: 11400000, guid: 596cfb0c4d11525448934c42288096be, type: 2}
+  - {fileID: 11400000, guid: 81c0c9416df43914cb5c51dfaab23f0e, type: 2}
+  - {fileID: 11400000, guid: 5a3f4600a0d1b434f879787648ec485b, type: 2}
+  - {fileID: 11400000, guid: be9290b78d224024c9fb102a1fb2cdd4, type: 2}
+  - {fileID: 11400000, guid: 2742c40a1997bbd4eb24e4ee322c7cc7, type: 2}
+  - {fileID: 11400000, guid: 4ddd1479eff4a1c4f9a820d1634430f7, type: 2}
+  - {fileID: 11400000, guid: 13f30f44e847b024591418f9d881b26d, type: 2}
+  - {fileID: 11400000, guid: 41f9fa57b022f1246970a841dd096258, type: 2}
+  - {fileID: 11400000, guid: 9d984da71e2ff48418c8f513ed3fe51b, type: 2}
+  - {fileID: 11400000, guid: 789d98d7f117c604a9c1833686579ae5, type: 2}
+  statueRevealInterval: 0.8
   statueBurstShake: 0.4
   statueBurstClip: {fileID: 8300000, guid: f58e88fc3ff5dc74f94fdd5e6eaacb68, type: 3}
   statueBurstVolume: 1
@@ -518,7 +542,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19f7135adf0332d46b73bc1509c9a879, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BossHealth
-  maxHealth: 50
+  maxHealth: 650
   onDeath:
     m_PersistentCalls:
       m_Calls: []
@@ -540,7 +564,7 @@ MonoBehaviour:
   sporeDropCooldown: 0.5
   hurtClip: {fileID: 8300000, guid: 3ef1eef1e125ae04ca5e0053211ce2c1, type: 3}
   hurtVolume: 0.8
-  deflectClip: {fileID: 0}
+  deflectClip: {fileID: 8300000, guid: 5f442536ef2f2b043a8a7f640c2ddeba, type: 3}
   deflectVolume: 1
   deflectCooldown: 0.08
 --- !u!114 &9056498895987517654

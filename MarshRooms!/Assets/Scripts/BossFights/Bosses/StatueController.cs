@@ -16,6 +16,7 @@ public class StatueController : MonoBehaviour
 
     [Header("Laser")]
     [SerializeField] private LayerMask hitMask;
+    [SerializeField] private LayerMask visualBlockMask;
     [SerializeField] private float raycastMaxDistance = 30f;
     [SerializeField] private float damage = 2f;
     [SerializeField] private float tickInterval = 0.25f;
@@ -40,9 +41,18 @@ public class StatueController : MonoBehaviour
         animator?.SetTrigger(TrigSpawn);
     }
 
+    private Coroutine activeFireRoutine;
+
     public Coroutine Fire(float angleDegrees, float chargeDuration, float firingDuration)
     {
-        return StartCoroutine(FireRoutine(angleDegrees, chargeDuration, firingDuration));
+        if (activeFireRoutine != null)
+        {
+            StopCoroutine(activeFireRoutine);
+            PlayBeams(b => b.Hide());
+        }
+
+        activeFireRoutine = StartCoroutine(FireRoutine(angleDegrees, chargeDuration, firingDuration));
+        return activeFireRoutine;
     }
 
     private IEnumerator FireRoutine(float angleDegrees, float chargeDuration, float firingDuration)
@@ -54,8 +64,8 @@ public class StatueController : MonoBehaviour
 
         Vector2 damageOrigin = eyePoint != null ? (Vector2)eyePoint.position : (Vector2)transform.position;
 
-        RaycastHit2D initialHit = Physics2D.Raycast(damageOrigin, dir, raycastMaxDistance, hitMask);
-        float beamLength = initialHit.collider != null ? initialHit.distance : raycastMaxDistance;
+        RaycastHit2D visualHit = Physics2D.Raycast(damageOrigin, dir, raycastMaxDistance, visualBlockMask);
+        float beamLength = visualHit.collider != null ? visualHit.distance : raycastMaxDistance;
 
         ShowBeams(damageOrigin, angleDegrees, beamLength);
 
@@ -75,7 +85,7 @@ public class StatueController : MonoBehaviour
         {
             if (elapsed >= nextTick)
             {
-                RaycastHit2D hit = Physics2D.Raycast(damageOrigin, dir, raycastMaxDistance, hitMask);
+                RaycastHit2D hit = Physics2D.Raycast(damageOrigin, dir, beamLength, hitMask);
                 if (hit.collider != null)
                 {
                     PlayerHealth ph = hit.collider.GetComponentInParent<PlayerHealth>();
@@ -96,6 +106,7 @@ public class StatueController : MonoBehaviour
 
         yield return new WaitForSeconds(beamHideDelay);
         PlayBeams(b => b.Hide());
+        activeFireRoutine = null;
     }
 
     private void ShowBeams(Vector2 fallbackOrigin, float angleDegrees, float length)

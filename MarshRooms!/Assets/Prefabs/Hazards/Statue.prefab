@@ -201,16 +201,19 @@ MonoBehaviour:
   hitMask:
     serializedVersion: 2
     m_Bits: 64
+  visualBlockMask:
+    serializedVersion: 2
+    m_Bits: 0
   raycastMaxDistance: 300
   damage: 2
   tickInterval: 0.25
   beamHideDelay: 0.4
-  chargeClip: {fileID: 8300000, guid: fe9c5a1744380084196c74d3137ebe9b, type: 3}
+  chargeClip: {fileID: 8300000, guid: 465af2f36ae3d7440a35eebd5c013fb0, type: 3}
   chargeVolume: 1
-  firingClip: {fileID: 8300000, guid: 7999fbf05fd575343bbafb1caf493afd, type: 3}
+  firingClip: {fileID: 8300000, guid: 08c974add37076d4da774b6f26f9a4b6, type: 3}
   firingVolume: 1
-  powerDownClip: {fileID: 8300000, guid: 8e502e498eca0b943af0dedc2b8850dd, type: 3}
-  powerDownVolume: 1
+  powerDownClip: {fileID: 0}
+  powerDownVolume: 0
 --- !u!1 &2977164866819721291
 GameObject:
   m_ObjectHideFlags: 0
