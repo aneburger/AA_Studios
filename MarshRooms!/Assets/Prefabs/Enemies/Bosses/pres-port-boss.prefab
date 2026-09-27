@@ -108,6 +108,7 @@ GameObject:
   - component: {fileID: 9056498895987517654}
   - component: {fileID: 7585961510317227088}
   - component: {fileID: 3846074695851464617}
+  - component: {fileID: 27379241362764003}
   m_Layer: 7
   m_Name: pres-port-boss
   m_TagString: Untagged
@@ -254,14 +255,14 @@ MonoBehaviour:
     burrowSmashKnockback: 8
     burrowSmashShake: 0.5
     burrowPopCooldown: 1.5
-    throneActionsMin: 2
+    throneActionsMin: 1
     throneActionsMax: 2
     throneActionPause: 1
     throneStatuesWeight: 1
     throneEnemiesWeight: 1
     throneSpikesWeight: 0
-    throneEnemyCountMin: 2
-    throneEnemyCountMax: 3
+    throneEnemyCountMin: 3
+    throneEnemyCountMax: 5
     throneEnemyUsesPerVisit: 1
     laserChargeDuration: 0.8
     laserFiringDuration: 1
@@ -275,7 +276,7 @@ MonoBehaviour:
     goldBarVolleyPause: 0.5
     goldBarBulletSpeedMultiplier: 1
     goldBarAimTurnRate: 80
-    coinVolleys: 3
+    coinVolleys: 2
     coinVolleyPause: 0.5
     coinShots: 30
     coinShotInterval: 0.12
@@ -307,7 +308,7 @@ MonoBehaviour:
     spikeScreenShakeDuration: 0.5
     spikeScreenShakeForce: 0.3
     burrowPops: 3
-    burrowChaseSpeed: 6.4
+    burrowChaseSpeed: 6.8
     burrowChaseDuration: 1.8
     burrowStopPause: 0.07
     burrowSmashRadius: 3
@@ -368,7 +369,7 @@ MonoBehaviour:
     spikeScreenShakeDuration: 0.75
     spikeScreenShakeForce: 0.3
     burrowPops: 3
-    burrowChaseSpeed: 6.8
+    burrowChaseSpeed: 7
     burrowChaseDuration: 1.5
     burrowStopPause: 0.05
     burrowSmashRadius: 3
@@ -381,23 +382,23 @@ MonoBehaviour:
     throneActionPause: 1
     throneStatuesWeight: 1
     throneEnemiesWeight: 1
-    throneSpikesWeight: 0.8
+    throneSpikesWeight: 1
     throneEnemyCountMin: 4
     throneEnemyCountMax: 6
     throneEnemyUsesPerVisit: 1
-    laserChargeDuration: 1
-    laserFiringDuration: 2
-    laserVolleys: 2
-    laserVolleyPause: 0.4
+    laserChargeDuration: 0.6
+    laserFiringDuration: 0.6
+    laserVolleys: 5
+    laserVolleyPause: 0.2
     laserCycleDifferentPattern: 1
-    goldBarVolleys: 4
+    goldBarVolleys: 2
     goldBarWindup: 0.7
     goldBarShots: 14
     goldBarShotInterval: 0.27
     goldBarVolleyPause: 0.4
     goldBarBulletSpeedMultiplier: 1.12
     goldBarAimTurnRate: 120
-    coinVolleys: 3
+    coinVolleys: 2
     coinVolleyPause: 0.7
     coinShots: 40
     coinShotInterval: 0.11
@@ -451,7 +452,7 @@ MonoBehaviour:
   spikeStandSpotMinPlayerDistance: 2.5
   spikeStandSpotMinMoveDistance: 1.5
   spikeSummonEventTimeout: 3
-  spikeSummonClip: {fileID: 8300000, guid: 268398b940108cc4e8c57d4e6312c541, type: 3}
+  spikeSummonClip: {fileID: 0}
   spikeSummonVolume: 1
   burrowImpactEventTimeout: 3
   burrowDiveClip: {fileID: 8300000, guid: 8c681740adf407e4885c813399b7bdc4, type: 3}
@@ -483,6 +484,7 @@ MonoBehaviour:
   - {fileID: 988082134135583188, guid: 5bcc205bad2246b4b94d8e21366aebd0, type: 3}
   - {fileID: 988082134135583188, guid: b6879f58974980647905342bc1961b7e, type: 3}
   - {fileID: 988082134135583188, guid: 34b450337f1a16040bcac12efa72893b, type: 3}
+  - {fileID: 988082134135583188, guid: faf64abcc052f8947867cca3bf03bfef, type: 3}
   enemySpawnPoints:
   - {fileID: 0}
   - {fileID: 0}
@@ -528,7 +530,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 789d98d7f117c604a9c1833686579ae5, type: 2}
   statueRevealInterval: 0.8
   statueBurstShake: 0.4
-  statueBurstClip: {fileID: 8300000, guid: f58e88fc3ff5dc74f94fdd5e6eaacb68, type: 3}
+  statueBurstClip: {fileID: 8300000, guid: da8e6a543d7f9c64ba28d60e2b0848bb, type: 3}
   statueBurstVolume: 1
 --- !u!114 &8169478559265794274
 MonoBehaviour:
@@ -542,7 +544,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19f7135adf0332d46b73bc1509c9a879, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BossHealth
-  maxHealth: 650
+  maxHealth: 100
   onDeath:
     m_PersistentCalls:
       m_Calls: []
@@ -617,6 +619,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BossPatternShooter
   origin: {fileID: 0}
+  attackerName: Pres. Portobello
+--- !u!114 &27379241362764003
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 988082134135583188}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d4e72c0f30c3324980638d65a61732c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PortobelloOutro
+  bossAnimator: {fileID: 803806091724421615}
+  deathTrigger: Die
+  musicFadeDuration: 1.5
+  hitStopDuration: 0.08
+  hitStopFlashColor: {r: 1, g: 1, b: 1, a: 1}
+  hitStopFlashAlpha: 0.7
+  hitStopFlashDuration: 0.3
+  deathThudDelay: 0.3
+  rumbleShakeCount: 4
+  rumbleShakeInterval: 0.15
+  rumbleShakeMin: 0.2
+  rumbleShakeMax: 0.5
+  dialogue: {fileID: 11400000, guid: 211ca1f99b882c245a3e1c9cc284e4df, type: 2}
+  pauseBeforeDialogue: 0.5
 --- !u!1 &1474284981994161219
 GameObject:
   m_ObjectHideFlags: 0

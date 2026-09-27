@@ -13,9 +13,33 @@ MonoBehaviour:
   m_Name: bossOutroDialoguePart1
   m_EditorClassIdentifier: Assembly-CSharp::DialogueSequence
   lines:
-  - speakerName: Marsh
-    portrait: {fileID: 1730539990, guid: 96f423fd58af20743ab60c2815e095a2, type: 3}
-    talkingPortrait: {fileID: -1870950988, guid: 96f423fd58af20743ab60c2815e095a2, type: 3}
-    text: 
+  - speakerName: Pres. Portobello
+    portrait: {fileID: -527737148134839775, guid: da9a0b2b89f807e4fbdcbb2057c0451e, type: 3}
+    talkingPortrait: {fileID: 3117636074755913924, guid: da9a0b2b89f807e4fbdcbb2057c0451e, type: 3}
+    text: <b>How is this possible!?</b>
     voiceClip: {fileID: 0}
+    typewriterSpeedOverride: 0
+  - speakerName: Pres. Portobello
+    portrait: {fileID: -8615114463756852289, guid: da9a0b2b89f807e4fbdcbb2057c0451e, type: 3}
+    talkingPortrait: {fileID: -7491684181852471763, guid: da9a0b2b89f807e4fbdcbb2057c0451e, type: 3}
+    text: I'm supposed to be amazing...
+    voiceClip: {fileID: 0}
+    typewriterSpeedOverride: 0
+  - speakerName: Pres. Portobello
+    portrait: {fileID: -3138460952452340409, guid: da9a0b2b89f807e4fbdcbb2057c0451e, type: 3}
+    talkingPortrait: {fileID: -8615114463756852289, guid: da9a0b2b89f807e4fbdcbb2057c0451e, type: 3}
+    text: <shake>Bluahhggghh</shake>
+    voiceClip: {fileID: 0}
+    typewriterSpeedOverride: 35
+  - speakerName: Marsh
+    portrait: {fileID: 6562647036115510444, guid: 96f423fd58af20743ab60c2815e095a2, type: 3}
+    talkingPortrait: {fileID: -2681918893553572030, guid: 96f423fd58af20743ab60c2815e095a2, type: 3}
+    text: The story will conclude in the final version.
+    voiceClip: {fileID: 8300000, guid: c68eac0243656f04aaf2eed6ceaea404, type: 3}
+    typewriterSpeedOverride: 0
+  - speakerName: Marsh
+    portrait: {fileID: -916550197, guid: 96f423fd58af20743ab60c2815e095a2, type: 3}
+    talkingPortrait: {fileID: -1472452136, guid: 96f423fd58af20743ab60c2815e095a2, type: 3}
+    text: The developers need to sleep first.
+    voiceClip: {fileID: 8300000, guid: a52b0cfa367016946aedf7ca9de26c60, type: 3}
     typewriterSpeedOverride: 0

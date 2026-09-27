@@ -145861,6 +145861,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 27379241362764003, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
+      propertyPath: contactDamage
+      value: 
+      objectReference: {fileID: 866544880}
+    - target: {fileID: 27379241362764003, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
+      propertyPath: pauseBeforeDialogue
+      value: 1.5
+      objectReference: {fileID: 0}
     - target: {fileID: 208003371081328597, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
       propertyPath: m_LocalPosition.x
       value: -32.501
@@ -145905,13 +145913,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: pres-port-boss
       objectReference: {fileID: 0}
-    - target: {fileID: 3846074695851464617, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
-      propertyPath: attackerName
-      value: Pres. Portobello
-      objectReference: {fileID: 0}
     - target: {fileID: 8169478559265794274, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
       propertyPath: maxHealth
-      value: 1000
+      value: 1050
       objectReference: {fileID: 0}
     - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
       propertyPath: room
@@ -145934,25 +145938,13 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1078339583}
     - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
-      propertyPath: phase1.burrowWeight
-      value: 1
-      objectReference: {fileID: 0}
+      propertyPath: throneJumpClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 5eb6fa0a9a7a684419120aa1b5b58937, type: 3}
     - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
-      propertyPath: phase3.laserVolleys
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
-      propertyPath: phase1.throneActionsMin
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
-      propertyPath: phase3.laserVolleyPause
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
-      propertyPath: minionPrefabs.Array.size
-      value: 4
-      objectReference: {fileID: 0}
+      propertyPath: throneLandClip
+      value: 
+      objectReference: {fileID: 8300000, guid: ca5546d1a4b07a04e8fa76f131c21030, type: 3}
     - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
       propertyPath: 'shootSpots.Array.data[0]'
       value: 
@@ -145978,10 +145970,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1660818596}
     - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
-      propertyPath: phase3.throneSpikesWeight
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
       propertyPath: 'statueSlots.Array.data[0]'
       value: 
       objectReference: {fileID: 2072447720}
@@ -145997,26 +145985,6 @@ PrefabInstance:
       propertyPath: 'statueSlots.Array.data[3]'
       value: 
       objectReference: {fileID: 2126337768}
-    - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
-      propertyPath: phase1.throneEnemyCountMax
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
-      propertyPath: phase1.throneEnemyCountMin
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
-      propertyPath: phase3.laserChargeDuration
-      value: 0.6
-      objectReference: {fileID: 0}
-    - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
-      propertyPath: phase3.laserFiringDuration
-      value: 0.6
-      objectReference: {fileID: 0}
-    - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
-      propertyPath: 'minionPrefabs.Array.data[3]'
-      value: 
-      objectReference: {fileID: 988082134135583188, guid: faf64abcc052f8947867cca3bf03bfef, type: 3}
     - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
       propertyPath: 'spikeStandSpots.Array.data[0]'
       value: 
@@ -146081,6 +146049,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19f7135adf0332d46b73bc1509c9a879, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BossHealth
+--- !u!114 &866544879 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 27379241362764003, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
+  m_PrefabInstance: {fileID: 866544877}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d4e72c0f30c3324980638d65a61732c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PortobelloOutro
+--- !u!114 &866544880 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9056498895987517654, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
+  m_PrefabInstance: {fileID: 866544877}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: abe8d5f37591326489fc45a2b0a231b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BossContactDamage
 --- !u!1 &882842618
 GameObject:
   m_ObjectHideFlags: 0
@@ -150115,7 +150105,7 @@ MonoBehaviour:
   introCard: {fileID: 2144050856}
   pauseBeforeCard: 0.6
   pauseAfterCard: 0.3
-  outro: {fileID: 0}
+  outro: {fileID: 866544879}
   doorOpenClip: {fileID: 8300000, guid: 1ca490609e24e524db4bca612167753a, type: 3}
   doorOpenVolume: 1
   elevator: {fileID: 0}

@@ -13,15 +13,27 @@ MonoBehaviour:
   m_Name: bossIntroDialogue
   m_EditorClassIdentifier: Assembly-CSharp::DialogueSequence
   lines:
-  - speakerName: Marsh
-    portrait: {fileID: 1730539990, guid: 96f423fd58af20743ab60c2815e095a2, type: 3}
-    talkingPortrait: {fileID: -1870950988, guid: 96f423fd58af20743ab60c2815e095a2, type: 3}
-    text: ...
-    voiceClip: {fileID: 0}
+  - speakerName: Pres. Portobello
+    portrait: {fileID: 5322633849160142261, guid: da9a0b2b89f807e4fbdcbb2057c0451e, type: 3}
+    talkingPortrait: {fileID: -7571878350800270001, guid: da9a0b2b89f807e4fbdcbb2057c0451e, type: 3}
+    text: What is the meaning of this!
+    voiceClip: {fileID: 8300000, guid: 283f6c02c734e974683167dacda928bd, type: 3}
     typewriterSpeedOverride: 0
   - speakerName: Pres. Portobello
     portrait: {fileID: -4656897530138824443, guid: da9a0b2b89f807e4fbdcbb2057c0451e, type: 3}
     talkingPortrait: {fileID: -9178681478427425499, guid: da9a0b2b89f807e4fbdcbb2057c0451e, type: 3}
-    text: ...
-    voiceClip: {fileID: 0}
+    text: <shake><b>Guards Guards!<b></shake>
+    voiceClip: {fileID: 8300000, guid: bba8fe26bd53da645a3889fe3cbab0b4, type: 3}
+    typewriterSpeedOverride: 35
+  - speakerName: Marsh
+    portrait: {fileID: 1163481806, guid: 96f423fd58af20743ab60c2815e095a2, type: 3}
+    talkingPortrait: {fileID: 63140439, guid: 96f423fd58af20743ab60c2815e095a2, type: 3}
+    text: I turned them all into spore clouds!
+    voiceClip: {fileID: 8300000, guid: 60d92a7a6e87c6e478d59edfa53b83af, type: 3}
+    typewriterSpeedOverride: 0
+  - speakerName: Marsh
+    portrait: {fileID: 4452015905900111914, guid: 96f423fd58af20743ab60c2815e095a2, type: 3}
+    talkingPortrait: {fileID: -1870950988, guid: 96f423fd58af20743ab60c2815e095a2, type: 3}
+    text: You're next if you don't give me Mr. Blobs back.
+    voiceClip: {fileID: 8300000, guid: 03fd7ef7a9b872447b8c7209c0fc50b3, type: 3}
     typewriterSpeedOverride: 0
