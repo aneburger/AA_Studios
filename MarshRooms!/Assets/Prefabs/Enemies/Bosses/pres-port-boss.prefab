@@ -232,8 +232,9 @@ MonoBehaviour:
     downtimeMax: 2
     goldBarWeight: 0
     coinGunWeight: 0
-    dollarBurstsWeight: 1
+    dollarBurstsWeight: 0
     spikeWeight: 0
+    burrowWeight: 1
     animSpeed: 1
     spikeCountMin: 3
     spikeCountMax: 5
@@ -243,6 +244,14 @@ MonoBehaviour:
     spikeRoundInterval: 0.75
     spikeScreenShakeDuration: 0
     spikeScreenShakeForce: 0.3
+    burrowPops: 3
+    burrowChaseSpeed: 6
+    burrowChaseDuration: 3
+    burrowStopPause: 0.25
+    burrowSmashRadius: 4
+    burrowSmashDamage: 3
+    burrowSmashKnockback: 8
+    burrowSmashShake: 0.5
     goldBarVolleys: 3
     goldBarWindup: 0.8
     goldBarShots: 10
@@ -269,8 +278,9 @@ MonoBehaviour:
     downtimeMax: 1.5
     goldBarWeight: 0
     coinGunWeight: 0
-    dollarBurstsWeight: 1
+    dollarBurstsWeight: 0
     spikeWeight: 0
+    burrowWeight: 1
     animSpeed: 1.15
     spikeCountMin: 4
     spikeCountMax: 6
@@ -280,6 +290,14 @@ MonoBehaviour:
     spikeRoundInterval: 0.63
     spikeScreenShakeDuration: 0.5
     spikeScreenShakeForce: 0.3
+    burrowPops: 1
+    burrowChaseSpeed: 4
+    burrowChaseDuration: 2
+    burrowStopPause: 0.4
+    burrowSmashRadius: 2
+    burrowSmashDamage: 3
+    burrowSmashKnockback: 8
+    burrowSmashShake: 0.7
     goldBarVolleys: 3
     goldBarWindup: 0.7
     goldBarShots: 12
@@ -306,8 +324,9 @@ MonoBehaviour:
     downtimeMax: 1
     goldBarWeight: 0
     coinGunWeight: 0
-    dollarBurstsWeight: 1
+    dollarBurstsWeight: 0
     spikeWeight: 0
+    burrowWeight: 1
     animSpeed: 1.3
     spikeCountMin: 5
     spikeCountMax: 8
@@ -317,6 +336,14 @@ MonoBehaviour:
     spikeRoundInterval: 0.6
     spikeScreenShakeDuration: 0.75
     spikeScreenShakeForce: 0.3
+    burrowPops: 1
+    burrowChaseSpeed: 4
+    burrowChaseDuration: 2
+    burrowStopPause: 0.4
+    burrowSmashRadius: 2
+    burrowSmashDamage: 3
+    burrowSmashKnockback: 8
+    burrowSmashShake: 0.7
     goldBarVolleys: 4
     goldBarWindup: 0.7
     goldBarShots: 7
@@ -375,6 +402,15 @@ MonoBehaviour:
   spikeSummonEventTimeout: 3
   spikeSummonClip: {fileID: 8300000, guid: 268398b940108cc4e8c57d4e6312c541, type: 3}
   spikeSummonVolume: 1
+  burrowImpactEventTimeout: 3
+  burrowDiveClip: {fileID: 8300000, guid: 8c681740adf407e4885c813399b7bdc4, type: 3}
+  burrowDiveVolume: 1
+  burrowEmergeClip: {fileID: 8300000, guid: 8c681740adf407e4885c813399b7bdc4, type: 3}
+  burrowEmergeVolume: 1
+  burrowCrashClip: {fileID: 8300000, guid: b34deecd90c7bea468f4a797c2f4aa5b, type: 3}
+  burrowCrashVolume: 0.8
+  burrowLoopClip: {fileID: 8300000, guid: cadd02ef3eaed304cafa580ef12f9443, type: 3}
+  burrowLoopVolume: 1
   stubAttackDuration: 1.5
 --- !u!114 &8169478559265794274
 MonoBehaviour:

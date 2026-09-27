@@ -1,8 +1,10 @@
 // Portobello's brain.
+// Step 1: skeleton. Step 2: Gold Bar Gun. Step 3: Coin Spray Gun.
 
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TopDown.Movement;
 
 public enum PortobelloAttack
 {
@@ -20,11 +22,12 @@ public class PortobelloPhaseSettings
     public float downtimeMin = 1.5f;
     public float downtimeMax = 2.5f;
 
-    [Header("Attack Weights")]
+    [Header("Attack Weights (0 = never picked this phase)")]
     public float goldBarWeight = 1f;
     public float coinGunWeight = 1f;
     public float dollarBurstsWeight = 1f;
     public float spikeWeight = 1f;
+    public float burrowWeight = 1f;
 
     [Header("Animation")]
     public float animSpeed = 1f;
@@ -36,8 +39,19 @@ public class PortobelloPhaseSettings
     public int spikeRoundsMin = 1;
     public int spikeRoundsMax = 1;
     public float spikeRoundInterval = 0.5f;
+    [Tooltip("0 = no extra shake (Phase 1/2). Set in Phase 3 for the more impactful version.")]
     public float spikeScreenShakeDuration = 0f;
     public float spikeScreenShakeForce = 0.5f;
+
+    [Header("Burrow")]
+    public int burrowPops = 1;
+    public float burrowChaseSpeed = 4f;
+    public float burrowChaseDuration = 2f;
+    public float burrowStopPause = 0.4f;
+    public float burrowSmashRadius = 2f;
+    public float burrowSmashDamage = 3f;
+    public float burrowSmashKnockback = 8f;
+    public float burrowSmashShake = 0.7f;
 
     [Header("Gold Bar Gun")]
     public int goldBarVolleys = 1;
@@ -46,7 +60,7 @@ public class PortobelloPhaseSettings
     public float goldBarShotInterval = 0.18f;
     public float goldBarVolleyPause = 0.5f;
     public float goldBarBulletSpeedMultiplier = 1f;
-    public float goldBarAimTurnRate = 0f;
+    public float goldBarAimTurnRate = 0f; // 0 = snap to player
 
     [Header("Coin Spray Gun")]
     public int coinVolleys = 1;
@@ -74,6 +88,8 @@ public class PortobelloBoss : BossBrain
     private const string TrigSpawn = "Spawn";
     private const string TrigBillSummon = "bill-summon";
     private const string TrigSpikeWindup = "spike-windup";
+    private const string TrigBurrowIn = "port-jump-in";
+    private const string TrigBurrowOut = "port-jump-out";
 
     [Header("Phase Settings")]
     [SerializeField] private PortobelloPhaseSettings phase1 = new PortobelloPhaseSettings
@@ -152,6 +168,17 @@ public class PortobelloBoss : BossBrain
     [SerializeField] private AudioClip spikeSummonClip;
     [Range(0f, 1f)] [SerializeField] private float spikeSummonVolume = 1f;
 
+    [Header("Burrow")]
+    [SerializeField] private float burrowImpactEventTimeout = 3f;
+    [SerializeField] private AudioClip burrowDiveClip;
+    [Range(0f, 1f)] [SerializeField] private float burrowDiveVolume = 1f;
+    [SerializeField] private AudioClip burrowEmergeClip;
+    [Range(0f, 1f)] [SerializeField] private float burrowEmergeVolume = 1f;
+    [SerializeField] private AudioClip burrowCrashClip;
+    [Range(0f, 1f)] [SerializeField] private float burrowCrashVolume = 1f;
+    [SerializeField] private AudioClip burrowLoopClip;
+    [Range(0f, 1f)] [SerializeField] private float burrowLoopVolume = 0.7f;
+
     [Header("Fallback")]
     [SerializeField] private float stubAttackDuration = 1.5f;
 
@@ -165,7 +192,28 @@ public class PortobelloBoss : BossBrain
     private int lastShootSpot = -1;
     private int lastDollarPatternIndex = -1;
     private bool summonReadyFired;
+    private bool burrowImpactFired;
     private PortobelloAttack? lastAttack;
+    private AudioSource burrowLoopSource;
+    private bool burrowLoopPausedByUs;
+
+    private void Update()
+    {
+        if (burrowLoopSource == null) return;
+
+        bool shouldPause = Time.timeScale <= 0f;
+
+        if (shouldPause && !burrowLoopPausedByUs)
+        {
+            burrowLoopSource.Pause();
+            burrowLoopPausedByUs = true;
+        }
+        else if (!shouldPause && burrowLoopPausedByUs)
+        {
+            burrowLoopSource.UnPause();
+            burrowLoopPausedByUs = false;
+        }
+    }
 
     // -- AWAKE --
     protected override void Awake()
@@ -183,6 +231,7 @@ public class PortobelloBoss : BossBrain
     {
         base.OnEnable();
         if (relay != null) relay.SummonReady += HandleSummonReady;
+        if (relay != null) relay.BurrowImpact += HandleBurrowImpact;
         if (spikeSpawner != null) spikeSpawner.SpikeSpawned += RegisterHazard;
     }
 
@@ -191,12 +240,19 @@ public class PortobelloBoss : BossBrain
     {
         base.OnDisable();
         if (relay != null) relay.SummonReady -= HandleSummonReady;
+        if (relay != null) relay.BurrowImpact -= HandleBurrowImpact;
         if (spikeSpawner != null) spikeSpawner.SpikeSpawned -= RegisterHazard;
     }
 
     private void HandleSummonReady()
     {
         summonReadyFired = true;
+    }
+
+    private void HandleBurrowImpact()
+    {
+        burrowImpactFired = true;
+        DoBurrowSmash(CurrentSettings);
     }
 
     protected override void OnAnimTrigger(string triggerName)
@@ -209,6 +265,10 @@ public class PortobelloBoss : BossBrain
             AudioManager.Instance?.PlaySFXWithPitch(billSummonClip, billSummonVolume, 0.1f);
         else if (triggerName == TrigSpikeWindup)
             AudioManager.Instance?.PlaySFXWithPitch(spikeSummonClip, spikeSummonVolume, 0.1f);
+        else if (triggerName == TrigBurrowIn)
+            AudioManager.Instance?.PlaySFXWithPitch(burrowDiveClip, burrowDiveVolume, 0.1f);
+        else if (triggerName == TrigBurrowOut)
+            AudioManager.Instance?.PlaySFXWithPitch(burrowEmergeClip, burrowEmergeVolume, 0.1f);
     }
 
     // -- PHASE --
@@ -225,7 +285,9 @@ public class PortobelloBoss : BossBrain
             shooter.HideWeapon(true);
             ClearGunSettings();
         }
+        health.SetInvulnerable(BossHealth.ReasonHidden, false);
         SetIdleContact();
+        StopBurrowLoopSound();
     }
 
     // ==================== DIRECTOR ====================
@@ -251,8 +313,8 @@ public class PortobelloBoss : BossBrain
     private PortobelloAttack PickNextAttack()
     {
         PortobelloPhaseSettings s = CurrentSettings;
-        PortobelloAttack[] options = { PortobelloAttack.GoldBarGun, PortobelloAttack.CoinGun, PortobelloAttack.DollarBursts, PortobelloAttack.GoldSpikes };
-        float[] weights = { s.goldBarWeight, s.coinGunWeight, s.dollarBurstsWeight, s.spikeWeight };
+        PortobelloAttack[] options = { PortobelloAttack.GoldBarGun, PortobelloAttack.CoinGun, PortobelloAttack.DollarBursts, PortobelloAttack.GoldSpikes, PortobelloAttack.Burrow };
+        float[] weights = { s.goldBarWeight, s.coinGunWeight, s.dollarBurstsWeight, s.spikeWeight, s.burrowWeight };
 
         if (lastAttack.HasValue)
         {
@@ -262,12 +324,12 @@ public class PortobelloBoss : BossBrain
             }
         }
 
-        float total = weights[0] + weights[1] + weights[2] + weights[3];
+        float total = SumWeights(weights);
         if (total <= 0f)
         {
             // Only the previous attack has any weight this phase - allow it rather than stalling
-            weights = new[] { s.goldBarWeight, s.coinGunWeight, s.dollarBurstsWeight, s.spikeWeight };
-            total = weights[0] + weights[1] + weights[2] + weights[3];
+            weights = new[] { s.goldBarWeight, s.coinGunWeight, s.dollarBurstsWeight, s.spikeWeight, s.burrowWeight };
+            total = SumWeights(weights);
             if (total <= 0f) return PortobelloAttack.GoldBarGun;
         }
 
@@ -285,6 +347,13 @@ public class PortobelloBoss : BossBrain
         return options[fallback];
     }
 
+    private static float SumWeights(float[] weights)
+    {
+        float total = 0f;
+        foreach (float w in weights) total += w;
+        return total;
+    }
+
     private IEnumerator RunAttack(PortobelloAttack attack)
     {
         health.SetFlinchEnabled(false);
@@ -295,6 +364,7 @@ public class PortobelloBoss : BossBrain
             case PortobelloAttack.CoinGun: yield return CoinSprayGunAttack(); break;
             case PortobelloAttack.DollarBursts: yield return DollarBurstsAttack(); break;
             case PortobelloAttack.GoldSpikes: yield return GoldSpikesAttack(); break;
+            case PortobelloAttack.Burrow: yield return BurrowAttack(); break;
         }
     }
 
@@ -569,6 +639,117 @@ public class PortobelloBoss : BossBrain
             yield return new WaitForSeconds(interval);
             t += interval;
         }
+    }
+
+    // ==================== BURROW ====================
+    private IEnumerator BurrowAttack()
+    {
+        if (player == null)
+        {
+            yield return new WaitForSeconds(stubAttackDuration);
+            yield break;
+        }
+
+        PortobelloPhaseSettings s = CurrentSettings;
+        int pops = Mathf.Max(1, s.burrowPops);
+
+        facePlayer = true;
+        shooter?.HideWeapon(true);
+
+        for (int p = 0; p < pops; p++)
+        {
+            yield return BurrowDiveAndChase(s);
+            yield return BurrowPopSmash(s);
+        }
+
+        SetIdleContact();
+        health.SetInvulnerable(BossHealth.ReasonHidden, false);
+        facePlayer = true;
+    }
+
+    private IEnumerator BurrowDiveAndChase(PortobelloPhaseSettings s)
+    {
+        DisableContact();
+        health.SetInvulnerable(BossHealth.ReasonHidden, true);
+
+        yield return WaitUntilIdle();
+        Trigger(TrigBurrowIn);
+        yield return WaitForStateFinished();
+
+        StartBurrowLoopSound();
+
+        float elapsed = 0f;
+        while (elapsed < s.burrowChaseDuration)
+        {
+            if (player != null)
+            {
+                Vector2 dir = (Vector2)player.position - (Vector2)transform.position;
+                if (dir.sqrMagnitude > 0.0001f)
+                {
+                    dir.Normalize();
+                    transform.position += (Vector3)(dir * s.burrowChaseSpeed * Time.deltaTime);
+                }
+            }
+
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        // A brief pause underground before surfacing - the player's cue to get clear
+        yield return new WaitForSeconds(s.burrowStopPause);
+    }
+
+    private IEnumerator BurrowPopSmash(PortobelloPhaseSettings s)
+    {
+        StopBurrowLoopSound();
+
+        burrowImpactFired = false;
+        Trigger(TrigBurrowOut);
+        health.SetInvulnerable(BossHealth.ReasonHidden, false);
+
+        float t = 0f;
+        while (!burrowImpactFired && t < burrowImpactEventTimeout)
+        {
+            t += Time.deltaTime;
+            yield return null;
+        }
+
+        yield return WaitForReturnToIdle();
+    }
+
+    // Circular AoE damage, applied once at the exact crash frame via the animation event
+    private void DoBurrowSmash(PortobelloPhaseSettings s)
+    {
+        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, s.burrowSmashRadius);
+
+        foreach (Collider2D col in hits)
+        {
+            PlayerHealth ph = col.GetComponentInParent<PlayerHealth>();
+            if (ph == null || ph.IsOnCooldown()) continue;
+
+            ph.TakeDamage(s.burrowSmashDamage);
+
+            BaseMover mover = col.GetComponentInParent<BaseMover>();
+            if (mover != null)
+            {
+                Vector2 dir = ((Vector2)ph.transform.position - (Vector2)transform.position).normalized;
+                mover.ApplyKnockback(dir * s.burrowSmashKnockback);
+            }
+        }
+
+        ScreenEffects.Instance?.ShakeScreen(s.burrowSmashShake);
+        AudioManager.Instance?.PlaySFXWithPitch(burrowCrashClip, burrowCrashVolume, 0.1f);
+    }
+
+    private void StartBurrowLoopSound()
+    {
+        AudioManager.Instance?.PlayLoopingSFX(ref burrowLoopSource, burrowLoopClip, burrowLoopVolume);
+    }
+
+    private void StopBurrowLoopSound()
+    {
+        AudioManager.Instance?.StopLoopingSFX(ref burrowLoopSource);
+        burrowLoopPausedByUs = false;
     }
 
     // ==================== SHARED GUN HELPERS ====================

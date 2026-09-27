@@ -7,6 +7,7 @@ public class BossAnimationRelay : MonoBehaviour
     public event Action SummonAction;
     public event Action SummonReady;
 
+    // --- Puffs --- 
     public void OnRollWindupEnd()
     {
         RollWindupEnded?.Invoke();
@@ -17,9 +18,17 @@ public class BossAnimationRelay : MonoBehaviour
         SummonAction?.Invoke();
     }
 
+    // --- Portobello- ---
     public void OnSummonReady()
     {
         SummonReady?.Invoke();
+    }
+
+    public event Action BurrowImpact;
+
+    public void OnBurrowImpact()
+    {
+        BurrowImpact?.Invoke();
     }
 
 }
