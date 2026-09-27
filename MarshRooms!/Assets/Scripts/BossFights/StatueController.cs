@@ -21,6 +21,7 @@ public class StatueController : MonoBehaviour
     [SerializeField] private float damage = 2f;
     [SerializeField] private float tickInterval = 0.25f;
     [SerializeField] private float beamHideDelay = 0.4f;
+    [SerializeField] private string attackerName = "Lasers";
 
     [Header("Audio")]
     [SerializeField] private AudioClip chargeClip;
@@ -39,6 +40,12 @@ public class StatueController : MonoBehaviour
     {
         gameObject.SetActive(true);
         animator?.SetTrigger(TrigSpawn);
+    }
+
+    // -- SET ATTACKER NAME --
+    public void SetAttackerName(string name)
+    {
+        attackerName = name;
     }
 
     private Coroutine activeFireRoutine;

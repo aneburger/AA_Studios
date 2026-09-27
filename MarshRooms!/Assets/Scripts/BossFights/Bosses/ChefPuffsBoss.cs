@@ -273,6 +273,12 @@ public class ChefPuffsBoss : BossBrain
         shooter = GetComponent<EnemyShooter>();
         weaponAimer = GetComponentInChildren<WeaponAimer>();
         patternShooter = GetComponent<BossPatternShooter>();
+
+        // BossContactDamage's bossName is the single source of truth for "who killed the
+        // player" - every other damage source (croissant/knife bullets) reads from it here.
+        string bossName = contact != null ? contact.BossName : "Chef Puffs";
+        shooter?.SetAttackerName(bossName);
+        patternShooter?.SetAttackerName(bossName);
     }
 
     // -- ENABLE --

@@ -5,6 +5,9 @@ using TopDown.Movement;
 
 public class BossContactDamage : MonoBehaviour
 {
+    [SerializeField] private string bossName = "Boss";
+    public string BossName => bossName;
+
     private float damage;
     private float knockback;
 
@@ -23,6 +26,7 @@ public class BossContactDamage : MonoBehaviour
 
         if (playerHealth.IsOnCooldown()) return;
 
+        playerHealth.SetLastAttacker(bossName);
         playerHealth.TakeDamage(damage);
 
         BaseMover playerMover = collision.GetComponentInParent<BaseMover>();

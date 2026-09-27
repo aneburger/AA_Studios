@@ -142725,7 +142725,7 @@ Transform:
   m_GameObject: {fileID: 623177206}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 15.755001, y: -6.781, z: 0}
+  m_LocalPosition: {x: -6.95, y: -6.781, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -142805,12 +142805,12 @@ GameObject:
   - component: {fileID: 651164898}
   - component: {fileID: 651164897}
   m_Layer: 5
-  m_Name: PuffsGraphic
+  m_Name: PresGraphic
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &651164896
 RectTransform:
   m_ObjectHideFlags: 0
@@ -142827,8 +142827,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -26, y: 31.2}
-  m_SizeDelta: {x: 102, y: 153}
+  m_AnchoredPosition: {x: -37.8, y: 36.7}
+  m_SizeDelta: {x: 167, y: 136}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &651164897
 MonoBehaviour:
@@ -142850,7 +142850,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 944252501, guid: 82abe689add784946a0e105ca21936fc, type: 3}
+  m_Sprite: {fileID: -898837512, guid: 8d2cf6ccbcb3d6a4888e601aa1fe28b7, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -145905,6 +145905,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: pres-port-boss
       objectReference: {fileID: 0}
+    - target: {fileID: 3846074695851464617, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
+      propertyPath: attackerName
+      value: Pres. Portobello
+      objectReference: {fileID: 0}
     - target: {fileID: 8169478559265794274, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
       propertyPath: maxHealth
       value: 1000
@@ -146160,7 +146164,7 @@ Transform:
   m_GameObject: {fileID: 904895790}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -32.76, y: 13.33, z: 0}
+  m_LocalPosition: {x: 11.542, y: 7.199, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -146253,7 +146257,7 @@ Transform:
   m_GameObject: {fileID: 956611844}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 19.76, y: -6.781, z: 0}
+  m_LocalPosition: {x: -2.9450006, y: -6.781, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -146683,7 +146687,7 @@ Transform:
   m_GameObject: {fileID: 1061114334}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 17.76, y: -6.781, z: 0}
+  m_LocalPosition: {x: -4.9450006, y: -6.781, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -150223,7 +150227,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -1755747890, guid: 82abe689add784946a0e105ca21936fc, type: 3}
+  m_Sprite: {fileID: -2001769760, guid: 8d2cf6ccbcb3d6a4888e601aa1fe28b7, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -151640,7 +151644,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1664872648
 RectTransform:
   m_ObjectHideFlags: 0
@@ -151657,8 +151661,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -22.6, y: -71.2}
-  m_SizeDelta: {x: 120, y: 26}
+  m_AnchoredPosition: {x: -21.2, y: -65.6}
+  m_SizeDelta: {x: 156, y: 54}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1664872649
 MonoBehaviour:
@@ -151680,7 +151684,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 361532350, guid: 82abe689add784946a0e105ca21936fc, type: 3}
+  m_Sprite: {fileID: -1280321370, guid: 8d2cf6ccbcb3d6a4888e601aa1fe28b7, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -288575,7 +288579,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2144050855}
   m_Enabled: 1
-  m_Alpha: 1
+  m_Alpha: 0
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0

@@ -26,7 +26,9 @@ public abstract class BaseShooter : MonoBehaviour
 
     [Header("Split Shot")]
     [SerializeField] private float extraBulletDamageMultiplier = 0.6f;
-    
+
+    public event System.Action<BaseBullet> BulletSpawned;
+
     public bool IsArmed => currentWeapon != null;
 
     protected float nextFireTime = 0f;
@@ -42,6 +44,10 @@ public abstract class BaseShooter : MonoBehaviour
 
     private float bulletSpeedMultiplier = 1f;
     protected float shakeMultiplier = 1f;
+
+    // Who this shooter's bullets should attribute a player death to - set by EnemyController
+    // (from EnemyData.enemyName) for regular enemies, or by the boss's own script for bosses.
+    private string attackerName;
 
     // Fire Rate Multipiers
     private float permanentFireRateMultiplier = 1f;
@@ -64,8 +70,6 @@ public abstract class BaseShooter : MonoBehaviour
 
     private Collider2D playerCollider;
 
-    public event System.Action<BaseBullet> BulletSpawned;
-
     // -1 means infinite ammo
     private int currentAmmo = -1;
 
@@ -77,6 +81,12 @@ public abstract class BaseShooter : MonoBehaviour
 
         wallMask = LayerMask.GetMask("Walls");
         playerCollider = GetComponent<Collider2D>();
+    }
+
+    // -- SET ATTACKER NAME --
+    public void SetAttackerName(string name)
+    {
+        attackerName = name;
     }
 
     // -- BULLET SPEED MULTIPLIER --
@@ -252,6 +262,7 @@ public abstract class BaseShooter : MonoBehaviour
             b.SetDirection(spreadDirection);
             b.SetAimOrigin(firePoint.position);
             b.SetBullet(currentWeapon.bulletSpeed * bulletSpeedMultiplier, rolledDamage, currentWeapon.hitKnockback, currentWeapon.hitPrefab, weaponSprite.sortingOrder, currentWeapon.wallHitClip, currentWeapon.wallHitVolume);
+            b.SetAttackerName(attackerName);
             lastBullet = b;
             BulletSpawned?.Invoke(b);
         }

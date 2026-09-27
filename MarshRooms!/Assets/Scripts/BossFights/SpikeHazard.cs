@@ -1,8 +1,3 @@
-// One spike (fork, knife or spoon). A target appears under the player (charge, then a looping "loading"
-// animation), the cutlery shoots up, stays up briefly, then retracts and the object destroys itself.
-// Damage is a circle check while it's up, NOT a collider, so it never absorbs the player's bullets.
-// Put one on each spike prefab. The prefab needs an Animator (see the trigger names below) and no collider.
-
 using System.Collections;
 using UnityEngine;
 
@@ -22,6 +17,7 @@ public class SpikeHazard : MonoBehaviour
     [SerializeField] private float damage = 4f;
     [SerializeField] private float hitRadius = 0.5f;
     [SerializeField] private Vector2 hitOffset;
+    [SerializeField] private string attackerName = "Hazard";
 
     [Header("Audio / FX")]
     [SerializeField] private AudioClip targetClip;
@@ -46,6 +42,12 @@ public class SpikeHazard : MonoBehaviour
     {
         anim = GetComponentInChildren<Animator>();
         playerMask = LayerMask.GetMask("Player", "PlayerInvincible");
+    }
+
+    // -- SET ATTACKER NAME --
+    public void SetAttackerName(string name)
+    {
+        attackerName = name;
     }
 
     // -- BEGIN --
@@ -102,6 +104,7 @@ public class SpikeHazard : MonoBehaviour
             PlayerHealth playerHealth = hit.GetComponentInParent<PlayerHealth>();
             if (playerHealth == null || playerHealth.IsOnCooldown()) continue;
 
+            playerHealth.SetLastAttacker(attackerName);
             playerHealth.TakeDamage(damage);
             return;
         }

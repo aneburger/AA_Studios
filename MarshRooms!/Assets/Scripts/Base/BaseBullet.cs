@@ -15,6 +15,8 @@ public class BaseBullet : MonoBehaviour
     protected Vector2 aimOrigin;
     protected AudioClip wallHitClip;
     protected float wallHitVolume;
+    
+    protected string attackerName;
 
     protected virtual void Start() { }
 
@@ -30,6 +32,12 @@ public class BaseBullet : MonoBehaviour
     public void SetAimOrigin(Vector2 origin)
     {
         aimOrigin = origin;
+    }
+
+    // -- SET ATTACKER NAME --
+    public void SetAttackerName(string name)
+    {
+        attackerName = name;
     }
 
     // --  SET BULLET --
@@ -57,6 +65,12 @@ public class BaseBullet : MonoBehaviour
 
         if (health != null)
         {
+            if (!string.IsNullOrEmpty(attackerName))
+            {
+                PlayerHealth playerHealth = health as PlayerHealth;
+                playerHealth?.SetLastAttacker(attackerName);
+            }
+
             health.TakeDamage(damage);
 
             BaseMover mover = collision.GetComponentInParent<BaseMover>();

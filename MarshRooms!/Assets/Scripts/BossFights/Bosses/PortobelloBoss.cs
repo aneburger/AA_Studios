@@ -260,6 +260,7 @@ public class PortobelloBoss : BossBrain
     private AudioSource burrowLoopSource;
     private bool burrowLoopPausedByUs;
     private readonly List<BaseBullet> activeBullets = new List<BaseBullet>();
+    private string bossName;
 
     protected override void Update()
     {
@@ -290,6 +291,19 @@ public class PortobelloBoss : BossBrain
         weaponAimer = GetComponentInChildren<WeaponAimer>();
         patternShooter = GetComponent<BossPatternShooter>();
         spriteRenderers = GetComponentsInChildren<SpriteRenderer>(true);
+
+        // BossContactDamage's bossName is the single source of truth for "who killed the
+        // player" - every other damage source (bullets, dollar bursts, statues) reads from it
+        // here rather than keeping its own separate copy of the same string.
+        bossName = contact != null ? contact.BossName : "President Portobello";
+        shooter?.SetAttackerName(bossName);
+        patternShooter?.SetAttackerName(bossName);
+
+        if (statueSlots != null)
+        {
+            foreach (StatueController statue in statueSlots)
+                statue?.SetAttackerName(bossName);
+        }
 
         if (throneShadow != null)
         {
@@ -874,6 +888,8 @@ public class PortobelloBoss : BossBrain
         int max = Mathf.Max(min, s.throneActionsMax);
         int actionCount = Random.Range(min, max + 1);
 
+        // A transition visit always has room for both the forced enemies and the forced
+        // laser reveal, even if this phase's normal action-count roll would have been 1.
         if (isTransitionVisit) actionCount = Mathf.Max(actionCount, 2);
 
         ThroneAction? lastThroneAction = null;
@@ -886,7 +902,7 @@ public class PortobelloBoss : BossBrain
             if (i == 0 && s.throneEnemyUsesPerVisit > 0)
                 action = ThroneAction.Enemies;
             else if (isTransitionVisit && i == 1 && activeStatueCount > 0)
-                action = ThroneAction.Statues;
+                action = ThroneAction.Statues; // guaranteed laser reveal right after the forced enemies, transition visits only
             else
                 action = PickThroneAction(s, lastThroneAction, enemyUsesSoFar);
 
@@ -1195,6 +1211,7 @@ public class PortobelloBoss : BossBrain
             PlayerHealth ph = col.GetComponentInParent<PlayerHealth>();
             if (ph == null || ph.IsOnCooldown()) continue;
 
+            ph.SetLastAttacker(bossName);
             ph.TakeDamage(s.burrowSmashDamage);
 
             BaseMover mover = col.GetComponentInParent<BaseMover>();

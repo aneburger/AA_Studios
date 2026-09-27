@@ -7,6 +7,7 @@ using UnityEngine;
 public class BossPatternShooter : MonoBehaviour
 {
     [SerializeField] private Transform origin;
+    [SerializeField] private string attackerName = "Boss";
 
     public event System.Action<GameObject> BulletSpawned;
 
@@ -34,6 +35,12 @@ public class BossPatternShooter : MonoBehaviour
             WeaponAimer aimer = GetComponentInChildren<WeaponAimer>();
             origin = aimer != null ? aimer.transform : transform;
         }
+    }
+
+    // -- SET ATTACKER NAME --
+    public void SetAttackerName(string name)
+    {
+        attackerName = name;
     }
 
     // -- THROW --
@@ -93,6 +100,7 @@ public class BossPatternShooter : MonoBehaviour
             bullet.SetDirection(p.direction);
             bullet.SetAimOrigin(center);
             bullet.SetBullet(hangs ? 0f : speed, damage, weapon.hitKnockback, weapon.hitPrefab, sortingOrder, weapon.wallHitClip, weapon.wallHitVolume);
+            bullet.SetAttackerName(attackerName);
 
             BulletSpawned?.Invoke(go);
             knives.Add(new PendingKnife { bullet = bullet, offset = p.offset, direction = p.direction, speed = speed, damage = damage });

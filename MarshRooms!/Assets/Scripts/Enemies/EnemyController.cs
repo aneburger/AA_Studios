@@ -106,6 +106,7 @@ public class EnemyController : MonoBehaviour
             weaponToEquip = eliteModifier.ApplyWeaponModifiers(weaponToEquip);
 
         shooter.EquipWeapon(weaponToEquip);
+        shooter.SetAttackerName(Data.enemyName);
     }
 
     // -- SET SHOULD SPAWN ANIMATE --
