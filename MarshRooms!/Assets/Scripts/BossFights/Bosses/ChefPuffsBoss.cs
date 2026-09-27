@@ -244,8 +244,9 @@ public class ChefPuffsBoss : BossBrain
     private AudioSource rollLoopSource;
     private bool rollLoopPausedByUs;
 
-    private void Update()
+    protected override void Update()
     {
+        base.Update();
         if (rollLoopSource == null) return;
 
         bool shouldPause = Time.timeScale <= 0f;

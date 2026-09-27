@@ -2115,7 +2115,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 714474214}
-  - {fileID: 1191720621}
   - {fileID: 1914881108}
   - {fileID: 1667406973}
   - {fileID: 172812280}
@@ -7421,6 +7420,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Statue 3
       objectReference: {fileID: 0}
+    - target: {fileID: 68054988314619150, guid: 345bc446e4894b44a8e4670319f2445c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 232563415355625759, guid: 345bc446e4894b44a8e4670319f2445c, type: 3}
       propertyPath: m_LocalPosition.x
       value: -18.54813
@@ -7471,6 +7474,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 232563415355625759, guid: 345bc446e4894b44a8e4670319f2445c, type: 3}
   m_PrefabInstance: {fileID: 435265294}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &435265296 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 65538986033957575, guid: 345bc446e4894b44a8e4670319f2445c, type: 3}
+  m_PrefabInstance: {fileID: 435265294}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6963349c64df904cb276fb2673c67ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StatueController
 --- !u!1 &453231937
 GameObject:
   m_ObjectHideFlags: 0
@@ -142409,7 +142423,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.078431375}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.5882353}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -145912,14 +145926,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1078339583}
     - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
-      propertyPath: throneJumpUpHeight
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
-      propertyPath: throneJumpUpDuration
-      value: 0.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
       propertyPath: 'shootSpots.Array.data[0]'
       value: 
       objectReference: {fileID: 1667406973}
@@ -145941,6 +145947,34 @@ PrefabInstance:
       objectReference: {fileID: 1660818596}
     - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
       propertyPath: 'shootSpots.Array.data[5]'
+      value: 
+      objectReference: {fileID: 1660818596}
+    - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
+      propertyPath: 'statueSlots.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2072447720}
+    - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
+      propertyPath: 'statueSlots.Array.data[1]'
+      value: 
+      objectReference: {fileID: 435265296}
+    - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
+      propertyPath: 'statueSlots.Array.data[2]'
+      value: 
+      objectReference: {fileID: 1809027384}
+    - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
+      propertyPath: 'statueSlots.Array.data[3]'
+      value: 
+      objectReference: {fileID: 2126337768}
+    - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
+      propertyPath: spikeStandSpots.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
+      propertyPath: 'spikeStandSpots.Array.data[0]'
+      value: 
+      objectReference: {fileID: 1283171671}
+    - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
+      propertyPath: 'spikeStandSpots.Array.data[1]'
       value: 
       objectReference: {fileID: 1660818596}
     - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
@@ -145983,6 +146017,10 @@ PrefabInstance:
       propertyPath: 'enemySpawnPoints.Array.data[9]'
       value: 
       objectReference: {fileID: 2122040099}
+    - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
+      propertyPath: 'fourStatuePatterns.Array.data[0]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 596cfb0c4d11525448934c42288096be, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -146082,7 +146120,7 @@ Transform:
   m_GameObject: {fileID: 904895790}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 11.53, y: 7.32, z: 0}
+  m_LocalPosition: {x: -32.76, y: 13.33, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -150163,37 +150201,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1184101501}
   m_CullTransparentMesh: 1
---- !u!1 &1191720620
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1191720621}
-  m_Layer: 0
-  m_Name: ArenaPoint
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1191720621
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1191720620}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 21.34187, y: 32.03, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 306096454}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1194151650
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -150503,7 +150510,7 @@ Transform:
   m_GameObject: {fileID: 1283171670}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -24.207, y: 38.34, z: 0}
+  m_LocalPosition: {x: -24.207, y: 38.54, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -151504,7 +151511,7 @@ Transform:
   m_GameObject: {fileID: 1660818595}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -24.35, y: 33.62, z: 0}
+  m_LocalPosition: {x: -24.35, y: 33.32, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -160967,6 +160974,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Statue 2
       objectReference: {fileID: 0}
+    - target: {fileID: 68054988314619150, guid: 345bc446e4894b44a8e4670319f2445c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 232563415355625759, guid: 345bc446e4894b44a8e4670319f2445c, type: 3}
       propertyPath: m_LocalPosition.x
       value: -33.66813
@@ -161017,6 +161028,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 232563415355625759, guid: 345bc446e4894b44a8e4670319f2445c, type: 3}
   m_PrefabInstance: {fileID: 1809027382}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1809027384 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 65538986033957575, guid: 345bc446e4894b44a8e4670319f2445c, type: 3}
+  m_PrefabInstance: {fileID: 1809027382}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6963349c64df904cb276fb2673c67ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StatueController
 --- !u!1001 &1820930758
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -161214,7 +161236,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -16.1, y: -3.2}
+  m_AnchoredPosition: {x: -6, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1914881107
@@ -174734,7 +174756,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.078431375}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.39215687}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -175059,6 +175081,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Statue 1
       objectReference: {fileID: 0}
+    - target: {fileID: 68054988314619150, guid: 345bc446e4894b44a8e4670319f2445c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 232563415355625759, guid: 345bc446e4894b44a8e4670319f2445c, type: 3}
       propertyPath: m_LocalPosition.x
       value: -29.79813
@@ -175109,6 +175135,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 232563415355625759, guid: 345bc446e4894b44a8e4670319f2445c, type: 3}
   m_PrefabInstance: {fileID: 2072447718}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2072447720 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 65538986033957575, guid: 345bc446e4894b44a8e4670319f2445c, type: 3}
+  m_PrefabInstance: {fileID: 2072447718}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6963349c64df904cb276fb2673c67ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StatueController
 --- !u!4 &2078935524 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4193395490162544945, guid: 852b0831376edf749a675b737d74c8fc, type: 3}
@@ -175325,6 +175362,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Statue 4
       objectReference: {fileID: 0}
+    - target: {fileID: 68054988314619150, guid: 345bc446e4894b44a8e4670319f2445c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 232563415355625759, guid: 345bc446e4894b44a8e4670319f2445c, type: 3}
       propertyPath: m_LocalPosition.x
       value: -14.64813
@@ -175375,6 +175416,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 232563415355625759, guid: 345bc446e4894b44a8e4670319f2445c, type: 3}
   m_PrefabInstance: {fileID: 2126337766}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2126337768 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 65538986033957575, guid: 345bc446e4894b44a8e4670319f2445c, type: 3}
+  m_PrefabInstance: {fileID: 2126337766}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6963349c64df904cb276fb2673c67ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StatueController
 --- !u!1001 &2131114112
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -175493,7 +175545,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2144050855}
   m_Enabled: 1
-  m_Alpha: 0
+  m_Alpha: 1
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0

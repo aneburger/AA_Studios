@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 792576986802620951}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.54, y: -0.137, z: 0}
+  m_LocalPosition: {x: 0.874, y: -0.137, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -82,7 +82,7 @@ SpriteRenderer:
   m_SortingLayer: 3
   m_SortingOrder: 238
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 2061830940, guid: 0f552d159566fe345855135e3ea97b09, type: 3}
+  m_Sprite: {fileID: -4854829337826818713, guid: 6e0dd451b4501c54da27a492414f70a4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -102,14 +102,16 @@ GameObject:
   m_Component:
   - component: {fileID: 208003371081328597}
   - component: {fileID: 8831653329582606974}
-  - component: {fileID: 2233625664831475049}
-  - component: {fileID: 8465027221499930036}
-  - component: {fileID: 8169478559265794274}
-  - component: {fileID: 9056498895987517654}
+  - component: {fileID: 1352117975290639043}
+  - component: {fileID: 9141055844336914756}
+  - component: {fileID: 2905366087901206073}
   - component: {fileID: 7585961510317227088}
-  - component: {fileID: 3846074695851464617}
+  - component: {fileID: 7672455363216179369}
+  - component: {fileID: 3724249218000953578}
+  - component: {fileID: -5271332957310462840}
+  - component: {fileID: 345462243566778897}
   m_Layer: 7
-  m_Name: pres-port-boss
+  m_Name: meji-small-boss
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -128,7 +130,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 9119758761054498521}
   - {fileID: 4698166982508756797}
   - {fileID: 5395735851033162757}
   - {fileID: 7866796958824413751}
@@ -161,7 +162,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
---- !u!58 &2233625664831475049
+--- !u!58 &1352117975290639043
 CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -195,9 +196,9 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 1.96}
-  m_Radius: 1
---- !u!114 &8465027221499930036
+  m_Offset: {x: -0.01, y: 0.56}
+  m_Radius: 0.382002
+--- !u!114 &9141055844336914756
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -206,307 +207,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 988082134135583188}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5ea81845c07855a43ba267659943c84a, type: 3}
+  m_Script: {fileID: 11500000, guid: 2e773f2125a68074c811dedb2f604c04, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PortobelloBoss
-  room: {fileID: 0}
-  health: {fileID: 8169478559265794274}
-  healthBar: {fileID: 0}
-  animator: {fileID: 803806091724421615}
-  visualsRoot: {fileID: 4698166982508756797}
-  idleStateName: IdleBlend
-  angryTrigger: Angry
-  animSpeedParameter: AnimSpeed
-  openingDelay: 1
-  facePlayer: 1
-  transitionEffectDelay: 0.35
-  transitionShake: 0.3
-  transitionFlashColor: {r: 1, g: 1, b: 1, a: 1}
-  transitionFlashAlpha: 0.6
-  transitionFlashDuration: 0.35
-  hitStopDuration: 0.07
-  transitionClip: {fileID: 8300000, guid: 7bca1f54037e45c4384d7f7c4cee9dda, type: 3}
-  transitionVolume: 1
-  phaseRefillDuration: 1.5
-  phase1:
-    downtimeMin: 1
-    downtimeMax: 2
-    goldBarWeight: 1
-    coinGunWeight: 1
-    dollarBurstsWeight: 0
-    spikeWeight: 0
-    burrowWeight: 0
-    animSpeed: 1.2
-    spikeCountMin: 3
-    spikeCountMax: 5
-    spikeWarningTime: 0.6
-    spikeRoundsMin: 4
-    spikeRoundsMax: 7
-    spikeRoundInterval: 0.75
-    spikeScreenShakeDuration: 0
-    spikeScreenShakeForce: 0.3
-    burrowPops: 3
-    burrowChaseSpeed: 6
-    burrowChaseDuration: 3
-    burrowStopPause: 0.25
-    burrowSmashRadius: 4
-    burrowSmashDamage: 3
-    burrowSmashKnockback: 8
-    burrowSmashShake: 0.5
-    burrowPopCooldown: 1.5
-    throneActionsMin: 2
-    throneActionsMax: 3
-    throneActionPause: 1
-    throneStatuesWeight: 1
-    throneEnemiesWeight: 1
-    throneSpikesWeight: 0
-    throneEnemyCountMin: 2
-    throneEnemyCountMax: 3
-    laserChargeDuration: 1
-    laserFiringDuration: 2
-    laserVolleys: 1
-    laserVolleyPause: 0.4
-    laserCycleDifferentPattern: 1
-    goldBarVolleys: 2
-    goldBarWindup: 0.8
-    goldBarShots: 10
-    goldBarShotInterval: 0.35
-    goldBarVolleyPause: 0.5
-    goldBarBulletSpeedMultiplier: 1
-    goldBarAimTurnRate: 80
-    coinVolleys: 3
-    coinVolleyPause: 0.5
-    coinShots: 30
-    coinShotInterval: 0.12
-    coinBulletSpeedMultiplier: 1.15
-    coinAimTurnRate: 140
-    coinBulletsPerShot: 1
-    coinSpread: 10
-    coinMoveSpeed: 2
-    dollarThrows: 3
-    dollarSummonPause: 0.7
-    dollarSpeedMultiplier: 1
-    dollarCountMultiplier: 1
-    dollarHangMultiplier: 1
-  phase2:
-    downtimeMin: 1
-    downtimeMax: 1.5
-    goldBarWeight: 1
-    coinGunWeight: 1
-    dollarBurstsWeight: 0
-    spikeWeight: 0
-    burrowWeight: 0
-    animSpeed: 1.4
-    spikeCountMin: 4
-    spikeCountMax: 6
-    spikeWarningTime: 0.32
-    spikeRoundsMin: 4
-    spikeRoundsMax: 8
-    spikeRoundInterval: 0.63
-    spikeScreenShakeDuration: 0.5
-    spikeScreenShakeForce: 0.3
-    burrowPops: 1
-    burrowChaseSpeed: 4
-    burrowChaseDuration: 2
-    burrowStopPause: 0.4
-    burrowSmashRadius: 2
-    burrowSmashDamage: 3
-    burrowSmashKnockback: 8
-    burrowSmashShake: 0.7
-    burrowPopCooldown: 1.5
-    throneActionsMin: 2
-    throneActionsMax: 3
-    throneActionPause: 1
-    throneStatuesWeight: 1
-    throneEnemiesWeight: 1
-    throneSpikesWeight: 0
-    throneEnemyCountMin: 2
-    throneEnemyCountMax: 3
-    laserChargeDuration: 1
-    laserFiringDuration: 2
-    laserVolleys: 1
-    laserVolleyPause: 0.4
-    laserCycleDifferentPattern: 1
-    goldBarVolleys: 3
-    goldBarWindup: 0.7
-    goldBarShots: 13
-    goldBarShotInterval: 0.28
-    goldBarVolleyPause: 0.5
-    goldBarBulletSpeedMultiplier: 1
-    goldBarAimTurnRate: 130
-    coinVolleys: 3
-    coinVolleyPause: 0.5
-    coinShots: 25
-    coinShotInterval: 0.11
-    coinBulletSpeedMultiplier: 1.17
-    coinAimTurnRate: 145
-    coinBulletsPerShot: 1
-    coinSpread: 12
-    coinMoveSpeed: 2
-    dollarThrows: 3
-    dollarSummonPause: 0.6
-    dollarSpeedMultiplier: 1.1
-    dollarCountMultiplier: 1.1
-    dollarHangMultiplier: 1
-  phase3:
-    downtimeMin: 0.5
-    downtimeMax: 1
-    goldBarWeight: 1
-    coinGunWeight: 1
-    dollarBurstsWeight: 0
-    spikeWeight: 0
-    burrowWeight: 0
-    animSpeed: 1.6
-    spikeCountMin: 5
-    spikeCountMax: 8
-    spikeWarningTime: 0.28
-    spikeRoundsMin: 5
-    spikeRoundsMax: 8
-    spikeRoundInterval: 0.6
-    spikeScreenShakeDuration: 0.75
-    spikeScreenShakeForce: 0.3
-    burrowPops: 1
-    burrowChaseSpeed: 4
-    burrowChaseDuration: 2
-    burrowStopPause: 0.4
-    burrowSmashRadius: 2
-    burrowSmashDamage: 3
-    burrowSmashKnockback: 8
-    burrowSmashShake: 0.7
-    burrowPopCooldown: 1.5
-    throneActionsMin: 2
-    throneActionsMax: 3
-    throneActionPause: 1
-    throneStatuesWeight: 1
-    throneEnemiesWeight: 1
-    throneSpikesWeight: 1
-    throneEnemyCountMin: 2
-    throneEnemyCountMax: 3
-    laserChargeDuration: 1
-    laserFiringDuration: 2
-    laserVolleys: 2
-    laserVolleyPause: 0.4
-    laserCycleDifferentPattern: 1
-    goldBarVolleys: 4
-    goldBarWindup: 0.7
-    goldBarShots: 14
-    goldBarShotInterval: 0.27
-    goldBarVolleyPause: 0.4
-    goldBarBulletSpeedMultiplier: 1.12
-    goldBarAimTurnRate: 120
-    coinVolleys: 3
-    coinVolleyPause: 0.7
-    coinShots: 40
-    coinShotInterval: 0.11
-    coinBulletSpeedMultiplier: 1.13
-    coinAimTurnRate: 145
-    coinBulletsPerShot: 2
-    coinSpread: 14
-    coinMoveSpeed: 2.1
-    dollarThrows: 4
-    dollarSummonPause: 0.55
-    dollarSpeedMultiplier: 1.16
-    dollarCountMultiplier: 1.2
-    dollarHangMultiplier: 1
-  idleContactDamage: 2
-  idleContactKnockback: 20
-  despawnClip: {fileID: 8300000, guid: 1fdcafced2d7d2e4699e3a200438c3f4, type: 3}
-  despawnVolume: 1
-  spawnClip: {fileID: 8300000, guid: 5eb6fa0a9a7a684419120aa1b5b58937, type: 3}
-  spawnVolume: 1
-  goldBarGun: {fileID: 11400000, guid: 2c6028ccdb03081468033d7f44fa98a6, type: 2}
-  shootSpots:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  shootSpotMinPlayerDistance: 2.5
-  shootSpotMinMoveDistance: 1.5
-  weaponShowDelay: 0.8
-  gunWindupClip: {fileID: 8300000, guid: ab209789ecf1a3b4c903ff297d0c9dfa, type: 3}
-  gunWindupVolume: 1
-  gunWindupPulses: 2
-  goldBarShotShakeForce: 0.08
-  coinSprayGun: {fileID: 11400000, guid: 6bc1d5bb88aeb48499167fcf58c04824, type: 2}
-  coinMinDistanceToPlayer: 1
-  dollarBillWeapon: {fileID: 11400000, guid: 19213c64363889e45913bfeb57be897d, type: 2}
-  dollarPatterns:
-  - {fileID: 11400000, guid: beb39c3cdbfbcc94fad0e1540d0dfc71, type: 2}
-  dollarSummonEventTimeout: 3
-  billSummonClip: {fileID: 8300000, guid: 7f5cbbf443a03b24693d00ab1966f50d, type: 3}
-  billSummonVolume: 1
-  billLaunchClip: {fileID: 8300000, guid: b337e2a9fc164d440a0c98c3eb14e908, type: 3}
-  billLaunchVolume: 0.7
-  billLaunchSoundLead: 0.05
-  dollarBurstShakeForce: 0.2
-  spikeSpawner: {fileID: 0}
-  spikeStandSpots: []
-  spikeStandSpotMinPlayerDistance: 2.5
-  spikeStandSpotMinMoveDistance: 1.5
-  spikeSummonEventTimeout: 3
-  spikeSummonClip: {fileID: 8300000, guid: 268398b940108cc4e8c57d4e6312c541, type: 3}
-  spikeSummonVolume: 1
-  burrowImpactEventTimeout: 3
-  burrowDiveClip: {fileID: 8300000, guid: 8c681740adf407e4885c813399b7bdc4, type: 3}
-  burrowDiveVolume: 1
-  burrowEmergeClip: {fileID: 8300000, guid: 8c681740adf407e4885c813399b7bdc4, type: 3}
-  burrowEmergeVolume: 1
-  burrowCrashClip: {fileID: 8300000, guid: b34deecd90c7bea468f4a797c2f4aa5b, type: 3}
-  burrowCrashVolume: 0.8
-  burrowLoopClip: {fileID: 8300000, guid: cadd02ef3eaed304cafa580ef12f9443, type: 3}
-  burrowLoopVolume: 1
-  stubAttackDuration: 1.5
-  attacksBeforeThroneMin: 15
-  attacksBeforeThroneMax: 15
-  thronePoint: {fileID: 0}
-  throneSummonEventTimeout: 3
-  throneSummonClip: {fileID: 8300000, guid: 268398b940108cc4e8c57d4e6312c541, type: 3}
-  throneSummonVolume: 1
-  throneShadow: {fileID: 3965542549712042889}
-  throneJumpUpHeight: 20
-  throneJumpUpDuration: 0.3
-  throneShadowLeadTime: 0.6
-  throneJumpClip: {fileID: 8300000, guid: 8c681740adf407e4885c813399b7bdc4, type: 3}
-  throneJumpVolume: 1
-  throneLandClip: {fileID: 8300000, guid: 8c681740adf407e4885c813399b7bdc4, type: 3}
-  throneLandVolume: 1
-  throneLandShake: 0.6
-  minionSpawner: {fileID: 0}
-  minionPrefabs:
-  - {fileID: 988082134135583188, guid: 5bcc205bad2246b4b94d8e21366aebd0, type: 3}
-  - {fileID: 988082134135583188, guid: b6879f58974980647905342bc1961b7e, type: 3}
-  - {fileID: 988082134135583188, guid: 34b450337f1a16040bcac12efa72893b, type: 3}
-  enemySpawnPoints:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  weaponGuaranteeChance: 0.4
-  healthGuaranteeChance: 0.4
-  enemySpawnIntervalMin: 0.15
-  enemySpawnIntervalMax: 0.4
-  statueSlots:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  twoStatuePatterns:
-  - {fileID: 11400000, guid: 7f57e2fbd52dc2e4c9ffae0c4804a57c, type: 2}
-  fourStatuePatterns:
-  - {fileID: 11400000, guid: 97435860d7b46804e84fe17b8930e05b, type: 2}
-  statueRevealInterval: 0.5
-  statueBurstShake: 0.4
-  statueBurstClip: {fileID: 8300000, guid: f58e88fc3ff5dc74f94fdd5e6eaacb68, type: 3}
-  statueBurstVolume: 1
---- !u!114 &8169478559265794274
+  m_EditorClassIdentifier: Assembly-CSharp::TopDown.Movement.EnemyMover
+  moveSpeed: 1
+  facingSmoothSpeed: 10
+--- !u!114 &2905366087901206073
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -515,46 +221,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 988082134135583188}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 19f7135adf0332d46b73bc1509c9a879, type: 3}
+  m_Script: {fileID: 11500000, guid: 320c83c86ab251449a9056c5f534234a, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::BossHealth
-  maxHealth: 50
-  onDeath:
-    m_PersistentCalls:
-      m_Calls: []
-  onTakeDamage:
-    m_PersistentCalls:
-      m_Calls: []
-  phaseThresholds:
-  - 0.66
-  - 0.33
-  protectUntilPhaseTwo: 1
-  phaseBars: 1
-  startInvulnerable: 1
-  flinchCooldown: 0.4
-  sporePrefab: {fileID: 7129025776932877359, guid: b8874dc0a3c605d419413a967c2f2c17, type: 3}
-  sporeDropChance: 0.15
-  minSporesPerDrop: 1
-  maxSporesPerDrop: 5
-  sporeScatterRadius: 1
-  sporeDropCooldown: 0.5
-  hurtClip: {fileID: 8300000, guid: 3ef1eef1e125ae04ca5e0053211ce2c1, type: 3}
-  hurtVolume: 0.8
-  deflectClip: {fileID: 0}
-  deflectVolume: 1
-  deflectCooldown: 0.08
---- !u!114 &9056498895987517654
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 988082134135583188}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: abe8d5f37591326489fc45a2b0a231b3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::BossContactDamage
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyController
+  enemyData: {fileID: 11400000, guid: 29d15c97a4bfadf4cb3767b4605a5b8b, type: 2}
+  externalAIControl: 0
+  spawnDuration: 1.5
+  spawnClip: {fileID: 8300000, guid: fd719a68106daa84a832ce2f492ac83f, type: 3}
+  spawnVolume: 0.6
 --- !u!114 &7585961510317227088
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -569,7 +243,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyShooter
   firePoint: {fileID: 7380771766672293422}
   weaponAimer: {fileID: 3068222108091938041}
-  mover: {fileID: 0}
+  mover: {fileID: 9141055844336914756}
   weaponSprite: {fileID: 4781575144476638892}
   currentWeapon: {fileID: 0}
   equipClip: {fileID: 0}
@@ -579,7 +253,7 @@ MonoBehaviour:
   emptyClip: {fileID: 0}
   emptyVolume: 0
   extraBulletDamageMultiplier: 0.6
---- !u!114 &3846074695851464617
+--- !u!114 &7672455363216179369
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -588,10 +262,105 @@ MonoBehaviour:
   m_GameObject: {fileID: 988082134135583188}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e8074bebd8454fd4c9fa6edb7eb044bb, type: 3}
+  m_Script: {fileID: 11500000, guid: 2846554c14e837e40ba449b64c14a845, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::BossPatternShooter
-  origin: {fileID: 0}
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
+  maxHealth: 5
+  onDeath:
+    m_PersistentCalls:
+      m_Calls: []
+  onTakeDamage:
+    m_PersistentCalls:
+      m_Calls: []
+  healthBar: {fileID: 7413680353662796778}
+  hurtClip: {fileID: 8300000, guid: 3ef1eef1e125ae04ca5e0053211ce2c1, type: 3}
+  hurtVolume: 0.4
+  dieClip: {fileID: 8300000, guid: 0d591969c6603fe4cb52ef7b5959feda, type: 3}
+  dieVolume: 0.5
+--- !u!114 &3724249218000953578
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 988082134135583188}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab4f93db9b59fcc4781fe91fa4795980, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyPathing
+  destinationUpdateInterval: 0.1
+  offMeshSampleDistance: 4
+  enemyMask:
+    serializedVersion: 2
+    m_Bits: 128
+  separationRadius: 1.4
+  separationStrength: 1
+  directionSmoothSpeed: 10
+--- !u!114 &-5271332957310462840
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 988082134135583188}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 136753f748aaa7a42b054c47afbb1c97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MejiSmallAI
+  idleDurationMin: 3
+  idleDurationMax: 5
+  patrolDurationMin: 1
+  patrolDurationMax: 3
+  patrolRadius: 2.5
+  patrolChance: 0.4
+  leashRadius: 5
+  wallMask:
+    serializedVersion: 2
+    m_Bits: 0
+  losSkin: 1
+  passiveSpeedMultiplier: 0.5
+  spawnGraceMin: 0.6
+  spawnGraceMax: 1
+  debugLogging: 0
+  panicRadius: 1.5
+  panicTargetRefreshMin: 0.3
+  panicTargetRefreshMax: 0.7
+  panicSpeedMultiplier: 1.5
+  dashRange: 2.5
+  dashDuration: 0.35
+  dashSpeedMultiplier: 2.2
+  dashInaccuracyMin: 20
+  dashInaccuracyMax: 40
+  staggerDuration: 0.8
+  staggerSpeedMultiplier: 0.25
+  spriteTransform: {fileID: 208003371081328597}
+  squashScaleX: 1.3
+  squashScaleY: 0.7
+  squashDuration: 0.4
+--- !u!195 &345462243566778897
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 988082134135583188}
+  m_Enabled: 1
+  m_AgentTypeID: -1372625422
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1 &1474284981994161219
 GameObject:
   m_ObjectHideFlags: 0
@@ -605,7 +374,6 @@ GameObject:
   - component: {fileID: 803806091724421615}
   - component: {fileID: 5285933926964467797}
   - component: {fileID: 3493981120691389104}
-  - component: {fileID: 4898600272660648916}
   m_Layer: 7
   m_Name: Visuals
   m_TagString: Untagged
@@ -626,6 +394,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 7463520488446096402}
   - {fileID: 7190313226069261513}
   m_Father: {fileID: 208003371081328597}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -678,7 +447,7 @@ SpriteRenderer:
   m_SortingLayer: 3
   m_SortingOrder: 1
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 4747737961246356050, guid: 1ac9868338760f140a8b3c52aa37ab84, type: 3}
+  m_Sprite: {fileID: -7120631989524559942, guid: 28c86761955ae2941b45859519d38679, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -698,7 +467,7 @@ Animator:
   m_GameObject: {fileID: 1474284981994161219}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: edd86149fe678f346b29640c31caead6, type: 2}
+  m_Controller: {fileID: 9100000, guid: 3e59c2c37df20c04095eb3ed53157de3, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -736,18 +505,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpriteYSorter
   sortingOffset: 0
---- !u!114 &4898600272660648916
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1474284981994161219}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d94c7a77119ca694c81e75a513b3c75d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::BossAnimationRelay
 --- !u!1 &2223798187010705781
 GameObject:
   m_ObjectHideFlags: 0
@@ -757,8 +514,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7866796958824413751}
-  - component: {fileID: 4781514753774294185}
-  - component: {fileID: 7395519946870887071}
+  - component: {fileID: 1811900954029987988}
   m_Layer: 9
   m_Name: Hitbox
   m_TagString: Untagged
@@ -775,14 +531,14 @@ Transform:
   m_GameObject: {fileID: 2223798187010705781}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.01, y: -0.064, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 208003371081328597}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!58 &4781514753774294185
-CircleCollider2D:
+--- !u!61 &1811900954029987988
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -815,45 +571,18 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 1.92}
-  m_Radius: 0.72
---- !u!70 &7395519946870887071
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2223798187010705781}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: 0.031713363, y: 2.945192}
-  m_Size: {x: 2.5267107, y: 1.0586826}
-  m_Direction: 1
+  m_Offset: {x: -0.01963371, y: 0.71109957}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 0.5405204, y: 0.98394835}
+  m_EdgeRadius: 0
 --- !u!1 &3221483142425514410
 GameObject:
   m_ObjectHideFlags: 0
@@ -880,7 +609,7 @@ Transform:
   m_GameObject: {fileID: 3221483142425514410}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0.10088569, w: 0.994898}
-  m_LocalPosition: {x: -0.015, y: 1.95, z: 0}
+  m_LocalPosition: {x: 0.025, y: 0.71, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -946,13 +675,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: Shadow
       objectReference: {fileID: 0}
+    - target: {fileID: 1525218423229736197, guid: fe02030257054c548a0a8f1e09f2f665, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 4750130110337884741, guid: fe02030257054c548a0a8f1e09f2f665, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.001
+      value: 0.004
       objectReference: {fileID: 0}
     - target: {fileID: 4750130110337884741, guid: fe02030257054c548a0a8f1e09f2f665, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.127
+      value: 0.342
       objectReference: {fileID: 0}
     - target: {fileID: 4750130110337884741, guid: fe02030257054c548a0a8f1e09f2f665, type: 3}
       propertyPath: m_LocalPosition.z
@@ -964,15 +697,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4750130110337884741, guid: fe02030257054c548a0a8f1e09f2f665, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4750130110337884741, guid: fe02030257054c548a0a8f1e09f2f665, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4750130110337884741, guid: fe02030257054c548a0a8f1e09f2f665, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4750130110337884741, guid: fe02030257054c548a0a8f1e09f2f665, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -989,85 +722,111 @@ PrefabInstance:
     - target: {fileID: 5163916380359555627, guid: fe02030257054c548a0a8f1e09f2f665, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 67297232, guid: 687b2d6160ce7db41803647497bda900, type: 3}
+      objectReference: {fileID: -2878024585921678656, guid: 12cca95684463824697f91af70df8fd7, type: 3}
+    - target: {fileID: 5163916380359555627, guid: fe02030257054c548a0a8f1e09f2f665, type: 3}
+      propertyPath: m_Color.a
+      value: 0.5882353
+      objectReference: {fileID: 0}
+    - target: {fileID: 5163916380359555627, guid: fe02030257054c548a0a8f1e09f2f665, type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5163916380359555627, guid: fe02030257054c548a0a8f1e09f2f665, type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5163916380359555627, guid: fe02030257054c548a0a8f1e09f2f665, type: 3}
+      propertyPath: m_Color.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5163916380359555627, guid: fe02030257054c548a0a8f1e09f2f665, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fe02030257054c548a0a8f1e09f2f665, type: 3}
---- !u!1 &3965542549712042889 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1525218423229736197, guid: fe02030257054c548a0a8f1e09f2f665, type: 3}
-  m_PrefabInstance: {fileID: 2459745927262707340}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7190313226069261513 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4750130110337884741, guid: fe02030257054c548a0a8f1e09f2f665, type: 3}
   m_PrefabInstance: {fileID: 2459745927262707340}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &4567844561182477468
+--- !u!1001 &8024657605660993789
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 208003371081328597}
+    m_TransformParent: {fileID: 4698166982508756797}
     m_Modifications:
-    - target: {fileID: 1525218423229736197, guid: fe02030257054c548a0a8f1e09f2f665, type: 3}
-      propertyPath: m_Name
-      value: Shadow (1)
+    - target: {fileID: -7192900063087935849, guid: d10a319c85c09cd4aa88037a9112cab5, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 4750130110337884741, guid: fe02030257054c548a0a8f1e09f2f665, type: 3}
+    - target: {fileID: 634602670860180719, guid: d10a319c85c09cd4aa88037a9112cab5, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.001
+      value: 0.031
       objectReference: {fileID: 0}
-    - target: {fileID: 4750130110337884741, guid: fe02030257054c548a0a8f1e09f2f665, type: 3}
+    - target: {fileID: 634602670860180719, guid: d10a319c85c09cd4aa88037a9112cab5, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.127
+      value: 1.642
       objectReference: {fileID: 0}
-    - target: {fileID: 4750130110337884741, guid: fe02030257054c548a0a8f1e09f2f665, type: 3}
+    - target: {fileID: 634602670860180719, guid: d10a319c85c09cd4aa88037a9112cab5, type: 3}
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4750130110337884741, guid: fe02030257054c548a0a8f1e09f2f665, type: 3}
+    - target: {fileID: 634602670860180719, guid: d10a319c85c09cd4aa88037a9112cab5, type: 3}
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 4750130110337884741, guid: fe02030257054c548a0a8f1e09f2f665, type: 3}
+    - target: {fileID: 634602670860180719, guid: d10a319c85c09cd4aa88037a9112cab5, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4750130110337884741, guid: fe02030257054c548a0a8f1e09f2f665, type: 3}
+    - target: {fileID: 634602670860180719, guid: d10a319c85c09cd4aa88037a9112cab5, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4750130110337884741, guid: fe02030257054c548a0a8f1e09f2f665, type: 3}
+    - target: {fileID: 634602670860180719, guid: d10a319c85c09cd4aa88037a9112cab5, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4750130110337884741, guid: fe02030257054c548a0a8f1e09f2f665, type: 3}
+    - target: {fileID: 634602670860180719, guid: d10a319c85c09cd4aa88037a9112cab5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4750130110337884741, guid: fe02030257054c548a0a8f1e09f2f665, type: 3}
+    - target: {fileID: 634602670860180719, guid: d10a319c85c09cd4aa88037a9112cab5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4750130110337884741, guid: fe02030257054c548a0a8f1e09f2f665, type: 3}
+    - target: {fileID: 634602670860180719, guid: d10a319c85c09cd4aa88037a9112cab5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5163916380359555627, guid: fe02030257054c548a0a8f1e09f2f665, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 67297232, guid: 687b2d6160ce7db41803647497bda900, type: 3}
+    - target: {fileID: 6553418807101348367, guid: d10a319c85c09cd4aa88037a9112cab5, type: 3}
+      propertyPath: m_Name
+      value: EnemyHealthBar
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: fe02030257054c548a0a8f1e09f2f665, type: 3}
---- !u!4 &9119758761054498521 stripped
+  m_SourcePrefab: {fileID: 100100000, guid: d10a319c85c09cd4aa88037a9112cab5, type: 3}
+--- !u!114 &7413680353662796778 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 702526993082772247, guid: d10a319c85c09cd4aa88037a9112cab5, type: 3}
+  m_PrefabInstance: {fileID: 8024657605660993789}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96298e16c6196e947a49d2a67ea65097, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyHealthBar
+--- !u!4 &7463520488446096402 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 4750130110337884741, guid: fe02030257054c548a0a8f1e09f2f665, type: 3}
-  m_PrefabInstance: {fileID: 4567844561182477468}
+  m_CorrespondingSourceObject: {fileID: 634602670860180719, guid: d10a319c85c09cd4aa88037a9112cab5, type: 3}
+  m_PrefabInstance: {fileID: 8024657605660993789}
   m_PrefabAsset: {fileID: 0}

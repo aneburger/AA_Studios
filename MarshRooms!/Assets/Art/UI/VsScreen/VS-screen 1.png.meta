@@ -1,16 +1,16 @@
 fileFormatVersion: 2
-guid: 43c7e6f076696b2409e7347787831012
+guid: 8d2cf6ccbcb3d6a4888e601aa1fe28b7
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -3251359726020833483
-    second: rainbow-bullet_0
+      213: -2941886138689827563
+    second: VS-screen_0
   - first:
-      213: -4859685926511366965
-    second: rainbow-bullet_1
+      213: 3694642349107757616
+    second: VS-screen_1
   - first:
-      213: 5395391490758058839
-    second: rainbow-bullet_2
+      213: 8999300483560382984
+    second: VS-screen_2
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -119,67 +119,111 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: statue-laser-load_0
+      name: VS-screen_0
       rect:
         serializedVersion: 2
-        x: 2
-        y: 0
-        width: 16
-        height: 10
-      alignment: 4
-      pivot: {x: 0, y: 0.5}
+        x: 44
+        y: 137
+        width: 79
+        height: 26
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: fdaf003fff3f7364785e76ffacae1b40
-      internalID: 122907701
+      spriteID: 51d4fb5c4225c27d0800000000000000
+      internalID: -2941886138689827563
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: statue-laser-load_1
+      name: VS-screen_1
       rect:
         serializedVersion: 2
-        x: 21
-        y: 0
-        width: 16
-        height: 10
-      alignment: 4
-      pivot: {x: 0, y: 0.5}
+        x: 190
+        y: 108
+        width: 66
+        height: 53
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: d6019dec4da767740892ea875360ac9b
-      internalID: -1894114736
+      spriteID: 032cea634a1064330800000000000000
+      internalID: 3694642349107757616
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: statue-laser-load_2
+      name: VS-screen_2
       rect:
         serializedVersion: 2
-        x: 40
-        y: 0
-        width: 16
-        height: 10
-      alignment: 4
-      pivot: {x: 0, y: 0.5}
+        x: 332
+        y: 98
+        width: 102
+        height: 153
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 516ec42c506e3424aa6867c2aa6cf749
-      internalID: 1541599484
+      spriteID: c494bc20a5d21b4498bbeb78e4d6698a
+      internalID: 944252501
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: VS-screen_3
+      rect:
+        serializedVersion: 2
+        x: 37
+        y: 27
+        width: 83
+        height: 90
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 37763ce7d498f084c87ca45888e7eb52
+      internalID: -1755747890
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: VS-screen_4
+      rect:
+        serializedVersion: 2
+        x: 322
+        y: 38
+        width: 120
+        height: 26
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 36f8765ce8defd348b89e1c17daee40f
+      internalID: 361532350
       vertices: []
       indices: 
       edges: []
@@ -188,7 +232,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: f3e1329169155cd4c805f56c9e319a2e
+    spriteID: 9e7e6f461ed932543a2c4cdaccfd24a0
     internalID: 0
     vertices: []
     indices: 
@@ -198,11 +242,14 @@ TextureImporter:
     spriteCustomMetadata:
       entries:
       - key: SpriteEditor.SliceSettings
-        value: '{"sliceOnImport":false,"gridCellCount":{"x":3.0,"y":1.0},"gridSpriteSize":{"x":19.0,"y":10.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      statue-laser-load_0: 122907701
-      statue-laser-load_1: -1894114736
-      statue-laser-load_2: 1541599484
+      VS-screen_0: -2941886138689827563
+      VS-screen_1: 3694642349107757616
+      VS-screen_2: 944252501
+      VS-screen_3: -1755747890
+      VS-screen_4: 361532350
+      VS-screen_5: -802344472
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

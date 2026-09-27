@@ -116,7 +116,7 @@ public abstract class BossBrain : MonoBehaviour
     }
 
     // -- UPDATE --
-    private void Update()
+    protected virtual void Update()
     {
         if (!facePlayer || directionalAnimator == null) return;
 

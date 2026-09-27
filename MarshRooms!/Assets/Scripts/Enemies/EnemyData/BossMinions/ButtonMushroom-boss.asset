@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6302092c942ee1644bc4027ea868e779, type: 3}
+  m_Name: ButtonMushroom-boss
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyData
+  maxHealth: 12
+  moveSpeed: 2
+  contactDamage: 1
+  contactKnockback: 5
+  enemyName: Button Butler
+  weapon: {fileID: 11400000, guid: ae5f0808f91f61b4db927c47cb2de3a0, type: 2}
+  detectionRange: 16
+  attackRange: 12
+  possibleWeaponDrops:
+  - weaponPickupPrefab: {fileID: 1303430737314922756, guid: df60fd66b3dcf2047bca1049f6b58218, type: 3}
+    dropChance: 0.15
+  - weaponPickupPrefab: {fileID: 1303430737314922756, guid: 3d43bd427e9ea7645a30f7ae52c53575, type: 3}
+    dropChance: 0.15
+  - weaponPickupPrefab: {fileID: 1303430737314922756, guid: 0f851c1cdd294d7468c7afb55dbfea2c, type: 3}
+    dropChance: 0.1
+  maxSporeDrops: 5
+  sporePrefab: {fileID: 7129025776932877359, guid: b8874dc0a3c605d419413a967c2f2c17, type: 3}
+  guaranteesSporeDrop: 0
+  healthPickupPrefab: {fileID: 1002410625230129664, guid: 1dd3664c0f1e23b4182c58054280f391, type: 3}
+  healthDropChance: 0.08

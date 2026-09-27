@@ -1,6 +1,3 @@
-// Portobello's brain.
-// Step 1: skeleton. Step 2: Gold Bar Gun. Step 3: Coin Spray Gun.
-
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -22,7 +19,7 @@ public class PortobelloPhaseSettings
     public float downtimeMin = 1.5f;
     public float downtimeMax = 2.5f;
 
-    [Header("Attack Weights (0 = never picked this phase)")]
+    [Header("Attack Weights")]
     public float goldBarWeight = 1f;
     public float coinGunWeight = 1f;
     public float dollarBurstsWeight = 1f;
@@ -39,7 +36,6 @@ public class PortobelloPhaseSettings
     public int spikeRoundsMin = 1;
     public int spikeRoundsMax = 1;
     public float spikeRoundInterval = 0.5f;
-    [Tooltip("0 = no extra shake (Phase 1/2). Set in Phase 3 for the more impactful version.")]
     public float spikeScreenShakeDuration = 0f;
     public float spikeScreenShakeForce = 0.5f;
 
@@ -55,8 +51,21 @@ public class PortobelloPhaseSettings
     public float burrowPopCooldown = 1.5f;
 
     [Header("Throne Phase")]
+    public int throneActionsMin = 2;
+    public int throneActionsMax = 3;
+    public float throneActionPause = 1f;
+    public float throneStatuesWeight = 1f;
+    public float throneEnemiesWeight = 1f;
+    public float throneSpikesWeight = 0f;
     public int throneEnemyCountMin = 2;
     public int throneEnemyCountMax = 3;
+
+    [Header("Laser Statues")]
+    public float laserChargeDuration = 1f;
+    public float laserFiringDuration = 2f;
+    public int laserVolleys = 1;
+    public float laserVolleyPause = 0.4f;
+    public bool laserCycleDifferentPattern = true;
 
     [Header("Gold Bar Gun")]
     public int goldBarVolleys = 1;
@@ -65,7 +74,7 @@ public class PortobelloPhaseSettings
     public float goldBarShotInterval = 0.18f;
     public float goldBarVolleyPause = 0.5f;
     public float goldBarBulletSpeedMultiplier = 1f;
-    public float goldBarAimTurnRate = 0f; // 0 = snap to player
+    public float goldBarAimTurnRate = 0f;
 
     [Header("Coin Spray Gun")]
     public int coinVolleys = 1;
@@ -88,6 +97,8 @@ public class PortobelloPhaseSettings
 
 public class PortobelloBoss : BossBrain
 {
+    private enum ThroneAction { None, Statues, Enemies, Spikes }
+
     // Animator trigger names
     private const string TrigDespawn = "Despawn";
     private const string TrigSpawn = "Spawn";
@@ -125,7 +136,9 @@ public class PortobelloBoss : BossBrain
         goldBarShotInterval = 0.13f,
         goldBarVolleyPause = 0.4f,
         spikeScreenShakeDuration = 0.8f,
-        spikeScreenShakeForce = 0.6f
+        spikeScreenShakeForce = 0.6f,
+        throneSpikesWeight = 1f,
+        laserVolleys = 2
     };
 
     protected override int LastPhase => 3;
@@ -166,12 +179,14 @@ public class PortobelloBoss : BossBrain
     [Range(0f, 1f)] [SerializeField] private float billSummonVolume = 1f;
     [SerializeField] private AudioClip billLaunchClip;
     [Range(0f, 1f)] [SerializeField] private float billLaunchVolume = 1f;
-    [Tooltip("Fires the launch sound this many seconds early, to compensate for audio latency.")]
     [SerializeField] private float billLaunchSoundLead = 0.05f;
     [SerializeField] private float dollarBurstShakeForce = 0.4f;
 
     [Header("Gold Spikes")]
     [SerializeField] private BossSpikeSpawner spikeSpawner;
+    [SerializeField] private Transform[] spikeStandSpots;
+    [SerializeField] private float spikeStandSpotMinPlayerDistance = 2.5f;
+    [SerializeField] private float spikeStandSpotMinMoveDistance = 1.5f;
     [SerializeField] private float spikeSummonEventTimeout = 3f;
     [SerializeField] private AudioClip spikeSummonClip;
     [Range(0f, 1f)] [SerializeField] private float spikeSummonVolume = 1f;
@@ -211,10 +226,22 @@ public class PortobelloBoss : BossBrain
     [SerializeField] private BossMinionSpawner minionSpawner;
     [SerializeField] private GameObject[] minionPrefabs;
     [SerializeField] private Transform[] enemySpawnPoints;
+    [SerializeField] private int throneEnemySpawnCap = 1;
     [Range(0f, 1f)] [SerializeField] private float weaponGuaranteeChance = 0.7f;
     [Range(0f, 1f)] [SerializeField] private float healthGuaranteeChance = 0.4f;
     [SerializeField] private float enemySpawnIntervalMin = 0.15f;
     [SerializeField] private float enemySpawnIntervalMax = 0.4f;
+
+    [Header("Throne Phase: Statues")]
+    [SerializeField] private StatueController[] statueSlots;
+    [SerializeField] private LaserPatternData[] twoStatuePatterns;
+    [SerializeField] private LaserPatternData[] fourStatuePatterns;
+    [SerializeField] private float statueRevealInterval = 0.5f;
+    [SerializeField] private float statueBurstShake = 0.4f;
+    [SerializeField] private AudioClip statueBurstClip;
+    [Range(0f, 1f)] [SerializeField] private float statueBurstVolume = 1f;
+
+    private int activeStatueCount;
 
     private BossContactDamage contact;
     private Rigidbody2D body;
@@ -225,15 +252,19 @@ public class PortobelloBoss : BossBrain
 
     private Vector2 currentAim = Vector2.right;
     private int lastShootSpot = -1;
+    private int lastSpikeSpot = -1;
     private int lastDollarPatternIndex = -1;
     private bool summonReadyFired;
     private bool burrowImpactFired;
     private PortobelloAttack? lastAttack;
     private AudioSource burrowLoopSource;
     private bool burrowLoopPausedByUs;
+    private readonly List<BaseBullet> activeBullets = new List<BaseBullet>();
 
-    private void Update()
+    protected override void Update()
     {
+        base.Update();
+
         if (burrowLoopSource == null) return;
 
         bool shouldPause = Time.timeScale <= 0f;
@@ -250,7 +281,6 @@ public class PortobelloBoss : BossBrain
         }
     }
 
-    // -- AWAKE --
     protected override void Awake()
     {
         base.Awake();
@@ -260,9 +290,17 @@ public class PortobelloBoss : BossBrain
         weaponAimer = GetComponentInChildren<WeaponAimer>();
         patternShooter = GetComponent<BossPatternShooter>();
         spriteRenderers = GetComponentsInChildren<SpriteRenderer>(true);
+
+        if (throneShadow != null)
+        {
+            SpriteRenderer[] shadowRenderers = throneShadow.GetComponentsInChildren<SpriteRenderer>(true);
+            spriteRenderers = System.Array.FindAll(spriteRenderers, sr => System.Array.IndexOf(shadowRenderers, sr) < 0);
+
+            throneShadow.transform.SetParent(null, true);
+            throneShadow.SetActive(false);
+        }
     }
 
-    // -- ENABLE --
     protected override void OnEnable()
     {
         base.OnEnable();
@@ -270,9 +308,9 @@ public class PortobelloBoss : BossBrain
         if (relay != null) relay.BurrowImpact += HandleBurrowImpact;
         if (spikeSpawner != null) spikeSpawner.SpikeSpawned += RegisterHazard;
         if (minionSpawner != null) minionSpawner.MinionSpawned += RegisterMinion;
+        if (shooter != null) shooter.BulletSpawned += RegisterBullet;
     }
 
-    // -- DISABLE --
     protected override void OnDisable()
     {
         base.OnDisable();
@@ -280,12 +318,27 @@ public class PortobelloBoss : BossBrain
         if (relay != null) relay.BurrowImpact -= HandleBurrowImpact;
         if (spikeSpawner != null) spikeSpawner.SpikeSpawned -= RegisterHazard;
         if (minionSpawner != null) minionSpawner.MinionSpawned -= RegisterMinion;
+        if (shooter != null) shooter.BulletSpawned -= RegisterBullet;
     }
 
-    // Minions cleared by a phase transition
     protected override void OnMinionCleared(GameObject minion)
     {
         EnemyManager.Instance?.UnregisterEnemy(minion);
+    }
+
+    private void RegisterBullet(BaseBullet bullet)
+    {
+        if (bullet == null) return;
+        if (activeBullets.Count > 256) activeBullets.RemoveAll(b => b == null);
+        activeBullets.Add(bullet);
+    }
+
+    private void ClearActiveBullets()
+    {
+        foreach (BaseBullet b in activeBullets)
+            if (b != null) Destroy(b.gameObject);
+
+        activeBullets.Clear();
     }
 
     private void HandleSummonReady()
@@ -321,11 +374,9 @@ public class PortobelloBoss : BossBrain
             AudioManager.Instance?.PlaySFXWithPitch(throneSummonClip, throneSummonVolume, 0.1f);
     }
 
-    // -- PHASE --
     protected override void ApplyPhase(int newPhase)
     {
         SetAnimSpeed(CurrentSettings.animSpeed);
-        // Statue spawning on phase 2/3 entry hooks in here later.
     }
 
     protected override void OnFightCancelled()
@@ -334,7 +385,13 @@ public class PortobelloBoss : BossBrain
         {
             shooter.HideWeapon(true);
             ClearGunSettings();
+            ClearCoinSettings();
         }
+
+        directionalAnimator?.SetWalking(false);
+
+        ClearActiveBullets();
+
         health.SetInvulnerable(BossHealth.ReasonHidden, false);
         SetIdleContact();
         StopBurrowLoopSound();
@@ -346,8 +403,20 @@ public class PortobelloBoss : BossBrain
         yield return new WaitForSeconds(openingDelay);
         SetIdleContact();
 
-        minionSpawner?.ResetGuarantees();
+        if (phase == 1) minionSpawner?.ResetGuarantees();
         lastAttack = null;
+
+        if (phase == 2)
+        {
+            yield return ThroneAttack(0, 2);
+            yield return Downtime();
+        }
+        else if (phase == 3)
+        {
+            yield return ThroneAttack(2, 4);
+            yield return Downtime();
+        }
+
         int attacksBeforeThrone = RollAttacksBeforeThrone();
         int attacksSinceThrone = 0;
 
@@ -379,9 +448,6 @@ public class PortobelloBoss : BossBrain
         return Random.Range(min, max + 1);
     }
 
-    // Weighted pick that never repeats the previous attack.
-    // Implemented so far: Gold Bar Gun, Coin Gun, Dollar Bursts, Gold Spikes.
-    // Burrow joins this list once it's built.
     private PortobelloAttack PickNextAttack()
     {
         PortobelloPhaseSettings s = CurrentSettings;
@@ -399,7 +465,6 @@ public class PortobelloBoss : BossBrain
         float total = SumWeights(weights);
         if (total <= 0f)
         {
-            // Only the previous attack has any weight this phase - allow it rather than stalling
             weights = new[] { s.goldBarWeight, s.coinGunWeight, s.dollarBurstsWeight, s.spikeWeight, s.burrowWeight };
             total = SumWeights(weights);
             if (total <= 0f) return PortobelloAttack.GoldBarGun;
@@ -604,7 +669,6 @@ public class PortobelloBoss : BossBrain
         SetIdleContact();
         shooter?.HideWeapon(true);
 
-        // Vanish and reappear at a spot - he never holds a weapon for this one
         yield return RepositionNoWeapon();
 
         for (int i = 0; i < throws; i++)
@@ -630,7 +694,6 @@ public class PortobelloBoss : BossBrain
         ScreenEffects.Instance?.ShakeScreen(dollarBurstShakeForce);
     }
 
-    // Vanish, reappear at a shoot point, but never show a weapon - the bills spawn from thin air
     private IEnumerator RepositionNoWeapon()
     {
         health.SetInvulnerable(BossHealth.ReasonHidden, true);
@@ -659,7 +722,6 @@ public class PortobelloBoss : BossBrain
         }
     }
 
-    // Random index that differs from the last
     private static int PickDifferentIndex(int count, ref int last)
     {
         int index = Random.Range(0, count);
@@ -680,11 +742,73 @@ public class PortobelloBoss : BossBrain
             yield break;
         }
 
-        PortobelloPhaseSettings s = CurrentSettings;
-
         facePlayer = true;
         SetIdleContact();
+        shooter?.HideWeapon(true);
 
+        yield return RepositionToSpikeSpot();
+
+        yield return SpawnGoldSpikesSequence(CurrentSettings);
+
+        facePlayer = true;
+    }
+
+    // Vanish, reappear at a dedicated spike stand spot (never a weapon-shoot spot) - same
+    // shape as RepositionNoWeapon, just pointed at its own spot pool.
+    private IEnumerator RepositionToSpikeSpot()
+    {
+        health.SetInvulnerable(BossHealth.ReasonHidden, true);
+        DisableContact();
+        facePlayer = true;
+
+        yield return WaitUntilIdle();
+        Trigger(TrigDespawn);
+        yield return WaitForStateFinished();
+
+        TeleportTo(PickSpikeSpot());
+        Trigger(TrigSpawn);
+        yield return WaitForReturnToIdle();
+
+        SetIdleContact();
+        health.SetInvulnerable(BossHealth.ReasonHidden, false);
+    }
+
+    private Transform PickSpikeSpot()
+    {
+        if (spikeStandSpots == null || spikeStandSpots.Length == 0) return null;
+
+        bool canAvoidRepeat = spikeStandSpots.Length > 1;
+        List<int> allowed = new List<int>();
+
+        for (int i = 0; i < spikeStandSpots.Length; i++)
+        {
+            if (spikeStandSpots[i] == null) continue;
+            if (canAvoidRepeat && i == lastSpikeSpot) continue;
+            if (canAvoidRepeat && Vector2.Distance(spikeStandSpots[i].position, transform.position) < spikeStandSpotMinMoveDistance) continue;
+            allowed.Add(i);
+        }
+
+        if (allowed.Count == 0)
+        {
+            for (int i = 0; i < spikeStandSpots.Length; i++)
+            {
+                if (spikeStandSpots[i] == null) continue;
+                if (canAvoidRepeat && i == lastSpikeSpot) continue;
+                allowed.Add(i);
+            }
+            if (allowed.Count == 0) return null;
+        }
+
+        List<int> preferred = allowed.FindAll(i =>
+            player == null || Vector2.Distance(spikeStandSpots[i].position, player.position) >= spikeStandSpotMinPlayerDistance);
+
+        List<int> pool = preferred.Count > 0 ? preferred : allowed;
+        lastSpikeSpot = pool[Random.Range(0, pool.Count)];
+        return spikeStandSpots[lastSpikeSpot];
+    }
+
+    private IEnumerator SpawnGoldSpikesSequence(PortobelloPhaseSettings s)
+    {
         summonReadyFired = false;
         Trigger(TrigSpikeWindup);
         yield return WaitForSummonReady(spikeSummonEventTimeout);
@@ -697,11 +821,8 @@ public class PortobelloBoss : BossBrain
 
         yield return spikeSpawner.SpawnRounds(count, rounds, s.spikeWarningTime, s.spikeRoundInterval, player);
         yield return spikeSpawner.WaitForAllSpikesFinished();
-
-        facePlayer = true;
     }
 
-    // A few repeated shake pulses across the duration, rather than one instant shake
     private IEnumerator SustainedScreenShake(float duration, float force, float interval = 0.12f)
     {
         float t = 0f;
@@ -714,7 +835,25 @@ public class PortobelloBoss : BossBrain
     }
 
     // ==================== THRONE PHASE ====================
-    private IEnumerator ThroneAttack()
+    private IEnumerator RevealStatues(int fromIndex, int toIndexExclusive)
+    {
+        if (statueSlots == null) yield break;
+
+        for (int i = fromIndex; i < toIndexExclusive && i < statueSlots.Length; i++)
+        {
+            if (statueSlots[i] == null) continue;
+
+            statueSlots[i].PlaySpawn();
+            activeStatueCount++;
+
+            ScreenEffects.Instance?.ShakeScreen(statueBurstShake);
+            AudioManager.Instance?.PlaySFXWithPitch(statueBurstClip, statueBurstVolume, 0.1f);
+
+            yield return new WaitForSeconds(statueRevealInterval);
+        }
+    }
+
+    private IEnumerator ThroneAttack(int? revealFrom = null, int? revealToExclusive = null)
     {
         PortobelloPhaseSettings s = CurrentSettings;
 
@@ -728,11 +867,78 @@ public class PortobelloBoss : BossBrain
         Trigger(TrigThroneSummon);
         yield return WaitForSummonReady(throneSummonEventTimeout);
 
-        yield return FireActiveStatues();
-        yield return SpawnThroneEnemyWave(s);
+        if (revealFrom.HasValue && revealToExclusive.HasValue)
+            yield return RevealStatues(revealFrom.Value, revealToExclusive.Value);
+
+        int min = Mathf.Max(1, s.throneActionsMin);
+        int max = Mathf.Max(min, s.throneActionsMax);
+        int actionCount = Random.Range(min, max + 1);
+        ThroneAction? lastThroneAction = null;
+
+        for (int i = 0; i < actionCount; i++)
+        {
+            ThroneAction action = PickThroneAction(s, lastThroneAction);
+            if (action == ThroneAction.None) break;
+
+            yield return RunThroneAction(action, s);
+            lastThroneAction = action;
+
+            if (i < actionCount - 1)
+                yield return new WaitForSeconds(s.throneActionPause);
+        }
 
         yield return ExitThrone();
         SetIdleContact();
+    }
+
+    private ThroneAction PickThroneAction(PortobelloPhaseSettings s, ThroneAction? last)
+    {
+        List<ThroneAction> options = new List<ThroneAction>();
+        List<float> weights = new List<float>();
+
+        void AddOption(ThroneAction action, bool available, float weight, bool allowRepeat)
+        {
+            if (!available || weight <= 0f) return;
+            if (!allowRepeat && last == action) return;
+            options.Add(action);
+            weights.Add(weight);
+        }
+
+        AddOption(ThroneAction.Statues, activeStatueCount > 0, s.throneStatuesWeight, allowRepeat: false);
+        AddOption(ThroneAction.Enemies, true, s.throneEnemiesWeight, allowRepeat: false);
+        AddOption(ThroneAction.Spikes, spikeSpawner != null, s.throneSpikesWeight, allowRepeat: false);
+
+        // Nothing available without repeating
+        if (options.Count == 0)
+        {
+            AddOption(ThroneAction.Statues, activeStatueCount > 0, s.throneStatuesWeight, allowRepeat: true);
+            AddOption(ThroneAction.Enemies, true, s.throneEnemiesWeight, allowRepeat: true);
+            AddOption(ThroneAction.Spikes, spikeSpawner != null, s.throneSpikesWeight, allowRepeat: true);
+        }
+
+        if (options.Count == 0) return ThroneAction.None;
+
+        float total = 0f;
+        foreach (float w in weights) total += w;
+
+        float pick = Random.value * total;
+        for (int i = 0; i < options.Count; i++)
+        {
+            if (pick < weights[i]) return options[i];
+            pick -= weights[i];
+        }
+
+        return options[options.Count - 1];
+    }
+
+    private IEnumerator RunThroneAction(ThroneAction action, PortobelloPhaseSettings s)
+    {
+        switch (action)
+        {
+            case ThroneAction.Statues: yield return FireActiveStatues(s); break;
+            case ThroneAction.Enemies: yield return SpawnThroneEnemyWave(s); break;
+            case ThroneAction.Spikes: yield return SpawnGoldSpikesSequence(s); break;
+        }
     }
 
     private IEnumerator SpawnThroneEnemyWave(PortobelloPhaseSettings s)
@@ -743,19 +949,48 @@ public class PortobelloBoss : BossBrain
 
         GameObject prefab = minionPrefabs[Random.Range(0, minionPrefabs.Length)];
         int count = Random.Range(Mathf.Max(1, s.throneEnemyCountMin), Mathf.Max(1, s.throneEnemyCountMax) + 1);
+        count = Mathf.Min(count, Mathf.Max(1, throneEnemySpawnCap));
 
         yield return minionSpawner.SpawnWave(prefab, count, enemySpawnPoints,
             weaponGuaranteeChance, healthGuaranteeChance, enemySpawnIntervalMin, enemySpawnIntervalMax);
     }
 
-    // Placeholder until the statue system is built - fires any statues currently active
-    private IEnumerator FireActiveStatues()
+    // Fires every active statue simultaneously, for the configured number of volleys, using a
+    // randomly picked pattern per volley (cycling through distinct ones if requested).
+    private IEnumerator FireActiveStatues(PortobelloPhaseSettings s)
     {
-        yield break;
+        if (activeStatueCount <= 0 || statueSlots == null) yield break;
+
+        LaserPatternData[] pool = activeStatueCount >= 4 ? fourStatuePatterns : twoStatuePatterns;
+        if (pool == null || pool.Length == 0) yield break;
+
+        int volleys = Mathf.Max(1, s.laserVolleys);
+        int lastPatternIndex = -1;
+
+        for (int v = 0; v < volleys; v++)
+        {
+            int patternIndex = s.laserCycleDifferentPattern
+                ? PickDifferentIndex(pool.Length, ref lastPatternIndex)
+                : Random.Range(0, pool.Length);
+
+            LaserPatternData pattern = pool[patternIndex];
+            if (pattern != null && pattern.anglesDegrees != null && pattern.anglesDegrees.Length > 0)
+            {
+                for (int i = 0; i < activeStatueCount && i < statueSlots.Length; i++)
+                {
+                    if (statueSlots[i] == null) continue;
+                    float angle = pattern.anglesDegrees[i % pattern.anglesDegrees.Length];
+                    statueSlots[i].Fire(angle, s.laserChargeDuration, s.laserFiringDuration);
+                }
+            }
+
+            yield return new WaitForSeconds(s.laserChargeDuration + s.laserFiringDuration);
+
+            if (v < volleys - 1)
+                yield return new WaitForSeconds(s.laserVolleyPause);
+        }
     }
 
-    // Shared jump cinematic: lift pose, rise off-screen (hidden), a shadow tells the landing
-    // spot, then he visibly falls back into frame and lands. Used both entering and leaving the throne.
     private IEnumerator JumpTo(Transform destination)
     {
         facePlayer = true;
@@ -764,12 +999,10 @@ public class PortobelloBoss : BossBrain
         Trigger(TrigThroneJumpUp);
         yield return WaitForStateFinished();
 
-        // Rise up from wherever he currently is
         Vector3 start = transform.position;
         Vector3 aboveStart = start + Vector3.up * throneJumpUpHeight;
         yield return MoveOverTime(start, aboveStart, throneJumpUpDuration);
 
-        // Fully hidden now - reposition high above the destination while nobody can see him move
         SetVisible(false);
 
         Vector3 destPos = destination != null ? destination.position : transform.position;
@@ -787,7 +1020,6 @@ public class PortobelloBoss : BossBrain
 
         if (throneShadow != null) throneShadow.SetActive(false);
 
-        // Fall back into view from above the landing spot
         SetVisible(true);
         shooter?.HideWeapon(true);
         yield return MoveOverTime(aboveDest, destPos, throneJumpUpDuration);
@@ -890,7 +1122,6 @@ public class PortobelloBoss : BossBrain
             yield return null;
         }
 
-        // A brief pause underground before surfacing - the player's cue to get clear
         yield return new WaitForSeconds(s.burrowStopPause);
     }
 
@@ -912,7 +1143,6 @@ public class PortobelloBoss : BossBrain
         yield return WaitForReturnToIdle();
     }
 
-    // Circular AoE damage, applied once at the exact crash frame via the animation event
     private void DoBurrowSmash(PortobelloPhaseSettings s)
     {
         Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, s.burrowSmashRadius);
@@ -948,8 +1178,6 @@ public class PortobelloBoss : BossBrain
     }
 
     // ==================== SHARED GUN HELPERS ====================
-
-    // Vanish, reappear at a shoot point (stationary — no movement toward player), gun in hand
     private IEnumerator Reposition()
     {
         health.SetInvulnerable(BossHealth.ReasonHidden, true);

@@ -64,6 +64,8 @@ public abstract class BaseShooter : MonoBehaviour
 
     private Collider2D playerCollider;
 
+    public event System.Action<BaseBullet> BulletSpawned;
+
     // -1 means infinite ammo
     private int currentAmmo = -1;
 
@@ -251,6 +253,7 @@ public abstract class BaseShooter : MonoBehaviour
             b.SetAimOrigin(firePoint.position);
             b.SetBullet(currentWeapon.bulletSpeed * bulletSpeedMultiplier, rolledDamage, currentWeapon.hitKnockback, currentWeapon.hitPrefab, weaponSprite.sortingOrder, currentWeapon.wallHitClip, currentWeapon.wallHitVolume);
             lastBullet = b;
+            BulletSpawned?.Invoke(b);
         }
 
         OnShootEffects(direction);
