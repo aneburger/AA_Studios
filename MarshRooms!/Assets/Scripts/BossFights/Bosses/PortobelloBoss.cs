@@ -52,6 +52,11 @@ public class PortobelloPhaseSettings
     public float burrowSmashDamage = 3f;
     public float burrowSmashKnockback = 8f;
     public float burrowSmashShake = 0.7f;
+    public float burrowPopCooldown = 1.5f;
+
+    [Header("Throne Phase")]
+    public int throneEnemyCountMin = 2;
+    public int throneEnemyCountMax = 3;
 
     [Header("Gold Bar Gun")]
     public int goldBarVolleys = 1;
@@ -90,6 +95,9 @@ public class PortobelloBoss : BossBrain
     private const string TrigSpikeWindup = "spike-windup";
     private const string TrigBurrowIn = "port-jump-in";
     private const string TrigBurrowOut = "port-jump-out";
+    private const string TrigThroneSummon = "throne-summon";
+    private const string TrigThroneJumpUp = "throne-jump-up";
+    private const string TrigThroneLand = "throne-land";
 
     [Header("Phase Settings")]
     [SerializeField] private PortobelloPhaseSettings phase1 = new PortobelloPhaseSettings
@@ -182,11 +190,38 @@ public class PortobelloBoss : BossBrain
     [Header("Fallback")]
     [SerializeField] private float stubAttackDuration = 1.5f;
 
+    [Header("Throne Phase Cadence")]
+    [SerializeField] private int attacksBeforeThroneMin = 2;
+    [SerializeField] private int attacksBeforeThroneMax = 3;
+    [SerializeField] private Transform thronePoint;
+    [SerializeField] private float throneSummonEventTimeout = 3f;
+    [SerializeField] private AudioClip throneSummonClip;
+    [Range(0f, 1f)] [SerializeField] private float throneSummonVolume = 1f;
+    [SerializeField] private GameObject throneShadow;
+    [SerializeField] private float throneJumpUpHeight = 15f;
+    [SerializeField] private float throneJumpUpDuration = 0.5f;
+    [SerializeField] private float throneShadowLeadTime = 0.6f;
+    [SerializeField] private AudioClip throneJumpClip;
+    [Range(0f, 1f)] [SerializeField] private float throneJumpVolume = 1f;
+    [SerializeField] private AudioClip throneLandClip;
+    [Range(0f, 1f)] [SerializeField] private float throneLandVolume = 1f;
+    [SerializeField] private float throneLandShake = 0.6f;
+
+    [Header("Throne Phase: Enemies")]
+    [SerializeField] private BossMinionSpawner minionSpawner;
+    [SerializeField] private GameObject[] minionPrefabs;
+    [SerializeField] private Transform[] enemySpawnPoints;
+    [Range(0f, 1f)] [SerializeField] private float weaponGuaranteeChance = 0.7f;
+    [Range(0f, 1f)] [SerializeField] private float healthGuaranteeChance = 0.4f;
+    [SerializeField] private float enemySpawnIntervalMin = 0.15f;
+    [SerializeField] private float enemySpawnIntervalMax = 0.4f;
+
     private BossContactDamage contact;
     private Rigidbody2D body;
     private EnemyShooter shooter;
     private WeaponAimer weaponAimer;
     private BossPatternShooter patternShooter;
+    private SpriteRenderer[] spriteRenderers;
 
     private Vector2 currentAim = Vector2.right;
     private int lastShootSpot = -1;
@@ -224,6 +259,7 @@ public class PortobelloBoss : BossBrain
         shooter = GetComponent<EnemyShooter>();
         weaponAimer = GetComponentInChildren<WeaponAimer>();
         patternShooter = GetComponent<BossPatternShooter>();
+        spriteRenderers = GetComponentsInChildren<SpriteRenderer>(true);
     }
 
     // -- ENABLE --
@@ -233,6 +269,7 @@ public class PortobelloBoss : BossBrain
         if (relay != null) relay.SummonReady += HandleSummonReady;
         if (relay != null) relay.BurrowImpact += HandleBurrowImpact;
         if (spikeSpawner != null) spikeSpawner.SpikeSpawned += RegisterHazard;
+        if (minionSpawner != null) minionSpawner.MinionSpawned += RegisterMinion;
     }
 
     // -- DISABLE --
@@ -242,6 +279,13 @@ public class PortobelloBoss : BossBrain
         if (relay != null) relay.SummonReady -= HandleSummonReady;
         if (relay != null) relay.BurrowImpact -= HandleBurrowImpact;
         if (spikeSpawner != null) spikeSpawner.SpikeSpawned -= RegisterHazard;
+        if (minionSpawner != null) minionSpawner.MinionSpawned -= RegisterMinion;
+    }
+
+    // Minions cleared by a phase transition
+    protected override void OnMinionCleared(GameObject minion)
+    {
+        EnemyManager.Instance?.UnregisterEnemy(minion);
     }
 
     private void HandleSummonReady()
@@ -269,6 +313,12 @@ public class PortobelloBoss : BossBrain
             AudioManager.Instance?.PlaySFXWithPitch(burrowDiveClip, burrowDiveVolume, 0.1f);
         else if (triggerName == TrigBurrowOut)
             AudioManager.Instance?.PlaySFXWithPitch(burrowEmergeClip, burrowEmergeVolume, 0.1f);
+        else if (triggerName == TrigThroneJumpUp)
+            AudioManager.Instance?.PlaySFXWithPitch(throneJumpClip, throneJumpVolume, 0.1f);
+        else if (triggerName == TrigThroneLand)
+            AudioManager.Instance?.PlaySFXWithPitch(throneLandClip, throneLandVolume, 0.1f);
+        else if (triggerName == TrigThroneSummon)
+            AudioManager.Instance?.PlaySFXWithPitch(throneSummonClip, throneSummonVolume, 0.1f);
     }
 
     // -- PHASE --
@@ -296,15 +346,37 @@ public class PortobelloBoss : BossBrain
         yield return new WaitForSeconds(openingDelay);
         SetIdleContact();
 
+        minionSpawner?.ResetGuarantees();
         lastAttack = null;
+        int attacksBeforeThrone = RollAttacksBeforeThrone();
+        int attacksSinceThrone = 0;
 
         while (true)
         {
+            if (attacksSinceThrone >= attacksBeforeThrone)
+            {
+                yield return ThroneAttack();
+
+                attacksSinceThrone = 0;
+                attacksBeforeThrone = RollAttacksBeforeThrone();
+                yield return Downtime();
+                continue;
+            }
+
             PortobelloAttack attack = PickNextAttack();
             yield return RunAttack(attack);
             lastAttack = attack;
+            attacksSinceThrone++;
+
             yield return Downtime();
         }
+    }
+
+    private int RollAttacksBeforeThrone()
+    {
+        int min = Mathf.Max(1, attacksBeforeThroneMin);
+        int max = Mathf.Max(min, attacksBeforeThroneMax);
+        return Random.Range(min, max + 1);
     }
 
     // Weighted pick that never repeats the previous attack.
@@ -641,6 +713,128 @@ public class PortobelloBoss : BossBrain
         }
     }
 
+    // ==================== THRONE PHASE ====================
+    private IEnumerator ThroneAttack()
+    {
+        PortobelloPhaseSettings s = CurrentSettings;
+
+        facePlayer = true;
+        shooter?.HideWeapon(true);
+        DisableContact();
+
+        yield return EnterThrone();
+
+        summonReadyFired = false;
+        Trigger(TrigThroneSummon);
+        yield return WaitForSummonReady(throneSummonEventTimeout);
+
+        yield return FireActiveStatues();
+        yield return SpawnThroneEnemyWave(s);
+
+        yield return ExitThrone();
+        SetIdleContact();
+    }
+
+    private IEnumerator SpawnThroneEnemyWave(PortobelloPhaseSettings s)
+    {
+        if (minionSpawner == null || minionPrefabs == null || minionPrefabs.Length == 0
+            || enemySpawnPoints == null || enemySpawnPoints.Length == 0)
+            yield break;
+
+        GameObject prefab = minionPrefabs[Random.Range(0, minionPrefabs.Length)];
+        int count = Random.Range(Mathf.Max(1, s.throneEnemyCountMin), Mathf.Max(1, s.throneEnemyCountMax) + 1);
+
+        yield return minionSpawner.SpawnWave(prefab, count, enemySpawnPoints,
+            weaponGuaranteeChance, healthGuaranteeChance, enemySpawnIntervalMin, enemySpawnIntervalMax);
+    }
+
+    // Placeholder until the statue system is built - fires any statues currently active
+    private IEnumerator FireActiveStatues()
+    {
+        yield break;
+    }
+
+    // Shared jump cinematic: lift pose, rise off-screen (hidden), a shadow tells the landing
+    // spot, then he visibly falls back into frame and lands. Used both entering and leaving the throne.
+    private IEnumerator JumpTo(Transform destination)
+    {
+        facePlayer = true;
+
+        yield return WaitUntilIdle();
+        Trigger(TrigThroneJumpUp);
+        yield return WaitForStateFinished();
+
+        // Rise up from wherever he currently is
+        Vector3 start = transform.position;
+        Vector3 aboveStart = start + Vector3.up * throneJumpUpHeight;
+        yield return MoveOverTime(start, aboveStart, throneJumpUpDuration);
+
+        // Fully hidden now - reposition high above the destination while nobody can see him move
+        SetVisible(false);
+
+        Vector3 destPos = destination != null ? destination.position : transform.position;
+        Vector3 aboveDest = destPos + Vector3.up * throneJumpUpHeight;
+        transform.position = aboveDest;
+        if (body != null) body.position = aboveDest;
+
+        if (throneShadow != null)
+        {
+            throneShadow.transform.position = destPos;
+            throneShadow.SetActive(true);
+        }
+
+        yield return new WaitForSeconds(throneShadowLeadTime);
+
+        if (throneShadow != null) throneShadow.SetActive(false);
+
+        // Fall back into view from above the landing spot
+        SetVisible(true);
+        shooter?.HideWeapon(true);
+        yield return MoveOverTime(aboveDest, destPos, throneJumpUpDuration);
+
+        Trigger(TrigThroneLand);
+        ScreenEffects.Instance?.ShakeScreen(throneLandShake);
+
+        yield return WaitForReturnToIdle();
+    }
+
+    private IEnumerator MoveOverTime(Vector3 from, Vector3 to, float duration)
+    {
+        float t = 0f;
+        while (t < duration)
+        {
+            t += Time.deltaTime;
+            transform.position = Vector3.Lerp(from, to, Mathf.Clamp01(t / duration));
+            yield return null;
+        }
+
+        transform.position = to;
+        if (body != null) body.position = to;
+    }
+
+    private void SetVisible(bool visible)
+    {
+        if (spriteRenderers == null) return;
+
+        foreach (SpriteRenderer sr in spriteRenderers)
+            if (sr != null) sr.enabled = visible;
+    }
+
+    private IEnumerator EnterThrone()
+    {
+        health.SetInvulnerable(BossHealth.ReasonHidden, true);
+        DisableContact();
+
+        yield return JumpTo(thronePoint);
+    }
+
+    private IEnumerator ExitThrone()
+    {
+        yield return JumpTo(PickShootSpot());
+
+        health.SetInvulnerable(BossHealth.ReasonHidden, false);
+    }
+
     // ==================== BURROW ====================
     private IEnumerator BurrowAttack()
     {
@@ -660,6 +854,7 @@ public class PortobelloBoss : BossBrain
         {
             yield return BurrowDiveAndChase(s);
             yield return BurrowPopSmash(s);
+            yield return new WaitForSeconds(s.burrowPopCooldown);
         }
 
         SetIdleContact();
