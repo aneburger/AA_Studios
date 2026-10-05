@@ -145946,6 +145946,22 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8300000, guid: ca5546d1a4b07a04e8fa76f131c21030, type: 3}
     - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
+      propertyPath: idleContactDamage
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
+      propertyPath: phase1.burrowSmashDamage
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
+      propertyPath: phase2.burrowSmashDamage
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
+      propertyPath: phase3.burrowSmashDamage
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
       propertyPath: 'shootSpots.Array.data[0]'
       value: 
       objectReference: {fileID: 1667406973}

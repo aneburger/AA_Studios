@@ -37,6 +37,7 @@ public class TutorialDirector : MonoBehaviour
     [SerializeField] private Transform toiletInteractSpot;
     [SerializeField] private float walkToToiletSpeed;
     [SerializeField] private Transform blobsMoveSpot;
+     [SerializeField] private Transform mutateSpot;
     [SerializeField] private Transform marshFinalSpot;
     [SerializeField] private Transform[] chefPuffsMoveSpot;
 
@@ -332,7 +333,7 @@ public class TutorialDirector : MonoBehaviour
 
         // ==== PART 6: Wait for toilet to die ====
         yield return StartCoroutine(WaitUntil(() => toiletDead));
-        yield return new WaitForSeconds(1.8f);
+        yield return new WaitForSeconds(1.2f);
         yield return StartCoroutine(PlayDialogue(toiletWinDialogue));
 
 
@@ -470,11 +471,13 @@ public class TutorialDirector : MonoBehaviour
         yield return StartCoroutine(PlayDialogue(sporeFullDialogue));
         yield return new WaitForSeconds(0.8f);
 
+        yield return StartCoroutine(WalkToPoint(mutateSpot));
+        playerAimer?.SetAimOverride(Vector2.down);
+        LockPlayerKeepInput();
+
         //  ==== Part 12: Wave 3 + mutate teaching ==== 
         foreach (var enemy in wave3Enemies)
             enemy?.GetComponent<EnemyController>()?.SetExternalAIControl(true);
-
-        LockPlayerKeepInput();
 
         yield return StartCoroutine(SetWaveActiveStaggered(wave3Enemies, true));
         SubscribeWaveClear(() => wave3Clear = true);

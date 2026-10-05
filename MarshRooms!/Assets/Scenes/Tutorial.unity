@@ -4576,6 +4576,37 @@ Transform:
   - {fileID: 1249039757}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &599698620
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 599698621}
+  m_Layer: 0
+  m_Name: Mutate Pos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &599698621
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 599698620}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 9.08, y: 5.37, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1937198059}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &601184107
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8115,6 +8146,7 @@ MonoBehaviour:
   toiletInteractSpot: {fileID: 311244553}
   walkToToiletSpeed: 2
   blobsMoveSpot: {fileID: 70908436}
+  mutateSpot: {fileID: 599698621}
   marshFinalSpot: {fileID: 507602185}
   chefPuffsMoveSpot:
   - {fileID: 1446247439}
@@ -10495,7 +10527,7 @@ Transform:
   m_GameObject: {fileID: 1491865810}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 4.23, y: 3.29, z: 0}
+  m_LocalPosition: {x: 2.09, y: 1.97, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -62717,6 +62749,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 384763596}
+  - {fileID: 599698621}
   - {fileID: 311244553}
   - {fileID: 70908436}
   - {fileID: 507602185}
