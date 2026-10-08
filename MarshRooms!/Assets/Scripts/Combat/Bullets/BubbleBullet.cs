@@ -124,7 +124,8 @@ public class BubbleBullet : BaseBullet
         }
         else
         {
-            AudioManager.Instance?.PlaySFXWithPitch(wallHitClip, wallHitVolume, 0.1f);
+            if (!BreakableUtil.TryBreak(collision))
+                AudioManager.Instance?.PlaySFXWithPitch(wallHitClip, wallHitVolume, 0.1f);
         }
 
         Pop();

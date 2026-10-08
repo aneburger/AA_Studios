@@ -68,6 +68,7 @@ public class BananaBullet : BaseBullet
                 mover.ApplyKnockback(direction * knockback);
         }
 
+        BreakableUtil.TryBreak(collision);
         Splash();
     }
 
@@ -94,6 +95,8 @@ public class BananaBullet : BaseBullet
 
             target.TakeDamage(damage * splashDamageMultiplier);
         }
+
+        BreakableUtil.BreakInRadius(splashCenter, currentSplashRadius);
 
         int splatCount = Random.Range(currentMinSplats, currentMaxSplats + 1);
         for (int i = 0; i < splatCount; i++)

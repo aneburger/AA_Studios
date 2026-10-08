@@ -174,6 +174,8 @@ public class ExplodingModifier : MonoBehaviour
 
             otherHealth.TakeDamage(explosionDamage);
         }
+
+        BreakableUtil.BreakInRadius(transform.position, explosionRadius);
     }
 
     // -- OUTLINE TOGGLE --

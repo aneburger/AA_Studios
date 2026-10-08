@@ -81,6 +81,8 @@ public class SporeBullet : BaseBullet
             tick.Apply(currentTickDamage, tickInterval, tickDuration, poisonTint);
         }
 
+        BreakableUtil.BreakInRadius(transform.position, currentRadius);
+
         VFXManager.Instance.SpawnHitVFX(hitVFX, transform.position, weaponSortingOrder);
         AudioManager.Instance.PlaySFXWithPitch(explodeClip, explodeVolume, 0.1f);
         Destroy(gameObject);

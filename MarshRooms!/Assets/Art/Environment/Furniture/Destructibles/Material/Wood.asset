@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03d0c9891cb97c241b678af1281aa800, type: 3}
+  m_Name: Wood
+  m_EditorClassIdentifier: Assembly-CSharp::BreakMaterial
+  breakSounds:
+  - {fileID: 8300000, guid: eb36d0fb546bff04391e450c587c0579, type: 3}
+  volume: 1
+  pitchVariation: 0.1
+  dustPrefab: {fileID: 4081999799842582576, guid: 58ff3210537b77e43a7aece106f1672e, type: 3}
+  minSpeed: 1.5
+  maxSpeed: 4
+  minSettleTime: 0.25
+  maxSettleTime: 0.5
+  maxSpinDegPerSec: 540

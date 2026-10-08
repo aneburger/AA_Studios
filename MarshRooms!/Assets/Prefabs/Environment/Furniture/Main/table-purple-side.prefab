@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1380530515334402144}
   - component: {fileID: 2145246581525259491}
   - component: {fileID: 655325558946374988}
+  - component: {fileID: 7617274927996750808}
   - component: {fileID: 530201341595075451}
   - component: {fileID: 6264031640221667080}
   m_Layer: 17
@@ -107,6 +108,35 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpriteYSorter
   sortingOffset: 0
+--- !u!114 &7617274927996750808
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6275297484357287296}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d5428050a1272c438eddaf43ae5f8f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DestructibleProp
+  spriteRenderer: {fileID: 2145246581525259491}
+  afterBreak: 0
+  brokenSprite: {fileID: 1261408418, guid: 8f287e9a5f18d1747a86812eb27d08f4, type: 3}
+  breakMaterial: {fileID: 11400000, guid: 2d9dd206ac2cfeb4aa0777abe7eeb5a0, type: 2}
+  debrisSprites:
+  - {fileID: -872648419, guid: bf0273a1e1ea573498ccad543a9fdd1e, type: 3}
+  - {fileID: 1678545679, guid: bf0273a1e1ea573498ccad543a9fdd1e, type: 3}
+  - {fileID: 1012514248, guid: bf0273a1e1ea573498ccad543a9fdd1e, type: 3}
+  debrisSpawnRadius: 1
+  debrisSortingLayer: Background
+  debrisSortingOrder: 3
+  removeColliderOnBreak: 0
+  brokenCollider: {fileID: 0}
+  childBreakDelay: 0.05
+  dropChance: 0.05
+  possiblePickups:
+  - {fileID: 7129025776932877359, guid: b8874dc0a3c605d419413a967c2f2c17, type: 3}
 --- !u!61 &530201341595075451
 BoxCollider2D:
   m_ObjectHideFlags: 0

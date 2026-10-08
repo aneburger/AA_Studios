@@ -11,7 +11,9 @@ GameObject:
   - component: {fileID: 2166477703874850487}
   - component: {fileID: 7496474196502974891}
   - component: {fileID: 6198880207050171093}
+  - component: {fileID: 7643209156956354188}
   - component: {fileID: 7798141303836400812}
+  - component: {fileID: 7421411167541169429}
   - component: {fileID: 3067585012322620560}
   m_Layer: 17
   m_Name: crate-1
@@ -107,6 +109,35 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpriteYSorter
   sortingOffset: 0
+--- !u!114 &7643209156956354188
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6583796016957280314}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d5428050a1272c438eddaf43ae5f8f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DestructibleProp
+  spriteRenderer: {fileID: 7496474196502974891}
+  afterBreak: 0
+  brokenSprite: {fileID: 250401014, guid: 8f287e9a5f18d1747a86812eb27d08f4, type: 3}
+  breakMaterial: {fileID: 11400000, guid: 2d9dd206ac2cfeb4aa0777abe7eeb5a0, type: 2}
+  debrisSprites:
+  - {fileID: 227166378, guid: bf0273a1e1ea573498ccad543a9fdd1e, type: 3}
+  - {fileID: 1678545679, guid: bf0273a1e1ea573498ccad543a9fdd1e, type: 3}
+  - {fileID: -475154596, guid: bf0273a1e1ea573498ccad543a9fdd1e, type: 3}
+  debrisSpawnRadius: 1
+  debrisSortingLayer: Background
+  debrisSortingOrder: 3
+  removeColliderOnBreak: 1
+  brokenCollider: {fileID: 7421411167541169429}
+  childBreakDelay: 0.05
+  dropChance: 0.05
+  possiblePickups:
+  - {fileID: 7129025776932877359, guid: b8874dc0a3c605d419413a967c2f2c17, type: 3}
 --- !u!61 &7798141303836400812
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -152,6 +183,52 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   m_Size: {x: 1.04, y: 1.28}
+  m_EdgeRadius: 0
+--- !u!61 &7421411167541169429
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6583796016957280314}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: -0.31479722}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1.1875, y: 1.625}
+    newSize: {x: 2.4375, y: 1.9375}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 1.04, y: 0.6504055}
   m_EdgeRadius: 0
 --- !u!114 &3067585012322620560
 MonoBehaviour:

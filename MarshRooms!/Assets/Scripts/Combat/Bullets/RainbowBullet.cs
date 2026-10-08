@@ -41,6 +41,7 @@ public class RainbowBullet : BaseBullet
             }
             else
             {
+                BreakableUtil.TryBreak(hit.collider);
                 beamLength = hit.distance;
                 break;
             }

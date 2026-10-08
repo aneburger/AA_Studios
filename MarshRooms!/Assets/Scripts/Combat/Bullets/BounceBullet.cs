@@ -40,6 +40,12 @@ public class BounceBullet : BaseBullet
         }
 
         bool isWall = ((1 << collision.gameObject.layer) & wallMask) != 0;
+        if (BreakableUtil.TryBreak(collision))
+        {
+            VFXManager.Instance.SpawnHitVFX(hitVFX, transform.position, weaponSortingOrder);
+            Destroy(gameObject);
+            return;
+        }
         if (!isWall || bouncesLeft <= 0)
         {
             AudioManager.Instance?.PlaySFXWithPitch(wallHitClip, wallHitVolume, 0.1f);

@@ -79,7 +79,8 @@ public class BaseBullet : MonoBehaviour
         }
         else
         {
-            AudioManager.Instance?.PlaySFXWithPitch(wallHitClip, wallHitVolume, 0.1f);
+            if (!BreakableUtil.TryBreak(collision))
+                AudioManager.Instance?.PlaySFXWithPitch(wallHitClip, wallHitVolume, 0.1f);
         }
 
         VFXManager.Instance.SpawnHitVFX(hitVFX, transform.position, weaponSortingOrder);

@@ -9,6 +9,7 @@ public class RunStatsSaveData
 {
     public int deathCount;
     public int killCount;
+    public int destroyedCount;
     public float elapsedPlayTime;
     public List<string> collectedCardIds = new List<string>();
 }
@@ -43,8 +44,9 @@ public class RunStatsTracker : MonoBehaviour
 
     public int DeathCount { get; private set; }
     public int KillCount { get; private set; }
+    public int DestroyedCount { get; private set; }
     public float ElapsedPlayTime { get; private set; }
-
+    
     private readonly List<BoonCardData> collectedCards = new List<BoonCardData>();
     public IReadOnlyList<BoonCardData> CollectedCards => collectedCards;
 
@@ -76,6 +78,11 @@ public class RunStatsTracker : MonoBehaviour
         KillCount++;
     }
 
+    public void RegisterDestroyed()
+    {
+        DestroyedCount++;
+    }
+
     public void RegisterDeath()
     {
         DeathCount++;
@@ -91,6 +98,7 @@ public class RunStatsTracker : MonoBehaviour
     {
         DeathCount = 0;
         KillCount = 0;
+        DestroyedCount = 0;
         ElapsedPlayTime = 0f;
         collectedCards.Clear();
         isTiming = true;
@@ -103,6 +111,7 @@ public class RunStatsTracker : MonoBehaviour
         {
             deathCount = DeathCount,
             killCount = KillCount,
+            destroyedCount = DestroyedCount,
             elapsedPlayTime = ElapsedPlayTime
         };
 
@@ -122,6 +131,7 @@ public class RunStatsTracker : MonoBehaviour
 
         DeathCount = data.deathCount;
         KillCount = data.killCount;
+        DestroyedCount = data.destroyedCount;
         ElapsedPlayTime = data.elapsedPlayTime;
 
         collectedCards.Clear();
