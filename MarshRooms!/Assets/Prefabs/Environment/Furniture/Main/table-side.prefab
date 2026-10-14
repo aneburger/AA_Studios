@@ -133,6 +133,10 @@ MonoBehaviour:
   debrisSortingOrder: 3
   removeColliderOnBreak: 0
   brokenCollider: {fileID: 0}
+  bulletsPassThroughWhenBroken: 1
+  shakeOnBreak: 1
+  shakeAmount: 0.05
+  shakeDuration: 0.15
   childBreakDelay: 0.05
   dropChance: 0.05
   possiblePickups:
@@ -171,7 +175,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: -0.1}
+  m_Offset: {x: 0, y: 0.055777133}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -181,5 +185,5 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1.7, y: 2.31}
+  m_Size: {x: 1.7, y: 1.9984454}
   m_EdgeRadius: 0

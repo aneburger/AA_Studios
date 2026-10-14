@@ -22,6 +22,7 @@ public class DestructibleProp : MonoBehaviour, IBreakable
     [Header("Colliders")]
     [SerializeField] bool removeColliderOnBreak = false;
     [SerializeField] Collider2D brokenCollider;
+    [SerializeField] bool bulletsPassThroughWhenBroken = true;
 
     [Header("Stacking")]
     [SerializeField] float childBreakDelay = 0.05f;
@@ -31,16 +32,17 @@ public class DestructibleProp : MonoBehaviour, IBreakable
     [SerializeField] GameObject[] possiblePickups;
 
     public bool IsBroken { get; private set; }
+    public bool BulletsPassThrough => IsBroken && bulletsPassThroughWhenBroken;
 
     bool queued;
     bool vanishRequested;
     bool hidden;
 
-    // Room drop zone, keeps debris and pickups inside the walls
     static RoomDropZone cachedDropZone;
 
     const float DefaultMinSpeed = 1.5f, DefaultMaxSpeed = 4f;
     const float DefaultMinSettle = 0.25f, DefaultMaxSettle = 0.5f, DefaultSpin = 540f;
+    const float DefaultDebrisLifetime = 10f, DefaultFadeStartPercent = 0.5f;
 
     void Reset()
     {
@@ -113,11 +115,14 @@ public class DestructibleProp : MonoBehaviour, IBreakable
 
     // -- HIDE NOW --
     void HideNow()
-    {   
+    {
         hidden = true;
         if (spriteRenderer != null) spriteRenderer.enabled = false;
         DisableColliders();
-    }  
+
+        bool hasStackedProps = GetComponentsInChildren<DestructibleProp>(true).Length > 1;
+        Destroy(gameObject, hasStackedProps ? childBreakDelay + 0.2f : 0f);
+    } 
 
     // -- DISABLE COLLIDERS -- 
     void DisableColliders()
@@ -178,6 +183,8 @@ public class DestructibleProp : MonoBehaviour, IBreakable
         float minSettle = breakMaterial != null ? breakMaterial.minSettleTime : DefaultMinSettle;
         float maxSettle = breakMaterial != null ? breakMaterial.maxSettleTime : DefaultMaxSettle;
         float spin = breakMaterial != null ? breakMaterial.maxSpinDegPerSec : DefaultSpin;
+        float lifetime = breakMaterial != null ? breakMaterial.debrisLifetime : DefaultDebrisLifetime;
+        float fadeStart = breakMaterial != null ? breakMaterial.fadeStartPercent : DefaultFadeStartPercent;
 
         foreach (var sprite in debrisSprites)
         {
@@ -199,11 +206,15 @@ public class DestructibleProp : MonoBehaviour, IBreakable
             Vector2 dir = Random.insideUnitCircle;
             if (dir.sqrMagnitude < 0.01f) dir = Vector2.up;
 
+            // Where the piece would naturally slide to, then keep it inside the room
             float settle = Random.Range(minSettle, maxSettle);
             float distance = Random.Range(minSpeed, maxSpeed) * settle / 3f;
             Vector2 end = SafePosition(start + dir.normalized * distance);
 
             go.AddComponent<DebrisPiece>().Launch(start, end, Random.Range(-spin, spin), settle);
+
+            if (lifetime > 0f)
+                go.AddComponent<FadeOutSprite>().Setup(lifetime, fadeStart);
         }
     }
 

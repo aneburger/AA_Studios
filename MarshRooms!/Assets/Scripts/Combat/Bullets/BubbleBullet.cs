@@ -112,6 +112,7 @@ public class BubbleBullet : BaseBullet
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
         if (hasPopped) return;
+        if (BreakableUtil.IgnoresBullets(collision)) return;
 
         BaseHealth health = collision.GetComponentInParent<BaseHealth>();
         if (health != null)

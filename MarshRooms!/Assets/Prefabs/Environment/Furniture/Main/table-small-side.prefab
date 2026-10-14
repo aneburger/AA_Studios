@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 530201341595075451}
   - component: {fileID: 6264031640221667080}
   m_Layer: 17
-  m_Name: table-purple-side
+  m_Name: table-small-side
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -133,6 +133,10 @@ MonoBehaviour:
   debrisSortingOrder: 3
   removeColliderOnBreak: 0
   brokenCollider: {fileID: 0}
+  bulletsPassThroughWhenBroken: 1
+  shakeOnBreak: 1
+  shakeAmount: 0.05
+  shakeDuration: 0.15
   childBreakDelay: 0.05
   dropChance: 0.05
   possiblePickups:
@@ -171,7 +175,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 1.18}
+  m_Offset: {x: 0, y: 1.3348968}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0}
@@ -181,7 +185,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1.13, y: 2.14}
+  m_Size: {x: 1.13, y: 1.8302064}
   m_EdgeRadius: 0
 --- !u!114 &6264031640221667080
 MonoBehaviour:

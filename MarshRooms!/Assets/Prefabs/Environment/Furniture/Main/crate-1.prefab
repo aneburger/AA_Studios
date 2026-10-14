@@ -132,8 +132,9 @@ MonoBehaviour:
   debrisSpawnRadius: 1
   debrisSortingLayer: Background
   debrisSortingOrder: 3
-  removeColliderOnBreak: 1
+  removeColliderOnBreak: 0
   brokenCollider: {fileID: 7421411167541169429}
+  bulletsPassThroughWhenBroken: 1
   childBreakDelay: 0.05
   dropChance: 0.05
   possiblePickups:

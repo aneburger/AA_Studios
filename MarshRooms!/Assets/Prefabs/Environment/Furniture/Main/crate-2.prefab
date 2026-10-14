@@ -127,7 +127,6 @@ MonoBehaviour:
   breakMaterial: {fileID: 11400000, guid: 2d9dd206ac2cfeb4aa0777abe7eeb5a0, type: 2}
   debrisSprites:
   - {fileID: -7854325, guid: bf0273a1e1ea573498ccad543a9fdd1e, type: 3}
-  - {fileID: 887014700, guid: bf0273a1e1ea573498ccad543a9fdd1e, type: 3}
   - {fileID: 1969740995, guid: bf0273a1e1ea573498ccad543a9fdd1e, type: 3}
   - {fileID: 1012514248, guid: bf0273a1e1ea573498ccad543a9fdd1e, type: 3}
   - {fileID: -220458962, guid: bf0273a1e1ea573498ccad543a9fdd1e, type: 3}
@@ -136,6 +135,10 @@ MonoBehaviour:
   debrisSortingOrder: 3
   removeColliderOnBreak: 0
   brokenCollider: {fileID: 1884500502535566418}
+  bulletsPassThroughWhenBroken: 1
+  shakeOnBreak: 1
+  shakeAmount: 0.05
+  shakeDuration: 0.15
   childBreakDelay: 0.05
   dropChance: 0.05
   possiblePickups:

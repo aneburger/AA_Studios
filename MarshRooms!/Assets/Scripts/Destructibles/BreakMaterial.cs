@@ -17,4 +17,8 @@ public class BreakMaterial : ScriptableObject
     public float minSettleTime = 0.25f;
     public float maxSettleTime = 0.5f;
     public float maxSpinDegPerSec = 540f;
+
+    [Header("Debris fade out")]
+    public float debrisLifetime = 5f;
+    [Range(0f, 0.95f)] public float fadeStartPercent = 0.5f;
 }

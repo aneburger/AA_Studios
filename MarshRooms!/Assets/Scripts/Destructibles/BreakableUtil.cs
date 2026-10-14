@@ -32,4 +32,9 @@ public static class BreakableUtil
         }
         return false;
     }
+
+    public static bool IgnoresBullets(Collider2D other)
+    {
+        return other.TryGetComponent<DestructibleProp>(out var prop) && prop.BulletsPassThrough;
+    }
 }

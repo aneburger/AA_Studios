@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 4965316667451762}
   - component: {fileID: 3810681508165382211}
   - component: {fileID: 2262050792676939480}
+  - component: {fileID: 7451411311471342909}
   m_Layer: 17
   m_Name: green-stool
   m_TagString: Untagged
@@ -169,3 +170,34 @@ MonoBehaviour:
   m_Area: 1
   m_IgnoreFromBuild: 0
   m_AffectedAgents: ffffffff
+--- !u!114 &7451411311471342909
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2496758124454227322}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d5428050a1272c438eddaf43ae5f8f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DestructibleProp
+  spriteRenderer: {fileID: 115599059714051087}
+  afterBreak: 0
+  brokenSprite: {fileID: -1609925451, guid: 8f287e9a5f18d1747a86812eb27d08f4, type: 3}
+  breakMaterial: {fileID: 11400000, guid: 2d9dd206ac2cfeb4aa0777abe7eeb5a0, type: 2}
+  debrisSprites:
+  - {fileID: 1678545679, guid: bf0273a1e1ea573498ccad543a9fdd1e, type: 3}
+  debrisSpawnRadius: 1
+  debrisSortingLayer: Background
+  debrisSortingOrder: 3
+  removeColliderOnBreak: 0
+  brokenCollider: {fileID: 0}
+  bulletsPassThroughWhenBroken: 1
+  shakeOnBreak: 1
+  shakeAmount: 0.05
+  shakeDuration: 0.15
+  childBreakDelay: 0.05
+  dropChance: 0.05
+  possiblePickups:
+  - {fileID: 7129025776932877359, guid: b8874dc0a3c605d419413a967c2f2c17, type: 3}

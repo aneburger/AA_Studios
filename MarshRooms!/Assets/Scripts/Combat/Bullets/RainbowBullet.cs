@@ -27,6 +27,8 @@ public class RainbowBullet : BaseBullet
 
         foreach (var hit in hits)
         {
+            if (BreakableUtil.IgnoresBullets(hit.collider)) continue;
+
             BaseHealth health = hit.collider.GetComponentInParent<BaseHealth>();
 
             if (health != null)

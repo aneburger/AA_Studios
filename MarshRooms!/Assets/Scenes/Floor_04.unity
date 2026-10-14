@@ -46702,7 +46702,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6257052244954196687, guid: 71c9331f24eab1342b540e12e91ebc1d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 21.53
+      value: 21.63
       objectReference: {fileID: 0}
     - target: {fileID: 6257052244954196687, guid: 71c9331f24eab1342b540e12e91ebc1d, type: 3}
       propertyPath: m_LocalPosition.y
@@ -48483,6 +48483,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b54ecd92aa5929e40871579d71f98997, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoomManager
+  manualControl: 0
   spawnDelay: 1.5
   spawnIntervalMin: 0.3
   spawnIntervalMax: 2

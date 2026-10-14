@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2166477703874850487}
   - component: {fileID: 7496474196502974891}
   - component: {fileID: 6198880207050171093}
+  - component: {fileID: -6266719356341055101}
   - component: {fileID: 5818962708024452269}
   m_Layer: 0
   m_Name: window-1
@@ -107,6 +108,38 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpriteYSorter
   sortingOffset: 0
+--- !u!114 &-6266719356341055101
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6583796016957280314}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d5428050a1272c438eddaf43ae5f8f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DestructibleProp
+  spriteRenderer: {fileID: 7496474196502974891}
+  afterBreak: 0
+  brokenSprite: {fileID: 382249844, guid: 8f287e9a5f18d1747a86812eb27d08f4, type: 3}
+  breakMaterial: {fileID: 11400000, guid: 1b4688c2ba476814990a69316ce703f5, type: 2}
+  debrisSprites:
+  - {fileID: 960333203, guid: d94f437839190484280c32d5e339b8c0, type: 3}
+  - {fileID: -1236302670, guid: d94f437839190484280c32d5e339b8c0, type: 3}
+  - {fileID: 1522442997, guid: d94f437839190484280c32d5e339b8c0, type: 3}
+  debrisSpawnRadius: 0.5
+  debrisSortingLayer: Background
+  debrisSortingOrder: 3
+  removeColliderOnBreak: 1
+  brokenCollider: {fileID: 0}
+  bulletsPassThroughWhenBroken: 1
+  shakeOnBreak: 1
+  shakeAmount: 0.05
+  shakeDuration: 0.15
+  childBreakDelay: 0.05
+  dropChance: 0
+  possiblePickups: []
 --- !u!61 &5818962708024452269
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -141,17 +174,17 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: 0.31991768}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.25, y: 1.5625}
+    oldSize: {x: 1.375, y: 1.5625}
     newSize: {x: 2.4375, y: 1.9375}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1.25, y: 1.5625}
+  m_Size: {x: 1.25, y: 2.2023335}
   m_EdgeRadius: 0
 --- !u!1 &8060287618941787632
 GameObject:

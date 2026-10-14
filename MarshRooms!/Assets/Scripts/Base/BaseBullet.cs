@@ -61,6 +61,8 @@ public class BaseBullet : MonoBehaviour
     // -- BULLET HIT --
     protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
+        if (BreakableUtil.IgnoresBullets(collision)) return;
+        
         BaseHealth health = collision.GetComponentInParent<BaseHealth>();
 
         if (health != null)

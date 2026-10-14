@@ -8,6 +8,7 @@ public class DebrisPiece : MonoBehaviour
     float duration;
     float elapsed;
 
+    // -- LAUNCH --
     public void Launch(Vector2 startPos, Vector2 endPos, float spinDegPerSec, float settleTime)
     {
         start = startPos;
@@ -16,6 +17,7 @@ public class DebrisPiece : MonoBehaviour
         duration = Mathf.Max(0.05f, settleTime);
     }
 
+    // -- UPDATE --
     void Update()
     {
         elapsed += Time.deltaTime;
