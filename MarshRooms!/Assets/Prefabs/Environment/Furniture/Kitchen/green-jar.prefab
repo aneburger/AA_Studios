@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6257052244954196687}
   - component: {fileID: 115599059714051087}
   - component: {fileID: 4965316667451762}
+  - component: {fileID: 4379504662880087937}
   - component: {fileID: -6618582337524394297}
   m_Layer: 17
   m_Name: green-jar
@@ -106,6 +107,34 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpriteYSorter
   sortingOffset: 0
+--- !u!114 &4379504662880087937
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2496758124454227322}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d5428050a1272c438eddaf43ae5f8f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DestructibleProp
+  spriteRenderer: {fileID: 115599059714051087}
+  afterBreak: 1
+  brokenSprite: {fileID: 0}
+  breakMaterial: {fileID: 11400000, guid: 1b4688c2ba476814990a69316ce703f5, type: 2}
+  debrisSprites:
+  - {fileID: 1676156478, guid: 0fd639418db638840bebd7374af408b8, type: 3}
+  - {fileID: 33465372, guid: 0fd639418db638840bebd7374af408b8, type: 3}
+  debrisSpawnRadius: 1
+  debrisSortingLayer: Background
+  debrisSortingOrder: 3
+  removeColliderOnBreak: 1
+  brokenCollider: {fileID: 0}
+  bulletsPassThroughWhenBroken: 1
+  childBreakDelay: 0.05
+  dropChance: 0
+  possiblePickups: []
 --- !u!61 &-6618582337524394297
 BoxCollider2D:
   m_ObjectHideFlags: 0
