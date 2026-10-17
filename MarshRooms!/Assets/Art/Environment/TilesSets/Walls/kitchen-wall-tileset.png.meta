@@ -523,7 +523,7 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -532,6 +532,28 @@ TextureImporter:
       bones: []
       spriteID: 6ba17ab4c077a1c46b4d36478fb81b0c
       internalID: 2049343220
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: kitchen-wall-tileset_0
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d996b1772f761014d8f87afa1af13a59
+      internalID: -422859845
       vertices: []
       indices: 
       edges: []
@@ -571,6 +593,7 @@ TextureImporter:
       kitchen-wall-tileset-export_7: -632012173
       kitchen-wall-tileset-export_8: 1073607879
       kitchen-wall-tileset-export_9: 827792790
+      kitchen-wall-tileset_0: -422859845
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

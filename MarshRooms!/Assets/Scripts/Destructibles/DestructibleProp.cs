@@ -142,6 +142,7 @@ public class DestructibleProp : MonoBehaviour, IBreakable
     void DoBreak()
     {
         IsBroken = true;
+        Vector2 center = GetVisualCenter();
 
         bool vanish = vanishRequested || afterBreak == AfterBreak.Disappear;
 
@@ -160,10 +161,10 @@ public class DestructibleProp : MonoBehaviour, IBreakable
                 DisableColliders();
         }
 
-        SpawnDebris();
+        SpawnDebris(center);
         PlaySound();
-        SpawnDust();
-        TryDropPickup();
+        SpawnDust(center);
+        TryDropPickup(center);
 
         RunStatsTracker.Instance.RegisterDestroyed();
 
@@ -174,7 +175,7 @@ public class DestructibleProp : MonoBehaviour, IBreakable
     }
 
     // -- SPAWN DEBRIS --
-    void SpawnDebris()
+    void SpawnDebris(Vector2 center)
     {
         if (debrisSprites == null || debrisSprites.Length == 0) return;
 
@@ -191,7 +192,7 @@ public class DestructibleProp : MonoBehaviour, IBreakable
             if (sprite == null) continue;
 
             Vector2 offset = Random.insideUnitCircle * debrisSpawnRadius;
-            Vector2 start = SafePosition((Vector2)transform.position + offset);
+            Vector2 start = SafePosition(center + offset);
 
             var go = new GameObject("Debris");
             go.transform.position = start;
@@ -228,21 +229,29 @@ public class DestructibleProp : MonoBehaviour, IBreakable
     }
 
     // -- SPAWN DUST -- 
-    void SpawnDust()
+    void SpawnDust(Vector2 center)
     {
         if (breakMaterial == null || breakMaterial.dustPrefab == null) return;
-        var dust = Instantiate(breakMaterial.dustPrefab, transform.position, Quaternion.identity);
+        var dust = Instantiate(breakMaterial.dustPrefab, center, Quaternion.identity);
         Destroy(dust, 3f);
     }
 
     // -- TRY DROP PICKUP -- 
-    void TryDropPickup()
+    void TryDropPickup(Vector2 center)
     {
         if (dropChance <= 0f || possiblePickups == null || possiblePickups.Length == 0) return;
         if (Random.value > dropChance) return;
         
         var prefab = possiblePickups[Random.Range(0, possiblePickups.Length)];
         if (prefab != null)
-            Instantiate(prefab, SafePosition(transform.position), Quaternion.identity);
+            Instantiate(prefab, SafePosition(center), Quaternion.identity);
+    }
+
+    // -- GET VISUAL CENTER --
+    Vector2 GetVisualCenter()
+    {
+        return spriteRenderer != null
+            ? (Vector2)spriteRenderer.bounds.center
+            : (Vector2)transform.position;
     }
 }
