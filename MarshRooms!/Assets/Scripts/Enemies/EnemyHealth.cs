@@ -135,7 +135,9 @@ public class EnemyHealth : BaseHealth
             // Health drop
             float healthDropChance = controller.Data.healthDropChance * BoonManager.Instance.Stats.healthDropRateMultiplier;
             float roll = Random.value;
-            bool willDrop = controller.Data.healthPickupPrefab != null && roll <= healthDropChance;
+            bool willDrop = controller.Data.healthPickupPrefab != null
+                && roll <= healthDropChance
+                && !PlayerHealth.IsAtFullHealth();
 
             if (willDrop)
             {

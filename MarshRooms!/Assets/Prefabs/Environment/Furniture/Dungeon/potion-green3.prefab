@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6198880207050171093}
   - component: {fileID: -5502798990799458634}
   - component: {fileID: -1483614715575240104}
-  - component: {fileID: 143362604404623948}
+  - component: {fileID: 68280509798244258}
   m_Layer: 17
   m_Name: potion-green3
   m_TagString: Untagged
@@ -153,13 +153,16 @@ MonoBehaviour:
   m_Area: 1
   m_IgnoreFromBuild: 0
   m_AffectedAgents: ffffffff
---- !u!136 &143362604404623948
-CapsuleCollider:
+--- !u!70 &68280509798244258
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6583796016957280314}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -168,11 +171,22 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
   m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.28125
-  m_Height: 0.5625
-  m_Direction: 1
-  m_Center: {x: 0, y: 0.28125, z: 0}
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0.375}
+  m_Size: {x: 0.5625, y: 0.75}
+  m_Direction: 0

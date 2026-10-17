@@ -96,6 +96,8 @@ public class PlayerDodgeAttack : MonoBehaviour
 
         foreach (Collider2D hit in hits)
         {
+            BreakableUtil.TryBreak(hit);
+
             if (!DamageTargets.TryGetEnemyHealth(hit, out BaseHealth health)) continue;
             if (health.IsDead() || !hitThisDodge.Add(health)) continue;
 

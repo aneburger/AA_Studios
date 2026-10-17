@@ -187,6 +187,13 @@ public class BoonManager : MonoBehaviour
         }
 
         OnBoonApplied?.Invoke(null);
+
+        PlayerHealth playerHealth = FindFirstObjectByType<PlayerHealth>();
+        if (playerHealth != null)
+        {
+            playerHealth.SyncMaxHealthWithBoons();
+            playerHealth.ResetHealth();
+        }
     }
 
     public List<BoonCardData> GetThreeCardOffers(int floorNumber)

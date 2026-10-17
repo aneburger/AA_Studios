@@ -32,6 +32,8 @@ public class PlayerHealth : BaseHealth
 
     private bool isLowHealthActive = false;
 
+    private float baseMaxHealth;
+
     private float damageCooldownTimer;
 
     private bool isInvincible = false;
@@ -64,6 +66,7 @@ public class PlayerHealth : BaseHealth
     protected override void Awake()
     {
         base.Awake();
+        baseMaxHealth = maxHealth;
         mover = GetComponent<PlayerMover>();
         mutatedVisuals = GetComponent<PlayerMutatedVisuals>();
         sporeReadyVisuals = GetComponent<PlayerSporeReadyVisuals>();
@@ -353,6 +356,25 @@ public class PlayerHealth : BaseHealth
         ResetHealth();
 
         StartCoroutine(RespawnInvincibility());
+    }
+
+    // -- SYNC MAX HEALTH WITH BOONS --
+    public void SyncMaxHealthWithBoons()
+    {
+        if (BoonManager.Instance == null) return;
+
+        int bonusHearts = Mathf.RoundToInt(BoonManager.Instance.Stats.bonusMaxHearts);
+        maxHealth = baseMaxHealth + bonusHearts * 4f;
+        currentHealth = Mathf.Min(currentHealth, maxHealth);
+
+        HUDManager.Instance?.RefreshHearts();
+    }
+
+    // -- IS AT FULL HEALTH --
+    public static bool IsAtFullHealth()
+    {
+        PlayerHealth player = FindFirstObjectByType<PlayerHealth>();
+        return player != null && player.CurrentHealth >= player.MaxHealth;
     }
 
     // -- BUILD DEATH SCREEN STATS --
