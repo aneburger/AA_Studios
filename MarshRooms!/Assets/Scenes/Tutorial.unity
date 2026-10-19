@@ -1138,6 +1138,18 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 17
       objectReference: {fileID: 0}
+    - target: {fileID: 1283045080806399078, guid: f6cc61c2536ec53479bdcf73f5c5cf3f, type: 3}
+      propertyPath: 'debrisSprites.Array.data[2]'
+      value: 
+      objectReference: {fileID: 1305182109, guid: d94f437839190484280c32d5e339b8c0, type: 3}
+    - target: {fileID: 7051882928349574473, guid: f6cc61c2536ec53479bdcf73f5c5cf3f, type: 3}
+      propertyPath: m_Size.y
+      value: 0.548368
+      objectReference: {fileID: 0}
+    - target: {fileID: 7051882928349574473, guid: f6cc61c2536ec53479bdcf73f5c5cf3f, type: 3}
+      propertyPath: m_Offset.y
+      value: 0.10081601
+      objectReference: {fileID: 0}
     - target: {fileID: 9161246990941594278, guid: f6cc61c2536ec53479bdcf73f5c5cf3f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 3.29
@@ -1510,7 +1522,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 973914246}
+    m_TransformParent: {fileID: 1659404104}
     m_Modifications:
     - target: {fileID: 503118498505674759, guid: 68f10773f6ad9a746806bfd72d62c93a, type: 3}
       propertyPath: m_Sprite
@@ -1522,11 +1534,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1792466384847559249, guid: 68f10773f6ad9a746806bfd72d62c93a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 11.78
+      value: -0.90999985
       objectReference: {fileID: 0}
     - target: {fileID: 1792466384847559249, guid: 68f10773f6ad9a746806bfd72d62c93a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -4.29
+      value: 0.19999981
       objectReference: {fileID: 0}
     - target: {fileID: 1792466384847559249, guid: 68f10773f6ad9a746806bfd72d62c93a, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1661,6 +1673,7 @@ GameObject:
   - component: {fileID: 334472340}
   - component: {fileID: 334472339}
   - component: {fileID: 334472341}
+  - component: {fileID: 334472342}
   m_Layer: 0
   m_Name: Pot
   m_TagString: Untagged
@@ -1717,7 +1730,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: 0.15250492}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -1727,7 +1740,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.9375, y: 0.875}
+  m_Size: {x: 0.9375, y: 0.56999016}
   m_EdgeRadius: 0
 --- !u!212 &334472340
 SpriteRenderer:
@@ -1801,6 +1814,34 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpriteYSorter
   sortingOffset: 0
+--- !u!114 &334472342
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 334472337}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d5428050a1272c438eddaf43ae5f8f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DestructibleProp
+  spriteRenderer: {fileID: 334472340}
+  afterBreak: 0
+  brokenSprite: {fileID: 1022947978, guid: 8f287e9a5f18d1747a86812eb27d08f4, type: 3}
+  breakMaterial: {fileID: 11400000, guid: d42e1b4757179364280b387be6d7b8b4, type: 2}
+  extraAnimatorsToDisable: []
+  debrisSprites:
+  - {fileID: 332745150, guid: 5239a177107177c4f8e1e49ae3403445, type: 3}
+  debrisSpawnRadius: 1
+  debrisSortingLayer: Background
+  debrisSortingOrder: 3
+  removeColliderOnBreak: 0
+  brokenCollider: {fileID: 0}
+  bulletsPassThroughWhenBroken: 1
+  childBreakDelay: 0.05
+  dropChance: 0
+  possiblePickups: []
 --- !u!1 &379252526
 GameObject:
   m_ObjectHideFlags: 0
@@ -4006,7 +4047,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c57bc01d207fdb342b3839d2bb6a3815, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TilemapYSorter
-  sortingOffset: 160
+  sortingOffset: 145
 --- !u!483693784 &538165129
 TilemapRenderer:
   serializedVersion: 2
@@ -4445,10 +4486,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 973914246}
     m_Modifications:
-    - target: {fileID: 2014250547499062083, guid: 35f36b77d13581e4db5aa01f05c90f61, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: -178340464, guid: bfb5bb853aadc464ea2c6f91d826d204, type: 3}
     - target: {fileID: 3827999177226790777, guid: 35f36b77d13581e4db5aa01f05c90f61, type: 3}
       propertyPath: m_LocalPosition.x
       value: 12.35
@@ -4493,17 +4530,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Bedside Table
       objectReference: {fileID: 0}
-    - target: {fileID: 7655768425088376221, guid: 35f36b77d13581e4db5aa01f05c90f61, type: 3}
-      propertyPath: m_SpriteTilingProperty.oldSize.x
-      value: 1.125
-      objectReference: {fileID: 0}
-    - target: {fileID: 7655768425088376221, guid: 35f36b77d13581e4db5aa01f05c90f61, type: 3}
-      propertyPath: m_SpriteTilingProperty.oldSize.y
-      value: 1.0625
+    - target: {fileID: 4165455976485242010, guid: 35f36b77d13581e4db5aa01f05c90f61, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 3827999177226790777, guid: 35f36b77d13581e4db5aa01f05c90f61, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1304507061}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 35f36b77d13581e4db5aa01f05c90f61, type: 3}
 --- !u!4 &553806343 stripped
@@ -4927,6 +4963,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 973914246}
     m_Modifications:
+    - target: {fileID: 350639976459115910, guid: 84587073b599a6c41878f0c6914f4eef, type: 3}
+      propertyPath: m_Size.y
+      value: 0.7166505
+      objectReference: {fileID: 0}
+    - target: {fileID: 350639976459115910, guid: 84587073b599a6c41878f0c6914f4eef, type: 3}
+      propertyPath: m_Offset.y
+      value: 0.11042476
+      objectReference: {fileID: 0}
     - target: {fileID: 2705108533601661246, guid: 84587073b599a6c41878f0c6914f4eef, type: 3}
       propertyPath: m_LocalPosition.x
       value: 22.63513
@@ -4975,9 +5019,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: big-box
       objectReference: {fileID: 0}
+    - target: {fileID: 5237660716294061970, guid: 84587073b599a6c41878f0c6914f4eef, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 2705108533601661246, guid: 84587073b599a6c41878f0c6914f4eef, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7386172407314506081}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 84587073b599a6c41878f0c6914f4eef, type: 3}
 --- !u!4 &701656251 stripped
@@ -5250,7 +5301,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 973914246}
+    m_TransformParent: {fileID: 4624385969866902434}
     m_Modifications:
     - target: {fileID: 1462306644581915625, guid: c4f571d994ad6b04dbe7aa0006596b6f, type: 3}
       propertyPath: m_Sprite
@@ -5262,11 +5313,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4894960337328450534, guid: c4f571d994ad6b04dbe7aa0006596b6f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 16.373
+      value: 0.002998352
       objectReference: {fileID: 0}
     - target: {fileID: 4894960337328450534, guid: c4f571d994ad6b04dbe7aa0006596b6f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 10.7699995
+      value: 0.62999916
       objectReference: {fileID: 0}
     - target: {fileID: 4894960337328450534, guid: c4f571d994ad6b04dbe7aa0006596b6f, type: 3}
       propertyPath: m_LocalPosition.z
@@ -8405,6 +8456,7 @@ GameObject:
   - component: {fileID: 873781347}
   - component: {fileID: 873781346}
   - component: {fileID: 873781350}
+  - component: {fileID: 873781351}
   m_Layer: 17
   m_Name: Couch
   m_TagString: Untagged
@@ -8561,6 +8613,39 @@ MonoBehaviour:
   m_Area: 1
   m_IgnoreFromBuild: 0
   m_AffectedAgents: ffffffff
+--- !u!114 &873781351
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 873781345}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d5428050a1272c438eddaf43ae5f8f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DestructibleProp
+  spriteRenderer: {fileID: 873781348}
+  afterBreak: 0
+  brokenSprite: {fileID: 1229186305, guid: 8f287e9a5f18d1747a86812eb27d08f4, type: 3}
+  breakMaterial: {fileID: 11400000, guid: 969ac043c49ab384d92e8c6355b71591, type: 2}
+  extraAnimatorsToDisable: []
+  debrisSprites:
+  - {fileID: -478301675, guid: d94f437839190484280c32d5e339b8c0, type: 3}
+  - {fileID: 1305182109, guid: d94f437839190484280c32d5e339b8c0, type: 3}
+  - {fileID: -156196238, guid: d94f437839190484280c32d5e339b8c0, type: 3}
+  - {fileID: -388088844, guid: d94f437839190484280c32d5e339b8c0, type: 3}
+  - {fileID: 574130756, guid: d94f437839190484280c32d5e339b8c0, type: 3}
+  debrisSpawnRadius: 1
+  debrisSortingLayer: Background
+  debrisSortingOrder: 3
+  removeColliderOnBreak: 0
+  brokenCollider: {fileID: 0}
+  bulletsPassThroughWhenBroken: 1
+  childBreakDelay: 0.05
+  dropChance: 0
+  possiblePickups:
+  - {fileID: 7129025776932877359, guid: b8874dc0a3c605d419413a967c2f2c17, type: 3}
 --- !u!1001 &881133999
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8735,12 +8820,13 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1625152740}
-  - {fileID: 2126388494}
-  - {fileID: 873781349}
+  - {fileID: 1288860348}
   - {fileID: 1659404104}
-  - {fileID: 1168913368}
-  - {fileID: 1855566498}
+  - {fileID: 2126388494}
+  - {fileID: 701656251}
+  - {fileID: 553806343}
+  - {fileID: 4624385969866902434}
+  - {fileID: 873781349}
   - {fileID: 6313510409120453295}
   - {fileID: 881134000}
   - {fileID: 1690033898}
@@ -8748,18 +8834,8 @@ Transform:
   - {fileID: 258503131}
   - {fileID: 2049590041}
   - {fileID: 334472338}
-  - {fileID: 1714497033}
-  - {fileID: 1288860348}
-  - {fileID: 1686067694}
-  - {fileID: 266258390}
-  - {fileID: 1943593018}
-  - {fileID: 1584223354}
   - {fileID: 214014486}
   - {fileID: 1010627282}
-  - {fileID: 1304507061}
-  - {fileID: 1414980508}
-  - {fileID: 4624385969866902434}
-  - {fileID: 553806343}
   - {fileID: 1514325375}
   - {fileID: 853878632}
   - {fileID: 1686559866}
@@ -8776,9 +8852,7 @@ Transform:
   - {fileID: 661686913}
   - {fileID: 260868012}
   - {fileID: 1967253413}
-  - {fileID: 7386172407314506081}
   - {fileID: 9084159566516062050}
-  - {fileID: 701656251}
   m_Father: {fileID: 434774038}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1010627281
@@ -8792,6 +8866,14 @@ PrefabInstance:
     - target: {fileID: 802682720575647315, guid: f6cc61c2536ec53479bdcf73f5c5cf3f, type: 3}
       propertyPath: m_Name
       value: Tea Chair
+      objectReference: {fileID: 0}
+    - target: {fileID: 7051882928349574473, guid: f6cc61c2536ec53479bdcf73f5c5cf3f, type: 3}
+      propertyPath: m_Size.y
+      value: 0.54836845
+      objectReference: {fileID: 0}
+    - target: {fileID: 7051882928349574473, guid: f6cc61c2536ec53479bdcf73f5c5cf3f, type: 3}
+      propertyPath: m_Offset.y
+      value: 0.10081577
       objectReference: {fileID: 0}
     - target: {fileID: 9161246990941594278, guid: f6cc61c2536ec53479bdcf73f5c5cf3f, type: 3}
       propertyPath: m_LocalPosition.x
@@ -11021,7 +11103,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 0
-      m_TileSpriteIndex: 7
+      m_TileSpriteIndex: 14
       m_TileMatrixIndex: 5
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -11221,7 +11303,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 3
-      m_TileSpriteIndex: 3
+      m_TileSpriteIndex: 13
       m_TileMatrixIndex: 5
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -11848,16 +11930,16 @@ Tilemap:
     m_Data: {fileID: 716851296, guid: e8d1b4f599dcda44ab14732ea62ad2d9, type: 3}
   - m_RefCount: 2
     m_Data: {fileID: -874871635, guid: e8d1b4f599dcda44ab14732ea62ad2d9, type: 3}
-  - m_RefCount: 1
-    m_Data: {fileID: 1813836395, guid: e8d1b4f599dcda44ab14732ea62ad2d9, type: 3}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   - m_RefCount: 0
     m_Data: {fileID: 0}
   - m_RefCount: 6
     m_Data: {fileID: -1041253437, guid: e8d1b4f599dcda44ab14732ea62ad2d9, type: 3}
   - m_RefCount: 12
     m_Data: {fileID: -2113950913, guid: e8d1b4f599dcda44ab14732ea62ad2d9, type: 3}
-  - m_RefCount: 1
-    m_Data: {fileID: 963794471, guid: e8d1b4f599dcda44ab14732ea62ad2d9, type: 3}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   - m_RefCount: 18
     m_Data: {fileID: 1188722296, guid: e8d1b4f599dcda44ab14732ea62ad2d9, type: 3}
   - m_RefCount: 18
@@ -11868,10 +11950,10 @@ Tilemap:
     m_Data: {fileID: -558728485, guid: e8d1b4f599dcda44ab14732ea62ad2d9, type: 3}
   - m_RefCount: 3
     m_Data: {fileID: 1458363845, guid: e8d1b4f599dcda44ab14732ea62ad2d9, type: 3}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
+  - m_RefCount: 1
+    m_Data: {fileID: 1813836395, guid: e8d1b4f599dcda44ab14732ea62ad2d9, type: 3}
+  - m_RefCount: 1
+    m_Data: {fileID: 963794471, guid: e8d1b4f599dcda44ab14732ea62ad2d9, type: 3}
   - m_RefCount: 21
     m_Data: {fileID: 602221970, guid: e8d1b4f599dcda44ab14732ea62ad2d9, type: 3}
   - m_RefCount: 1
@@ -12591,6 +12673,7 @@ GameObject:
   - component: {fileID: 1168913368}
   - component: {fileID: 1168913367}
   - component: {fileID: 1168913369}
+  - component: {fileID: 1168913370}
   m_Layer: 0
   m_Name: Vase
   m_TagString: Untagged
@@ -12666,11 +12749,11 @@ Transform:
   m_GameObject: {fileID: 1168913366}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 13.667, y: -4.4259996, z: 0}
+  m_LocalPosition: {x: 0.97700024, y: 0.06400013, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 973914246}
+  m_Father: {fileID: 1659404104}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1168913369
 MonoBehaviour:
@@ -12685,6 +12768,36 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpriteYSorter
   sortingOffset: 30
+--- !u!114 &1168913370
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1168913366}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d5428050a1272c438eddaf43ae5f8f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DestructibleProp
+  spriteRenderer: {fileID: 1168913367}
+  afterBreak: 1
+  brokenSprite: {fileID: 0}
+  breakMaterial: {fileID: 11400000, guid: df379f377d578114a8ea04ac444115d1, type: 2}
+  extraAnimatorsToDisable: []
+  debrisSprites:
+  - {fileID: -763293847, guid: 5239a177107177c4f8e1e49ae3403445, type: 3}
+  - {fileID: 684068601, guid: 5239a177107177c4f8e1e49ae3403445, type: 3}
+  - {fileID: -2004762645, guid: 5239a177107177c4f8e1e49ae3403445, type: 3}
+  debrisSpawnRadius: 1
+  debrisSortingLayer: Background
+  debrisSortingOrder: 3
+  removeColliderOnBreak: 1
+  brokenCollider: {fileID: 0}
+  bulletsPassThroughWhenBroken: 1
+  childBreakDelay: 0.05
+  dropChance: 0
+  possiblePickups: []
 --- !u!1 &1179066524
 GameObject:
   m_ObjectHideFlags: 0
@@ -13968,6 +14081,7 @@ GameObject:
   - component: {fileID: 1288860348}
   - component: {fileID: 1288860351}
   - component: {fileID: 1288860350}
+  - component: {fileID: 1288860353}
   - component: {fileID: 1288860349}
   - component: {fileID: 1288860352}
   m_Layer: 17
@@ -13989,7 +14103,11 @@ Transform:
   m_LocalPosition: {x: 1.64, y: 5.76, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1714497033}
+  - {fileID: 1686067694}
+  - {fileID: 1943593018}
+  - {fileID: 1584223354}
   m_Father: {fileID: 973914246}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &1288860349
@@ -14126,6 +14244,36 @@ MonoBehaviour:
   m_Area: 1
   m_IgnoreFromBuild: 0
   m_AffectedAgents: ffffffff
+--- !u!114 &1288860353
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1288860347}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d5428050a1272c438eddaf43ae5f8f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DestructibleProp
+  spriteRenderer: {fileID: 1288860351}
+  afterBreak: 0
+  brokenSprite: {fileID: 1015984959, guid: 8f287e9a5f18d1747a86812eb27d08f4, type: 3}
+  breakMaterial: {fileID: 11400000, guid: 2d9dd206ac2cfeb4aa0777abe7eeb5a0, type: 2}
+  extraAnimatorsToDisable: []
+  debrisSprites:
+  - {fileID: 1162016414, guid: 5239a177107177c4f8e1e49ae3403445, type: 3}
+  - {fileID: -1561278061, guid: 5239a177107177c4f8e1e49ae3403445, type: 3}
+  - {fileID: -1606648870, guid: 5239a177107177c4f8e1e49ae3403445, type: 3}
+  debrisSpawnRadius: 1
+  debrisSortingLayer: Background
+  debrisSortingOrder: 3
+  removeColliderOnBreak: 0
+  brokenCollider: {fileID: 0}
+  bulletsPassThroughWhenBroken: 1
+  childBreakDelay: 0.05
+  dropChance: 0
+  possiblePickups: []
 --- !u!4 &1304507061 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4894960337328450534, guid: c4f571d994ad6b04dbe7aa0006596b6f, type: 3}
@@ -15261,7 +15409,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 973914246}
+    m_TransformParent: {fileID: 1288860348}
     m_Modifications:
     - target: {fileID: 503118498505674759, guid: 68f10773f6ad9a746806bfd72d62c93a, type: 3}
       propertyPath: m_Sprite
@@ -15273,11 +15421,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1792466384847559249, guid: 68f10773f6ad9a746806bfd72d62c93a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.066
+      value: 0.426
       objectReference: {fileID: 0}
     - target: {fileID: 1792466384847559249, guid: 68f10773f6ad9a746806bfd72d62c93a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 6.238
+      value: 0.4779997
       objectReference: {fileID: 0}
     - target: {fileID: 1792466384847559249, guid: 68f10773f6ad9a746806bfd72d62c93a, type: 3}
       propertyPath: m_LocalPosition.z
@@ -15437,7 +15585,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 973914246}
+    m_TransformParent: {fileID: 2126388494}
     m_Modifications:
     - target: {fileID: 115599059714051087, guid: 35a1c03388b1796479fa5caa8dc5d605, type: 3}
       propertyPath: m_SortingOrder
@@ -15449,11 +15597,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6257052244954196687, guid: 35a1c03388b1796479fa5caa8dc5d605, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 21.93
+      value: -0.03999901
       objectReference: {fileID: 0}
     - target: {fileID: 6257052244954196687, guid: 35a1c03388b1796479fa5caa8dc5d605, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.502
+      value: -0.08399987
       objectReference: {fileID: 0}
     - target: {fileID: 6257052244954196687, guid: 35a1c03388b1796479fa5caa8dc5d605, type: 3}
       propertyPath: m_LocalPosition.z
@@ -15508,6 +15656,7 @@ GameObject:
   - component: {fileID: 1659404104}
   - component: {fileID: 1659404103}
   - component: {fileID: 1659404106}
+  - component: {fileID: 1659404108}
   - component: {fileID: 1659404105}
   - component: {fileID: 1659404107}
   m_Layer: 17
@@ -15588,7 +15737,10 @@ Transform:
   m_LocalPosition: {x: 12.69, y: -4.49, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1168913368}
+  - {fileID: 1855566498}
+  - {fileID: 266258390}
   m_Father: {fileID: 973914246}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &1659404105
@@ -15666,13 +15818,44 @@ MonoBehaviour:
   m_Area: 1
   m_IgnoreFromBuild: 0
   m_AffectedAgents: ffffffff
+--- !u!114 &1659404108
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1659404102}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d5428050a1272c438eddaf43ae5f8f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DestructibleProp
+  spriteRenderer: {fileID: 1659404103}
+  afterBreak: 0
+  brokenSprite: {fileID: 1332039160, guid: 8f287e9a5f18d1747a86812eb27d08f4, type: 3}
+  breakMaterial: {fileID: 11400000, guid: 2d9dd206ac2cfeb4aa0777abe7eeb5a0, type: 2}
+  extraAnimatorsToDisable: []
+  debrisSprites:
+  - {fileID: 1162016414, guid: 5239a177107177c4f8e1e49ae3403445, type: 3}
+  - {fileID: 1825726448, guid: 5239a177107177c4f8e1e49ae3403445, type: 3}
+  - {fileID: 1766891378, guid: 5239a177107177c4f8e1e49ae3403445, type: 3}
+  - {fileID: -715005442, guid: 5239a177107177c4f8e1e49ae3403445, type: 3}
+  debrisSpawnRadius: 1
+  debrisSortingLayer: Background
+  debrisSortingOrder: 3
+  removeColliderOnBreak: 0
+  brokenCollider: {fileID: 0}
+  bulletsPassThroughWhenBroken: 1
+  childBreakDelay: 0.05
+  dropChance: 0
+  possiblePickups: []
 --- !u!1001 &1686067693
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 973914246}
+    m_TransformParent: {fileID: 1288860348}
     m_Modifications:
     - target: {fileID: 503118498505674759, guid: 68f10773f6ad9a746806bfd72d62c93a, type: 3}
       propertyPath: m_Sprite
@@ -15684,11 +15867,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1792466384847559249, guid: 68f10773f6ad9a746806bfd72d62c93a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.352
+      value: 0.7119998
       objectReference: {fileID: 0}
     - target: {fileID: 1792466384847559249, guid: 68f10773f6ad9a746806bfd72d62c93a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 5.9
+      value: 0.13999939
       objectReference: {fileID: 0}
     - target: {fileID: 1792466384847559249, guid: 68f10773f6ad9a746806bfd72d62c93a, type: 3}
       propertyPath: m_LocalPosition.z
@@ -15791,6 +15974,7 @@ GameObject:
   - component: {fileID: 1686559866}
   - component: {fileID: 1686559868}
   - component: {fileID: 1686559867}
+  - component: {fileID: 1686559870}
   - component: {fileID: 1686559869}
   m_Layer: 0
   m_Name: Rubber Duck
@@ -15932,6 +16116,35 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.36768866, y: 0.15124989}
   m_EdgeRadius: 0
+--- !u!114 &1686559870
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1686559865}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d5428050a1272c438eddaf43ae5f8f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DestructibleProp
+  spriteRenderer: {fileID: 1686559868}
+  afterBreak: 1
+  brokenSprite: {fileID: 0}
+  breakMaterial: {fileID: 11400000, guid: 9221b24cac9b1e04881c3e6a0104f141, type: 2}
+  extraAnimatorsToDisable: []
+  debrisSprites:
+  - {fileID: -2020078671, guid: 5239a177107177c4f8e1e49ae3403445, type: 3}
+  - {fileID: 2144643119, guid: 5239a177107177c4f8e1e49ae3403445, type: 3}
+  debrisSpawnRadius: 1
+  debrisSortingLayer: Background
+  debrisSortingOrder: 3
+  removeColliderOnBreak: 1
+  brokenCollider: {fileID: 0}
+  bulletsPassThroughWhenBroken: 1
+  childBreakDelay: 0.05
+  dropChance: 0
+  possiblePickups: []
 --- !u!1001 &1690033897
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16080,6 +16293,7 @@ GameObject:
   - component: {fileID: 1714497033}
   - component: {fileID: 1714497035}
   - component: {fileID: 1714497034}
+  - component: {fileID: 1714497036}
   m_Layer: 0
   m_Name: Teapot
   m_TagString: Untagged
@@ -16096,11 +16310,11 @@ Transform:
   m_GameObject: {fileID: 1714497032}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.2648702, y: 6.207, z: 0}
+  m_LocalPosition: {x: -0.37512982, y: 0.44699955, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 973914246}
+  m_Father: {fileID: 1288860348}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1714497034
 MonoBehaviour:
@@ -16174,6 +16388,36 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &1714497036
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1714497032}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d5428050a1272c438eddaf43ae5f8f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DestructibleProp
+  spriteRenderer: {fileID: 1714497035}
+  afterBreak: 1
+  brokenSprite: {fileID: 0}
+  breakMaterial: {fileID: 11400000, guid: 1b4688c2ba476814990a69316ce703f5, type: 2}
+  extraAnimatorsToDisable: []
+  debrisSprites:
+  - {fileID: 297568221, guid: 5239a177107177c4f8e1e49ae3403445, type: 3}
+  - {fileID: -310182868, guid: 5239a177107177c4f8e1e49ae3403445, type: 3}
+  - {fileID: -1574085252, guid: 5239a177107177c4f8e1e49ae3403445, type: 3}
+  debrisSpawnRadius: 1
+  debrisSortingLayer: Background
+  debrisSortingOrder: 3
+  removeColliderOnBreak: 1
+  brokenCollider: {fileID: 0}
+  bulletsPassThroughWhenBroken: 1
+  childBreakDelay: 0.05
+  dropChance: 0
+  possiblePickups: []
 --- !u!1 &1719945834
 GameObject:
   m_ObjectHideFlags: 0
@@ -20575,6 +20819,7 @@ GameObject:
   - component: {fileID: 1855566497}
   - component: {fileID: 1855566496}
   - component: {fileID: 1855566495}
+  - component: {fileID: 1855566499}
   m_Layer: 0
   m_Name: Plant
   m_TagString: Untagged
@@ -20685,12 +20930,43 @@ Transform:
   m_GameObject: {fileID: 1855566494}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 12.73, y: -3.79, z: 0}
+  m_LocalPosition: {x: 0.03999996, y: 0.70000005, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 973914246}
+  m_Father: {fileID: 1659404104}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1855566499
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1855566494}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d5428050a1272c438eddaf43ae5f8f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DestructibleProp
+  spriteRenderer: {fileID: 1855566497}
+  afterBreak: 1
+  brokenSprite: {fileID: 0}
+  breakMaterial: {fileID: 11400000, guid: d42e1b4757179364280b387be6d7b8b4, type: 2}
+  extraAnimatorsToDisable: []
+  debrisSprites:
+  - {fileID: -1307154668, guid: 5239a177107177c4f8e1e49ae3403445, type: 3}
+  - {fileID: -1336833227, guid: 5239a177107177c4f8e1e49ae3403445, type: 3}
+  - {fileID: 1752245774, guid: 5239a177107177c4f8e1e49ae3403445, type: 3}
+  - {fileID: 2070808908, guid: 8a31fcad5c4936f42a773608a4c51f06, type: 3}
+  debrisSpawnRadius: 1
+  debrisSortingLayer: Background
+  debrisSortingOrder: 3
+  removeColliderOnBreak: 1
+  brokenCollider: {fileID: 0}
+  bulletsPassThroughWhenBroken: 1
+  childBreakDelay: 0.05
+  dropChance: 0
+  possiblePickups: []
 --- !u!1 &1900400555
 GameObject:
   m_ObjectHideFlags: 0
@@ -66859,7 +67135,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 973914246}
+    m_TransformParent: {fileID: 1288860348}
     m_Modifications:
     - target: {fileID: 503118498505674759, guid: 68f10773f6ad9a746806bfd72d62c93a, type: 3}
       propertyPath: m_Sprite
@@ -66871,11 +67147,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1792466384847559249, guid: 68f10773f6ad9a746806bfd72d62c93a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.799
+      value: 0.15900028
       objectReference: {fileID: 0}
     - target: {fileID: 1792466384847559249, guid: 68f10773f6ad9a746806bfd72d62c93a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 5.874
+      value: 0.11399937
       objectReference: {fileID: 0}
     - target: {fileID: 1792466384847559249, guid: 68f10773f6ad9a746806bfd72d62c93a, type: 3}
       propertyPath: m_LocalPosition.z
@@ -67383,7 +67659,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ac5e3cd19a51ae48bb2450ecd5ba10d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpriteYSorter
-  sortingOffset: 60
+  sortingOffset: 45
 --- !u!212 &1993616103
 SpriteRenderer:
   serializedVersion: 2
@@ -68059,6 +68335,7 @@ GameObject:
   - component: {fileID: 2126388497}
   - component: {fileID: 2126388496}
   - component: {fileID: 2126388495}
+  - component: {fileID: 2126388499}
   - component: {fileID: 2126388498}
   m_Layer: 17
   m_Name: Small Table
@@ -68079,7 +68356,8 @@ Transform:
   m_LocalPosition: {x: 21.97, y: 2.586, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1625152740}
   m_Father: {fileID: 973914246}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2126388495
@@ -68216,6 +68494,35 @@ MonoBehaviour:
   m_Area: 1
   m_IgnoreFromBuild: 0
   m_AffectedAgents: ffffffff
+--- !u!114 &2126388499
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2126388493}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d5428050a1272c438eddaf43ae5f8f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DestructibleProp
+  spriteRenderer: {fileID: 2126388497}
+  afterBreak: 0
+  brokenSprite: {fileID: -760445491, guid: 8f287e9a5f18d1747a86812eb27d08f4, type: 3}
+  breakMaterial: {fileID: 11400000, guid: 2d9dd206ac2cfeb4aa0777abe7eeb5a0, type: 2}
+  extraAnimatorsToDisable: []
+  debrisSprites:
+  - {fileID: 1162016414, guid: 5239a177107177c4f8e1e49ae3403445, type: 3}
+  - {fileID: 1825726448, guid: 5239a177107177c4f8e1e49ae3403445, type: 3}
+  debrisSpawnRadius: 1
+  debrisSortingLayer: Background
+  debrisSortingOrder: 3
+  removeColliderOnBreak: 0
+  brokenCollider: {fileID: 0}
+  bulletsPassThroughWhenBroken: 1
+  childBreakDelay: 0.05
+  dropChance: 0
+  possiblePickups: []
 --- !u!1001 &1893795563209815772
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -68439,9 +68746,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Bedside Table
       objectReference: {fileID: 0}
+    - target: {fileID: 4165455976485242010, guid: 35f36b77d13581e4db5aa01f05c90f61, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 3827999177226790777, guid: 35f36b77d13581e4db5aa01f05c90f61, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1414980508}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 35f36b77d13581e4db5aa01f05c90f61, type: 3}
 --- !u!4 &4624385969866902434 stripped
@@ -68457,6 +68771,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 973914246}
     m_Modifications:
+    - target: {fileID: 895921221212389577, guid: b3dae5ec0c3ea554a8bfeff5a819f018, type: 3}
+      propertyPath: m_Size.y
+      value: 0.35360909
+      objectReference: {fileID: 0}
+    - target: {fileID: 895921221212389577, guid: b3dae5ec0c3ea554a8bfeff5a819f018, type: 3}
+      propertyPath: m_Offset.y
+      value: -0.3259716
+      objectReference: {fileID: 0}
     - target: {fileID: 6252223375547910113, guid: b3dae5ec0c3ea554a8bfeff5a819f018, type: 3}
       propertyPath: m_Name
       value: Plant
@@ -68586,7 +68908,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 973914246}
+    m_TransformParent: {fileID: 701656251}
     m_Modifications:
     - target: {fileID: 7233647335215567999, guid: 4b9c5d627e6a20646bd1255995a4c1cc, type: 3}
       propertyPath: m_Name
@@ -68594,11 +68916,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7258990918968491729, guid: 4b9c5d627e6a20646bd1255995a4c1cc, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 22.68513
+      value: 0.049999237
       objectReference: {fileID: 0}
     - target: {fileID: 7258990918968491729, guid: 4b9c5d627e6a20646bd1255995a4c1cc, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 9.04
+      value: 0.52999973
       objectReference: {fileID: 0}
     - target: {fileID: 7258990918968491729, guid: 4b9c5d627e6a20646bd1255995a4c1cc, type: 3}
       propertyPath: m_LocalPosition.z
@@ -68648,7 +68970,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 973914246}
+    m_TransformParent: {fileID: 553806343}
     m_Modifications:
     - target: {fileID: 1462306644581915625, guid: c4f571d994ad6b04dbe7aa0006596b6f, type: 3}
       propertyPath: m_Sprite
@@ -68660,11 +68982,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4894960337328450534, guid: c4f571d994ad6b04dbe7aa0006596b6f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 12.33513
+      value: -0.014870644
       objectReference: {fileID: 0}
     - target: {fileID: 4894960337328450534, guid: c4f571d994ad6b04dbe7aa0006596b6f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 10.7699995
+      value: 0.62999916
       objectReference: {fileID: 0}
     - target: {fileID: 4894960337328450534, guid: c4f571d994ad6b04dbe7aa0006596b6f, type: 3}
       propertyPath: m_LocalPosition.z

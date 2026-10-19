@@ -119,6 +119,7 @@ GameObject:
   - component: {fileID: 4894960337328450534}
   - component: {fileID: 1462306644581915625}
   - component: {fileID: 2824964769644001177}
+  - component: {fileID: 5699085311529984539}
   m_Layer: 0
   m_Name: Lamp
   m_TagString: Untagged
@@ -214,3 +215,32 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpriteYSorter
   sortingOffset: 0
+--- !u!114 &5699085311529984539
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8961339221828360066}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d5428050a1272c438eddaf43ae5f8f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DestructibleProp
+  spriteRenderer: {fileID: 1462306644581915625}
+  afterBreak: 1
+  brokenSprite: {fileID: 0}
+  breakMaterial: {fileID: 11400000, guid: 70ec2f799da45e644ab8eb0a35872b8b, type: 2}
+  debrisSprites:
+  - {fileID: -180571780, guid: 5239a177107177c4f8e1e49ae3403445, type: 3}
+  - {fileID: -400462386, guid: 5239a177107177c4f8e1e49ae3403445, type: 3}
+  - {fileID: -422136446, guid: 5239a177107177c4f8e1e49ae3403445, type: 3}
+  debrisSpawnRadius: 1
+  debrisSortingLayer: Background
+  debrisSortingOrder: 3
+  removeColliderOnBreak: 1
+  brokenCollider: {fileID: 0}
+  bulletsPassThroughWhenBroken: 1
+  childBreakDelay: 0.05
+  dropChance: 0
+  possiblePickups: []

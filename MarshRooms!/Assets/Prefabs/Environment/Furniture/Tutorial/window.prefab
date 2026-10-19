@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 933504774753832622}
   - component: {fileID: 8029980604319209024}
   - component: {fileID: 1058181551208687046}
+  - component: {fileID: 1864736759598320714}
   - component: {fileID: 5004201617911741219}
   m_Layer: 0
   m_Name: window
@@ -106,6 +107,35 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpriteYSorter
   sortingOffset: 0
+--- !u!114 &1864736759598320714
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7264467510431442122}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d5428050a1272c438eddaf43ae5f8f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DestructibleProp
+  spriteRenderer: {fileID: 8029980604319209024}
+  afterBreak: 0
+  brokenSprite: {fileID: 573921963, guid: 8f287e9a5f18d1747a86812eb27d08f4, type: 3}
+  breakMaterial: {fileID: 11400000, guid: 8b65b293f10c44242a5f217511553050, type: 2}
+  debrisSprites:
+  - {fileID: 960333203, guid: d94f437839190484280c32d5e339b8c0, type: 3}
+  - {fileID: -1236302670, guid: d94f437839190484280c32d5e339b8c0, type: 3}
+  - {fileID: 1522442997, guid: d94f437839190484280c32d5e339b8c0, type: 3}
+  debrisSpawnRadius: 0.5
+  debrisSortingLayer: Background
+  debrisSortingOrder: 3
+  removeColliderOnBreak: 1
+  brokenCollider: {fileID: 0}
+  bulletsPassThroughWhenBroken: 1
+  childBreakDelay: 0
+  dropChance: 0
+  possiblePickups: []
 --- !u!61 &5004201617911741219
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -140,7 +170,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.025194645, y: -0.030920982}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -150,5 +180,5 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1.375, y: 1.375}
+  m_Size: {x: 1.2055073, y: 1.436842}
   m_EdgeRadius: 0

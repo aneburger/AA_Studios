@@ -137,12 +137,12 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: wood-debris_0
+      name: tutorial-debris_0
       rect:
         serializedVersion: 2
-        x: 3
-        y: 26
-        width: 12
+        x: 1
+        y: 25
+        width: 6
         height: 5
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -152,19 +152,107 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b6d56c6f1dd0e12458a3527cf5e73c31
-      internalID: 2000960408
+      spriteID: 148cf32890285294d8c6f68141b36599
+      internalID: -2020078671
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: wood-debris_1
+      name: tutorial-debris_1
       rect:
         serializedVersion: 2
-        x: 18
+        x: 17
+        y: 25
+        width: 6
+        height: 4
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aea9bc30f97049541a5449d61747a1f7
+      internalID: -763293847
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tutorial-debris_2
+      rect:
+        serializedVersion: 2
+        x: 25
+        y: 25
+        width: 6
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b2afc353c40f3094598822e83904f7ef
+      internalID: 684068601
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tutorial-debris_3
+      rect:
+        serializedVersion: 2
+        x: 34
         y: 26
-        width: 12
+        width: 4
+        height: 4
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1a53fa6fbdfc6b54fb564de61bfd3e2c
+      internalID: -180571780
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tutorial-debris_4
+      rect:
+        serializedVersion: 2
+        x: 39
+        y: 22
+        width: 7
+        height: 4
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 81073c78df4086444bf66139ff21fadc
+      internalID: -400462386
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tutorial-debris_5
+      rect:
+        serializedVersion: 2
+        x: 56
+        y: 24
+        width: 5
         height: 6
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -174,18 +262,326 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b5583ed3e13ddce4bb001f2f5b22d1df
-      internalID: -7854325
+      spriteID: 8dca980c72e25634dbecffb9b11a1412
+      internalID: -2085941107
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: wood-debris_2
+      name: tutorial-debris_6
       rect:
         serializedVersion: 2
-        x: 35
-        y: 23
+        x: 65
+        y: 26
+        width: 7
+        height: 4
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 75acc941f61025a499ba6b98dd004a66
+      internalID: -1307154668
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tutorial-debris_7
+      rect:
+        serializedVersion: 2
+        x: 75
+        y: 25
+        width: 4
+        height: 6
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 193858e1e5b905745b338905f5d15357
+      internalID: -1336833227
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tutorial-debris_8
+      rect:
+        serializedVersion: 2
+        x: 82
+        y: 25
+        width: 7
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b3bd7da6ee9d908498eff4dcc68bab23
+      internalID: 788578088
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tutorial-debris_9
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 19
+        width: 6
+        height: 4
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 91a2abac8f6afd1489adc4742af7e6df
+      internalID: 2144643119
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tutorial-debris_10
+      rect:
+        serializedVersion: 2
+        x: 22
+        y: 17
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f96b120fccab1924a96ab581e55ee1d5
+      internalID: -2004762645
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tutorial-debris_11
+      rect:
+        serializedVersion: 2
+        x: 51
+        y: 19
+        width: 5
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c545680f08f9931489d86b0e08573557
+      internalID: -1497895980
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tutorial-debris_12
+      rect:
+        serializedVersion: 2
+        x: 69
+        y: 17
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 40b78762a48f48142be29819ac433c96
+      internalID: 1752245774
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tutorial-debris_13
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 17
+        width: 5
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b4772f0cb5be13e4bba73aecdc77ea15
+      internalID: 1597135614
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tutorial-debris_14
+      rect:
+        serializedVersion: 2
+        x: 89
+        y: 18
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e75873b2c624c0749b80ac91448ac1a8
+      internalID: -1891908549
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tutorial-debris_15
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 10
+        width: 7
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4f7699456028d0f4da1dbf4963a9a78d
+      internalID: 297568221
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tutorial-debris_16
+      rect:
+        serializedVersion: 2
+        x: 11
+        y: 10
+        width: 3
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6f12ad20b40764843950093c61493f6a
+      internalID: -310182868
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tutorial-debris_17
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 8
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d921a7d523caf2b4e9ca234bc9d7a5e7
+      internalID: 98451585
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tutorial-debris_18
+      rect:
+        serializedVersion: 2
+        x: 26
+        y: 9
+        width: 5
+        height: 4
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4899dd14552d2db41a4a40be33108c8c
+      internalID: 1077686767
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tutorial-debris_19
+      rect:
+        serializedVersion: 2
+        x: 39
+        y: 9
+        width: 8
+        height: 6
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 896e4784685728847a17910e70cae240
+      internalID: 87309578
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tutorial-debris_20
+      rect:
+        serializedVersion: 2
+        x: 56
+        y: 3
         width: 4
         height: 10
       alignment: 0
@@ -196,18 +592,18 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f221bf7f0467d9245850dfd352293721
-      internalID: 1015367039
+      spriteID: cf48f30352b4da246beeb19d7f75ea48
+      internalID: 1825726448
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: wood-debris_3
+      name: tutorial-debris_21
       rect:
         serializedVersion: 2
-        x: 42
-        y: 22
+        x: 63
+        y: 2
         width: 4
         height: 12
       alignment: 0
@@ -218,18 +614,18 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 34e926481efd8f7438c859d26e3451ca
-      internalID: 1678545679
+      spriteID: 791aeb98c8107a24fb92ca5dae82e531
+      internalID: 1162016414
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: wood-debris_4
+      name: tutorial-debris_22
       rect:
         serializedVersion: 2
-        x: 51
-        y: 21
+        x: 72
+        y: 1
         width: 4
         height: 14
       alignment: 0
@@ -240,18 +636,18 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ed0b07d385e7d744097101a44b929a62
-      internalID: 227166378
+      spriteID: 5c4a73bab3872d74cbe681f788b08473
+      internalID: -715005442
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: wood-debris_5
+      name: tutorial-debris_23
       rect:
         serializedVersion: 2
-        x: 58
-        y: 22
+        x: 79
+        y: 2
         width: 4
         height: 12
       alignment: 0
@@ -262,18 +658,18 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8cd19152f0f9e984ca177fe53ab334b7
-      internalID: 1012514248
+      spriteID: edfa7e52067149245985f9bdc2d58906
+      internalID: -1561278061
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: wood-debris_6
+      name: tutorial-debris_24
       rect:
         serializedVersion: 2
-        x: 65
-        y: 28
+        x: 88
+        y: 8
         width: 8
         height: 7
       alignment: 0
@@ -284,85 +680,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: af25602778e67f74c87dad0e54c0d49e
-      internalID: -475154596
+      spriteID: f6843c7a352592842a715b2503c6c314
+      internalID: -1606648870
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: wood-debris_7
+      name: tutorial-debris_25
       rect:
         serializedVersion: 2
-        x: 71
-        y: 21
-        width: 8
-        height: 7
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ed2168567f0d8ac4b966e974086a1bb6
-      internalID: -220458962
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: wood-debris_8
-      rect:
-        serializedVersion: 2
-        x: 81
-        y: 23
+        x: 21
+        y: 1
         width: 6
-        height: 11
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 8dffeb1b9113023469724ed839826d58
-      internalID: 887014700
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: wood-debris_9
-      rect:
-        serializedVersion: 2
-        x: 89
-        y: 22
-        width: 6
-        height: 12
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 39a4fd7be838c9b40a7fa18c2011b125
-      internalID: 1969740995
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: wood-debris_10
-      rect:
-        serializedVersion: 2
-        x: 5
-        y: 12
-        width: 16
         height: 5
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -372,18 +702,62 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f0e821db5990f1e449bba1d826b2350c
-      internalID: -710636128
+      spriteID: 6881c8e7a6e84f240bdb8444998ba390
+      internalID: 2003136269
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: wood-debris_11
+      name: tutorial-debris_26
       rect:
         serializedVersion: 2
-        x: 5
-        y: 6
+        x: 33
+        y: 1
+        width: 8
+        height: 6
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f11cb832c12902649aeabc27ac15c79f
+      internalID: -1046528216
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tutorial-debris_27
+      rect:
+        serializedVersion: 2
+        x: 44
+        y: 2
+        width: 7
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 005a5d2f4426cfc4196c3022f988fe4c
+      internalID: 332745150
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tutorial-debris_28
+      rect:
+        serializedVersion: 2
+        x: 86
+        y: 2
         width: 13
         height: 4
       alignment: 0
@@ -394,20 +768,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 71f6a15c25aae59408a38d749145391d
-      internalID: -590993416
+      spriteID: 6910886476705fb428c163c798d84092
+      internalID: 1766891378
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: wood-debris_12
+      name: tutorial-debris_29
       rect:
         serializedVersion: 2
-        x: 25
-        y: 14
-        width: 12
-        height: 3
+        x: 35
+        y: 18
+        width: 2
+        height: 4
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -416,63 +790,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7da67e9e2f38460428239d5c81d4433d
-      internalID: 1962892931
+      spriteID: 41115ba9317645a49854ee1983af3fa3
+      internalID: -422136446
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: wood-debris_13
+      name: tutorial-debris_30
       rect:
         serializedVersion: 2
-        x: 44
-        y: 11
-        width: 14
-        height: 7
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 5292522388aa222459d7708657eedc6c
-      internalID: -1204566091
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: wood-debris_14
-      rect:
-        serializedVersion: 2
-        x: 55
-        y: 5
-        width: 9
-        height: 6
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 8290b2fd9c6e4a843bc25194c619079b
-      internalID: -1454503798
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: wood-debris_15
-      rect:
-        serializedVersion: 2
-        x: 66
-        y: 12
-        width: 13
+        x: 4
+        y: 2
+        width: 7
         height: 5
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -482,8 +812,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5d6e3832d0d522d488ee1b84e6178f47
-      internalID: -126143046
+      spriteID: e107d47bba26dde46a246807f5ef5ea1
+      internalID: -1574085252
       vertices: []
       indices: 
       edges: []
@@ -504,22 +834,37 @@ TextureImporter:
       - key: SpriteEditor.SliceSettings
         value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      wood-debris_0: 2000960408
-      wood-debris_1: -7854325
-      wood-debris_10: -710636128
-      wood-debris_11: -590993416
-      wood-debris_12: 1962892931
-      wood-debris_13: -1204566091
-      wood-debris_14: -1454503798
-      wood-debris_15: -126143046
-      wood-debris_2: 1015367039
-      wood-debris_3: 1678545679
-      wood-debris_4: 227166378
-      wood-debris_5: 1012514248
-      wood-debris_6: -475154596
-      wood-debris_7: -220458962
-      wood-debris_8: 887014700
-      wood-debris_9: 1969740995
+      tutorial-debris_0: -2020078671
+      tutorial-debris_1: -763293847
+      tutorial-debris_10: -2004762645
+      tutorial-debris_11: -1497895980
+      tutorial-debris_12: 1752245774
+      tutorial-debris_13: 1597135614
+      tutorial-debris_14: -1891908549
+      tutorial-debris_15: 297568221
+      tutorial-debris_16: -310182868
+      tutorial-debris_17: 98451585
+      tutorial-debris_18: 1077686767
+      tutorial-debris_19: 87309578
+      tutorial-debris_2: 684068601
+      tutorial-debris_20: 1825726448
+      tutorial-debris_21: 1162016414
+      tutorial-debris_22: -715005442
+      tutorial-debris_23: -1561278061
+      tutorial-debris_24: -1606648870
+      tutorial-debris_25: 2003136269
+      tutorial-debris_26: -1046528216
+      tutorial-debris_27: 332745150
+      tutorial-debris_28: 1766891378
+      tutorial-debris_29: -422136446
+      tutorial-debris_3: -180571780
+      tutorial-debris_30: -1574085252
+      tutorial-debris_4: -400462386
+      tutorial-debris_5: -2085941107
+      tutorial-debris_6: -1307154668
+      tutorial-debris_7: -1336833227
+      tutorial-debris_8: 788578088
+      tutorial-debris_9: 2144643119
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

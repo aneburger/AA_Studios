@@ -13,6 +13,9 @@ public class DestructibleProp : MonoBehaviour, IBreakable
     [Header("Material")]
     [SerializeField] BreakMaterial breakMaterial;
 
+    [Header("Animation")]
+    [SerializeField] Animator[] extraAnimatorsToDisable;
+
     [Header("Debris")]
     [SerializeField] Sprite[] debrisSprites;
     [SerializeField] float debrisSpawnRadius = 0.2f;
@@ -152,6 +155,8 @@ public class DestructibleProp : MonoBehaviour, IBreakable
         }
         else
         {
+            DisableAnimators();
+            
             if (spriteRenderer != null && brokenSprite != null)
                 spriteRenderer.sprite = brokenSprite;
 
@@ -253,5 +258,16 @@ public class DestructibleProp : MonoBehaviour, IBreakable
         return spriteRenderer != null
             ? (Vector2)spriteRenderer.bounds.center
             : (Vector2)transform.position;
+    }
+
+    // -- DISABLE ANIMATORS --
+    void DisableAnimators()
+    {
+        foreach (var a in GetComponents<Animator>())
+            a.enabled = false;
+
+        if (extraAnimatorsToDisable == null) return;
+        foreach (var a in extraAnimatorsToDisable)
+            if (a != null) a.enabled = false;
     }
 }

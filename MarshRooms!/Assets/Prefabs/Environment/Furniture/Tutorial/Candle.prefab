@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 503118498505674759}
   - component: {fileID: 5752980376647930581}
   - component: {fileID: 699518273764024306}
+  - component: {fileID: 8664123629386881274}
   m_Layer: 0
   m_Name: Candle
   m_TagString: Untagged
@@ -159,6 +160,34 @@ MonoBehaviour:
   - {x: 0.5, y: -0.5, z: 0}
   - {x: 0.5, y: 0.5, z: 0}
   - {x: -0.5, y: 0.5, z: 0}
+--- !u!114 &8664123629386881274
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3253549065094669965}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d5428050a1272c438eddaf43ae5f8f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DestructibleProp
+  spriteRenderer: {fileID: 503118498505674759}
+  afterBreak: 1
+  brokenSprite: {fileID: 0}
+  breakMaterial: {fileID: 11400000, guid: d42e1b4757179364280b387be6d7b8b4, type: 2}
+  debrisSprites:
+  - {fileID: -2085941107, guid: 5239a177107177c4f8e1e49ae3403445, type: 3}
+  - {fileID: -1497895980, guid: 5239a177107177c4f8e1e49ae3403445, type: 3}
+  debrisSpawnRadius: 1
+  debrisSortingLayer: Background
+  debrisSortingOrder: 3
+  removeColliderOnBreak: 1
+  brokenCollider: {fileID: 0}
+  bulletsPassThroughWhenBroken: 1
+  childBreakDelay: 0.05
+  dropChance: 0
+  possiblePickups: []
 --- !u!1 &6394726941662677693
 GameObject:
   m_ObjectHideFlags: 0
