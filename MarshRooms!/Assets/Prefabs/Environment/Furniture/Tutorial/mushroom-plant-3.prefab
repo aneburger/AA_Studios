@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 2166477703874850487}
   - component: {fileID: 7496474196502974891}
   - component: {fileID: 6198880207050171093}
-  - component: {fileID: 7385495472462987433}
   m_Layer: 0
   m_Name: mushroom-plant-3
   m_TagString: Untagged
@@ -79,9 +78,9 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: -1306409397
-  m_SortingLayer: 3
-  m_SortingOrder: 0
+  m_SortingLayerID: 473251923
+  m_SortingLayer: 1
+  m_SortingOrder: 4
   m_MaskInteraction: 0
   m_Sprite: {fileID: -2074223084, guid: 2b214f155ff6d874392387490b489572, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -105,49 +104,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ac5e3cd19a51ae48bb2450ecd5ba10d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpriteYSorter
---- !u!61 &7385495472462987433
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6583796016957280314}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.375, y: 0.8125}
-    newSize: {x: 2.4375, y: 1.9375}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Size: {x: 1.29, y: 0.77}
-  m_EdgeRadius: 0
+  sortingOffset: 0

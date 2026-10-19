@@ -13,17 +13,16 @@ MonoBehaviour:
   m_Name: Metal
   m_EditorClassIdentifier: Assembly-CSharp::BreakMaterial
   breakSounds:
-  - {fileID: 8300000, guid: d308f91d6f8b5b644b1bb72cddd1bc5e, type: 3}
-  - {fileID: 8300000, guid: cc660f96d9150584b840fe397fa7f48f, type: 3}
-  - {fileID: 8300000, guid: 16ceecf3c21159d4f9274973fd0376a5, type: 3}
-  - {fileID: 8300000, guid: 255847096b400ca45abaa94334de80b7, type: 3}
-  - {fileID: 8300000, guid: f99e0c1f660d7a344a3ecd01e513a914, type: 3}
-  - {fileID: 8300000, guid: cf72c8f4da55a564eb389898431b1ba1, type: 3}
-  volume: 0.3
-  pitchVariation: 0.2
+  - {fileID: 8300000, guid: a1f805be09fed0b44bc3e641fa269f4f, type: 3}
+  - {fileID: 8300000, guid: 15d9728f2316c1f488a590465b984221, type: 3}
+  - {fileID: 8300000, guid: 0b36c0093e0176a4a8e2a12bbf9da1a7, type: 3}
+  volume: 0.45
+  pitchVariation: 0.21
   dustPrefab: {fileID: 4081999799842582576, guid: e773c246afbaad0449a0403a3d1fdc0e, type: 3}
   minSpeed: 1.5
   maxSpeed: 4
   minSettleTime: 0.25
   maxSettleTime: 0.5
   maxSpinDegPerSec: 540
+  debrisLifetime: 5
+  fadeStartPercent: 0.5

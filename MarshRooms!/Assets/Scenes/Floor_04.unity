@@ -6221,7 +6221,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelMusicController
   floorMusic: {fileID: 8300000, guid: 8ac4109b74158094882fa68372defb25, type: 3}
-  combatVolume: 0.35
+  combatVolume: 0.32
   calmVolume: 0.1
   fadeDuration: 0.6
 --- !u!4 &459729766
@@ -52035,6 +52035,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1002322834}
     m_Modifications:
+    - target: {fileID: 4965316667451762, guid: 35a1c03388b1796479fa5caa8dc5d605, type: 3}
+      propertyPath: sortingOffset
+      value: 450
+      objectReference: {fileID: 0}
     - target: {fileID: 2496758124454227322, guid: 35a1c03388b1796479fa5caa8dc5d605, type: 3}
       propertyPath: m_Name
       value: plate (2)
@@ -52675,6 +52679,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1002322834}
     m_Modifications:
+    - target: {fileID: 4965316667451762, guid: 35a1c03388b1796479fa5caa8dc5d605, type: 3}
+      propertyPath: sortingOffset
+      value: 380
+      objectReference: {fileID: 0}
     - target: {fileID: 2496758124454227322, guid: 35a1c03388b1796479fa5caa8dc5d605, type: 3}
       propertyPath: m_Name
       value: plate (1)

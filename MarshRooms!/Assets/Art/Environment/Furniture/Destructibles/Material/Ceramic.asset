@@ -13,13 +13,12 @@ MonoBehaviour:
   m_Name: Ceramic
   m_EditorClassIdentifier: Assembly-CSharp::BreakMaterial
   breakSounds:
-  - {fileID: 8300000, guid: d308f91d6f8b5b644b1bb72cddd1bc5e, type: 3}
-  - {fileID: 8300000, guid: cc660f96d9150584b840fe397fa7f48f, type: 3}
-  - {fileID: 8300000, guid: 16ceecf3c21159d4f9274973fd0376a5, type: 3}
-  - {fileID: 8300000, guid: 255847096b400ca45abaa94334de80b7, type: 3}
-  - {fileID: 8300000, guid: f99e0c1f660d7a344a3ecd01e513a914, type: 3}
-  - {fileID: 8300000, guid: cf72c8f4da55a564eb389898431b1ba1, type: 3}
-  volume: 0.3
+  - {fileID: 8300000, guid: d1cedd9981ddb1943a3a29a764333cee, type: 3}
+  - {fileID: 8300000, guid: 82faeccb031784844b559898b887076d, type: 3}
+  - {fileID: 8300000, guid: 52eed44614c8ed6449b49b6ac0daf726, type: 3}
+  - {fileID: 8300000, guid: 10feee9a28951ab4b8399b50496bcefd, type: 3}
+  - {fileID: 8300000, guid: 3d12f946d9e755a4aa69f6641dfc7c5f, type: 3}
+  volume: 0.6
   pitchVariation: 0.2
   dustPrefab: {fileID: 4081999799842582576, guid: e773c246afbaad0449a0403a3d1fdc0e, type: 3}
   minSpeed: 1.5
@@ -27,3 +26,5 @@ MonoBehaviour:
   minSettleTime: 0.25
   maxSettleTime: 0.5
   maxSpinDegPerSec: 540
+  debrisLifetime: 5
+  fadeStartPercent: 0.5

@@ -13,8 +13,11 @@ MonoBehaviour:
   m_Name: Plant
   m_EditorClassIdentifier: Assembly-CSharp::BreakMaterial
   breakSounds:
-  - {fileID: 8300000, guid: 98c6727c639b2da4493ac39c8da8f444, type: 3}
-  volume: 0.3
+  - {fileID: 8300000, guid: d0a2c724a483bdb46a91658c49a5bdee, type: 3}
+  - {fileID: 8300000, guid: 665fef41cd0f3774f975a6b0246678a2, type: 3}
+  - {fileID: 8300000, guid: a397b3b4428524e45b4f399560788e22, type: 3}
+  - {fileID: 8300000, guid: 7516cc8c12336f14180f5fe40ae397c4, type: 3}
+  volume: 0.4
   pitchVariation: 0.2
   dustPrefab: {fileID: 4081999799842582576, guid: e773c246afbaad0449a0403a3d1fdc0e, type: 3}
   minSpeed: 1
@@ -22,3 +25,5 @@ MonoBehaviour:
   minSettleTime: 0.5
   maxSettleTime: 1
   maxSpinDegPerSec: 540
+  debrisLifetime: 5
+  fadeStartPercent: 0.5
