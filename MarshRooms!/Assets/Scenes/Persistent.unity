@@ -23982,7 +23982,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -63.6, y: -16.09998}
+  m_AnchoredPosition: {x: -42.9, y: -16.09998}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1708035410
@@ -24003,19 +24003,25 @@ MonoBehaviour:
   emptySprite: {fileID: 566127695, guid: 61287ff337b34dc49b55f40cc5002fce, type: 3}
   finalEmptySprite: {fileID: -1573380189, guid: 61287ff337b34dc49b55f40cc5002fce, type: 3}
   activeFrames:
-  - {fileID: 566127695, guid: 61287ff337b34dc49b55f40cc5002fce, type: 3}
   - {fileID: -345138353, guid: 61287ff337b34dc49b55f40cc5002fce, type: 3}
   - {fileID: 1727707387, guid: 61287ff337b34dc49b55f40cc5002fce, type: 3}
   - {fileID: -932115207, guid: 61287ff337b34dc49b55f40cc5002fce, type: 3}
   - {fileID: -932115207, guid: 61287ff337b34dc49b55f40cc5002fce, type: 3}
+  - {fileID: -932115207, guid: 61287ff337b34dc49b55f40cc5002fce, type: 3}
+  - {fileID: -932115207, guid: 61287ff337b34dc49b55f40cc5002fce, type: 3}
+  - {fileID: 1727707387, guid: 61287ff337b34dc49b55f40cc5002fce, type: 3}
+  - {fileID: -345138353, guid: 61287ff337b34dc49b55f40cc5002fce, type: 3}
   finalActiveFrames:
-  - {fileID: -1573380189, guid: 61287ff337b34dc49b55f40cc5002fce, type: 3}
+  - {fileID: 764289730, guid: 61287ff337b34dc49b55f40cc5002fce, type: 3}
+  - {fileID: 1020544286, guid: 61287ff337b34dc49b55f40cc5002fce, type: 3}
   - {fileID: 250103926, guid: 61287ff337b34dc49b55f40cc5002fce, type: 3}
   - {fileID: 250103926, guid: 61287ff337b34dc49b55f40cc5002fce, type: 3}
   - {fileID: 250103926, guid: 61287ff337b34dc49b55f40cc5002fce, type: 3}
   - {fileID: 250103926, guid: 61287ff337b34dc49b55f40cc5002fce, type: 3}
+  - {fileID: 1020544286, guid: 61287ff337b34dc49b55f40cc5002fce, type: 3}
+  - {fileID: 764289730, guid: 61287ff337b34dc49b55f40cc5002fce, type: 3}
   completeSprite: {fileID: -128868112, guid: 61287ff337b34dc49b55f40cc5002fce, type: 3}
-  finalCompleteSprite: {fileID: 1020544286, guid: 61287ff337b34dc49b55f40cc5002fce, type: 3}
+  finalCompleteSprite: {fileID: -296512184, guid: 61287ff337b34dc49b55f40cc5002fce, type: 3}
   framesPerSecond: 8
   waveStartClip: {fileID: 0}
   finalWaveStartClip: {fileID: 0}

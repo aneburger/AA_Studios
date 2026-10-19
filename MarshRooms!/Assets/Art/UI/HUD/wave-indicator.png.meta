@@ -236,9 +236,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 71
-        y: 8
-        width: 14
-        height: 14
+        y: 5
+        width: 15
+        height: 17
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -257,10 +257,10 @@ TextureImporter:
       name: wave-indicator_6
       rect:
         serializedVersion: 2
-        x: 86
-        y: 8
-        width: 14
-        height: 14
+        x: 87
+        y: 5
+        width: 15
+        height: 17
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -279,10 +279,10 @@ TextureImporter:
       name: wave-indicator_7
       rect:
         serializedVersion: 2
-        x: 101
-        y: 8
-        width: 14
-        height: 14
+        x: 103
+        y: 5
+        width: 15
+        height: 17
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -293,6 +293,50 @@ TextureImporter:
       bones: []
       spriteID: 5d525d2188ba71643be234ea0acfd43a
       internalID: 1020544286
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: wave-indicator_8
+      rect:
+        serializedVersion: 2
+        x: 119
+        y: 5
+        width: 15
+        height: 17
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: baa7257b65a3e4a4d8ca56abac0fc7d0
+      internalID: 764289730
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: wave-indicator_9
+      rect:
+        serializedVersion: 2
+        x: 135
+        y: 5
+        width: 15
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b488b3afa58d773408746e1651480ebf
+      internalID: -296512184
       vertices: []
       indices: 
       edges: []
@@ -321,6 +365,8 @@ TextureImporter:
       wave-indicator_5: -1573380189
       wave-indicator_6: 250103926
       wave-indicator_7: 1020544286
+      wave-indicator_8: 764289730
+      wave-indicator_9: -296512184
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
