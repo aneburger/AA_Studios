@@ -24,6 +24,13 @@ public class SporeBar : MonoBehaviour
 
     private float targetFillAmount = 0f;
     private float shakeTimer = 0f;
+
+    [Header("Gain Pop")]
+    [SerializeField] private float gainPopAmount = 0.08f;
+    [SerializeField] private float gainPopDuration = 0.2f;
+
+    private int lastSporeCount = -1;
+    private UIPunch punch;
     private Vector2 originalAnchoredPosition;
     private bool hasOriginalPosition;
 
@@ -44,6 +51,9 @@ public class SporeBar : MonoBehaviour
         {
             originalAnchoredPosition = shakeTarget.anchoredPosition;
             hasOriginalPosition = true;
+
+            punch = shakeTarget.GetComponent<UIPunch>();
+            if (punch == null) punch = shakeTarget.gameObject.AddComponent<UIPunch>();
         }
 
         parentRect = transform.parent as RectTransform;
@@ -92,6 +102,12 @@ public class SporeBar : MonoBehaviour
     {
         if (fillImage == null || maxSpores <= 0)
             return;
+
+        bool gained = lastSporeCount >= 0 && currentSpores > lastSporeCount;
+        lastSporeCount = currentSpores;
+
+        if (gained && punch != null && SporeManager.Instance != null && !SporeManager.Instance.IsMutated)
+            punch.Punch(gainPopAmount, gainPopDuration);
 
         targetFillAmount = (float)currentSpores / maxSpores;
         UpdateColor(targetFillAmount);

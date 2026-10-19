@@ -136,7 +136,7 @@ public class PlayerHealth : BaseHealth
 
         damageCooldownTimer = damageCooldown;
         base.TakeDamage(amount);
-        UpdateHUD();
+        UpdateHUD(true);
 
         if (!IsDead())
             UpdateLowHealthEffect();
@@ -150,7 +150,7 @@ public class PlayerHealth : BaseHealth
         AudioManager.Instance.PlaySFXWithPitch(healClip, healVolume, 0.1f);
         currentHealth = Mathf.Min(currentHealth + amount, maxHealth);
         anim.SetTrigger("Heal");
-        UpdateHUD();
+        UpdateHUD(true);
 
         UpdateLowHealthEffect();
     }
@@ -190,11 +190,11 @@ public class PlayerHealth : BaseHealth
     }
 
     // -- UPDATE HUD --
-    public void UpdateHUD()
+    public void UpdateHUD(bool animate = false)
     {
         if (HUDManager.Instance != null)
         {
-            HUDManager.Instance.UpdateHealthDisplay((int)currentHealth, (int)maxHealth);
+            HUDManager.Instance.UpdateHealthDisplay((int)currentHealth, (int)maxHealth, animate);
         }
     }
 
@@ -271,6 +271,7 @@ public class PlayerHealth : BaseHealth
 
         ScreenEffects.Instance?.SetLowHealth(isLow);
         AudioManager.Instance?.SetLowHealthActive(isLow, lowHealthClip, lowHealthVolume, lowHealthPitch);
+        HUDManager.Instance?.SetLowHealthPulse(isLow);
     }
 
     // -- SET LOW HEALTH AUDIO PAUSED --
@@ -419,5 +420,6 @@ public class PlayerHealth : BaseHealth
     {
         AudioManager.Instance?.SetLowHealthActive(false);
         isLowHealthActive = false;
+        HUDManager.Instance?.SetLowHealthPulse(false);
     }
 }

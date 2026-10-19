@@ -19,6 +19,10 @@ public class AmmoDisplay : MonoBehaviour
     [SerializeField] private RectTransform[] slotAnchors = new RectTransform[3];
     [SerializeField] private Vector2 offsetFromSlot = new Vector2(0f, -60f);
 
+    [Header("Ammo Effects")]
+    [SerializeField] private Color lowAmmoColor = new Color(1f, 0.3f, 0.3f, 1f);
+    [SerializeField, Range(0f, 1f)] private float lowAmmoFraction = 0.15f;
+
     private RectTransform selfRect;
     private Canvas rootCanvas;
 
@@ -28,12 +32,17 @@ public class AmmoDisplay : MonoBehaviour
     private WeaponData lastWeapon;
     private Coroutine weaponNameRoutine;
 
+    private Color normalAmmoColor = Color.white;
+
     private void Start()
     {
         selfRect = GetComponent<RectTransform>();
         rootCanvas = GetComponentInParent<Canvas>();
         playerShooter = FindFirstObjectByType<PlayerShooter>();
         weaponSlots = FindFirstObjectByType<PlayerWeaponSlot>();
+
+        if (ammoCountText != null)
+            normalAmmoColor = ammoCountText.color;
 
         if (weaponName != null)
         {
@@ -113,7 +122,16 @@ public class AmmoDisplay : MonoBehaviour
         ammoCountText.enabled = true;
         maxAmmoCountText.enabled = true;
         if (slashText != null) slashText.enabled = true;
+
+        UpdateAmmoEffects(currentAmmo, currentWeapon.maxAmmo);
     }
+
+    // -- UPDATE AMMO EFFECTS --
+    private void UpdateAmmoEffects(int currentAmmo, int maxAmmo)
+    {
+        // red when low
+        bool isLow = maxAmmo > 0 && currentAmmo <= maxAmmo * lowAmmoFraction;
+        ammoCountText.color = isLow ? lowAmmoColor : normalAmmoColor;    }
 
     private void ShowWeaponName(string name)
     {
