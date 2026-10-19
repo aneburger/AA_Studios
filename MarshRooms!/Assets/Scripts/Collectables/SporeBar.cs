@@ -23,6 +23,7 @@ public class SporeBar : MonoBehaviour
     [SerializeField] private float shakeSpeed = 18f;
 
     private float targetFillAmount = 0f;
+    private float shakeTimer = 0f;
     private Vector2 originalAnchoredPosition;
     private bool hasOriginalPosition;
 
@@ -157,12 +158,6 @@ public class SporeBar : MonoBehaviour
         if (!hasOriginalPosition || shakeTarget == null || SporeManager.Instance == null)
             return;
 
-        if (Time.timeScale == 0f)
-        {
-            shakeTarget.anchoredPosition = originalAnchoredPosition;
-            return;
-        }
-
         bool shouldShake = SporeManager.Instance.IsFull || SporeManager.Instance.IsMutated;
 
         if (!shouldShake)
@@ -171,7 +166,11 @@ public class SporeBar : MonoBehaviour
             return;
         }
 
-        float time = Time.unscaledTime * shakeSpeed;
+        if (Time.timeScale == 0f)
+            return;
+
+        shakeTimer += Time.deltaTime;
+        float time = shakeTimer * shakeSpeed;
         float xOffset = Mathf.Sin(time) * shakeAmplitude;
         float yOffset = Mathf.Sin(time * 1.37f + 0.8f) * (shakeAmplitude * 0.5f);
 
@@ -184,11 +183,6 @@ public class SporeBar : MonoBehaviour
         if (meterConfig == null || fillImage == null)
             return;
 
-        if (fillPercent >= 0.66f)
-            fillImage.color = meterConfig.fullColor;
-        else if (fillPercent >= 0.33f)
-            fillImage.color = meterConfig.halfColor;
-        else
-            fillImage.color = meterConfig.lowColor;
+        fillImage.color = meterConfig.fullColor;
     }
 }

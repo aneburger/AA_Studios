@@ -13,6 +13,9 @@ public class ImageAnimation : MonoBehaviour
     public bool loop = true;
     public bool destroyOnEnd = false;
 
+    [Header("Pause")]
+    public bool pauseWithGame = false;
+
     private Image image;
     private int index = 0;
     private int frame = 0;
@@ -26,6 +29,8 @@ public class ImageAnimation : MonoBehaviour
     // -- UPDATE --
     private void Update()
     {
+        if (pauseWithGame && Time.timeScale == 0f) return;
+
         if (!loop && index == sprites.Length) return;
 
         frame++;

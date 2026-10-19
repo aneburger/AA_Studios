@@ -73,6 +73,15 @@ public class RoomManager : MonoBehaviour
 
     public static event System.Action OnRoomCleared;
 
+    // -- WAVE PIP EVENTS --
+    public static event System.Action<int> OnWavesPlanned;
+    public static event System.Action<int> OnWaveStarted;
+    public static event System.Action<int> OnWaveCompleted;
+
+    public int TotalPips => manualControl ? 0 : waves.Length + 1;
+    public int CurrentPipIndex => currentWave + 1;
+    public bool CurrentPipStarted { get; private set; }
+
     [System.Serializable]
     public class EnemyEntry
     {
@@ -98,7 +107,11 @@ public class RoomManager : MonoBehaviour
     // -- DISABLE --
     private void OnDisable()
     {
-        if (Current == this) Current = null;
+        if (Current == this)
+        {
+            Current = null;
+            OnWavesPlanned?.Invoke(0); // clears the pips when the floor unloads
+        }
     }
 
     // -- START --
@@ -111,7 +124,17 @@ public class RoomManager : MonoBehaviour
 
         if (!manualControl) EnemyManager.OnAllEnemiesDead += OnWaveCleared;
 
-        // capture the player's current spores/weapons when entering room
+        if (manualControl)
+        {
+            OnWavesPlanned?.Invoke(0);
+        }
+        else
+        {
+            OnWavesPlanned?.Invoke(TotalPips);
+            CurrentPipStarted = true;
+            OnWaveStarted?.Invoke(0);
+        }
+
         if (LevelLoader.Instance != null && !LevelLoader.Instance.HasPendingRestore)
             LevelLoader.Instance.SaveCurrentLevel();
     }
@@ -126,6 +149,10 @@ public class RoomManager : MonoBehaviour
     private void OnWaveCleared()
     {
         weaponDropsThisWave = 0;
+
+        OnWaveCompleted?.Invoke(currentWave + 1);
+        CurrentPipStarted = false;
+
         currentWave++;
 
         if (currentWave >= waves.Length)
@@ -149,6 +176,9 @@ public class RoomManager : MonoBehaviour
     private IEnumerator SpawnWaveCoroutine(Wave wave)
     {
         yield return new WaitForSeconds(spawnDelay);
+
+        CurrentPipStarted = true;
+        OnWaveStarted?.Invoke(currentWave + 1);
 
         List<GameObject> enemiesToSpawn = GenerateEnemies(wave.pointBudget);
         enemiesRemainingInFloor += enemiesToSpawn.Count;

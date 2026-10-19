@@ -8,6 +8,9 @@ public class ContinueIndicatorBob : MonoBehaviour
     [SerializeField] private float amount = 6f;
     [SerializeField] private float speed = 4f;
 
+    [Header("Pause")]
+    [SerializeField] private bool pauseWithGame = false;
+
     private RectTransform rect;
     private Vector2 basePos;
     private float t;
@@ -25,6 +28,8 @@ public class ContinueIndicatorBob : MonoBehaviour
 
     private void Update()
     {
+        if (pauseWithGame && Time.timeScale == 0f) return;
+
         t += Time.unscaledDeltaTime * speed;
         float offset = Mathf.Sin(t) * amount;
 
