@@ -39,6 +39,8 @@ public class CheatMenuManager : MonoBehaviour
     private TMP_Text infiniteAmmoLabelText;
     private TMP_Text boonToggleLabelText;
 
+    private TMP_Text cheatsButtonText;
+
     private void Start()
     {
         SetupOpenCheatsButton();
@@ -71,13 +73,25 @@ public class CheatMenuManager : MonoBehaviour
             cheatsPanel.SetActive(false);
 
         if (openCheatsButton != null)
+        {
+            cheatsButtonText = openCheatsButton.GetComponentInChildren<TMP_Text>();
             openCheatsButton.onClick.AddListener(ToggleCheatsPanel);
+            UpdateCheatsButtonLabel();
+        }
     }
 
     private void ToggleCheatsPanel()
     {
         if (cheatsPanel == null) return;
+
         cheatsPanel.SetActive(!cheatsPanel.activeSelf);
+        UpdateCheatsButtonLabel();
+    }
+
+    private void UpdateCheatsButtonLabel()
+    {
+        if (cheatsButtonText != null && cheatsPanel != null)
+            cheatsButtonText.text = cheatsPanel.activeSelf ? "Close Cheats" : "Open Cheats";
     }
 
     // ------INVINCIBILITY
