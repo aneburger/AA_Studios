@@ -14,6 +14,7 @@ public class SporeManager : MonoBehaviour
     private int maxSpores;
     private bool isMutated = false;
     private float mutatedTimeRemaining = 0f;
+    private bool suppressNextReadyAudio;
 
     public bool IsFull => currentSpores >= maxSpores;
 
@@ -76,7 +77,17 @@ public class SporeManager : MonoBehaviour
     {
         if (isMutated) EndMutatedStateSilent();
         currentSpores = Mathf.Clamp(count, 0, maxSpores);
+        suppressNextReadyAudio = currentSpores >= maxSpores;
         OnSporeCountChanged?.Invoke(currentSpores, maxSpores);
+    }
+
+    public bool ConsumeReadyAudioSuppression()
+    {
+        if (!suppressNextReadyAudio)
+            return false;
+
+        suppressNextReadyAudio = false;
+        return true;
     }
 
     // -- COLLECT SPORE --

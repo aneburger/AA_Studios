@@ -152,6 +152,10 @@ public class SporeBar : MonoBehaviour
         if (!isSporeReadyActive)
         {
             isSporeReadyActive = true;
+
+            if (SporeManager.Instance != null && SporeManager.Instance.ConsumeReadyAudioSuppression())
+                return;
+
             AudioManager.Instance?.PlaySFX(sporeReadyClip, sporeReadyVolume);
         }
     }

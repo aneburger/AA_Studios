@@ -193,7 +193,7 @@ public abstract class BaseShooter : MonoBehaviour
             if (squishCoroutine != null) StopCoroutine(squishCoroutine);
             squishCoroutine = StartCoroutine(SquishWeapon());
             weaponAimer?.ApplyRecoil(currentWeapon.recoilAmount, currentWeapon.recoilDecay);
-            AudioManager.Instance.PlaySFXWithPitch(equipClip, equipVolume);
+            if (playSound) AudioManager.Instance.PlaySFXWithPitch(equipClip, equipVolume);
         }
 
         isFirstEquip = false;
