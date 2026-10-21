@@ -53,6 +53,15 @@ MonoBehaviour:
   weaponData: {fileID: 11400000, guid: f82ad5183ec6c7a47ad9d1644203f41d, type: 2}
   setsAsDefault: 1
   isMinigunTutorialPickup: 0
+  playDropAnimation: 0
+  popDuration: 0.25
+  hopHeight: 0.35
+  hopDuration: 0.3
+  landSquash: 0.2
+  landSquashDuration: 0.1
+  pickupDelay: 0.1
+  snapHopToPixels: 1
+  pixelsPerUnit: 16
   ammo: -1
 --- !u!212 &4335018509098030027
 SpriteRenderer:

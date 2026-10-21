@@ -132,7 +132,10 @@ public class BossRoomController : MonoBehaviour
 
         int count = Mathf.Min(pool.Count, gunSpots.Length);
         for (int i = 0; i < count; i++)
-            Instantiate(pool[i], gunSpots[i].position, Quaternion.identity);
+        {
+            GameObject spawned = Instantiate(pool[i], gunSpots[i].position, Quaternion.identity);
+            spawned.GetComponent<WeaponPickup>()?.SkipDropAnimation();
+        }
     }
 
     // ==================== DOOR SEQUENCE ====================

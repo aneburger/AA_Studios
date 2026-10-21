@@ -382,16 +382,31 @@ public class RoomManager : MonoBehaviour
     }
 
     // -- TRY TO DROP WEAPON --
+    private bool IsFinalFight => currentWave == waves.Length - 1;
+
     public void TryDropWeapon(Vector2 position, GameObject weaponPrefab, float dropChance)
     {
-
         weaponDropCandidatesThisFloor.Add((weaponPrefab, position));
 
-        if (weaponDropsThisFloor >= maxWeaponDrops) return;
-        if (weaponDropsThisWave >= maxWeaponDropsPerWave) return;
-        if (Random.value > dropChance) return;
+        bool dropped = false;
+        if (weaponDropsThisFloor < maxWeaponDrops &&
+            weaponDropsThisWave < maxWeaponDropsPerWave &&
+            Random.value <= dropChance)
+        {
+            SpawnWeaponDrop(weaponPrefab, position);
+            dropped = true;
+        }
 
-        SpawnWeaponDrop(weaponPrefab, position);
+        // Last enemy of the final fight and the floor is still short: force it now
+        if (!dropped
+            && IsFinalFight
+            && EnemyManager.Instance.GetActiveEnemyCount() <= 1
+            && !EnemyManager.Instance.IsSpawning
+            && weaponDropsThisFloor < minWeaponDrops
+            && weaponDropsThisFloor < maxWeaponDrops)
+        {
+            SpawnWeaponDrop(weaponPrefab, position);
+        }
     }
 
     private void EnsureMinimumWeaponDrops()

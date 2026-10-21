@@ -12,6 +12,7 @@ public class EnemyManager : MonoBehaviour
     private Coroutine confirmRoutine;
 
     private int spawningLocks = 0;
+    public bool IsSpawning => spawningLocks > 0;
 
     // Events
     public static event System.Action OnAllEnemiesDead;
