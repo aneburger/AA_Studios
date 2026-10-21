@@ -8587,6 +8587,59 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4750130110337884741, guid: 7052b9e0631da0245998ea28a0f96fdf, type: 3}
   m_PrefabInstance: {fileID: 364053107}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &826826435
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 826826437}
+  - component: {fileID: 826826436}
+  m_Layer: 5
+  m_Name: DifficultyManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &826826436
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 826826435}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20e7cd8a0bd570345b0efadf5ae0656b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DifficultyManager
+  difficulty: 1
+  easy: {fileID: 11400000, guid: f6f4eb3e14fc67844a137022bf0b9271, type: 2}
+  normal: {fileID: 11400000, guid: 041698092edca42488c85bbae5a90cb3, type: 2}
+  hard: {fileID: 11400000, guid: 152f1bab0dd073745ba8b09864d511be, type: 2}
+  deathCap: {fileID: 11400000, guid: 73b4dcdb2d65df94c92689795f3af6ef, type: 2}
+--- !u!224 &826826437
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 826826435}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 4, y: 4, z: 4}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 240, y: 135}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &837937876
 GameObject:
   m_ObjectHideFlags: 0
@@ -26857,11 +26910,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4305491542601812260, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -397.54
+      value: -398.06
       objectReference: {fileID: 0}
     - target: {fileID: 4305491542601812260, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 89.4
+      value: 92.45
       objectReference: {fileID: 0}
     - target: {fileID: 5152905023015923455, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -27008,13 +27061,14 @@ SceneRoots:
   - {fileID: 650955917}
   - {fileID: 148418017}
   - {fileID: 994808033}
-  - {fileID: 1073522839}
   - {fileID: 395473942}
+  - {fileID: 1073522839}
   - {fileID: 364862853}
   - {fileID: 1527244762}
+  - {fileID: 826826437}
+  - {fileID: 2040801404}
   - {fileID: 1399008576}
   - {fileID: 1251095356}
-  - {fileID: 2040801404}
   - {fileID: 2140205849}
   - {fileID: 3537630140295722637}
   - {fileID: 1850610639}
