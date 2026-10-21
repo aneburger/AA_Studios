@@ -23,6 +23,7 @@ public class ContinueIndicatorBob : MonoBehaviour
 
     private void OnEnable()
     {
+        // basePos = rect.anchoredPosition;
         t = 0f;
     }
 
