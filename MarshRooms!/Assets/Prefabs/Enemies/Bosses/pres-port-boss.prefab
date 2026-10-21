@@ -109,6 +109,7 @@ GameObject:
   - component: {fileID: 7585961510317227088}
   - component: {fileID: 3846074695851464617}
   - component: {fileID: 27379241362764003}
+  - component: {fileID: 4971430655147127906}
   m_Layer: 7
   m_Name: pres-port-boss
   m_TagString: Untagged
@@ -633,6 +634,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PortobelloOutro
   bossAnimator: {fileID: 803806091724421615}
+  contactDamage: {fileID: 0}
   deathTrigger: Die
   musicFadeDuration: 1.5
   hitStopDuration: 0.08
@@ -646,6 +648,31 @@ MonoBehaviour:
   rumbleShakeMax: 0.5
   dialogue: {fileID: 11400000, guid: 211ca1f99b882c245a3e1c9cc284e4df, type: 2}
   pauseBeforeDialogue: 0.5
+--- !u!114 &4971430655147127906
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 988082134135583188}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9374ae4dd3ed56409b9b620d8c60b4f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpriteFlash
+  flashMaterial: {fileID: 2100000, guid: 931deb1e8763c9148928222a1589be93, type: 2}
+  flashColor: {r: 1, g: 1, b: 1, a: 1}
+  flashStrength: 0.9
+  holdFraction: 0.2
+  flashDuration: 0.15
+  retriggerAfter: 0.4
+  sortingOrderOffset: 6
+  targetRenderers: []
+  excludeRenderers:
+  - {fileID: 7316994202994468007}
+  - {fileID: 4781575144476638892}
+  - {fileID: 8704847832892159671}
+  disableHitAnimation: 1
 --- !u!1 &1474284981994161219
 GameObject:
   m_ObjectHideFlags: 0
@@ -1059,6 +1086,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4750130110337884741, guid: fe02030257054c548a0a8f1e09f2f665, type: 3}
   m_PrefabInstance: {fileID: 2459745927262707340}
   m_PrefabAsset: {fileID: 0}
+--- !u!212 &7316994202994468007 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 5163916380359555627, guid: fe02030257054c548a0a8f1e09f2f665, type: 3}
+  m_PrefabInstance: {fileID: 2459745927262707340}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4567844561182477468
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1120,6 +1152,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fe02030257054c548a0a8f1e09f2f665, type: 3}
+--- !u!212 &8704847832892159671 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 5163916380359555627, guid: fe02030257054c548a0a8f1e09f2f665, type: 3}
+  m_PrefabInstance: {fileID: 4567844561182477468}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &9119758761054498521 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4750130110337884741, guid: fe02030257054c548a0a8f1e09f2f665, type: 3}

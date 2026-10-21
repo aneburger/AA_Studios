@@ -109,8 +109,9 @@ GameObject:
   - component: {fileID: 7672455363216179369}
   - component: {fileID: 8471073151134515050}
   - component: {fileID: 3724249218000953578}
-  - component: {fileID: 345462243566778897}
   - component: {fileID: -6330205109350335678}
+  - component: {fileID: 5267701829724892483}
+  - component: {fileID: 345462243566778897}
   m_Layer: 7
   m_Name: meji-large-purple
   m_TagString: Untagged
@@ -253,6 +254,7 @@ MonoBehaviour:
   pickupVolume: 0
   emptyClip: {fileID: 0}
   emptyVolume: 0
+  extraBulletDamageMultiplier: 0.6
 --- !u!114 &7672455363216179369
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -341,6 +343,48 @@ MonoBehaviour:
   separationRadius: 1.4
   separationStrength: 1
   directionSmoothSpeed: 10
+--- !u!114 &-6330205109350335678
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 988082134135583188}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf60342188d429141964f2aab4d9023f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SplitOnDeath
+  splitPrefab: {fileID: 988082134135583188, guid: 440736620d600ee47b2dbd8938f833cc, type: 3}
+  splitCount: 2
+  scatterRadius: 1
+  eliteSplitPrefab: {fileID: 0}
+--- !u!114 &5267701829724892483
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 988082134135583188}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9374ae4dd3ed56409b9b620d8c60b4f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpriteFlash
+  flashMaterial: {fileID: 2100000, guid: 931deb1e8763c9148928222a1589be93, type: 2}
+  flashColor: {r: 1, g: 1, b: 1, a: 1}
+  flashStrength: 0.9
+  holdFraction: 0.2
+  flashDuration: 0.15
+  retriggerAfter: 0.4
+  sortingOrderOffset: 6
+  targetRenderers: []
+  excludeRenderers:
+  - {fileID: 7316994202994468007, guid: 9dd4fa7122095964ab53544fb04bb88e, type: 3}
+  - {fileID: 4781575144476638892, guid: 9dd4fa7122095964ab53544fb04bb88e, type: 3}
+  - {fileID: 8621674295602067104, guid: 9dd4fa7122095964ab53544fb04bb88e, type: 3}
+  - {fileID: 4242294298305090669, guid: 9dd4fa7122095964ab53544fb04bb88e, type: 3}
+  disableHitAnimation: 1
 --- !u!195 &345462243566778897
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -363,22 +407,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &-6330205109350335678
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 988082134135583188}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bf60342188d429141964f2aab4d9023f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SplitOnDeath
-  splitPrefab: {fileID: 988082134135583188, guid: 440736620d600ee47b2dbd8938f833cc, type: 3}
-  splitCount: 2
-  scatterRadius: 1
-  eliteSplitPrefab: {fileID: 0}
 --- !u!1 &1474284981994161219
 GameObject:
   m_ObjectHideFlags: 0
