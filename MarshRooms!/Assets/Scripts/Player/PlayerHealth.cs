@@ -306,6 +306,10 @@ public class PlayerHealth : BaseHealth
         base.Die();
         OnPlayerDeath?.Invoke();
 
+        // Death cap mode
+        //if (DifficultyManager.RestartRunOnDeath)
+            //LevelLoader.Instance?.EndRunForDeathCap();
+
         AudioManager.Instance.StopMusic();
         AudioManager.Instance.PlaySFX(dieClip, dieVolume);
 

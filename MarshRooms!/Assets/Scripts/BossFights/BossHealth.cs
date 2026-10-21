@@ -83,6 +83,11 @@ public class BossHealth : BaseHealth
     protected override void Awake()
     {
         base.Awake();
+
+        float mult = DifficultyManager.BossHealthMult;
+        if (!Mathf.Approximately(mult, 1f))
+            Initialise(maxHealth * mult);
+
         if (startInvulnerable) invulnerableReasons.Add(ReasonIntro);
     }
 

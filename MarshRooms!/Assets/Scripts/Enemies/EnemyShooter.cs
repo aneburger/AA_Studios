@@ -40,7 +40,13 @@ public class EnemyShooter : BaseShooter
         else
         {
             burstShotsFired = 0;
-            nextFireTime = Time.time + currentWeapon.fireRate * GetFireRateMultiplier();
+            nextFireTime = Time.time + currentWeapon.fireRate * GetFireRateMultiplier() / DifficultyManager.EnemyFireRateMult;
         }
+    }
+
+    // -- MODIFY OUTGOING DAMAGE --
+    protected override float ModifyOutgoingDamage(float damage)
+    {
+        return DifficultyManager.AdjustDamage(damage);
     }
 }

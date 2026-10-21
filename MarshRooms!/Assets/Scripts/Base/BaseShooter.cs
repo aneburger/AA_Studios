@@ -137,6 +137,9 @@ public abstract class BaseShooter : MonoBehaviour
         return permanentDamageMultiplier * temporaryDamageMultiplier;
     }
 
+    // -- MODIFY OUTGOING DAMAGE --
+    protected virtual float ModifyOutgoingDamage(float damage) => damage;
+
     // -- SET CRIT CHANCE (boons) --
     public void SetCritChance(float chance)
     {
@@ -256,6 +259,8 @@ public abstract class BaseShooter : MonoBehaviour
             // Extra bullets from a bonus (e.g. Split Shot boon) do reduced damage each
             if (i >= baseCount)
                 rolledDamage *= extraBulletDamageMultiplier;
+            
+            rolledDamage = ModifyOutgoingDamage(rolledDamage);
 
             GameObject bullet = Instantiate(currentWeapon.GetBulletPrefab(), spawnPosition, Quaternion.identity);
             BaseBullet b = bullet.GetComponent<BaseBullet>();

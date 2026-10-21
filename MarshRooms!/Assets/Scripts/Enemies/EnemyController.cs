@@ -53,6 +53,7 @@ public class EnemyController : MonoBehaviour
     private void Start()
     {
         InitialiseWeapon();
+        mover.SetSpeed(Data.moveSpeed * DifficultyManager.EnemySpeedMult);
         health.Initialise(Data.maxHealth);
         EnemyManager.Instance.RegisterEnemy(gameObject);
 
@@ -86,7 +87,7 @@ public class EnemyController : MonoBehaviour
         if (playerHealth.IsOnCooldown()) return;
 
         playerHealth.SetLastAttacker(Data.enemyName);
-        playerHealth.TakeDamage(Data.contactDamage);
+        playerHealth.TakeDamage(DifficultyManager.AdjustDamage(Data.contactDamage));
 
         BaseMover playerMover = collision.GetComponentInParent<BaseMover>();
         if (playerMover != null)

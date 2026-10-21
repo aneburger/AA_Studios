@@ -180,7 +180,7 @@ public class RoomManager : MonoBehaviour
         CurrentPipStarted = true;
         OnWaveStarted?.Invoke(currentWave + 1);
 
-        List<GameObject> enemiesToSpawn = GenerateEnemies(wave.pointBudget);
+        List<GameObject> enemiesToSpawn = GenerateEnemies(DifficultyManager.ScaleBudget(wave.pointBudget));
         enemiesRemainingInFloor += enemiesToSpawn.Count;
 
         List<Transform> sortedPoints = new List<Transform>(wave.spawnPoints);
@@ -319,7 +319,8 @@ public class RoomManager : MonoBehaviour
         HashSet<int> promotedIndices = new HashSet<int>();
 
         // -- Elite pass --
-        if (eliteChance > 0f && maxElitesPerWave > 0)
+        float effectiveEliteChance = Mathf.Clamp01(eliteChance * DifficultyManager.EliteChanceMult);
+        if (effectiveEliteChance > 0f && maxElitesPerWave > 0)
         {
             List<int> eliteEligible = new List<int>();
             for (int i = 0; i < chosenEntries.Count; i++)
@@ -334,7 +335,7 @@ public class RoomManager : MonoBehaviour
             {
                 if (elitePromotions >= maxElitesPerWave) break;
 
-                if (Random.value <= eliteChance)
+                if (Random.value <= effectiveEliteChance)
                 {
                     result[index] = chosenEntries[index].eliteVariant;
                     promotedIndices.Add(index);

@@ -22,6 +22,7 @@ public class LevelLoader : MonoBehaviour
 
     private const string SaveFileName = "savegame.json";
     private string SaveFilePath => Path.Combine(Application.persistentDataPath, SaveFileName);
+    private bool saveBlocked = false;
 
     public string CurrentLevelScene { get; private set; }
     private PlayerHealth playerHealth;

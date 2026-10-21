@@ -160,7 +160,7 @@ public class ExplodingModifier : MonoBehaviour
         foreach (Collider2D hit in playerHits)
         {
             PlayerHealth playerHealth = hit.GetComponentInParent<PlayerHealth>();
-            playerHealth?.TakeDamage(explosionDamage);
+            playerHealth?.TakeDamage(DifficultyManager.AdjustDamage(explosionDamage));
         }
 
         // Damage nearby enemies
