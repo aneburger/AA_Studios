@@ -62,10 +62,6 @@ public class Interactable : MonoBehaviour
                 speechBubbleIndicator.SetBasePosition(bubbleBasePos);
                 speechBubbleIndicator.Hide();
             }
-            else
-            {
-                Debug.LogWarning($"Speech Bubble Prefab on '{gameObject.name}' is missing an InteractIndicator component.", this);
-            }
         }
     }
 

@@ -278,10 +278,18 @@ public class DeathScreenManager : MonoBehaviour
         Close();
 
         Time.timeScale = 1f;
+
+        bool restartRun = LevelLoader.Instance != null && LevelLoader.Instance.RunEndedByDeathCap;
+
+        if (restartRun)
+        {
+            LevelLoader.Instance.StartFreshRunFromFloorOne();
+            FindFirstObjectByType<PlayerHealth>()?.RestoreAfterRetry(saveLevel: false);
+            return;
+        }
+
         RunStatsTracker.Instance?.ResumeTimer();
-
         LevelLoader.Instance?.ReloadCurrentLevel();
-
         FindFirstObjectByType<PlayerHealth>()?.RestoreAfterRetry();
     }
 

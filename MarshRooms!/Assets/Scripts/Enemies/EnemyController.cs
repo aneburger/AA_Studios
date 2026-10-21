@@ -87,7 +87,7 @@ public class EnemyController : MonoBehaviour
         if (playerHealth.IsOnCooldown()) return;
 
         playerHealth.SetLastAttacker(Data.enemyName);
-        playerHealth.TakeDamage(DifficultyManager.AdjustDamage(Data.contactDamage));
+        playerHealth.TakeDamage(Data.contactDamage);
 
         BaseMover playerMover = collision.GetComponentInParent<BaseMover>();
         if (playerMover != null)

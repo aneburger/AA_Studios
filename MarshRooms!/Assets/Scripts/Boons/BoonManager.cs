@@ -247,4 +247,10 @@ public class BoonManager : MonoBehaviour
         if (candidates.Count == 0) return null;
         return candidates[Random.Range(0, candidates.Count)];
     }
+
+    // -- RESET FOR NEW RUN --
+    public void ResetForNewRun()
+    {
+        RestoreFromSave(null, null);
+    }
 }

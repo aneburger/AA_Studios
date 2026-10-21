@@ -20,6 +20,9 @@ public class LevelLoader : MonoBehaviour
     [Header("Floor Display Names")]
     [SerializeField] private string[] floorDisplayNames;
 
+    // True from a Death Cap death until a fresh run starts or the player returns to the menu
+    public bool RunEndedByDeathCap { get; private set; }
+
     private const string SaveFileName = "savegame.json";
     private string SaveFilePath => Path.Combine(Application.persistentDataPath, SaveFileName);
     private bool saveBlocked = false;
@@ -94,6 +97,9 @@ public class LevelLoader : MonoBehaviour
     // -- RETURN TO MAIN MENU --
     public void ReturnToMainMenu()
     {
+        RunEndedByDeathCap = false;
+        DifficultyManager.Instance?.UnlockRun();
+
         Time.timeScale = 1f;
 
         if (BoonManager.Instance != null)
@@ -154,6 +160,12 @@ public class LevelLoader : MonoBehaviour
 
         ApplyPendingRestore();
 
+        if (sceneName.StartsWith("Floor_") && GetCurrentFloorNumber() > 6)
+        {
+            GameObject p = GameObject.FindGameObjectWithTag(playerTag);
+            p?.GetComponent<PlayerDodgeAttack>()?.SetUnlocked(true);
+        }
+
         if(sceneName == "Tutorial") yield break;
         
         yield return Fade(toBlack: false);
@@ -203,7 +215,9 @@ public class LevelLoader : MonoBehaviour
     public bool HasSavedGame => File.Exists(SaveFilePath);
 
     public void SaveCurrentLevel()
-    {
+    {   
+        if (RunEndedByDeathCap) return;
+
         if (string.IsNullOrEmpty(CurrentLevelScene))
             return;
 
@@ -212,7 +226,8 @@ public class LevelLoader : MonoBehaviour
 
         SaveGameData data = new SaveGameData
         {
-            sceneName = CurrentLevelScene
+            sceneName = CurrentLevelScene,
+            savedDifficulty = DifficultyManager.Instance != null ? (int)DifficultyManager.Current + 1 : 0
         };
 
         if (BoonManager.Instance != null)
@@ -247,7 +262,8 @@ public class LevelLoader : MonoBehaviour
             PlayerDodgeAttack dodgeAttack = player.GetComponent<PlayerDodgeAttack>();
             if (dodgeAttack != null)
             {
-                data.dodgeAttackUnlocked = dodgeAttack.GetSaveData();
+                // only save dodge attack after floor 6
+                data.dodgeAttackUnlocked = dodgeAttack.GetSaveData() && GetCurrentFloorNumber() > 6; 
             }
         }
         else
@@ -292,6 +308,12 @@ public class LevelLoader : MonoBehaviour
         {
             Debug.LogError("LevelLoader: save file was empty or corrupt.");
             return;
+        }
+
+        if (DifficultyManager.Instance != null)
+        {
+            Difficulty d = loaded.savedDifficulty > 0 ? (Difficulty)(loaded.savedDifficulty - 1) : Difficulty.Normal;
+            DifficultyManager.Instance.ResumeRun(d);
         }
 
         pendingRestoreData = loaded;
@@ -348,5 +370,27 @@ public class LevelLoader : MonoBehaviour
         {
             RunStatsTracker.Instance.RestoreFromSave(data.runStatsTrackerData);
         }
+    }
+
+    // -- END RUN (Death Cap) --
+    public void EndRunForDeathCap()
+    {
+        RunEndedByDeathCap = true;
+        ClearSavedGame();
+    }
+
+    // -- START FRESH RUN FROM FLOOR ONE (Death Cap retry) --
+    public void StartFreshRunFromFloorOne()
+    {
+        RunEndedByDeathCap = false;
+        ClearSavedGame();
+
+        BoonManager.Instance?.ResetForNewRun();
+        RunStatsTracker.Instance?.ResetForNewRun();
+
+        GameObject player = GameObject.FindGameObjectWithTag(playerTag);
+        player?.GetComponent<PlayerDodgeAttack>()?.SetUnlocked(false);
+
+        LoadLevel("Floor_01");
     }
 }

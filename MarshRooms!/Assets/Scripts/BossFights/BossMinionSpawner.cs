@@ -68,8 +68,12 @@ public class BossMinionSpawner : MonoBehaviour
         controller?.SetShouldSpawnAnimate();
 
         EnemyHealth health = go.GetComponent<EnemyHealth>();
+        
         if (health != null)
+        {
+            health.SetSuppressHealthDrop(true);
             health.OnDied += pos => HandleMinionDied(controller, pos, weaponGuaranteeChance, healthGuaranteeChance);
+        }
 
         MinionSpawned?.Invoke(go);
         return go;

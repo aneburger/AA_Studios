@@ -21,6 +21,8 @@ public class EnemyHealth : BaseHealth
     private ExplodingModifier exploder;
     private bool hasFinalized = false;
 
+    private bool suppressHealthDrop = false;
+
     // -- AWAKE --
     protected override void Awake()
     {
@@ -51,7 +53,13 @@ public class EnemyHealth : BaseHealth
             Instantiate(controller.Data.sporePrefab, spawnPos, Quaternion.identity);
         }
     }
-    
+
+    // -- SET SUPPRESS HEALTH DROP --
+    public void SetSuppressHealthDrop(bool value)
+    {
+        suppressHealthDrop = value;
+    }
+        
     // -- TAKE DAMAGE --
     public override void TakeDamage(float amount)
     {
@@ -135,7 +143,9 @@ public class EnemyHealth : BaseHealth
             // Health drop
             float healthDropChance = controller.Data.healthDropChance * BoonManager.Instance.Stats.healthDropRateMultiplier;
             float roll = Random.value;
-            bool willDrop = controller.Data.healthPickupPrefab != null
+
+            bool willDrop = !suppressHealthDrop
+                && controller.Data.healthPickupPrefab != null
                 && roll <= healthDropChance
                 && !PlayerHealth.IsAtFullHealth();
 

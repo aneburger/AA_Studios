@@ -133,6 +133,7 @@ public class PlayerHealth : BaseHealth
         if (damageCooldownTimer > 0f) return;
 
         amount = Mathf.Ceil(amount);
+        amount = DifficultyManager.AdjustDamage(amount);
 
         damageCooldownTimer = damageCooldown;
         base.TakeDamage(amount);
@@ -303,12 +304,12 @@ public class PlayerHealth : BaseHealth
             return;
         }
 
+        // Death cap mode
+        if (DifficultyManager.RestartRunOnDeath)
+            LevelLoader.Instance?.EndRunForDeathCap();
+
         base.Die();
         OnPlayerDeath?.Invoke();
-
-        // Death cap mode
-        //if (DifficultyManager.RestartRunOnDeath)
-            //LevelLoader.Instance?.EndRunForDeathCap();
 
         AudioManager.Instance.StopMusic();
         AudioManager.Instance.PlaySFX(dieClip, dieVolume);
@@ -349,14 +350,15 @@ public class PlayerHealth : BaseHealth
     }
 
     // -- RESTORE AFTER RETRY --
-    public void RestoreAfterRetry()
+    public void RestoreAfterRetry(bool saveLevel = true)
     {
         GetComponent<PlayerInput>().enabled = true;
         GetComponent<PlayerWeaponSlot>()?.ResetToDefaultWeapon();
         shooter.HideWeapon(false);
         mover.ForceIdleAnimation();
 
-        LevelLoader.Instance?.SaveCurrentLevel();
+        if (saveLevel)
+            LevelLoader.Instance?.SaveCurrentLevel();
 
         ResetHealth();
 

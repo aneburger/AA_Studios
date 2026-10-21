@@ -21,6 +21,9 @@ public class SaveGameData
 
     // Abilities
     public bool dodgeAttackUnlocked;
+
+    // Difficulty
+    public int savedDifficulty;
 }
 
 [System.Serializable]
