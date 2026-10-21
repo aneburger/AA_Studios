@@ -1,4 +1,6 @@
-// Shows one pip per fight on normal floors.
+// Shows one pip per fight on normal floors. Hidden on boss floors (RoomManager.manualControl).
+// Pip 0 is the pre-placed enemy group, pips 1..N are the entries in RoomManager.waves.
+// The last pip is the final wave.
 
 using UnityEngine;
 using System.Collections.Generic;
@@ -21,6 +23,10 @@ public class WavePipUI : MonoBehaviour
     [Header("Animation")]
     [SerializeField] private float framesPerSecond = 8f;
 
+    [Header("Kill Pop")]
+    [SerializeField] private float killPopScale = 0.15f;
+    [SerializeField] private float killPopDuration = 0.12f;
+
     [Header("Audio")]
     [SerializeField] private AudioClip waveStartClip;
     [SerializeField] private AudioClip finalWaveStartClip;
@@ -36,6 +42,7 @@ public class WavePipUI : MonoBehaviour
         RoomManager.OnWavesPlanned += HandleWavesPlanned;
         RoomManager.OnWaveStarted += HandleWaveStarted;
         RoomManager.OnWaveCompleted += HandleWaveCompleted;
+        EnemyManager.OnEnemyKilled += HandleEnemyKilled;
 
         RestoreFromRoom();
     }
@@ -46,6 +53,7 @@ public class WavePipUI : MonoBehaviour
         RoomManager.OnWavesPlanned -= HandleWavesPlanned;
         RoomManager.OnWaveStarted -= HandleWaveStarted;
         RoomManager.OnWaveCompleted -= HandleWaveCompleted;
+        EnemyManager.OnEnemyKilled -= HandleEnemyKilled;
     }
 
     // -- RESTORE FROM ROOM --
@@ -117,6 +125,14 @@ public class WavePipUI : MonoBehaviour
         pips[index].SetSprite(GetCompleteSprite(pips[index].IsFinal));
         pips[index].PlayPop();
         PlaySfx(waveCompleteClip);
+    }
+
+    // -- HANDLE ENEMY KILLED --
+    private void HandleEnemyKilled()
+    {
+        if (activeIndex < 0 || activeIndex >= pips.Count) return;
+
+        pips[activeIndex].PlayPop(killPopScale, killPopDuration);
     }
 
     // -- SET ACTIVE PIP --

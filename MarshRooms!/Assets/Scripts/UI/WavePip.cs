@@ -10,6 +10,8 @@ public class WavePip : MonoBehaviour
 
     private Image image;
     private float popTimer = -1f;
+    private float currentPopScale;
+    private float currentPopDuration;
 
     public bool IsFinal { get; private set; }
 
@@ -38,6 +40,14 @@ public class WavePip : MonoBehaviour
     // -- PLAY POP --
     public void PlayPop()
     {
+        PlayPop(popScale, popDuration);
+    }
+
+    // -- PLAY POP (custom size) --
+    public void PlayPop(float scale, float duration)
+    {
+        currentPopScale = scale;
+        currentPopDuration = duration;
         popTimer = 0f;
     }
 
@@ -47,7 +57,7 @@ public class WavePip : MonoBehaviour
         if (popTimer < 0f) return;
 
         popTimer += Time.deltaTime;
-        float t = popTimer / popDuration;
+        float t = popTimer / currentPopDuration;
 
         if (t >= 1f)
         {
@@ -56,6 +66,6 @@ public class WavePip : MonoBehaviour
             return;
         }
 
-        transform.localScale = Vector3.one * (1f + popScale * Mathf.Sin(t * Mathf.PI));
+        transform.localScale = Vector3.one * (1f + currentPopScale * Mathf.Sin(t * Mathf.PI));
     }
 }

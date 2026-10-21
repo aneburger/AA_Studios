@@ -71,16 +71,26 @@ public class Elevator : MonoBehaviour
         int floorNumber = LevelLoader.Instance.GetCurrentFloorNumber();
         List<BoonCardData> offers = BoonManager.Instance.GetThreeCardOffers(floorNumber);
 
+        // elevator ride screen
+        if (ElevatorScreen.Instance != null &&
+            ElevatorScreen.Instance.Play(floorNumber, offers, ApplyBoon, ProceedToNextFloor))
+            return;
+
         BoonSelectionUI.Instance.Show(
             offers,
             chosenCard =>
             {
-                BoonManager.Instance.ApplyBoonById(chosenCard.boonId);
-                RunStatsTracker.Instance?.RegisterCardCollected(chosenCard);
+                ApplyBoon(chosenCard);
                 ProceedToNextFloor();
             },
             onSkipped: ProceedToNextFloor
         );
+    }
+
+    private void ApplyBoon(BoonCardData chosenCard)
+    {
+        BoonManager.Instance.ApplyBoonById(chosenCard.boonId);
+        RunStatsTracker.Instance?.RegisterCardCollected(chosenCard);
     }
 
     private void ProceedToNextFloor()

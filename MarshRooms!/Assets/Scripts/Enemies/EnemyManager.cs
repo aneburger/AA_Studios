@@ -13,7 +13,9 @@ public class EnemyManager : MonoBehaviour
 
     private int spawningLocks = 0;
 
+    // Events
     public static event System.Action OnAllEnemiesDead;
+    public static event System.Action OnEnemyKilled;
 
     // -- AWAKE --
     private void Awake()
@@ -76,7 +78,8 @@ public class EnemyManager : MonoBehaviour
     // -- UNREGISTER ENEMY --
     public void UnregisterEnemy(GameObject enemy)
     {
-        activeEnemies.Remove(enemy);
+        if (activeEnemies.Remove(enemy))
+            OnEnemyKilled?.Invoke();
 
         if (activeEnemies.Count == 0 && spawningLocks == 0 && confirmRoutine == null)
             confirmRoutine = StartCoroutine(ConfirmAllDead());
