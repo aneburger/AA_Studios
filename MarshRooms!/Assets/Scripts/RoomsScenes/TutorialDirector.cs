@@ -333,7 +333,7 @@ public class TutorialDirector : MonoBehaviour
 
         // ==== PART 6: Wait for toilet to die ====
         yield return StartCoroutine(WaitUntil(() => toiletDead));
-        yield return new WaitForSeconds(1.2f);
+        yield return new WaitForSeconds(0.8f);
         yield return StartCoroutine(PlayDialogue(toiletWinDialogue));
 
 
@@ -377,7 +377,7 @@ public class TutorialDirector : MonoBehaviour
 
         // ==== PART 9: Wave 1 ====
         SetWaveActive(wave1Enemies, true);
-        TrackAmbushDeaths(wave1Enemies);
+        TrackAmbushDeaths(wave1Enemies, DropMinigun);
         SubscribeWaveClear(() => wave1Clear = true);
 
         ScreenEffects.Instance?.FadeFromBlack(0.5f);
@@ -415,7 +415,7 @@ public class TutorialDirector : MonoBehaviour
                 ai.SkipSpawnGrace();
                 ((Behaviour)ai).enabled = true;
             }
-            yield return new WaitForSeconds(2.6f);
+            yield return StartCoroutine(WaitForConditionOrTimeout(() => AllWave1EnemiesDead(), 2.6f));
         }
 
         // Wait for player to defeat wave
@@ -423,13 +423,6 @@ public class TutorialDirector : MonoBehaviour
         wave1Clear = true;
 
         // ==== PART 10: Minigun drop + learn weapon switching ====
-        
-        // Minigun drop (force to be at last position the enemy died)
-        if (minigunPickup != null)
-        {
-            minigunPickup.transform.position = lastAmbushDeathPosition;
-            minigunPickup.SetActive(true);
-        }
 
         // Wait for player to pick up the weapon and then fire dialogue
         yield return StartCoroutine(WaitUntil(() => minigunPickedUp));
@@ -532,6 +525,7 @@ public class TutorialDirector : MonoBehaviour
 
         LockPlayer();
         LockPlayerKeepInput();
+        playerHealth?.ResetHealth();
         yield return StartCoroutine(PlayDialogue(postWave3Dialogue1));
 
         yield return new WaitForSeconds(0.5f);
@@ -540,7 +534,7 @@ public class TutorialDirector : MonoBehaviour
         playerAimer?.SetAimOverride(Vector2.right);
         
         mrBlobsAnimator.Unhide();
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.8f);
 
         yield return StartCoroutine(PlayDialogue(postWave3Dialogue2));
 
@@ -858,7 +852,7 @@ public class TutorialDirector : MonoBehaviour
     }
 
     // -- TRACK LAST AMBUSH --
-    private void TrackAmbushDeaths(GameObject[] enemies)
+    private void TrackAmbushDeaths(GameObject[] enemies, System.Action onAllDead = null)
     {
         wave1DeathCount = 0;
 
@@ -870,8 +864,18 @@ public class TutorialDirector : MonoBehaviour
                 {
                     lastAmbushDeathPosition = pos;
                     wave1DeathCount++;
+                    if (wave1DeathCount >= enemies.Length)
+                        onAllDead?.Invoke();
                 };
         }
+    }
+
+    // -- DROP MINIGUN --
+    private void DropMinigun()
+    {
+        if (minigunPickup == null) return;
+        minigunPickup.transform.position = lastAmbushDeathPosition;
+        minigunPickup.SetActive(true);
     }
 
     // -- SET WAVE ACTIVE (STAGGERED) --
