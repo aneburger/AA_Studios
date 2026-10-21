@@ -144,9 +144,11 @@ public class SporeBar : MonoBehaviour
     {
         if (readyPrompt != null && !readyPrompt.activeSelf)
         {
+            promptRect.SetParent(shakeTarget.parent, false);
+            promptRect.anchoredPosition = new Vector2(
+                originalAnchoredPosition.x + shakeTarget.rect.width + (promptRect.rect.width * 0.5f) + readyPromptOffset.x,
+                originalAnchoredPosition.y + readyPromptOffset.y);
             readyPrompt.SetActive(true);
-            promptRect.SetParent(parentRect, false);
-            promptRect.anchoredPosition = originalAnchoredPosition + readyPromptOffset;
         }
 
         if (!isSporeReadyActive)
