@@ -30,6 +30,12 @@ public class PauseMenuManager : MonoBehaviour
     [SerializeField] private TMP_Text cancelText;
     [SerializeField] private TMP_Text confirmText;
 
+    [Header("Pause Menu Text")]
+    [SerializeField] private TMP_Text resumeText;
+    [SerializeField] private TMP_Text optionsText;
+    [SerializeField] private TMP_Text mainMenuText;
+    [SerializeField] private TMP_Text quitText;
+
     [Header("Button Arrows")]
     [SerializeField] private GameObject resumeArrow;
     [SerializeField] private GameObject optionsArrow;
@@ -52,6 +58,8 @@ public class PauseMenuManager : MonoBehaviour
     private GameObject[] menuArrows;
     private Button[] controlsMenuButtons;
     private TMP_Text[] controlsMenuTexts;
+
+    private TMP_Text[] pauseMenuTexts;
     private int currentIndex = -1;
     private enum ControlsMenuSource { PauseMenu }
 
@@ -66,6 +74,7 @@ public class PauseMenuManager : MonoBehaviour
         menuArrows = new[] { resumeArrow, optionsArrow, mainmenuArrow, quitArrow };
         controlsMenuButtons = new[] { cancelControlsButton, confirmControlsButton };
         controlsMenuTexts = new[] { cancelText, confirmText };
+        pauseMenuTexts = new[] {resumeText, optionsText, mainMenuText, quitText};
 
         ConfigureNavigation();
         ConfigurePointerEvents();
@@ -204,11 +213,11 @@ public class PauseMenuManager : MonoBehaviour
         bool changed = currentIndex != index;
         currentIndex = index;
 
-        //for (int i = 0; i < menuTexts.Length; i++)
-        //{
-        //    if (menuTexts[i] != null)
-        //        menuTexts[i].color = i == index ? selectedColor : normalColor;
-        //}
+        for (int i = 0; i < pauseMenuTexts.Length; i++)
+        {
+           if (pauseMenuTexts[i] != null)
+               pauseMenuTexts[i].color = i == index ? selectedColor : normalColor;
+        }
 
         for (int i = 0; i < menuArrows.Length; i++)
         {
