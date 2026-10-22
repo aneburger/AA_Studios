@@ -114,7 +114,7 @@ public class MenuManager : MonoBehaviour
             startButton.onClick.AddListener(OnOpenNewGameConfirm);
 
         if (tutorialButton != null)
-            tutorialButton.onClick.AddListener(() => OnBeginGame("Tutorial"));
+            tutorialButton.onClick.AddListener(OnOpenTutorialConfirm);
 
         if (controlsButton != null)
             controlsButton.onClick.AddListener(OnOpenControls);
@@ -440,14 +440,14 @@ public class MenuManager : MonoBehaviour
 
     private void OnOpenNewGameConfirm()
     {
-        if (LevelLoader.Instance == null || !LevelLoader.Instance.HasSavedGame)
-        {
-            OnBeginGame(startFloor);
-            return;
-        }
-
         PlayUiSound(clickClip, clickVolume);
         newGameConfirmManager?.Open(NewGameConfirmManager.NewGameConfirmSource.MainMenuNewGame);
+    }
+
+    private void OnOpenTutorialConfirm()
+    {
+        PlayUiSound(clickClip, clickVolume);
+        newGameConfirmManager?.Open(NewGameConfirmManager.NewGameConfirmSource.MainMenuTutorial);
     }
 
     // -- OPEN CONTROLS --

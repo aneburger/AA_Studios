@@ -4,14 +4,13 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using static QuitConfirmManager;
 
 public class NewGameConfirmManager : MonoBehaviour
 {
-
     public enum NewGameConfirmSource
     {
-        MainMenuNewGame
+        MainMenuNewGame,
+        MainMenuTutorial
     }
 
     [Header("Panel")]
@@ -20,14 +19,27 @@ public class NewGameConfirmManager : MonoBehaviour
     [Header("Buttons")]
     [SerializeField] private Button yesButton;
     [SerializeField] private Button noButton;
+    [SerializeField] private Button easyModeButton;
+    [SerializeField] private Button normalModeButton;
+    [SerializeField] private Button hardModeButton;
+    [SerializeField] private Button deathCapModeButton;
 
     [Header("Text")]
     [SerializeField] private TMP_Text yesText;
     [SerializeField] private TMP_Text noText;
+    [SerializeField] private TMP_Text modeDescription;
+    [SerializeField] private TMP_Text easyModeText;
+    [SerializeField] private TMP_Text normalModeText;
+    [SerializeField] private TMP_Text hardModeText;
+    [SerializeField] private TMP_Text deathCapModeText;
 
     [Header("Hover Arrows")]
     [SerializeField] private GameObject yesArrow;
     [SerializeField] private GameObject noArrow;
+    [SerializeField] private GameObject easyModeHover;
+    [SerializeField] private GameObject normalModeHover;
+    [SerializeField] private GameObject hardModeHover;
+    [SerializeField] private GameObject deathCapModeHover;
 
     [Header("UI Audio")]
     [SerializeField] private AudioClip hoverClip;
@@ -45,18 +57,26 @@ public class NewGameConfirmManager : MonoBehaviour
     private Button[] buttons;
     private TMP_Text[] texts;
     private GameObject[] arrows;
+    private Button[] difficultyButtons;
+    private TMP_Text[] difficultyTexts;
+    private GameObject[] difficultyHovers;
 
     private NewGameConfirmSource currentSource;
     private int currentIndex = -1;
+    private Difficulty chosenDifficulty = Difficulty.Normal;
 
     public bool NewGameConfirmIsOpen => newGameConfirmPanel != null && newGameConfirmPanel.activeSelf;
 
-
     private void Awake()
     {
+        ResolveAssetReferences();
+
         buttons = new[] { yesButton, noButton };
         texts = new[] { yesText, noText };
         arrows = new[] { yesArrow, noArrow };
+        difficultyButtons = new[] { easyModeButton, normalModeButton, hardModeButton, deathCapModeButton };
+        difficultyTexts = new[] { easyModeText, normalModeText, hardModeText, deathCapModeText };
+        difficultyHovers = new[] { easyModeHover, normalModeHover, hardModeHover, deathCapModeHover };
 
         ConfigureNavigation();
         ConfigurePointerEvents();
@@ -72,32 +92,114 @@ public class NewGameConfirmManager : MonoBehaviour
 
         if (noButton != null)
             noButton.onClick.AddListener(OnNoPressed);
+
+        for (int i = 0; i < difficultyButtons.Length; i++)
+        {
+            int index = i;
+            if (difficultyButtons[i] != null)
+                difficultyButtons[i].onClick.AddListener(() => SelectDifficulty(index));
+        }
     }
 
+    private void ResolveAssetReferences()
+    {
+        easyModeButton = ResolveButton(easyModeButton, "easy-mode-button");
+        normalModeButton = ResolveButton(normalModeButton, "normal-mode-button");
+        hardModeButton = ResolveButton(hardModeButton, "hard-mode-button");
+        deathCapModeButton = ResolveButton(deathCapModeButton, "death-cap-mode-button");
+
+        easyModeHover = ResolveChild(easyModeHover, "easy-hover");
+        normalModeHover = ResolveChild(normalModeHover, "normal-hover");
+        hardModeHover = ResolveChild(hardModeHover, "hard-hover");
+        deathCapModeHover = ResolveChild(deathCapModeHover, "death-cap-hover");
+
+        modeDescription = ResolveText(modeDescription, "mode-description");
+        easyModeText = ResolveText(easyModeText, easyModeButton);
+        normalModeText = ResolveText(normalModeText, normalModeButton);
+        hardModeText = ResolveText(hardModeText, hardModeButton);
+        deathCapModeText = ResolveText(deathCapModeText, deathCapModeButton);
+    }
+
+    private Button ResolveButton(Button current, string objectName)
+    {
+        if (current != null)
+            return current;
+
+        foreach (Button button in GetComponentsInChildren<Button>(true))
+        {
+            if (button.name == objectName)
+                return button;
+        }
+
+        return null;
+    }
+
+    private GameObject ResolveChild(GameObject current, string objectName)
+    {
+        if (current != null)
+            return current;
+
+        foreach (Transform child in GetComponentsInChildren<Transform>(true))
+        {
+            if (child.name == objectName)
+                return child.gameObject;
+        }
+
+        return null;
+    }
+
+    private TMP_Text ResolveText(TMP_Text current, Button button)
+    {
+        if (current != null || button == null)
+            return current;
+
+        return button.GetComponentInChildren<TMP_Text>(true);
+    }
+
+    private TMP_Text ResolveText(TMP_Text current, string objectName)
+    {
+        if (current != null)
+            return current;
+
+        foreach (TMP_Text text in GetComponentsInChildren<TMP_Text>(true))
+        {
+            if (text.name == objectName)
+                return text;
+        }
+
+        return null;
+    }
 
     private void ConfigureNavigation()
     {
-        if (yesButton != null)
+        for (int i = 0; i < difficultyButtons.Length; i++)
         {
-            Navigation nav = yesButton.navigation;
+            if (difficultyButtons[i] == null)
+                continue;
+
+            Navigation nav = difficultyButtons[i].navigation;
             nav.mode = Navigation.Mode.Explicit;
-            nav.selectOnLeft = noButton;
-            nav.selectOnRight = noButton;
-            nav.selectOnUp = noButton;
-            nav.selectOnDown = noButton;
-            yesButton.navigation = nav;
+            nav.selectOnLeft = difficultyButtons[(i + difficultyButtons.Length - 1) % difficultyButtons.Length];
+            nav.selectOnRight = difficultyButtons[(i + 1) % difficultyButtons.Length];
+            nav.selectOnDown = yesButton;
+            difficultyButtons[i].navigation = nav;
         }
 
-        if (noButton != null)
-        {
-            Navigation nav = noButton.navigation;
-            nav.mode = Navigation.Mode.Explicit;
-            nav.selectOnLeft = yesButton;
-            nav.selectOnRight = yesButton;
-            nav.selectOnUp = yesButton;
-            nav.selectOnDown = yesButton;
-            noButton.navigation = nav;
-        }
+        ConfigureButtonNavigation(yesButton, noButton);
+        ConfigureButtonNavigation(noButton, yesButton);
+    }
+
+    private void ConfigureButtonNavigation(Button button, Button otherButton)
+    {
+        if (button == null)
+            return;
+
+        Navigation nav = button.navigation;
+        nav.mode = Navigation.Mode.Explicit;
+        nav.selectOnUp = normalModeButton;
+        nav.selectOnLeft = otherButton;
+        nav.selectOnRight = otherButton;
+        button.navigation = nav;
     }
 
     private void ConfigurePointerEvents()
@@ -108,26 +210,28 @@ public class NewGameConfirmManager : MonoBehaviour
                 continue;
 
             int index = i;
+            AddPointerTrigger(buttons[i], EventTriggerType.PointerEnter, _ => SetConfirmationSelection(index, true));
+            AddPointerTrigger(buttons[i], EventTriggerType.Select, _ => SetConfirmationSelection(index, true));
+        }
 
-            EventTrigger trigger = buttons[i].GetComponent<EventTrigger>();
-            if (trigger == null)
-                trigger = buttons[i].gameObject.AddComponent<EventTrigger>();
+        for (int i = 0; i < difficultyButtons.Length; i++)
+        {
+            if (difficultyButtons[i] == null)
+                continue;
 
-            if (trigger.triggers == null)
-                trigger.triggers = new List<EventTrigger.Entry>();
-
-            AddTrigger(trigger, EventTriggerType.PointerEnter, _ => SetSelection(index, true));
-            AddTrigger(trigger, EventTriggerType.Select, _ => SetSelection(index, true));
+            int index = i;
+            AddPointerTrigger(difficultyButtons[i], EventTriggerType.PointerEnter, _ => SetDifficultySelection(index, true));
+            AddPointerTrigger(difficultyButtons[i], EventTriggerType.Select, _ => SetDifficultySelection(index, true));
         }
     }
 
-    private void AddTrigger(EventTrigger trigger, EventTriggerType type, UnityAction<BaseEventData> callback)
+    private void AddPointerTrigger(Button button, EventTriggerType type, UnityAction<BaseEventData> callback)
     {
-        EventTrigger.Entry entry = new EventTrigger.Entry
-        {
-            eventID = type
-        };
+        EventTrigger trigger = button.GetComponent<EventTrigger>();
+        if (trigger == null)
+            trigger = button.gameObject.AddComponent<EventTrigger>();
 
+        EventTrigger.Entry entry = new EventTrigger.Entry { eventID = type };
         entry.callback.AddListener(callback);
         trigger.triggers.Add(entry);
     }
@@ -135,11 +239,13 @@ public class NewGameConfirmManager : MonoBehaviour
     public void Open(NewGameConfirmSource source)
     {
         currentSource = source;
+        chosenDifficulty = Difficulty.Normal;
 
         if (newGameConfirmPanel != null)
             newGameConfirmPanel.SetActive(true);
 
-        SetSelection(0, false);
+        SetDifficultySelection((int)Difficulty.Normal, false);
+        SetConfirmationSelection(0, false);
     }
 
     private void Close()
@@ -150,12 +256,63 @@ public class NewGameConfirmManager : MonoBehaviour
         currentIndex = -1;
     }
 
-    private void SetSelection(int index, bool playHoverSound)
+    private void SelectDifficulty(int index)
     {
-        if (index < 0 || index >= buttons.Length)
+        if (index < 0 || index >= difficultyButtons.Length || difficultyButtons[index] == null)
             return;
 
-        if (buttons[index] == null)
+        PlayUiSound(clickClip, clickVolume);
+        chosenDifficulty = (Difficulty)index;
+        SetDifficultySelection(index, false);
+    }
+
+    private void SetDifficultySelection(int index, bool playHoverSound)
+    {
+        if (index < 0 || index >= difficultyButtons.Length || difficultyButtons[index] == null)
+            return;
+
+        bool changed = currentIndex != index;
+        currentIndex = index;
+
+        for (int i = 0; i < difficultyTexts.Length; i++)
+        {
+            if (difficultyTexts[i] != null)
+                difficultyTexts[i].color = i == index ? selectedColor : normalColor;
+        }
+
+        for (int i = 0; i < difficultyHovers.Length; i++)
+        {
+            if (difficultyHovers[i] != null)
+                difficultyHovers[i].SetActive(i == index);
+        }
+
+        if (modeDescription != null)
+            modeDescription.text = GetDifficultyDescription((Difficulty)index);
+
+        SelectButton(difficultyButtons[index]);
+
+        if (playHoverSound && changed)
+            PlayUiSound(hoverClip, hoverVolume);
+    }
+
+    private string GetDifficultyDescription(Difficulty difficulty)
+    {
+        switch (difficulty)
+        {
+            case Difficulty.Easy:
+                return "Experience the story with a lighter combat challenge.";
+            case Difficulty.Hard:
+                return "For those looking for a greater combat challenge.";
+            case Difficulty.DeathCap:
+                return "RESTART FROM FLOOR 1 WHEN YOU DIE.";
+            default:
+                return "The intended experience of the game.";
+        }
+    }
+
+    private void SetConfirmationSelection(int index, bool playHoverSound)
+    {
+        if (index < 0 || index >= buttons.Length || buttons[index] == null)
             return;
 
         bool changed = currentIndex != index;
@@ -173,13 +330,17 @@ public class NewGameConfirmManager : MonoBehaviour
                 arrows[i].SetActive(i == index);
         }
 
-        if (EventSystem.current != null && EventSystem.current.currentSelectedGameObject != buttons[index].gameObject)
-            EventSystem.current.SetSelectedGameObject(buttons[index].gameObject);
+        SelectButton(buttons[index]);
 
         if (playHoverSound && changed)
             PlayUiSound(hoverClip, hoverVolume);
     }
 
+    private void SelectButton(Button button)
+    {
+        if (EventSystem.current != null && EventSystem.current.currentSelectedGameObject != button.gameObject)
+            EventSystem.current.SetSelectedGameObject(button.gameObject);
+    }
 
     private void OnYesPressed()
     {
@@ -187,13 +348,14 @@ public class NewGameConfirmManager : MonoBehaviour
         Close();
 
         Time.timeScale = 1f;
-
+        DifficultyManager.Instance.StartNewRun(chosenDifficulty);
         LevelLoader.Instance?.ClearSavedGame();
 
         MenuManager menuManager = FindFirstObjectByType<MenuManager>();
         if (menuManager != null)
         {
-            menuManager.OnBeginGame(startFloor);
+            string scene = currentSource == NewGameConfirmSource.MainMenuTutorial ? "Tutorial" : startFloor;
+            menuManager.OnBeginGame(scene);
         }
     }
 
@@ -206,16 +368,11 @@ public class NewGameConfirmManager : MonoBehaviour
     {
         PlayUiSound(clickClip, clickVolume);
         Close();
-
-        if (newGameConfirmPanel != null) newGameConfirmPanel.SetActive(false);
     }
 
     private void PlayUiSound(AudioClip clip, float volume)
     {
-        if (clip == null)
-            return;
-
-        AudioManager.Instance?.PlaySFXWithPitch(clip, volume);
+        if (clip != null)
+            AudioManager.Instance?.PlaySFXWithPitch(clip, volume);
     }
-
 }
