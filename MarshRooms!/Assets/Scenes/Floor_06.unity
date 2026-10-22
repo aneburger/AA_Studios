@@ -12839,6 +12839,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: Kitchen-door
       objectReference: {fileID: 0}
+    - target: {fileID: 4615630345178776381, guid: 722bb6fcdecc3df41988ecede1edc93d, type: 3}
+      propertyPath: m_Size.x
+      value: 0.399621
+      objectReference: {fileID: 0}
+    - target: {fileID: 4615630345178776381, guid: 722bb6fcdecc3df41988ecede1edc93d, type: 3}
+      propertyPath: m_Size.y
+      value: 2.1102517
+      objectReference: {fileID: 0}
+    - target: {fileID: 4615630345178776381, guid: 722bb6fcdecc3df41988ecede1edc93d, type: 3}
+      propertyPath: m_Offset.y
+      value: -0.16065943
+      objectReference: {fileID: 0}
+    - target: {fileID: 5831873360634781337, guid: 722bb6fcdecc3df41988ecede1edc93d, type: 3}
+      propertyPath: m_Size.y
+      value: 2.1316636
+      objectReference: {fileID: 0}
+    - target: {fileID: 5831873360634781337, guid: 722bb6fcdecc3df41988ecede1edc93d, type: 3}
+      propertyPath: m_Offset.y
+      value: -0.14995348
+      objectReference: {fileID: 0}
     - target: {fileID: 6257052244954196687, guid: 722bb6fcdecc3df41988ecede1edc93d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 13.001
@@ -87100,6 +87120,7 @@ MonoBehaviour:
   boss: {fileID: 8169478559474246813}
   pauseBeforeDialogue: 1.3
   introDialogue: {fileID: 11400000, guid: 1bcbb49e47d68c14e9eba35d5a87e56f, type: 2}
+  introSeenId: boss_chef
   introCard: {fileID: 1026718583}
   pauseBeforeCard: 0.6
   pauseAfterCard: 0.3
@@ -87107,6 +87128,7 @@ MonoBehaviour:
   doorOpenClip: {fileID: 8300000, guid: 1ca490609e24e524db4bca612167753a, type: 3}
   doorOpenVolume: 1
   elevator: {fileID: 4730439802504969471}
+  downedHits: {fileID: 9056498895661130923}
   bossMusic: {fileID: 8300000, guid: acd988c884bd81a4696fcfb4d7e54080, type: 3}
   bossMusicVolume: 0.4
   musicFadeInDuration: 1.3
@@ -100034,6 +100056,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ec686a1c796be34bb8dea31ff843ca5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ChefPuffsOutro
+--- !u!114 &9056498895661130923 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7674058036989607450, guid: c2ec80757c23d484499ea01eab15bddc, type: 3}
+  m_PrefabInstance: {fileID: 708797362768254343}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d5298bde41e7544fa81b87fb7b357a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ChefDownedHits
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

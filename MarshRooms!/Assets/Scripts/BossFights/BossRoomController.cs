@@ -45,6 +45,7 @@ public class BossRoomController : MonoBehaviour
     [SerializeField] private AudioClip doorOpenClip;
     [Range(0f, 1f)] [SerializeField] private float doorOpenVolume = 1f;
     [SerializeField] private Elevator elevator;
+    [SerializeField] private ChefDownedHits downedHits;
 
     [Header("Boss Music")]
     [SerializeField] private AudioClip bossMusic;
@@ -325,6 +326,7 @@ public class BossRoomController : MonoBehaviour
         ReleasePlayer(restoreWeapon: true);
         OpenDoor();
         elevator?.OpenManually();
+        downedHits?.Begin();
     }
 
     private void OpenDoor()

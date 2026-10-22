@@ -41,10 +41,12 @@ public class BossHealth : BaseHealth
     [Range(0f, 1f)] [SerializeField] private float deflectVolume = 1f;
     [SerializeField] private float deflectCooldown = 0.08f;
 
+    // Events
     public event Action<float, float> OnHealthChanged;
     public event Action OnTookDamage; 
     public event Action OnPhaseTwoThreshold;
     public event Action OnDied;
+    public event Action OnHitWhileDead;
 
     private readonly HashSet<string> invulnerableReasons = new HashSet<string>();
     private int thresholdIndex;
@@ -115,7 +117,11 @@ public class BossHealth : BaseHealth
     // -- TAKE DAMAGE --
     public override void TakeDamage(float amount)
     {
-        if (IsDead()) return;
+        if (IsDead())
+        {
+            OnHitWhileDead?.Invoke();
+            return;
+        }
 
         if (IsInvulnerable)
         {

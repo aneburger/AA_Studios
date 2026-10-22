@@ -128,6 +128,7 @@ GameObject:
   - component: {fileID: 5097940574741786380}
   - component: {fileID: 6090154094055589427}
   - component: {fileID: 1277208911826252553}
+  - component: {fileID: 7674058036989607450}
   m_Layer: 7
   m_Name: chef-puffs-boss
   m_TagString: Untagged
@@ -588,6 +589,47 @@ MonoBehaviour:
   - {fileID: 8357494016595263076}
   - {fileID: 8128613600477994793}
   disableHitAnimation: 0
+--- !u!114 &7674058036989607450
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4508362719332185565}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d5298bde41e7544fa81b87fb7b357a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ChefDownedHits
+  boss: {fileID: 6827236103612923331}
+  bossAnimator: {fileID: 2859230541599407533}
+  stages:
+  - hitsRequired: 5
+    dialogue: {fileID: 11400000, guid: 2c273143efc105c44b60c7337334fcf5, type: 2}
+  - hitsRequired: 10
+    dialogue: {fileID: 11400000, guid: 2c273143efc105c44b60c7337334fcf5, type: 2}
+  hitsToKill: 15
+  hitClip: {fileID: 8300000, guid: 3ef1eef1e125ae04ca5e0053211ce2c1, type: 3}
+  hitVolume: 0.8
+  hitSoundCooldown: 0.05
+  finalDeathTrigger: FinalDeath
+  disappearDelay: 1.5
+  disappearTrigger: Disappear
+  disableCollidersOnDisappear: 1
+  hideOnDisappear:
+  - {fileID: 2411827145241747786}
+  finalDeathClip: {fileID: 8300000, guid: 0d591969c6603fe4cb52ef7b5959feda, type: 3}
+  finalDeathVolume: 1
+  vanishVfxPrefab: {fileID: 4081999799842582576, guid: 58ff3210537b77e43a7aece106f1672e, type: 3}
+  vanishVfxOffset: {x: 0, y: 0, z: 0}
+  sporePrefab: {fileID: 7129025776932877359, guid: b8874dc0a3c605d419413a967c2f2c17, type: 3}
+  minSpores: 3
+  maxSpores: 5
+  sporeScatterRadius: 1.5
+  killedRunFlag: killed_chef
+  onKilled:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &8240283278297865342
 GameObject:
   m_ObjectHideFlags: 0
@@ -966,6 +1008,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fe02030257054c548a0a8f1e09f2f665, type: 3}
+--- !u!1 &2411827145241747786 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1525218423229736197, guid: fe02030257054c548a0a8f1e09f2f665, type: 3}
+  m_PrefabInstance: {fileID: 3770113297336632399}
+  m_PrefabAsset: {fileID: 0}
 --- !u!212 &8357494016595263076 stripped
 SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 5163916380359555627, guid: fe02030257054c548a0a8f1e09f2f665, type: 3}

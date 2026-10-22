@@ -52536,6 +52536,38 @@ PrefabInstance:
       propertyPath: m_Name
       value: Mycena
       objectReference: {fileID: 0}
+    - target: {fileID: 2819628023860600835, guid: 56123277ec3208a40ae2a67cfdd3ad32, type: 3}
+      propertyPath: stages.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819628023860600835, guid: 56123277ec3208a40ae2a67cfdd3ad32, type: 3}
+      propertyPath: stages.Array.data[0].dialogue
+      value: 
+      objectReference: {fileID: 11400000, guid: 2c273143efc105c44b60c7337334fcf5, type: 2}
+    - target: {fileID: 2819628023860600835, guid: 56123277ec3208a40ae2a67cfdd3ad32, type: 3}
+      propertyPath: stages.Array.data[1].dialogue
+      value: 
+      objectReference: {fileID: 11400000, guid: 2c273143efc105c44b60c7337334fcf5, type: 2}
+    - target: {fileID: 2819628023860600835, guid: 56123277ec3208a40ae2a67cfdd3ad32, type: 3}
+      propertyPath: stages.Array.data[0].requiresRunFlag
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819628023860600835, guid: 56123277ec3208a40ae2a67cfdd3ad32, type: 3}
+      propertyPath: stages.Array.data[1].requiresRunFlag
+      value: killed_chef
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819628023860600835, guid: 56123277ec3208a40ae2a67cfdd3ad32, type: 3}
+      propertyPath: stages.Array.data[0].onCompleted.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819628023860600835, guid: 56123277ec3208a40ae2a67cfdd3ad32, type: 3}
+      propertyPath: stages.Array.data[0].onCompleted.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819628023860600835, guid: 56123277ec3208a40ae2a67cfdd3ad32, type: 3}
+      propertyPath: stages.Array.data[0].onCompleted.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6809733034006329004, guid: 56123277ec3208a40ae2a67cfdd3ad32, type: 3}
       propertyPath: sortingOffset
       value: -500
