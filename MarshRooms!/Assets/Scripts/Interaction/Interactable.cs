@@ -155,4 +155,29 @@ public class Interactable : MonoBehaviour
 
         UpdateSpeechBubble();
     }
+
+    // -- APPLY OFFSETS --
+    private void ApplyOffsets()
+    {
+        if (indicator != null)
+        {
+            Vector3 pos = new Vector3(indicatorHorizontalOffset, indicatorHeight, 0f);
+            indicator.transform.localPosition = pos;
+            indicator.SetBasePosition(pos);
+        }
+
+        if (speechBubbleIndicator != null)
+        {
+            Vector3 pos = new Vector3(speechBubbleHorizontalOffset, speechBubbleHeight, 0f);
+            speechBubbleIndicator.transform.localPosition = pos;
+            speechBubbleIndicator.SetBasePosition(pos);
+        }
+    }
+
+    #if UNITY_EDITOR
+    private void OnValidate()
+    {
+        if (Application.isPlaying) ApplyOffsets();
+    }
+    #endif
 }
