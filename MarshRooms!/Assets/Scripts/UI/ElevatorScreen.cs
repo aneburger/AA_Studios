@@ -112,6 +112,7 @@ public class ElevatorScreen : MonoBehaviour
     private bool isPlaying = false;
     private bool skipRequested = false;
     private float skipEnabledTime = float.MaxValue;
+    private bool playerLockedByUs = false;
 
     private Vector2 leftClosedPos;
     private Vector2 rightClosedPos;
@@ -192,59 +193,63 @@ public class ElevatorScreen : MonoBehaviour
 
         SetPlayerLocked(true);
 
-        yield return FadeRoutine(true);
-        Time.timeScale = 0f;
-
-        PrepareScreen(clearedFloor);
-        if (screenRoot != null) screenRoot.SetActive(true);
-
-        yield return FadeRoutine(false);
-        yield return new WaitForSecondsRealtime(holdBeforeCards);
-
-        if (guestRiding)
+        try
         {
-            SetGuestFacing(true, marshIdle);
-            yield return Wait(guestStareBeat);
+            yield return FadeRoutine(true);
+            Time.timeScale = 0f;
 
-            yield return PlayGuestDialogue(guestStareDialogue);
+            PrepareScreen(clearedFloor);
+            if (screenRoot != null) screenRoot.SetActive(true);
 
-            SetGuestFacing(false, marshIdle);
-            yield return Wait(guestLookAwayPause);
-        }
+            yield return FadeRoutine(false);
+            yield return new WaitForSecondsRealtime(holdBeforeCards);
 
-        // cards slide up, wait for a pick or a skip
-        bool picked = false;
-        BoonSelectionUI.Instance.Show(
-            offers,
-            card =>
+            if (guestRiding)
             {
-                onPicked?.Invoke(card);
-                picked = true;
-            },
-            () => picked = true,
-            manageGameState: false
-        );
+                SetGuestFacing(true, marshIdle);
+                yield return Wait(guestStareBeat);
 
-        yield return new WaitUntil(() => picked);
-        skipEnabledTime = Time.unscaledTime + skipInputDelay;
+                yield return PlayGuestDialogue(guestStareDialogue);
 
-        yield return RideRoutine(clearedFloor, destination);
-        yield return ArriveRoutine();
+                SetGuestFacing(false, marshIdle);
+                yield return Wait(guestLookAwayPause);
+            }
 
-        // screen is fully black here
-        StopRumble();
-        if (screenRoot != null) screenRoot.SetActive(false);
+            // cards slide up, wait for a pick or a skip
+            bool picked = false;
+            BoonSelectionUI.Instance.Show(
+                offers,
+                card =>
+                {
+                    onPicked?.Invoke(card);
+                    picked = true;
+                },
+                () => picked = true,
+                manageGameState: false
+            );
 
-        // the guest only rides once per game
-        if (guestRiding && !string.IsNullOrEmpty(guestSeenId))
-            StoryFlags.Set(guestSeenId);
+            yield return new WaitUntil(() => picked);
+            skipEnabledTime = Time.unscaledTime + skipInputDelay;
 
-        guestRiding = false;
-        if (guestImage != null) guestImage.gameObject.SetActive(false);
+            yield return RideRoutine(clearedFloor, destination);
+            yield return ArriveRoutine();
 
-        Time.timeScale = 1f;
-        SetPlayerLocked(false);
-        isPlaying = false;
+            // the guest only rides once per game
+            if (guestRiding && !string.IsNullOrEmpty(guestSeenId))
+                StoryFlags.Set(guestSeenId);
+        }
+        finally
+        {
+            StopRumble();
+            if (screenRoot != null) screenRoot.SetActive(false);
+
+            guestRiding = false;
+            if (guestImage != null) guestImage.gameObject.SetActive(false);
+
+            Time.timeScale = 1f;
+            SetPlayerLocked(false);
+            isPlaying = false;
+        }
 
         onFinished?.Invoke();
     }
@@ -377,9 +382,6 @@ public class ElevatorScreen : MonoBehaviour
         bool done = false;
         DialogueManager.Instance.StartDialogue(sequence, () => done = true, keepGamePaused: true);
         yield return new WaitUntil(() => done);
-
-        // Dialogue events may have unlocked the player; keep them locked for the rest of the ride
-        SetPlayerLocked(true);
 
         // The key that closed the dialogue must not also skip the ride
         if (skipEnabledTime != float.MaxValue)
@@ -703,6 +705,9 @@ public class ElevatorScreen : MonoBehaviour
     // -- SET PLAYER LOCKED --
     private void SetPlayerLocked(bool locked)
     {
+        if (playerLockedByUs == locked) return;
+        playerLockedByUs = locked;
+
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         player?.GetComponent<PlayerMover>()?.SetInputLocked(locked);
     }
