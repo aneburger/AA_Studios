@@ -38,6 +38,22 @@ public class ElevatorScreen : MonoBehaviour
     [SerializeField] private MarshClip marshIdle;
     [SerializeField] private MarshClip marshLookUp;
     [SerializeField] private MarshClip marshFacingAway;
+    [SerializeField] private MarshClip marshLookAtGuest;
+
+    [Header("Guest Passenger (one-off)")]
+    [SerializeField] private Image guestImage;
+    [SerializeField] private MarshClip guestIdle;
+    [SerializeField] private MarshClip guestLookAtMarsh;
+    [SerializeField] private int guestFloor = 4;
+    [SerializeField] private string guestSeenId = "elevator_guest_chef";
+    [SerializeField] private DialogueSequence guestStareDialogue;
+    [SerializeField] private DialogueSequence guestRideDialogue;
+
+    [Header("Guest Timing")]
+    [SerializeField] private float guestStareBeat = 0.7f;
+    [SerializeField] private float guestLookAwayPause = 0.6f;
+    [SerializeField] private float guestRideGlance = 0.5f;
+    [SerializeField] private float guestArriveDelay = 0.4f;
 
     [Header("Doors")]
     [SerializeField] private RectTransform leftDoor;
@@ -113,6 +129,10 @@ public class ElevatorScreen : MonoBehaviour
     private MarshClip currentClip;
     private float marshTimer = 0f;
 
+    private bool guestRiding = false;
+    private MarshClip currentGuestClip;
+    private float guestTimer = 0f;
+
     // -- AWAKE --
     private void Awake()
     {
@@ -166,6 +186,10 @@ public class ElevatorScreen : MonoBehaviour
 
         int destination = clearedFloor + 1;
 
+        guestRiding = guestImage != null
+            && clearedFloor == guestFloor
+            && (string.IsNullOrEmpty(guestSeenId) || !StoryFlags.Has(guestSeenId));
+
         SetPlayerLocked(true);
 
         yield return FadeRoutine(true);
@@ -176,6 +200,17 @@ public class ElevatorScreen : MonoBehaviour
 
         yield return FadeRoutine(false);
         yield return new WaitForSecondsRealtime(holdBeforeCards);
+
+        if (guestRiding)
+        {
+            SetGuestFacing(true, marshIdle);
+            yield return Wait(guestStareBeat);
+
+            yield return PlayGuestDialogue(guestStareDialogue);
+
+            SetGuestFacing(false, marshIdle);
+            yield return Wait(guestLookAwayPause);
+        }
 
         // cards slide up, wait for a pick or a skip
         bool picked = false;
@@ -199,6 +234,13 @@ public class ElevatorScreen : MonoBehaviour
         // screen is fully black here
         StopRumble();
         if (screenRoot != null) screenRoot.SetActive(false);
+
+        // the guest only rides once per game
+        if (guestRiding && !string.IsNullOrEmpty(guestSeenId))
+            StoryFlags.Set(guestSeenId);
+
+        guestRiding = false;
+        if (guestImage != null) guestImage.gameObject.SetActive(false);
 
         Time.timeScale = 1f;
         SetPlayerLocked(false);
@@ -238,6 +280,12 @@ public class ElevatorScreen : MonoBehaviour
         rumbling = false;
         if (shakeRoot != null) shakeRoot.anchoredPosition = shakeBasePos;
 
+        if (guestImage != null)
+        {
+            guestImage.gameObject.SetActive(guestRiding);
+            if (guestRiding) PlayGuest(guestIdle);
+        }
+
         PlayMarsh(marshIdle);
     }
 
@@ -245,6 +293,14 @@ public class ElevatorScreen : MonoBehaviour
     private IEnumerator RideRoutine(int clearedFloor, int destination)
     {
         StartRumble();
+
+        // they glance at each other, then quickly look away again
+        if (guestRiding && !skipRequested)
+        {
+            SetGuestFacing(true, marshIdle);
+            yield return Wait(guestRideGlance);
+            SetGuestFacing(false, marshIdle);
+        }
 
         yield return Wait(delayBeforePop);
 
@@ -255,14 +311,15 @@ public class ElevatorScreen : MonoBehaviour
 
         yield return Wait(delayBeforeDisplay);
 
-        // arrow + number appear, Marsh looks up, the next button starts flashing
-        PlayMarsh(marshLookUp);
+        PlayMarsh(guestRiding ? marshIdle : marshLookUp);
         StartButtonFlash(destination);
         SetDisplay(destination);
 
         if (!skipRequested)
             yield return BlinkDisplayRoutine();
         SetDisplayVisible(true);
+
+        
 
         yield return Wait(rideHoldAfterDisplay);
     }
@@ -272,6 +329,18 @@ public class ElevatorScreen : MonoBehaviour
     {
         StopRumble();
         AudioManager.Instance?.PlaySFX(dingClip, dingVolume);
+
+        if (guestRiding)
+        {
+            yield return Wait(guestArriveDelay);
+
+            SetGuestFacing(true, marshIdle);
+            yield return Wait(guestStareBeat);
+
+            yield return PlayGuestDialogue(guestRideDialogue);
+
+            SetGuestFacing(false, marshIdle);
+        }
 
         if (!skipRequested)
             yield return Wait(dingToDoorDelay);
@@ -285,6 +354,36 @@ public class ElevatorScreen : MonoBehaviour
             yield return Wait(fadeStartDelay);
 
         yield return FadeRoutine(true);
+    }
+
+    // -- SET GUEST FACING --
+    private void SetGuestFacing(bool facingEachOther, MarshClip awayClip)
+    {
+        bool marshCanLook = facingEachOther && marshLookAtGuest != null && marshLookAtGuest.frames != null && marshLookAtGuest.frames.Length > 0;
+        bool guestCanLook = facingEachOther && guestLookAtMarsh != null && guestLookAtMarsh.frames != null && guestLookAtMarsh.frames.Length > 0;
+
+        PlayMarsh(marshCanLook ? marshLookAtGuest : awayClip);
+        PlayGuest(guestCanLook ? guestLookAtMarsh : guestIdle);
+    }
+
+    // -- PLAY GUEST DIALOGUE --
+    private IEnumerator PlayGuestDialogue(DialogueSequence sequence)
+    {
+        if (sequence == null || DialogueManager.Instance == null) yield break;
+
+        while (DialogueManager.Instance.IsRunning)
+            yield return null;
+
+        bool done = false;
+        DialogueManager.Instance.StartDialogue(sequence, () => done = true, keepGamePaused: true);
+        yield return new WaitUntil(() => done);
+
+        // Dialogue events may have unlocked the player; keep them locked for the rest of the ride
+        SetPlayerLocked(true);
+
+        // The key that closed the dialogue must not also skip the ride
+        if (skipEnabledTime != float.MaxValue)
+            skipEnabledTime = Time.unscaledTime + skipInputDelay;
     }
 
     // -- POP ROUTINE --
@@ -397,6 +496,7 @@ public class ElevatorScreen : MonoBehaviour
         float dt = Time.unscaledDeltaTime;
 
         UpdateMarsh(dt);
+        UpdateGuest(dt);
         UpdateButtonFlash(dt);
         UpdateRumble(dt);
     }
@@ -432,6 +532,39 @@ public class ElevatorScreen : MonoBehaviour
         currentClip = clip;
         marshTimer = 0f;
         ApplyMarshFrame();
+    }
+
+    // -- UPDATE GUEST --
+    private void UpdateGuest(float dt)
+    {
+        if (!guestRiding || currentGuestClip == null || currentGuestClip.frames == null || currentGuestClip.frames.Length < 2) return;
+
+        guestTimer += dt;
+        ApplyGuestFrame();
+    }
+
+    // -- APPLY GUEST FRAME --
+    private void ApplyGuestFrame()
+    {
+        if (guestImage == null || currentGuestClip == null || currentGuestClip.frames == null || currentGuestClip.frames.Length == 0) return;
+
+        int length = currentGuestClip.frames.Length;
+        int index = (int)(guestTimer * currentGuestClip.fps);
+        index = currentGuestClip.loop ? index % length : Mathf.Min(index, length - 1);
+
+        Sprite sprite = currentGuestClip.frames[index];
+        if (sprite == null || guestImage.sprite == sprite) return;
+
+        guestImage.sprite = sprite;
+        guestImage.SetNativeSize();
+    }
+
+    // -- PLAY GUEST --
+    private void PlayGuest(MarshClip clip)
+    {
+        currentGuestClip = clip;
+        guestTimer = 0f;
+        ApplyGuestFrame();
     }
 
     // -- UPDATE BUTTON FLASH --

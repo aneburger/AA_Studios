@@ -11,6 +11,7 @@ public class DialogueManager : MonoBehaviour
 
     private DialogueUI dialogueUI;
     private bool isRunning = false;
+    private bool keepPausedOnEnd = false;
     private Action pendingCallback;
 
     // -- AWAKE --
@@ -31,7 +32,7 @@ public class DialogueManager : MonoBehaviour
     }
 
     // -- START DIALOUGUE --
-    public void StartDialogue(DialogueSequence sequence, Action onComplete = null)
+    public void StartDialogue(DialogueSequence sequence, Action onComplete = null, bool keepGamePaused = false)
     {
         if (sequence == null || sequence.lines.Length == 0)
         {
@@ -47,6 +48,7 @@ public class DialogueManager : MonoBehaviour
         }
 
         isRunning = true;
+        keepPausedOnEnd = keepGamePaused;
         pendingCallback = onComplete;
         Time.timeScale = 0f;
         OnDialogueStarted?.Invoke();
@@ -57,7 +59,8 @@ public class DialogueManager : MonoBehaviour
     private void OnSequenceComplete()
     {
         isRunning = false;
-        Time.timeScale = 1f;
+        if (!keepPausedOnEnd) Time.timeScale = 1f;
+        keepPausedOnEnd = false;
         OnDialogueEnded?.Invoke();
         pendingCallback?.Invoke();
         pendingCallback = null;

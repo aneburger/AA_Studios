@@ -124,6 +124,7 @@ MonoBehaviour:
   afterBreak: 0
   brokenSprite: {fileID: 354186568, guid: 8f287e9a5f18d1747a86812eb27d08f4, type: 3}
   breakMaterial: {fileID: 11400000, guid: 8b65b293f10c44242a5f217511553050, type: 2}
+  extraAnimatorsToDisable: []
   debrisSprites:
   - {fileID: 960333203, guid: d94f437839190484280c32d5e339b8c0, type: 3}
   - {fileID: -1236302670, guid: d94f437839190484280c32d5e339b8c0, type: 3}
@@ -153,7 +154,7 @@ BoxCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 4160
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
