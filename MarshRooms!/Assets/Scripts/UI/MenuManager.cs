@@ -415,6 +415,7 @@ public class MenuManager : MonoBehaviour
         AudioManager.Instance?.PlayMusic(AudioManager.Instance.musicClip);
 
         RunStatsTracker.Instance?.ResetForNewRun();
+        StoryFlags.ClearAll();
 
         // Resume time
         Time.timeScale = 1f;

@@ -34,6 +34,8 @@ public class BossRoomController : MonoBehaviour
     [SerializeField] private BossHealth boss;
     [SerializeField] private float pauseBeforeDialogue = 0.4f;
     [SerializeField] private DialogueSequence introDialogue;
+    [Tooltip("Unique per boss")]
+    [SerializeField] private string introSeenId = "boss_chef";
     [SerializeField] private BossIntroCardUI introCard;
     [SerializeField] private float pauseBeforeCard = 0.4f;
     [SerializeField] private float pauseAfterCard = 0.2f;
@@ -201,9 +203,19 @@ public class BossRoomController : MonoBehaviour
     private IEnumerator IntroSequence()
     {
         // Dialogue between Boss and Marsh
-        yield return new WaitForSeconds(pauseBeforeDialogue);
-        yield return PlayDialogue(introDialogue);
-        yield return new WaitForSeconds(pauseBeforeCard);
+        bool trackSeen = !string.IsNullOrEmpty(introSeenId);
+        bool skipDialogue = introDialogue == null || (trackSeen && StoryFlags.Has(introSeenId));
+
+        if (!skipDialogue)
+        {
+            yield return new WaitForSeconds(pauseBeforeDialogue);
+            yield return PlayDialogue(introDialogue);
+
+            // Only marked as seen once it has fully played
+            if (trackSeen) StoryFlags.Set(introSeenId);
+
+            yield return new WaitForSeconds(pauseBeforeCard);
+        }
 
         // Boss music in
         if (bossMusic != null)
