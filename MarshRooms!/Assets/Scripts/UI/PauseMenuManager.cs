@@ -387,6 +387,10 @@ public class PauseMenuManager : MonoBehaviour
             menuManager.controlsMenuSource = MenuManager.ControlsMenuSource.PauseMenu;
         }
 
+        // Cheats button visible on main menu settings
+        CheatMenuManager cheatMenuManager = FindFirstObjectByType<CheatMenuManager>();
+        cheatMenuManager?.SetOpenCheatsButtonVisible(true);
+
         PlayUiSound(clickClip, clickVolume);
 
         if (pauseMenuPanel != null)
