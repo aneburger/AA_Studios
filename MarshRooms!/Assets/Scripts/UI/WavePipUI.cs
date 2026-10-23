@@ -1,8 +1,7 @@
-// Shows one pip per fight on normal floors. Hidden on boss floors (RoomManager.manualControl).
-// Pip 0 is the pre-placed enemy group, pips 1..N are the entries in RoomManager.waves.
-// The last pip is the final wave.
+// Shows one pip per fight on normal floors.
 
 using UnityEngine;
+using System.Collections;
 using System.Collections.Generic;
 
 public class WavePipUI : MonoBehaviour
@@ -27,6 +26,10 @@ public class WavePipUI : MonoBehaviour
     [SerializeField] private float killPopScale = 0.15f;
     [SerializeField] private float killPopDuration = 0.12f;
 
+    [Header("Completion Wave")]
+    [SerializeField] private float waveHeight = 2f;
+    [SerializeField] private float waveBounceDuration = 0.35f;
+
     [Header("Audio")]
     [SerializeField] private AudioClip waveStartClip;
     [SerializeField] private AudioClip finalWaveStartClip;
@@ -35,6 +38,7 @@ public class WavePipUI : MonoBehaviour
     private readonly List<WavePip> pips = new List<WavePip>();
     private int activeIndex = -1;
     private float animTimer;
+    private Coroutine completionWave;
 
     // -- ON ENABLE --
     private void OnEnable()
@@ -54,6 +58,8 @@ public class WavePipUI : MonoBehaviour
         RoomManager.OnWaveStarted -= HandleWaveStarted;
         RoomManager.OnWaveCompleted -= HandleWaveCompleted;
         EnemyManager.OnEnemyKilled -= HandleEnemyKilled;
+
+        StopCompletionWave();
     }
 
     // -- RESTORE FROM ROOM --
@@ -81,6 +87,8 @@ public class WavePipUI : MonoBehaviour
     // -- BUILD --
     private void Build(int total)
     {
+        StopCompletionWave();
+
         foreach (WavePip pip in pips)
         {
             if (pip != null) Destroy(pip.gameObject);
@@ -125,6 +133,10 @@ public class WavePipUI : MonoBehaviour
         pips[index].SetSprite(GetCompleteSprite(pips[index].IsFinal));
         pips[index].PlayPop();
         PlaySfx(waveCompleteClip);
+
+        // everything is cleared: the pips do a little wave
+        if (pips[index].IsFinal)
+            StartCompletionWave();
     }
 
     // -- HANDLE ENEMY KILLED --
@@ -174,5 +186,72 @@ public class WavePipUI : MonoBehaviour
     {
         if (clip == null) return;
         AudioManager.Instance?.PlaySFX(clip);
+    }
+
+    // --- COMPLETION WAVE ---
+    private void StartCompletionWave()
+    {
+        StopCompletionWave();
+        completionWave = StartCoroutine(CompletionWaveRoutine());
+    }
+
+    private void StopCompletionWave()
+    {
+        if (completionWave == null) return;
+
+        StopCoroutine(completionWave);
+        completionWave = null;
+    }
+
+    private IEnumerator CompletionWaveRoutine()
+    {
+        yield return null;
+
+        int count = pips.Count;
+        RectTransform[] rects = new RectTransform[count];
+        float[] baseY = new float[count];
+
+        for (int i = 0; i < count; i++)
+        {
+            rects[i] = pips[i] != null ? pips[i].transform as RectTransform : null;
+            if (rects[i] != null) baseY[i] = rects[i].anchoredPosition.y;
+        }
+
+        float duration = Mathf.Max(0.01f, waveBounceDuration);
+        float stagger = duration * 0.5f;
+        float total = (count - 1) * stagger + duration;
+        float time = 0f;
+
+        while (time < total)
+        {
+            time += Time.deltaTime;
+
+            for (int i = 0; i < count; i++)
+            {
+                if (rects[i] == null) continue;
+
+                float local = (time - i * stagger) / duration;
+                float offset = local > 0f && local < 1f
+                    ? Mathf.Round(Mathf.Sin(local * Mathf.PI) * waveHeight)
+                    : 0f;
+
+                Vector2 pos = rects[i].anchoredPosition;
+                pos.y = baseY[i] + offset;
+                rects[i].anchoredPosition = pos;
+            }
+
+            yield return null;
+        }
+
+        for (int i = 0; i < count; i++)
+        {
+            if (rects[i] == null) continue;
+
+            Vector2 pos = rects[i].anchoredPosition;
+            pos.y = baseY[i];
+            rects[i].anchoredPosition = pos;
+        }
+
+        completionWave = null;
     }
 }

@@ -520,7 +520,7 @@ public class TutorialDirector : MonoBehaviour
         yield return StartCoroutine(WaitUntil(() => wave4Clear));
 
         // -- Part 13: Post-fight + evil chef --
-        yield return new WaitForSeconds(4f);
+        yield return new WaitForSeconds(2f);
         AudioManager.Instance?.FadeMusicVolume(0.2f, 1f);
 
         LockPlayer();

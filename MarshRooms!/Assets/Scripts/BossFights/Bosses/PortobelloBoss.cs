@@ -241,6 +241,9 @@ public class PortobelloBoss : BossBrain
     [SerializeField] private AudioClip statueBurstClip;
     [Range(0f, 1f)] [SerializeField] private float statueBurstVolume = 1f;
 
+    private LaserPatternData[] lastPatternPool;
+    private int lastPatternIndex = -1;
+
     private int activeStatueCount;
 
     private BossContactDamage contact;
@@ -1023,16 +1026,21 @@ public class PortobelloBoss : BossBrain
         LaserPatternData[] pool = activeStatueCount >= 4 ? fourStatuePatterns : twoStatuePatterns;
         if (pool == null || pool.Length == 0) yield break;
 
+        // A different pool means the remembered index no longer applies
+        if (pool != lastPatternPool)
+        {
+            lastPatternPool = pool;
+            lastPatternIndex = -1;
+        }
+
         int volleys = Mathf.Max(1, s.laserVolleys);
-        int lastPatternIndex = -1;
 
         for (int v = 0; v < volleys; v++)
         {
-            int patternIndex = s.laserCycleDifferentPattern
-                ? PickDifferentIndex(pool.Length, ref lastPatternIndex)
-                : Random.Range(0, pool.Length);
+            int patternIndex = PickDifferentIndex(pool.Length, ref lastPatternIndex);
 
             LaserPatternData pattern = pool[patternIndex];
+            
             if (pattern != null && pattern.anglesDegrees != null && pattern.anglesDegrees.Length > 0)
             {
                 for (int i = 0; i < activeStatueCount && i < statueSlots.Length; i++)

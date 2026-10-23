@@ -20,9 +20,6 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private QuitConfirmManager quitConfirmManager;
     [SerializeField] private NewGameConfirmManager newGameConfirmManager;
 
-    [Header("Floor Testing")]
-    [SerializeField] private string startFloor = "Floor_01";
-
     [Header("Controls Menu Buttons")]
     [SerializeField] private Button cancelControlsButton;
     [SerializeField] private Button confirmControlsButton;
