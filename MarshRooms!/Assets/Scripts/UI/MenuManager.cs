@@ -453,6 +453,10 @@ public class MenuManager : MonoBehaviour
         PlayUiSound(clickClip, clickVolume);
 
         controlsMenuSource = ControlsMenuSource.MainMenu;
+
+        // Cheats button not visible on main menu settings
+        CheatMenuManager cheatMenuManager = FindFirstObjectByType<CheatMenuManager>();
+        cheatMenuManager?.SetOpenCheatsButtonVisible(false);
         
 
         if (menuPanel != null)

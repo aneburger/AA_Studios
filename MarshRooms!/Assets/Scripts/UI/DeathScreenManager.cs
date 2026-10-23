@@ -44,6 +44,7 @@ public class DeathScreenManager : MonoBehaviour
     [SerializeField] private TMP_Text floorNameText;
     [SerializeField] private TMP_Text timeText;
     [SerializeField] private TMP_Text killsText;
+    [SerializeField] private TMP_Text gameModeText;
 
     [Header("Weapons Lost")]
     [SerializeField] private Image[] weaponLostSlots;
@@ -164,6 +165,27 @@ public class DeathScreenManager : MonoBehaviour
         SetSelection(0, false);
     }
 
+    private string GetDifficultyDisplayName(Difficulty difficulty)
+    {
+        switch (difficulty)
+        {
+            case Difficulty.Easy:
+                return "Easy";
+
+            case Difficulty.Normal:
+                return "Normal";
+
+            case Difficulty.Hard:
+                return "Hard";
+
+            case Difficulty.DeathCap:
+                return "DEATH CAP";
+
+            default:
+                return "Normal";
+        }
+    }
+
     private void PopulateStats(DeathScreenStats stats)
     {
         if (nrDiedText != null) nrDiedText.text = stats.deathCount.ToString();
@@ -171,6 +193,14 @@ public class DeathScreenManager : MonoBehaviour
         if (floorNameText != null) floorNameText.text = stats.floorName;
         if (timeText != null) timeText.text = RunStatsTracker.FormatTime(stats.timePlayedSeconds);
         if (killsText != null) killsText.text = stats.killCount.ToString();
+        if (gameModeText != null)
+        gameModeText.text = GetDifficultyDisplayName(DifficultyManager.Current);
+
+        // update retry button text if died in death cap mode
+        bool deathCap = LevelLoader.Instance != null &&
+                    LevelLoader.Instance.RunEndedByDeathCap;
+        if (retryText != null)
+            retryText.text = deathCap ? "RESTART" : "RETRY";
 
         PopulateWeaponsLost(stats.lostWeaponSprites);
         PopulateCardsCollected(stats.collectedCardSprites);

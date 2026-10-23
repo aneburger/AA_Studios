@@ -80,6 +80,15 @@ public class CheatMenuManager : MonoBehaviour
         }
     }
 
+    public void SetOpenCheatsButtonVisible(bool visible)
+    {
+        if (openCheatsButton != null)
+            openCheatsButton.gameObject.SetActive(visible);
+
+        if (!visible && cheatsPanel != null)
+            cheatsPanel.SetActive(false);
+    }
+
     private void ToggleCheatsPanel()
     {
         if (cheatsPanel == null) return;
