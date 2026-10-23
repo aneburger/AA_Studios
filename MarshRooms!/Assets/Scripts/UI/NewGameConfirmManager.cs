@@ -62,7 +62,10 @@ public class NewGameConfirmManager : MonoBehaviour
     private GameObject[] difficultyHovers;
 
     private NewGameConfirmSource currentSource;
-    private int currentIndex = -1;
+    private int selectedDifficultyIndex = -1;
+    private int hoveredDifficultyIndex = -1;
+    private int selectedConfirmationIndex = -1;
+    private int hoveredConfirmationIndex = -1;
     private Difficulty chosenDifficulty = Difficulty.Normal;
 
     public bool NewGameConfirmIsOpen => newGameConfirmPanel != null && newGameConfirmPanel.activeSelf;
@@ -210,8 +213,9 @@ public class NewGameConfirmManager : MonoBehaviour
                 continue;
 
             int index = i;
-            AddPointerTrigger(buttons[i], EventTriggerType.PointerEnter, _ => SetConfirmationSelection(index, true));
-            AddPointerTrigger(buttons[i], EventTriggerType.Select, _ => SetConfirmationSelection(index, true));
+            AddPointerTrigger(buttons[i], EventTriggerType.PointerEnter, _ => SetConfirmationHover(index, true));
+            AddPointerTrigger(buttons[i], EventTriggerType.Select, _ => SetConfirmationHover(index, true));
+            AddPointerTrigger(buttons[i], EventTriggerType.PointerExit, _ => ClearConfirmationHover(index));
         }
 
         for (int i = 0; i < difficultyButtons.Length; i++)
@@ -220,8 +224,9 @@ public class NewGameConfirmManager : MonoBehaviour
                 continue;
 
             int index = i;
-            AddPointerTrigger(difficultyButtons[i], EventTriggerType.PointerEnter, _ => SetDifficultySelection(index, true));
-            AddPointerTrigger(difficultyButtons[i], EventTriggerType.Select, _ => SetDifficultySelection(index, true));
+            AddPointerTrigger(difficultyButtons[i], EventTriggerType.PointerEnter, _ => SetDifficultyHover(index, true));
+            AddPointerTrigger(difficultyButtons[i], EventTriggerType.Select, _ => SetDifficultyHover(index, true));
+            AddPointerTrigger(difficultyButtons[i], EventTriggerType.PointerExit, _ => ClearDifficultyHover(index));
         }
     }
 
@@ -253,7 +258,10 @@ public class NewGameConfirmManager : MonoBehaviour
         if (newGameConfirmPanel != null)
             newGameConfirmPanel.SetActive(false);
 
-        currentIndex = -1;
+        selectedDifficultyIndex = -1;
+        hoveredDifficultyIndex = -1;
+        selectedConfirmationIndex = -1;
+        hoveredConfirmationIndex = -1;
     }
 
     private void SelectDifficulty(int index)
@@ -271,8 +279,8 @@ public class NewGameConfirmManager : MonoBehaviour
         if (index < 0 || index >= difficultyButtons.Length || difficultyButtons[index] == null)
             return;
 
-        bool changed = currentIndex != index;
-        currentIndex = index;
+        bool changed = selectedDifficultyIndex != index;
+        selectedDifficultyIndex = index;
 
         for (int i = 0; i < difficultyTexts.Length; i++)
         {
@@ -280,11 +288,7 @@ public class NewGameConfirmManager : MonoBehaviour
                 difficultyTexts[i].color = i == index ? selectedColor : normalColor;
         }
 
-        for (int i = 0; i < difficultyHovers.Length; i++)
-        {
-            if (difficultyHovers[i] != null)
-                difficultyHovers[i].SetActive(i == index);
-        }
+        UpdateDifficultyHovers();
 
         if (modeDescription != null)
             modeDescription.text = GetDifficultyDescription((Difficulty)index);
@@ -310,13 +314,35 @@ public class NewGameConfirmManager : MonoBehaviour
         }
     }
 
+    private void SetDifficultyHover(int index, bool playHoverSound)
+    {
+        if (index < 0 || index >= difficultyButtons.Length || difficultyButtons[index] == null)
+            return;
+
+        bool changed = hoveredDifficultyIndex != index;
+        hoveredDifficultyIndex = index;
+        UpdateDifficultyHovers();
+
+        if (playHoverSound && changed)
+            PlayUiSound(hoverClip, hoverVolume);
+    }
+
+    private void ClearDifficultyHover(int index)
+    {
+        if (hoveredDifficultyIndex != index)
+            return;
+
+        hoveredDifficultyIndex = -1;
+        UpdateDifficultyHovers();
+    }
+
     private void SetConfirmationSelection(int index, bool playHoverSound)
     {
         if (index < 0 || index >= buttons.Length || buttons[index] == null)
             return;
 
-        bool changed = currentIndex != index;
-        currentIndex = index;
+        bool changed = selectedConfirmationIndex != index;
+        selectedConfirmationIndex = index;
 
         for (int i = 0; i < texts.Length; i++)
         {
@@ -324,16 +350,48 @@ public class NewGameConfirmManager : MonoBehaviour
                 texts[i].color = i == index ? selectedColor : normalColor;
         }
 
-        for (int i = 0; i < arrows.Length; i++)
-        {
-            if (arrows[i] != null)
-                arrows[i].SetActive(i == index);
-        }
+        UpdateConfirmationHovers();
 
         SelectButton(buttons[index]);
 
         if (playHoverSound && changed)
             PlayUiSound(hoverClip, hoverVolume);
+    }
+
+    private void SetConfirmationHover(int index, bool playHoverSound)
+    {
+        if (index < 0 || index >= buttons.Length || buttons[index] == null)
+            return;
+
+        hoveredConfirmationIndex = index;
+        SetConfirmationSelection(index, playHoverSound);
+    }
+
+    private void ClearConfirmationHover(int index)
+    {
+        if (hoveredConfirmationIndex != index)
+            return;
+
+        hoveredConfirmationIndex = -1;
+        UpdateConfirmationHovers();
+    }
+
+    private void UpdateDifficultyHovers()
+    {
+        for (int i = 0; i < difficultyHovers.Length; i++)
+        {
+            if (difficultyHovers[i] != null)
+                difficultyHovers[i].SetActive(i == selectedDifficultyIndex || i == hoveredDifficultyIndex);
+        }
+    }
+
+    private void UpdateConfirmationHovers()
+    {
+        for (int i = 0; i < arrows.Length; i++)
+        {
+            if (arrows[i] != null)
+                arrows[i].SetActive(i == selectedConfirmationIndex || i == hoveredConfirmationIndex);
+        }
     }
 
     private void SelectButton(Button button)
