@@ -251,14 +251,14 @@ MonoBehaviour:
     burrowChaseSpeed: 6.2
     burrowChaseDuration: 2
     burrowStopPause: 0.14
-    burrowSmashRadius: 3
-    burrowSmashDamage: 3
+    burrowSmashRadius: 3.3
+    burrowSmashDamage: 4
     burrowSmashKnockback: 8
     burrowSmashShake: 0.5
-    burrowPopCooldown: 1.5
+    burrowPopCooldown: 1
     throneActionsMin: 1
     throneActionsMax: 2
-    throneActionPause: 1
+    throneActionPause: 3
     throneStatuesWeight: 1
     throneEnemiesWeight: 1
     throneSpikesWeight: 0
@@ -312,14 +312,14 @@ MonoBehaviour:
     burrowChaseSpeed: 6.8
     burrowChaseDuration: 1.8
     burrowStopPause: 0.07
-    burrowSmashRadius: 3
-    burrowSmashDamage: 3
+    burrowSmashRadius: 3.5
+    burrowSmashDamage: 4
     burrowSmashKnockback: 8
     burrowSmashShake: 0.6
-    burrowPopCooldown: 1.3
+    burrowPopCooldown: 0.8
     throneActionsMin: 2
     throneActionsMax: 2
-    throneActionPause: 1
+    throneActionPause: 2
     throneStatuesWeight: 1
     throneEnemiesWeight: 1
     throneSpikesWeight: 0
@@ -373,11 +373,11 @@ MonoBehaviour:
     burrowChaseSpeed: 7
     burrowChaseDuration: 1.5
     burrowStopPause: 0.05
-    burrowSmashRadius: 3
-    burrowSmashDamage: 3
+    burrowSmashRadius: 4
+    burrowSmashDamage: 4
     burrowSmashKnockback: 8
     burrowSmashShake: 0.7
-    burrowPopCooldown: 1.2
+    burrowPopCooldown: 0.5
     throneActionsMin: 2
     throneActionsMax: 3
     throneActionPause: 1
@@ -387,7 +387,7 @@ MonoBehaviour:
     throneEnemyCountMin: 4
     throneEnemyCountMax: 6
     throneEnemyUsesPerVisit: 1
-    laserChargeDuration: 0.6
+    laserChargeDuration: 0.45
     laserFiringDuration: 0.6
     laserVolleys: 5
     laserVolleyPause: 0.2
@@ -413,7 +413,7 @@ MonoBehaviour:
     dollarSpeedMultiplier: 1.16
     dollarCountMultiplier: 1.2
     dollarHangMultiplier: 1
-  idleContactDamage: 2
+  idleContactDamage: 3
   idleContactKnockback: 20
   despawnClip: {fileID: 8300000, guid: 1fdcafced2d7d2e4699e3a200438c3f4, type: 3}
   despawnVolume: 1
@@ -475,9 +475,9 @@ MonoBehaviour:
   throneJumpUpHeight: 20
   throneJumpUpDuration: 0.3
   throneShadowLeadTime: 0.6
-  throneJumpClip: {fileID: 8300000, guid: 8c681740adf407e4885c813399b7bdc4, type: 3}
+  throneJumpClip: {fileID: 8300000, guid: 5eb6fa0a9a7a684419120aa1b5b58937, type: 3}
   throneJumpVolume: 1
-  throneLandClip: {fileID: 8300000, guid: 8c681740adf407e4885c813399b7bdc4, type: 3}
+  throneLandClip: {fileID: 8300000, guid: ca5546d1a4b07a04e8fa76f131c21030, type: 3}
   throneLandVolume: 1
   throneLandShake: 0.6
   minionSpawner: {fileID: 0}
@@ -545,7 +545,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19f7135adf0332d46b73bc1509c9a879, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BossHealth
-  maxHealth: 100
+  maxHealth: 15
   onDeath:
     m_PersistentCalls:
       m_Calls: []
@@ -634,20 +634,39 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PortobelloOutro
   bossAnimator: {fileID: 803806091724421615}
-  contactDamage: {fileID: 0}
-  deathTrigger: Die
-  musicFadeDuration: 1.5
   hitStopDuration: 0.08
   hitStopFlashColor: {r: 1, g: 1, b: 1, a: 1}
   hitStopFlashAlpha: 0.7
-  hitStopFlashDuration: 0.3
-  deathThudDelay: 0.3
+  hitStopFlashDuration: 0.6
   rumbleShakeCount: 4
   rumbleShakeInterval: 0.15
   rumbleShakeMin: 0.2
   rumbleShakeMax: 0.5
-  dialogue: {fileID: 11400000, guid: 211ca1f99b882c245a3e1c9cc284e4df, type: 2}
-  pauseBeforeDialogue: 0.5
+  musicFadeDuration: 1.5
+  portobelloDeathDialogue: {fileID: 11400000, guid: 2c273143efc105c44b60c7337334fcf5, type: 2}
+  marshReactionDialogue: {fileID: 11400000, guid: 2c273143efc105c44b60c7337334fcf5, type: 2}
+  deathTrigger: Die
+  deathAnimationDuration: 0
+  finalDeathTrigger: FinalDeath
+  finalDeathDuration: 1.5
+  bossRoot: {fileID: 988082134135583188}
+  hideOnVanish:
+  - {fileID: 3048537268727196057}
+  - {fileID: 792576986802620951}
+  vanishVfxPrefab: {fileID: 4081999799842582576, guid: 58ff3210537b77e43a7aece106f1672e, type: 3}
+  vanishVfxOffset: {x: 0, y: 0, z: 0}
+  vanishClip: {fileID: 8300000, guid: 0d591969c6603fe4cb52ef7b5959feda, type: 3}
+  vanishVolume: 1
+  vanishScreenShake: 0
+  pauseBeforeDeathDialogue: 0.5
+  pauseAfterDeathDialogue: 0.8
+  pauseAfterDeathAnimation: 0
+  pauseBeforeMarshLine: 0.8
+  pauseAfterMarshLine: 0.8
+  onOutroFinished:
+    m_PersistentCalls:
+      m_Calls: []
+  neverReturnControl: 1
 --- !u!114 &4971430655147127906
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1152,6 +1171,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fe02030257054c548a0a8f1e09f2f665, type: 3}
+--- !u!1 &3048537268727196057 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1525218423229736197, guid: fe02030257054c548a0a8f1e09f2f665, type: 3}
+  m_PrefabInstance: {fileID: 4567844561182477468}
+  m_PrefabAsset: {fileID: 0}
 --- !u!212 &8704847832892159671 stripped
 SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 5163916380359555627, guid: fe02030257054c548a0a8f1e09f2f665, type: 3}

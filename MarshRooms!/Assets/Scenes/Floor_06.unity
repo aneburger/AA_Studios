@@ -87940,7 +87940,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BossRoomCameraReveal
   composer: {fileID: 0}
-  revealDistance: 7
+  revealDistance: 8
   revealDuration: 3
   returnDuration: 1
 --- !u!4 &934006809
@@ -99414,6 +99414,10 @@ PrefabInstance:
       propertyPath: rewardPopup
       value: 
       objectReference: {fileID: 1710673102}
+    - target: {fileID: 6090154094055589427, guid: c2ec80757c23d484499ea01eab15bddc, type: 3}
+      propertyPath: hitStopFlashDuration
+      value: 0.4
+      objectReference: {fileID: 0}
     - target: {fileID: 6874612114972605467, guid: c2ec80757c23d484499ea01eab15bddc, type: 3}
       propertyPath: room
       value: 

@@ -44,6 +44,7 @@ public class SplitOnDeath : MonoBehaviour
     // -- HANDLE DIED --
     private void HandleDied(Vector2 deathPosition)
     {
+        if (EnemyManager.Instance != null && EnemyManager.Instance.IsClearing) return;
         if (splitPrefab == null || splitCount <= 0) return;
 
         GameObject prefabToSpawn = splitPrefab;

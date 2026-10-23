@@ -21,12 +21,10 @@ MonoBehaviour:
   detectionRange: 16
   attackRange: 12
   possibleWeaponDrops:
-  - weaponPickupPrefab: {fileID: 1303430737314922756, guid: df60fd66b3dcf2047bca1049f6b58218, type: 3}
-    dropChance: 0.15
   - weaponPickupPrefab: {fileID: 1303430737314922756, guid: 3d43bd427e9ea7645a30f7ae52c53575, type: 3}
-    dropChance: 0.1
+    dropChance: 0.05
   - weaponPickupPrefab: {fileID: 1303430737314922756, guid: 8b6717c7fcf618d48a9c81e5c6d876de, type: 3}
-    dropChance: 0.07
+    dropChance: 0.1
   maxSporeDrops: 3
   sporePrefab: {fileID: 7129025776932877359, guid: b8874dc0a3c605d419413a967c2f2c17, type: 3}
   guaranteesSporeDrop: 0

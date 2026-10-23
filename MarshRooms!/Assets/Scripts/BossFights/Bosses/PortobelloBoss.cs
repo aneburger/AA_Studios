@@ -338,6 +338,13 @@ public class PortobelloBoss : BossBrain
         if (shooter != null) shooter.BulletSpawned -= RegisterBullet;
     }
 
+    protected override void ClearMinions()
+    {
+        minionSpawner?.StopSpawning();
+        base.ClearMinions();
+        EnemyManager.Instance?.DestroyAllEnemies();
+    }
+
     protected override void OnMinionCleared(GameObject minion)
     {
         EnemyManager.Instance?.UnregisterEnemy(minion);

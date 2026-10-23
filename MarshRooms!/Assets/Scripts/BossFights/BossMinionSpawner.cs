@@ -79,6 +79,12 @@ public class BossMinionSpawner : MonoBehaviour
         return go;
     }
 
+    // -- STOP SPAWNING --
+    public void StopSpawning()
+    {
+        StopAllCoroutines();
+    }
+
     // -- HANDLEMINION DIED --
     private void HandleMinionDied(EnemyController controller, Vector2 position, float weaponGuaranteeChance, float healthGuaranteeChance)
     {

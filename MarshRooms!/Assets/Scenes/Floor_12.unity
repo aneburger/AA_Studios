@@ -153312,12 +153312,8 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 27379241362764003, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
-      propertyPath: contactDamage
-      value: 
-      objectReference: {fileID: 866544880}
-    - target: {fileID: 27379241362764003, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
-      propertyPath: pauseBeforeDialogue
-      value: 1.5
+      propertyPath: pauseAfterDeathDialogue
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 208003371081328597, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
       propertyPath: m_LocalPosition.x
@@ -153363,14 +153359,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: pres-port-boss
       objectReference: {fileID: 0}
-    - target: {fileID: 988082134135583188, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
-      propertyPath: m_Layer
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 8169478559265794274, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
-      propertyPath: maxHealth
-      value: 1150
-      objectReference: {fileID: 0}
     - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
       propertyPath: room
       value: 
@@ -153391,66 +153379,6 @@ PrefabInstance:
       propertyPath: minionSpawner
       value: 
       objectReference: {fileID: 1078339583}
-    - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
-      propertyPath: throneJumpClip
-      value: 
-      objectReference: {fileID: 8300000, guid: 5eb6fa0a9a7a684419120aa1b5b58937, type: 3}
-    - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
-      propertyPath: throneLandClip
-      value: 
-      objectReference: {fileID: 8300000, guid: ca5546d1a4b07a04e8fa76f131c21030, type: 3}
-    - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
-      propertyPath: idleContactDamage
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
-      propertyPath: phase1.burrowPopCooldown
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
-      propertyPath: phase1.burrowSmashDamage
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
-      propertyPath: phase1.burrowSmashRadius
-      value: 3.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
-      propertyPath: phase1.throneActionPause
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
-      propertyPath: phase2.burrowPopCooldown
-      value: 0.8
-      objectReference: {fileID: 0}
-    - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
-      propertyPath: phase2.burrowSmashDamage
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
-      propertyPath: phase2.burrowSmashRadius
-      value: 3.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
-      propertyPath: phase2.throneActionPause
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
-      propertyPath: phase3.burrowPopCooldown
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
-      propertyPath: phase3.burrowSmashDamage
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
-      propertyPath: phase3.burrowSmashRadius
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
-      propertyPath: phase3.throneActionPause
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
       propertyPath: 'shootSpots.Array.data[0]'
       value: 
@@ -153491,10 +153419,6 @@ PrefabInstance:
       propertyPath: 'statueSlots.Array.data[3]'
       value: 
       objectReference: {fileID: 2126337768}
-    - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
-      propertyPath: phase3.laserChargeDuration
-      value: 0.45
-      objectReference: {fileID: 0}
     - target: {fileID: 8465027221499930036, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
       propertyPath: 'spikeStandSpots.Array.data[0]'
       value: 
@@ -153570,17 +153494,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d4e72c0f30c3324980638d65a61732c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PortobelloOutro
---- !u!114 &866544880 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 9056498895987517654, guid: 01b8ddb7bc8038e478b2cd39b41fb40f, type: 3}
-  m_PrefabInstance: {fileID: 866544877}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: abe8d5f37591326489fc45a2b0a231b3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::BossContactDamage
 --- !u!1 &882842618
 GameObject:
   m_ObjectHideFlags: 0
@@ -157614,7 +157527,7 @@ MonoBehaviour:
   slamShakeForce: 0.5
   boss: {fileID: 866544878}
   pauseBeforeDialogue: 1.3
-  introDialogue: {fileID: 11400000, guid: f320c4a550fdf694eb8ac98eb2210124, type: 2}
+  introDialogue: {fileID: 11400000, guid: 2c273143efc105c44b60c7337334fcf5, type: 2}
   introSeenId: boss_port
   introCard: {fileID: 2144050856}
   pauseBeforeCard: 0.6

@@ -177,6 +177,7 @@ public abstract class BossBrain : MonoBehaviour
         if (clearHazardsImmediately)
         {
             ClearHazards();
+            StopHazardSpawners();
             ClearMinions();
         }
 
@@ -242,6 +243,7 @@ public abstract class BossBrain : MonoBehaviour
 
         // Nothing carries over into the new phase
         ClearHazards();
+        StopHazardSpawners();
         ClearMinions();
 
         yield return WaitForReturnToIdle(5f);
@@ -303,6 +305,12 @@ public abstract class BossBrain : MonoBehaviour
             if (h != null) Destroy(h);
 
         hazards.Clear();
+    }
+
+    protected virtual void StopHazardSpawners()
+    {
+        foreach (BossSpikeSpawner spawner in FindObjectsByType<BossSpikeSpawner>(FindObjectsSortMode.None))
+            spawner.StopAll();
     }
 
     protected virtual void ClearMinions()

@@ -103,4 +103,14 @@ public class BossSpikeSpawner : MonoBehaviour
 
         SpikeSpawned?.Invoke(go);
     }
+
+    public void StopAll()
+    {
+        StopAllCoroutines();
+
+        foreach (GameObject spike in activeSpikes)
+            if (spike != null) Destroy(spike);
+
+        activeSpikes.Clear();
+    }
 }

@@ -12,7 +12,9 @@ public class EnemyManager : MonoBehaviour
     private Coroutine confirmRoutine;
 
     private int spawningLocks = 0;
+
     public bool IsSpawning => spawningLocks > 0;
+    public bool IsClearing { get; private set; }
 
     // Events
     public static event System.Action OnAllEnemiesDead;
@@ -102,4 +104,25 @@ public class EnemyManager : MonoBehaviour
     {
         return activeEnemies.Count;
     } 
+
+    // -- DESTROY ALL ENEMIES --
+    public void DestroyAllEnemies()
+    {
+        IsClearing = true;
+
+        foreach (GameObject enemy in new List<GameObject>(activeEnemies))
+        {
+            if (enemy == null) { activeEnemies.Remove(enemy); continue; }
+            UnregisterEnemy(enemy);
+            Destroy(enemy);
+        }
+
+        StartCoroutine(ResetClearing());
+    }
+
+    private IEnumerator ResetClearing()
+    {
+        yield return new WaitForSecondsRealtime(0.25f);
+        IsClearing = false;
+    }
 }
