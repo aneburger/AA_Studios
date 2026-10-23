@@ -467,7 +467,7 @@ MonoBehaviour:
   exclamationOvershoot: 1.25
   shockedClip: {fileID: 8300000, guid: 00e98d07350d70a4b96b6dce5daca8bd, type: 3}
   shockedVolume: 1
-  introDialogue: {fileID: 11400000, guid: 2c273143efc105c44b60c7337334fcf5, type: 2}
+  introDialogue: {fileID: 11400000, guid: fa097983c1021e64b9efeac528b0df88, type: 2}
 --- !u!4 &55118885
 Transform:
   m_ObjectHideFlags: 0
@@ -62719,7 +62719,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::StoryInteractable
   beatId: floor01_statue
   stages:
-  - dialogue: {fileID: 11400000, guid: 2c273143efc105c44b60c7337334fcf5, type: 2}
+  - dialogue: {fileID: 11400000, guid: ed92f3b9fc2fcac408026233bd9754f2, type: 2}
     requiresRunFlag: 
     onCompleted:
       m_PersistentCalls:

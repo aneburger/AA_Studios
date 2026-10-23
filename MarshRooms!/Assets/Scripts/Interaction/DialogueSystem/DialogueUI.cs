@@ -40,9 +40,12 @@ public class DialogueUI : MonoBehaviour
     private Coroutine dimFadeCoroutine;
     private int openedFrame = -1;
 
+    private float defaultFontSize;
+
     private void Awake()
     {
         textEffects = dialogueText.GetComponent<DialogueTextEffects>();
+        defaultFontSize = dialogueText.fontSize;
         audioSource = GetComponent<AudioSource>();
 
         if (audioSource == null)
@@ -121,7 +124,7 @@ public class DialogueUI : MonoBehaviour
 
         DialogueLine line = currentSequence.lines[index];
 
-        // Portrait
+        // Portrait 
         if (line.portrait != null || line.talkingPortrait != null)
         {
             portraitImage.sprite = line.talkingPortrait != null ? line.talkingPortrait : line.portrait;
@@ -129,6 +132,7 @@ public class DialogueUI : MonoBehaviour
         }
         else
         {
+            SetPortraitTalking(false);
             portraitImage.gameObject.SetActive(false);
         }
 
@@ -145,6 +149,7 @@ public class DialogueUI : MonoBehaviour
 
         // Parse custom tags from text
         var parsed = DialogueTextParser.Parse(line.text);
+        dialogueText.fontSize = line.fontSizeOverride > 0f ? line.fontSizeOverride : defaultFontSize;
         textEffects?.SetEffectRanges(parsed.effectRanges);
 
         // Voice clip for this line
@@ -170,7 +175,8 @@ public class DialogueUI : MonoBehaviour
         skipRequested = false;
         continueIndicator.SetActive(false);
 
-        portraitTalkAnimator?.SetTalking(true);
+        if (!line.disablePortraitSquish)
+            SetPortraitTalking(true);
 
         dialogueText.text = "";
         dialogueText.maxVisibleCharacters = 0;
@@ -209,7 +215,7 @@ public class DialogueUI : MonoBehaviour
         isTyping = false;
         skipRequested = false;
 
-        portraitTalkAnimator?.SetTalking(false);
+        SetPortraitTalking(false);
 
         if (line.portrait != null) 
             portraitImage.sprite = line.portrait;
@@ -277,5 +283,13 @@ public class DialogueUI : MonoBehaviour
 
         if (!show)
             dimOverlay.gameObject.SetActive(false);
+    }
+
+    private void SetPortraitTalking(bool talking)
+    {
+        if (portraitTalkAnimator == null) return;
+        if (!portraitImage.gameObject.activeInHierarchy) return;
+
+        portraitTalkAnimator.SetTalking(talking);
     }
 }

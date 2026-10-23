@@ -26,6 +26,13 @@ public class DialogueLine
     
     [Tooltip("Override the typewriter speed for this line. 0 = use default.")] 
     public float typewriterSpeedOverride = 0f; 
+
+    [Header("Style")]
+    [Tooltip("Font size for this line. 0 = use the default size.")]
+    public float fontSizeOverride = 0f;
+
+    [Tooltip("Tick to stop the portrait squish/talk animation on this line.")]
+    public bool disablePortraitSquish = false;
 }
 
 // A full conversation (a sequence of dialogue lines )

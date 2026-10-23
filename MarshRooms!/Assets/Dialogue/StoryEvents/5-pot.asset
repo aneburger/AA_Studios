@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d396eeaa05b4f404ea49b1f5e4965776, type: 3}
+  m_Name: 5-pot
+  m_EditorClassIdentifier: Assembly-CSharp::DialogueSequence
+  lines:
+  - speakerName: Marsh
+    portrait: {fileID: 5355775165517145425, guid: 96f423fd58af20743ab60c2815e095a2, type: 3}
+    talkingPortrait: {fileID: 6562647036115510444, guid: 96f423fd58af20743ab60c2815e095a2, type: 3}
+    text: Thank the shrooms! Mr. Blobs isn't in here.
+    voiceClip: {fileID: 8300000, guid: a52b0cfa367016946aedf7ca9de26c60, type: 3}
+    typewriterSpeedOverride: 0
+  - speakerName: Marsh
+    portrait: {fileID: -4332381428540570747, guid: 96f423fd58af20743ab60c2815e095a2, type: 3}
+    talkingPortrait: {fileID: 6562647036115510444, guid: 96f423fd58af20743ab60c2815e095a2, type: 3}
+    text: Smells a bit burnt though...
+    voiceClip: {fileID: 8300000, guid: 3f30958262045f14aa585947b9eb72a2, type: 3}
+    typewriterSpeedOverride: 0

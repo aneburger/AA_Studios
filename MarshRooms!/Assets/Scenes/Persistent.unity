@@ -14780,7 +14780,7 @@ MonoBehaviour:
   waveAmplitude: 2
   waveFrequency: 1.8
   waveSpeed: 2.8
-  shakeIntensity: 1.5
+  shakeIntensity: 1.2
   shakeSpeed: 25
   rainbowSpeed: 2
   rainbowSpread: 0.1
@@ -14935,6 +14935,81 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1410935993
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1410935994}
+  - component: {fileID: 1410935995}
+  - component: {fileID: 1410935996}
+  m_Layer: 6
+  m_Name: Testers
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1410935994
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1410935993}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 9.164869, y: -7.35, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1410935995
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1410935993}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e819259107b7484ea28c77eeabc1836, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DialogueTester
+  sequences:
+  - {fileID: 11400000, guid: fa097983c1021e64b9efeac528b0df88, type: 2}
+  - {fileID: 11400000, guid: ed92f3b9fc2fcac408026233bd9754f2, type: 2}
+  - {fileID: 11400000, guid: 994761a9f7c04544e82168c05a0e390f, type: 2}
+  - {fileID: 11400000, guid: d34936383620f55498e0250b0f77d165, type: 2}
+  - {fileID: 11400000, guid: a95d517ce2c55cd499ce78658ea89d9f, type: 2}
+  - {fileID: 11400000, guid: d25b485b250643e4bbf61ca825d79bce, type: 2}
+  - {fileID: 11400000, guid: 9a35a4442d2ca814084b6a358c62170e, type: 2}
+  - {fileID: 11400000, guid: 0cf431f3aa7f26740820b82f15ff3fac, type: 2}
+  - {fileID: 11400000, guid: d52393563c6539b4ab50c9bc08161e59, type: 2}
+  toggleKey: 101
+  previousKey: 11
+  nextKey: 12
+  playKey: 10
+--- !u!114 &1410935996
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1410935993}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc3c29f24a7db62459480a28a6771ed4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyKillTester
+  killKey: 25
+  killDamage: 99999
+  maxPasses: 6
+  passInterval: 0.2
 --- !u!224 &1481352615 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6689009336894008067, guid: bbc45a02aeae5e444b1ff531fadb0847, type: 3}
@@ -26865,4 +26940,5 @@ SceneRoots:
   - {fileID: 1251095356}
   - {fileID: 2140205849}
   - {fileID: 1850610639}
+  - {fileID: 1410935994}
   - {fileID: 3537630140295722637}
