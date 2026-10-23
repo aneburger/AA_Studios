@@ -223,6 +223,7 @@ public abstract class BossBrain : MonoBehaviour
     private void HandlePlayerDeath()
     {
         CancelFight(clearHazardsImmediately: false);
+        StopHazardSpawners();
     }
 
     // ==================== PHASE TRANSITION ====================

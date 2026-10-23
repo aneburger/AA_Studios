@@ -11,8 +11,27 @@ public class BossSpikeSpawner : MonoBehaviour
     [SerializeField] private int placementAttemptsPerSpike = 12;
     [SerializeField] private float spreadRadius = 1.2f;
 
+    private BossHealth bossHealth;
+    private bool bossDead;
+
     public event System.Action<GameObject> SpikeSpawned;
     private readonly List<GameObject> activeSpikes = new List<GameObject>();
+
+    private void Start()
+    {
+        bossHealth = FindFirstObjectByType<BossHealth>();
+    }
+
+    private void Update()
+    {
+        if (bossDead || bossHealth == null) return;
+
+        if (bossHealth.IsDead())
+        {
+            bossDead = true;
+            StopAll();
+        }
+    }
 
     // Waits until every spike spawned so far
     public IEnumerator WaitForAllSpikesFinished()
@@ -27,6 +46,7 @@ public class BossSpikeSpawner : MonoBehaviour
 
     public Coroutine SpawnRounds(int countPerRound, int rounds, float warningTime, float roundInterval, Transform playerTransform)
     {
+        if (bossDead) return null;
         return StartCoroutine(SpawnRoundsRoutine(countPerRound, rounds, warningTime, roundInterval, playerTransform));
     }
 
@@ -46,6 +66,9 @@ public class BossSpikeSpawner : MonoBehaviour
     // Spawns `count` spikes clustered near the player
     public void SpawnBatch(int count, float warningTime, Vector2 playerPosition)
     {
+
+        if (bossDead) return;
+
         List<Vector2> placed = new List<Vector2>();
 
         for (int i = 0; i < count; i++)

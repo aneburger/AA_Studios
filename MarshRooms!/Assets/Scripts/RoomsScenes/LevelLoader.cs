@@ -3,6 +3,7 @@ using UnityEngine.SceneManagement;
 using System.Text.RegularExpressions;
 using System.Collections;
 using System.IO;
+using TopDown.Movement;
 
 public class LevelLoader : MonoBehaviour
 {
@@ -132,6 +133,17 @@ public class LevelLoader : MonoBehaviour
 
         GameObject existingPlayer = GameObject.FindGameObjectWithTag(playerTag);
         playerHealth = existingPlayer != null ? existingPlayer.GetComponent<PlayerHealth>() : null;
+
+        if (existingPlayer != null)
+        {
+            PlayerMover mover = existingPlayer.GetComponent<PlayerMover>();
+            PlayerAimer aimer = existingPlayer.GetComponentInChildren<PlayerAimer>();
+            PlayerShooter shooter = existingPlayer.GetComponentInChildren<PlayerShooter>();
+
+            aimer?.ClearAimOverride();
+            shooter?.HideWeapon(false);
+        }
+
         playerHealth?.UpdateHUD();
 
         if (!SceneManager.GetSceneByName(persistentScene).isLoaded)
