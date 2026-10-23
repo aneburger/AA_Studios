@@ -130,7 +130,6 @@ GameObject:
   - component: {fileID: 8475951240260664171}
   - component: {fileID: 8889232745874893418}
   - component: {fileID: 4571512544733310230}
-  - component: {fileID: 6873063882810655059}
   - component: {fileID: 2413747236791488}
   - component: {fileID: 2140417929933268408}
   - component: {fileID: 913256151741367261}
@@ -149,7 +148,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6621292616118025532}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 12.21, y: 5.73, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -290,52 +289,6 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.8676281, y: 0.5651779}
   m_EdgeRadius: 0
---- !u!61 &6873063882810655059
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6621292616118025532}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 64
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 65463
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: -0.01, y: -0.12}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.25, y: 1.25}
-    newSize: {x: 1.25, y: 1.25}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Size: {x: 2.2, y: 2.2}
-  m_EdgeRadius: 0
 --- !u!95 &2413747236791488
 Animator:
   serializedVersion: 7
@@ -401,6 +354,10 @@ PrefabInstance:
     - target: {fileID: 4231454197893734728, guid: a348b764fdb39e541bca3b31953a64a8, type: 3}
       propertyPath: m_Layer
       value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 4231454197893734728, guid: a348b764fdb39e541bca3b31953a64a8, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7225378695460256140, guid: a348b764fdb39e541bca3b31953a64a8, type: 3}
       propertyPath: sortingOffset

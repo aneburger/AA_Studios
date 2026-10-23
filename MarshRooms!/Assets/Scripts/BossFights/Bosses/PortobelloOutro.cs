@@ -71,7 +71,7 @@ public class PortobelloOutro : BossOutroSequence
 
         yield return DeathRumble();
 
-        AudioManager.Instance?.FadeOutMusic(musicFadeDuration);
+        AudioManager.Instance?.FadeMusicVolume(0.2f, musicFadeDuration);
         room.HealthBar?.Hide();
 
         // -- Make Marsh safe for the whole ending --
@@ -82,6 +82,11 @@ public class PortobelloOutro : BossOutroSequence
 
         PlayerHealth playerHealth = room.Player != null ? room.Player.GetComponent<PlayerHealth>() : null;
         playerHealth?.SetInvincible(true, affectSpeed: false);
+
+        // -- Final cutscene --
+        HUDManager.Instance?.SetHUDVisible(false);
+        playerHealth?.ResetHealth();
+        SporeManager.Instance?.ResetSpores();
 
         if (deathAnimationDuration > 0f)
             yield return new WaitForSeconds(deathAnimationDuration);
@@ -98,10 +103,12 @@ public class PortobelloOutro : BossOutroSequence
                 bossAnimator.SetTrigger(finalDeathTrigger);
         }
 
+        AudioManager.Instance?.FadeOutMusic(musicFadeDuration);
+
         yield return Pause(finalDeathDuration);
         yield return Pause(pauseAfterDeathAnimation);
 
-        // --- Vanish
+        // -- Vanish
         Vanish();
 
         yield return Pause(pauseBeforeMarshLine);
