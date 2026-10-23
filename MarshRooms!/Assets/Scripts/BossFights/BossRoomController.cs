@@ -177,7 +177,7 @@ public class BossRoomController : MonoBehaviour
     {
         if (player == null || mover == null || playerStandPoint == null) yield break;
 
-        if (aimer != null) aimer.enabled = false;
+        aimer?.SetAimOverride(faceDirectionAfterWalk);
 
         float elapsed = 0f;
         while (elapsed < walkTimeout &&
@@ -293,6 +293,7 @@ public class BossRoomController : MonoBehaviour
             mover.SetInputLocked(false);
         }
 
+        aimer?.ClearAimOverride();
         if (aimer != null) aimer.enabled = true;
         if (restoreWeapon && shooter != null) shooter.HideWeapon(false);
     }

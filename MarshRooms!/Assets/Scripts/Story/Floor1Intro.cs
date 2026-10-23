@@ -157,6 +157,7 @@ public class Floor1Intro : MonoBehaviour
         }
 
         mover.SetMoveInput(Vector2.zero);
+        aimer?.SetAimOverride(faceDirectionOnArrive);
         mover.SetFacingOverride(faceDirectionOnArrive);
         mover.FaceDirection(faceDirectionOnArrive);
         mover.ForceIdleAnimation();
@@ -317,6 +318,7 @@ public class Floor1Intro : MonoBehaviour
             mover.SetInputLocked(false);
         }
 
+        aimer?.ClearAimOverride();
         if (aimer != null) aimer.enabled = true;
         if (restoreWeapon && shooter != null) shooter.HideWeapon(false);
     }

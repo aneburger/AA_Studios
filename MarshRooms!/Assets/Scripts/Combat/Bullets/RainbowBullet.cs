@@ -10,6 +10,11 @@ public class RainbowBullet : BaseBullet
     [SerializeField] private float mutatedRangeMultiplier = 1.5f;
     [SerializeField] private float mutatedDamageMultiplier = 1.5f;
 
+    [Header("Beam Visual")]
+    [SerializeField] private float beamLifetime = 0f;
+    [SerializeField] private float minLifetime = 0.1f;
+    [SerializeField] private float spriteWorldWidth = 0f;
+
     protected override void Start()
     {
         base.Start();
@@ -50,15 +55,30 @@ public class RainbowBullet : BaseBullet
         }
 
         SpriteRenderer sr = GetComponent<SpriteRenderer>();
-        if (sr != null && sr.sprite != null)
-        {
-            float spriteWidth = sr.sprite.bounds.size.x;
+        float spriteWidth = spriteWorldWidth > 0f
+            ? spriteWorldWidth
+            : (sr != null && sr.sprite != null ? sr.sprite.bounds.size.x : 0f);
+
+        if (spriteWidth > 0f)
             transform.localScale = new Vector3(beamLength / spriteWidth, transform.localScale.y, 1f);
+
+        Destroy(gameObject, GetBeamLifetime());
+    }
+
+    // -- GET BEAM LIFETIME --
+    private float GetBeamLifetime()
+    {
+        if (beamLifetime > 0f) return Mathf.Max(beamLifetime, minLifetime);
+
+        float longest = 0f;
+        Animator anim = GetComponent<Animator>();
+        if (anim != null && anim.runtimeAnimatorController != null)
+        {
+            foreach (AnimationClip clip in anim.runtimeAnimatorController.animationClips)
+                longest = Mathf.Max(longest, clip.length);
         }
 
-        Animator anim = GetComponent<Animator>();
-        if (anim != null)
-            Destroy(gameObject, anim.GetCurrentAnimatorStateInfo(0).length);
+        return Mathf.Max(longest, minLifetime);
     }
 
     protected override void Update() { }
