@@ -91,9 +91,9 @@ public class MenuManager : MonoBehaviour
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         player?.GetComponent<TopDown.Movement.PlayerMover>()?.SetInputLocked(true);
 
-        menuButtons = new[] { tutorialButton, continueButton, startButton, controlsButton, quitButton };
-        menuTexts = new[] { tutorialText, continueText, startText, controlsText, quitText };
-        menuArrows = new[] { tutorialArrow, continueArrow, startArrow, controlsArrow, quitArrow };
+        menuButtons = new[] { continueButton, tutorialButton, startButton, controlsButton, quitButton };
+        menuTexts = new[] { continueText, tutorialText, startText, controlsText, quitText };
+        menuArrows = new[] { continueArrow, tutorialArrow, startArrow, controlsArrow, quitArrow };
 
         controlsMenuButtons = new[] { cancelControlsButton, confirmControlsButton };
         controlsMenuTexts = new[] { cancelText, confirmText };
@@ -132,7 +132,7 @@ public class MenuManager : MonoBehaviour
             continueButton.onClick.AddListener(OnContinueGame);
 
         // Tutorial is default highlighted option
-        SetSelection(0, false);
+        SetSelection(1, false);
 
         UpdateContinueButtonVisibility();
         //HUDManager.Instance?.SetHUDVisible(false);
