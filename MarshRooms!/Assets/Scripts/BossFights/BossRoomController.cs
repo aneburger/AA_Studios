@@ -56,6 +56,9 @@ public class BossRoomController : MonoBehaviour
     [SerializeField] private BossHealthBarUI healthBar;
     [SerializeField] private float healthBarFillDuration = 2.5f;
 
+    [Header("Camera")]
+    [SerializeField] private BossRoomCameraReveal cameraReveal;
+
     public event System.Action OnFightStarted;
 
     private GameObject player;
@@ -155,6 +158,7 @@ public class BossRoomController : MonoBehaviour
             yield return new WaitUntil(() => !mover.IsDodging);
 
         LockPlayer();
+        cameraReveal?.Begin(faceDirectionAfterWalk);
         yield return WalkToStandPoint();
 
         AudioManager.Instance?.FadeOutMusic(musicFadeDuration);
@@ -166,6 +170,7 @@ public class BossRoomController : MonoBehaviour
         AudioManager.Instance?.PlaySFX(doorSlamClip, doorSlamVolume);
         ScreenEffects.Instance?.ShakeScreen(slamShakeForce);
         if (doorBlocker != null) doorBlocker.SetActive(true);
+        cameraReveal?.End(); 
 
         yield return new WaitForSeconds(postSlamBeat);
 
@@ -310,6 +315,7 @@ public class BossRoomController : MonoBehaviour
         if (hudHiddenByUs) SetHUDHidden(false);
 
         ReleasePlayer(restoreWeapon: false);
+        cameraReveal?.ResetImmediate();
     }
 
     // ==================== DEATH SEQUENCE ====================
