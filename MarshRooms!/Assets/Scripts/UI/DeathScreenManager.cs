@@ -196,6 +196,12 @@ public class DeathScreenManager : MonoBehaviour
         if (gameModeText != null)
         gameModeText.text = GetDifficultyDisplayName(DifficultyManager.Current);
 
+        // update retry button text if died in death cap mode
+        bool deathCap = LevelLoader.Instance != null &&
+                    LevelLoader.Instance.RunEndedByDeathCap;
+        if (retryText != null)
+            retryText.text = deathCap ? "RESTART" : "RETRY";
+
         PopulateWeaponsLost(stats.lostWeaponSprites);
         PopulateCardsCollected(stats.collectedCardSprites);
     }
