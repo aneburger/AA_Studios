@@ -25,6 +25,11 @@ public sealed class AudioManager : MonoBehaviour
     [Header("Overlap Protection")]
     [SerializeField] private float minReplayInterval = 0.04f;
 
+    private Coroutine dampenRoutine;
+    private const string CutoffParam = "MasterCutoff";
+    private const float NormalCutoff = 22000f;
+    private const float DampenedCutoff = 800f;
+
     private readonly System.Collections.Generic.Dictionary<AudioClip, float> lastPlayTime = new System.Collections.Generic.Dictionary<AudioClip, float>();
 
     private AudioSource runningSFX;
@@ -34,6 +39,7 @@ public sealed class AudioManager : MonoBehaviour
     private float musicDampenMultiplier = 1f;
     public float GetMusicVolume() => musicSource.volume;
     public float GetCurrentMusicVolume()
+
     {
         return musicSource != null ? musicSource.volume : 0f;
     }
@@ -49,6 +55,8 @@ public sealed class AudioManager : MonoBehaviour
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
+
+        ResetAudioEffects();
     }
 
     private void ApplyMusicVolume()
@@ -250,15 +258,34 @@ public sealed class AudioManager : MonoBehaviour
     // -- DAMPEN AUDIO --
     public void DampenAudio(float duration)
     {
-        StartCoroutine(DampenCoroutine(duration));
+        if (audioMixer == null) return;
+
+        if (dampenRoutine != null) StopCoroutine(dampenRoutine);
+        dampenRoutine = StartCoroutine(DampenCoroutine(duration));
     }
 
     // -- DAMPEN COROUTINE --
     private IEnumerator DampenCoroutine(float duration)
     {
-        audioMixer.SetFloat("MasterCutoff", 800f);
-        yield return new WaitForSeconds(duration);
-        audioMixer.SetFloat("MasterCutoff", 22000f);
+        audioMixer.SetFloat(CutoffParam, DampenedCutoff);
+        yield return new WaitForSecondsRealtime(duration);
+        audioMixer.SetFloat(CutoffParam, NormalCutoff);
+        dampenRoutine = null;
+    }
+
+    // -- RESET AUDIO EFFECTS --
+    public void ResetAudioEffects()
+    {
+        if (dampenRoutine != null)
+        {
+            StopCoroutine(dampenRoutine);
+            dampenRoutine = null;
+        }
+
+        if (audioMixer != null) audioMixer.SetFloat(CutoffParam, NormalCutoff);
+
+        musicDampenMultiplier = 1f;
+        ApplyMusicVolume();
     }
 
     // -- FADE IN --
@@ -334,6 +361,12 @@ public sealed class AudioManager : MonoBehaviour
 
         if (paused) lowHealthSource.Pause();
         else lowHealthSource.UnPause();
+    }
+
+    private void OnDestroy()
+    {
+        if (Instance == this && audioMixer != null)
+            audioMixer.SetFloat(CutoffParam, NormalCutoff);
     }
 
 }

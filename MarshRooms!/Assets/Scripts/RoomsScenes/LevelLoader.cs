@@ -115,6 +115,7 @@ public class LevelLoader : MonoBehaviour
         HUDManager.Instance?.SetHUDVisible(false);
 
         AudioManager.Instance?.StopMusic();
+        AudioManager.Instance?.ResetAudioEffects();
 
         CurrentLevelScene = null;
 
@@ -129,6 +130,7 @@ public class LevelLoader : MonoBehaviour
 
     private IEnumerator LoadLevelRoutine(string sceneName)
     {
+        AudioManager.Instance?.ResetAudioEffects();
         ScreenEffects.Instance?.SetFadeImage();
 
         GameObject existingPlayer = GameObject.FindGameObjectWithTag(playerTag);

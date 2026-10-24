@@ -71,7 +71,7 @@ public class PortobelloOutro : BossOutroSequence
 
         yield return DeathRumble();
 
-        AudioManager.Instance?.FadeMusicVolume(0.2f, musicFadeDuration);
+        AudioManager.Instance?.FadeMusicVolume(0.1f, musicFadeDuration);
         room.HealthBar?.Hide();
 
         // -- Make Marsh safe for the whole ending --

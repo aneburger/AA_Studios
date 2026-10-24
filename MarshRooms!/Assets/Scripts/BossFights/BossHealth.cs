@@ -57,6 +57,9 @@ public class BossHealth : BaseHealth
     private float nextSporeDropTime;
     private float nextDeflectTime;
 
+    private bool fightStarted;
+    private BossRoomController roomController;
+
     public bool IsInvulnerable => invulnerableReasons.Count > 0;
     public bool PhaseTwoTriggered => phaseTriggered;
     public bool PhaseTwoStarted => phaseStarted;
@@ -167,6 +170,7 @@ public class BossHealth : BaseHealth
     // -- DEFLECT SOUND --
     private void PlayDeflect()
     {
+        if (!fightStarted) return;
         if (deflectClip == null || Time.time < nextDeflectTime) return;
 
         nextDeflectTime = Time.time + deflectCooldown;
@@ -222,5 +226,23 @@ public class BossHealth : BaseHealth
             return new Vector2(transform.position.x, sr.bounds.max.y);
 
         return transform.position;
+    }
+
+    // -- ENABLE --
+    private void OnEnable()
+    {
+        roomController = FindFirstObjectByType<BossRoomController>();
+        if (roomController != null) roomController.OnFightStarted += HandleFightStarted;
+    }
+
+    // -- DISABLE --
+    private void OnDisable()
+    {
+        if (roomController != null) roomController.OnFightStarted -= HandleFightStarted;
+    }
+
+    private void HandleFightStarted()
+    {
+        fightStarted = true;
     }
 }

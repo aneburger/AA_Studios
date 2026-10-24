@@ -53,15 +53,19 @@ MonoBehaviour:
   spawnTrigger: Spawn
   spawnClip: {fileID: 8300000, guid: fd719a68106daa84a832ce2f492ac83f, type: 3}
   spawnVolume: 0.6
+  randomizeIdle: 1
+  idleStateName: Idle
+  speedVariation: 0.1
   glanceEnabled: 1
   glanceIntervalMin: 4
   glanceIntervalMax: 10
   glanceDurationMin: 0.6
   glanceDurationMax: 1.4
-  cheerTrigger: 
+  cheerTrigger: Cheer
   cheerHops: 1
   hopHeight: 0.4
   hopDuration: 0.18
+  bubbleOffsetExtra: {x: 0, y: 0, z: 0}
 --- !u!1 &1474284981994161219
 GameObject:
   m_ObjectHideFlags: 0
