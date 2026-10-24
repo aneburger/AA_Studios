@@ -14,10 +14,10 @@ public class EndingDirector : MonoBehaviour
     [SerializeField] private float walkTimeout = 6f;
     [SerializeField] private float arriveDistance = 0.1f;
 
-    [Header("Cage")]
+    [Header("Cage (sprite swap)")]
     [SerializeField] private SpriteRenderer cageRenderer;
     [SerializeField] private Sprite cageOpenSprite;
-    [SerializeField] private string cageOpenSortingLayer = "World";
+    [SerializeField] private string cageOpenSortingLayer = "Background";
     [SerializeField] private AudioClip cageClickClip;
     [Range(0f, 1f)] [SerializeField] private float cageClickVolume = 1f;
     [SerializeField] private float delayAfterClick = 0.4f;
@@ -41,11 +41,29 @@ public class EndingDirector : MonoBehaviour
     [SerializeField] private DialogueSequence reunionDialogue;
     [SerializeField] private float pauseAfterReunionDialogue = 0.6f;
 
+    [Header("Crowd (C + D)")]
+    [SerializeField] private CrowdChatter chatter;
+    [SerializeField] private CrowdMember[] surroundCrowd;
+    [SerializeField] private Transform surroundCenter;
+    [SerializeField] private float crowdStaggerMin = 0.1f;
+    [SerializeField] private float crowdStaggerMax = 0.3f;
+    [SerializeField] private float pauseAfterCrowdSpawn = 0.8f;
+    [SerializeField] private DialogueSequence surroundDialogue;
+    [SerializeField] private CrowdMember speakerMember;
+    [SerializeField] private float pauseBeforeSpeakerSpawn = 0.6f;
+    [SerializeField] private float pauseAfterSpeakerSpawn = 0.6f;
+    [SerializeField] private DialogueSequence redOneDialogue;
+    [SerializeField] private string[] hailCheerLines = { "ALL HAIL BLOBS!", "Yayyy!", "Woo!", "All hail Mr. Blobs!" };
+    [SerializeField] private float cheerBeforeFade = 4f;
+    [SerializeField] private float fadeToBlackDuration = 1.2f;
+    [SerializeField] private float blackHoldTime = 1f;
+
     private PlayerMover mover;
     private PlayerAimer aimer;
     private PlayerShooter shooter;
     private Transform player;
 
+    // Hook this to PortobelloOutro.onOutroFinished
     public void Begin()
     {
         StartCoroutine(RunEnding());
@@ -55,6 +73,7 @@ public class EndingDirector : MonoBehaviour
     {
         if (room == null || room.Player == null)
         {
+            Debug.LogWarning("EndingDirector: no BossRoomController / player.", this);
             yield break;
         }
 
@@ -63,6 +82,7 @@ public class EndingDirector : MonoBehaviour
         aimer = room.Player.GetComponent<PlayerAimer>();
         shooter = room.Player.GetComponent<PlayerShooter>();
 
+        // Player is already input-locked by PortobelloOutro (LockPlayerExternally).
         if (shooter != null) shooter.HideWeapon(true);
         if (aimer != null) aimer.enabled = false;
 
@@ -81,6 +101,48 @@ public class EndingDirector : MonoBehaviour
         yield return PlayDialogue(reunionDialogue);
         yield return new WaitForSeconds(pauseAfterReunionDialogue);
 
+        // -- C: crowd surrounds Marsh and Blobs --
+        yield return SpawnCrowd(surroundCrowd, surroundCenter);
+        mover.SetFacingOverride(Vector2.down);
+        yield return new WaitForSeconds(pauseAfterCrowdSpawn);
+
+        yield return PlayDialogue(surroundDialogue);
+
+        // The speaker spawns in after Marsh's reaction, then the dialogue continues
+        yield return new WaitForSeconds(pauseBeforeSpeakerSpawn);
+        if (speakerMember != null)
+            yield return SpawnCrowd(new[] { speakerMember }, surroundCenter);
+        yield return new WaitForSeconds(pauseAfterSpeakerSpawn);
+
+        yield return PlayDialogue(redOneDialogue);
+
+        // -- D: crowd cheers with speech bubbles while the screen fades out --
+        // The cheering runs in waves until the fade has finished
+        if (chatter != null) chatter.CheerFor(cheerBeforeFade + fadeToBlackDuration, hailCheerLines);
+        yield return new WaitForSeconds(cheerBeforeFade);
+
+        ScreenEffects.Instance?.FadeToBlack(fadeToBlackDuration);
+        yield return new WaitForSeconds(fadeToBlackDuration + blackHoldTime);
+
+        // -- E: time skip goes here next (screen is black) --
+    }
+
+    // -- CROWD --
+    private IEnumerator SpawnCrowd(CrowdMember[] crowd, Transform faceCenter, bool playSpawnSound = true)
+    {
+        if (crowd == null) yield break;
+
+        foreach (CrowdMember member in crowd)
+        {
+            if (member == null) continue;
+
+            // Set facing first (stored while inactive), then Spawn applies it
+            if (faceCenter != null) member.FaceToward(faceCenter.position);
+            member.Spawn(animate: true, playSound: playSpawnSound);
+            if (chatter != null) chatter.AddMember(member);
+
+            yield return new WaitForSeconds(Random.Range(crowdStaggerMin, crowdStaggerMax));
+        }
     }
 
     // -- WALK --
@@ -128,11 +190,17 @@ public class EndingDirector : MonoBehaviour
         {
             if (cageOpenSprite != null)
                 cageRenderer.sprite = cageOpenSprite;
+            else
+                Debug.LogWarning("EndingDirector: no cage open sprite assigned.", this);
 
+            // Cage drops behind everything so Blobs can walk out in front of it
             if (!string.IsNullOrEmpty(cageOpenSortingLayer))
                 cageRenderer.sortingLayerName = cageOpenSortingLayer;
         }
-
+        else
+        {
+            Debug.LogWarning("EndingDirector: cageRenderer not assigned.", this);
+        }
 
         yield return new WaitForSeconds(cageOpenDuration);
     }
