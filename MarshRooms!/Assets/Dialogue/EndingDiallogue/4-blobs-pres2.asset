@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d396eeaa05b4f404ea49b1f5e4965776, type: 3}
+  m_Name: 4-blobs-pres2
+  m_EditorClassIdentifier: Assembly-CSharp::DialogueSequence
+  lines:
+  - speakerName: Marsh
+    portrait: {fileID: -2681918893553572030, guid: 96f423fd58af20743ab60c2815e095a2, type: 3}
+    talkingPortrait: {fileID: 6562647036115510444, guid: 96f423fd58af20743ab60c2815e095a2, type: 3}
+    text: 'Alright, how about... '
+    voiceClip: {fileID: 0}
+    typewriterSpeedOverride: 0
+    fontSizeOverride: 0
+    disablePortraitSquish: 0
+  - speakerName: Marsh
+    portrait: {fileID: -916550197, guid: 2103e7576939ef846a548a3144909d23, type: 3}
+    talkingPortrait: {fileID: -1472452136, guid: 2103e7576939ef846a548a3144909d23, type: 3}
+    text: MR. BLOBS FOR PRESIDENT?!
+    voiceClip: {fileID: 0}
+    typewriterSpeedOverride: 35
+    fontSizeOverride: 0
+    disablePortraitSquish: 0
