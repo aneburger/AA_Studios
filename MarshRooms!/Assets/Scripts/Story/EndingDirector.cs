@@ -118,7 +118,10 @@ public class EndingDirector : MonoBehaviour
     [Range(0f, 1f)] [SerializeField] private float endMusicTargetVolume = 0f;
     [Range(0f, 1f)] [SerializeField] private float creditsVolume = 0.8f;
     [SerializeField] private float creditsFadeInDuration = 2f;
+
+    [Header("Credits & Exit")]
     [SerializeField] private UnityEvent onCreditsStart;
+    [SerializeField] private float exitMusicFadeDuration = 1.5f;
 
     [Header("Camera (time skip)")]
     [SerializeField] private CinemachineCamera followCamera;
@@ -128,10 +131,17 @@ public class EndingDirector : MonoBehaviour
     private PlayerAimer aimer;
     private PlayerShooter shooter;
     private Transform player;
+    private bool creditsFinished;
 
     public void Begin()
     {
         StartCoroutine(RunEnding());
+    }
+
+    // Called by the credits screen (placeholder or the real one) when the credits are over
+    public void NotifyCreditsFinished()
+    {
+        creditsFinished = true;
     }
 
     private IEnumerator RunEnding()
@@ -215,12 +225,71 @@ public class EndingDirector : MonoBehaviour
             AudioManager.Instance?.FadeMusicVolume(endMusicTargetVolume, endFadeDuration);
         yield return new WaitForSeconds(endFadeDuration + endBlackHoldTime);
 
-        // -- Credits --
+        // -- Credits -- //
+        creditsFinished = false;
+
+        // The game counts as beaten as soon as the credits start
+        MarkGameBeaten();
+
         if (celebrationMusic != null)
             AudioManager.Instance?.FadeMusicVolume(creditsVolume, creditsFadeInDuration);
         onCreditsStart?.Invoke();
 
-        // Exit (ClearSavedGame, game-beaten flag, ReturnToMainMenu) goes here next
+        if (onCreditsStart != null && onCreditsStart.GetPersistentEventCount() > 0)
+        {
+            while (!creditsFinished)
+                yield return null;
+        }
+
+        // -- Exit --
+        yield return ExitToMainMenu();
+    }
+
+    // -- GAME BEATEN --
+    private void MarkGameBeaten()
+    {
+        // Continue must never drop the player back into floor 12
+        LevelLoader.Instance?.ClearSavedGame();
+
+        GameProgress.MarkBeaten();
+    }
+
+    // -- EXIT --
+    private IEnumerator ExitToMainMenu()
+    {
+        AudioManager.Instance?.FadeOutMusic(exitMusicFadeDuration);
+        yield return new WaitForSeconds(exitMusicFadeDuration);
+
+        ReleasePlayerForExit();
+
+        LevelLoader.Instance?.ClearSavedGame();
+        LevelLoader.Instance?.ReturnToMainMenu();
+    }
+
+    // Undo everything this director (and the outro) changed on the player and HUD
+    private void ReleasePlayerForExit()
+    {
+        HUDManager.Instance?.SetHUDVisible(true);
+
+        if (shooter != null) shooter.HideWeapon(false);
+
+        if (aimer != null)
+        {
+            aimer.ClearAimOverride();
+            aimer.enabled = true;
+        }
+
+        if (mover != null)
+        {
+            mover.SetMoveInput(Vector2.zero);
+            mover.ClearFacingOverride();
+        }
+
+        if (room != null && room.Player != null)
+        {
+            PlayerHealth health = room.Player.GetComponent<PlayerHealth>();
+            if (health != null) health.SetInvincible(false, affectSpeed: false);
+        }
     }
 
     private IEnumerator DemandBeat(DialogueSequence blobsDialogue, DialogueSequence marshDialogue, string[] cheerLines, float intensity, float cheerDuration)

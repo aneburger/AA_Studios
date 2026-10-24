@@ -43,6 +43,13 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private GameObject quitArrow;
     [SerializeField] private GameObject continueArrow;
 
+    [Header("Bonus")]
+    [SerializeField] private Button bonusButton;
+    [SerializeField] private TMP_Text bonusText;
+    [SerializeField] private GameObject bonusArrow;
+    [SerializeField] private string bonusSceneName = "Endless";
+    [SerializeField] private RectTransform continuePositionWhenBonusUnlocked;
+
     [Header("UI Audio")]
     [SerializeField] private AudioClip hoverClip;
     [SerializeField] private AudioClip clickClip;
@@ -63,6 +70,8 @@ public class MenuManager : MonoBehaviour
 
     private Button[] controlsMenuButtons;
     private TMP_Text[] controlsMenuTexts;
+
+    private Vector3 continueOriginalPosition;
 
     private int currentIndex = -1;
     private int currentControlsIndex = -1;
@@ -88,9 +97,12 @@ public class MenuManager : MonoBehaviour
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         player?.GetComponent<TopDown.Movement.PlayerMover>()?.SetInputLocked(true);
 
-        menuButtons = new[] { continueButton, tutorialButton, startButton, controlsButton, quitButton };
-        menuTexts = new[] { continueText, tutorialText, startText, controlsText, quitText };
-        menuArrows = new[] { continueArrow, tutorialArrow, startArrow, controlsArrow, quitArrow };
+        menuButtons = new[] { bonusButton, continueButton, tutorialButton, startButton, controlsButton, quitButton };
+        menuTexts = new[] { bonusText, continueText, tutorialText, startText, controlsText, quitText };
+        menuArrows = new[] { bonusArrow, continueArrow, tutorialArrow, startArrow, controlsArrow, quitArrow };
+
+        if (continueButton != null)
+            continueOriginalPosition = continueButton.transform.position;
 
         controlsMenuButtons = new[] { cancelControlsButton, confirmControlsButton };
         controlsMenuTexts = new[] { cancelText, confirmText };
@@ -128,8 +140,11 @@ public class MenuManager : MonoBehaviour
         if (continueButton != null)
             continueButton.onClick.AddListener(OnContinueGame);
 
+        if (bonusButton != null)
+            bonusButton.onClick.AddListener(OnBonusPressed);
+
         // Tutorial is default highlighted option
-        SetSelection(1, false);
+        SetSelection(GetMenuButtonIndex(tutorialButton), false);
 
         UpdateContinueButtonVisibility();
         //HUDManager.Instance?.SetHUDVisible(false);
@@ -204,13 +219,13 @@ public class MenuManager : MonoBehaviour
     {
         for (int i = index - 1; i >= 0; i--)
         {
-            if (menuButtons[i] != null)
+            if (IsUsable(menuButtons[i]))
                 return menuButtons[i];
         }
 
         for (int i = menuButtons.Length - 1; i > index; i--)
         {
-            if (menuButtons[i] != null)
+            if (IsUsable(menuButtons[i]))
                 return menuButtons[i];
         }
 
@@ -221,13 +236,13 @@ public class MenuManager : MonoBehaviour
     {
         for (int i = index + 1; i < menuButtons.Length; i++)
         {
-            if (menuButtons[i] != null)
+            if (IsUsable(menuButtons[i]))
                 return menuButtons[i];
         }
 
         for (int i = 0; i < index; i++)
         {
-            if (menuButtons[i] != null)
+            if (IsUsable(menuButtons[i]))
                 return menuButtons[i];
         }
 
@@ -273,23 +288,24 @@ public class MenuManager : MonoBehaviour
     private void ConfigurePointerEvents()
     {
         for (int i = 0; i < menuButtons.Length; i++)
-        {
-            if (menuButtons[i] == null)
-                continue;
+            AddMenuTriggers(menuButtons[i], i);
+    }
 
-            int index = i;
+    private void AddMenuTriggers(Button button, int index)
+    {
+        if (button == null)
+            return;
 
-            EventTrigger trigger = menuButtons[i].GetComponent<EventTrigger>();
-            if (trigger == null)
-                trigger = menuButtons[i].gameObject.AddComponent<EventTrigger>();
+        EventTrigger trigger = button.GetComponent<EventTrigger>();
+        if (trigger == null)
+            trigger = button.gameObject.AddComponent<EventTrigger>();
 
-            if (trigger.triggers == null)
-                trigger.triggers = new List<EventTrigger.Entry>();
+        if (trigger.triggers == null)
+            trigger.triggers = new List<EventTrigger.Entry>();
 
-            AddTrigger(trigger, EventTriggerType.PointerEnter, _ => SetSelection(index, true));
-            AddTrigger(trigger, EventTriggerType.Select, _ => SetSelection(index, true));
-            //AddTrigger(trigger, EventTriggerType.PointerExit, _ => StartCoroutine(ResetToDefaultWhenMouseLeaves()));
-        }
+        AddTrigger(trigger, EventTriggerType.PointerEnter, _ => SetSelection(index, true));
+        AddTrigger(trigger, EventTriggerType.Select, _ => SetSelection(index, true));
+        //AddTrigger(trigger, EventTriggerType.PointerExit, _ => StartCoroutine(ResetToDefaultWhenMouseLeaves()));
     }
 
     private void ConfigureControlsPointerEvents()
@@ -389,18 +405,29 @@ public class MenuManager : MonoBehaviour
         AudioManager.Instance?.PlaySFXWithPitch(clip, volume);
     }
 
-
     private void UpdateContinueButtonVisibility()
     {
         bool showContinue = LevelLoader.Instance != null && LevelLoader.Instance.HasSavedGame;
+        bool showBonus = GameProgress.IsBeaten && bonusButton != null;
 
         if (continueButton != null)
             continueButton.gameObject.SetActive(showContinue);
 
+        if (bonusButton != null)
+            bonusButton.gameObject.SetActive(showBonus);
+
+        if (continueButton != null)
+        {
+            bool moveContinue = showBonus && continuePositionWhenBonusUnlocked != null;
+            continueButton.transform.position = moveContinue
+                ? continuePositionWhenBonusUnlocked.position
+                : continueOriginalPosition;
+        }
+
         ConfigureNavigation();
 
-        if (!showContinue && currentIndex == GetMenuButtonIndex(continueButton))
-            SetSelection(0, false);
+        if (currentIndex >= 0 && !IsUsable(menuButtons[currentIndex]))
+            SetSelection(FirstActiveIndex(), false);
     }
 
 
@@ -445,6 +472,30 @@ public class MenuManager : MonoBehaviour
     {
         PlayUiSound(clickClip, clickVolume);
         newGameConfirmManager?.Open(NewGameConfirmManager.NewGameConfirmSource.MainMenuTutorial);
+    }
+
+    // -- BONUS  --
+    private void OnBonusPressed()
+    {
+        if (LevelLoader.Instance == null || string.IsNullOrEmpty(bonusSceneName))
+            return;
+
+        PlayUiSound(clickClip, clickVolume);
+        AudioManager.Instance?.PlayMusic(AudioManager.Instance.musicClip);
+
+        // Resume time
+        Time.timeScale = 1f;
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        player?.GetComponent<TopDown.Movement.PlayerMover>()?.SetInputLocked(false);
+
+        if (controlsMenuPanel != null)
+            controlsMenuPanel.SetActive(false);
+
+        if (menuPanel != null)
+            menuPanel.SetActive(false);
+
+        gameObject.GetComponent<MenuManager>().enabled = false;
+        LevelLoader.Instance.LoadLevel(bonusSceneName);
     }
 
     // -- OPEN CONTROLS --
@@ -528,7 +579,7 @@ public class MenuManager : MonoBehaviour
             if (menuPanel != null)
                 menuPanel.SetActive(true);
 
-            SetSelection(2, false);
+            SetSelection(GetMenuButtonIndex(startButton), false);
         }
 
         //if (menuPanel != null)
@@ -587,6 +638,22 @@ public class MenuManager : MonoBehaviour
         }
     }
 
+    private static bool IsUsable(Button button)
+    {
+        return button != null && button.gameObject.activeSelf;
+    }
+
+    private int FirstActiveIndex()
+    {
+        for (int i = 0; i < menuButtons.Length; i++)
+        {
+            if (IsUsable(menuButtons[i]))
+                return i;
+        }
+
+        return 0;
+    }
+
     private int GetMenuButtonIndex(Button button)
     {
         for (int i = 0; i < menuButtons.Length; i++)
@@ -611,7 +678,7 @@ public class MenuManager : MonoBehaviour
         if (controlsMenuPanel != null)
             controlsMenuPanel.SetActive(false);
 
-        SetSelection(0, false);
+        SetSelection(FirstActiveIndex(), false);
     }
 
     public void RestoreAfterQuitConfirm()

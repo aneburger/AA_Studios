@@ -3103,7 +3103,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 13.133179
+  orthographic size: 8.4375
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -26218,6 +26218,29 @@ Transform:
   m_Children: []
   m_Father: {fileID: 937699703}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1951375926 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7085789729006638418, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
+  m_PrefabInstance: {fileID: 3537630140295722637}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1951375935
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1951375926}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ad2702286c66aa42ba9984c37c77486, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MenuProgressVisuals
+  defaultMarsh: {fileID: 0}
+  beatenMarsh: {fileID: 0}
+  inProgressMarsh: {fileID: 0}
+  inProgressOverridesBeaten: 1
+  menuPanel: {fileID: 0}
+  forceBeatenForTesting: 0
 --- !u!1 &1966904031
 GameObject:
   m_ObjectHideFlags: 0
@@ -26915,7 +26938,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7085789729006638418, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1951375935}
   m_SourcePrefab: {fileID: 100100000, guid: e3933ec6722bffd47905403c8fe75e0c, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
