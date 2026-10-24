@@ -4,7 +4,7 @@ using TopDown.Movement;
 
 public class CrowdMember : MonoBehaviour
 {
-    [Header("References")]
+    [Header("References (auto-found if empty)")]
     [SerializeField] private Animator animator;
     [SerializeField] private DirectionalAnimator directionalAnimator;
     [SerializeField] private BaseMover mover;
@@ -15,6 +15,11 @@ public class CrowdMember : MonoBehaviour
     [SerializeField] private string spawnTrigger = "Spawn";
     [SerializeField] private AudioClip spawnClip;
     [Range(0f, 1f)] [SerializeField] private float spawnVolume = 1f;
+
+    [Header("Idle Variation (breaks up the sync)")]
+    [SerializeField] private bool randomizeIdle = true;
+    [SerializeField] private string idleStateName = "Idle";
+    [Range(0f, 0.5f)] [SerializeField] private float speedVariation = 0.2f;
 
     [Header("Idle Glance")]
     [SerializeField] private bool glanceEnabled = true;
@@ -29,10 +34,16 @@ public class CrowdMember : MonoBehaviour
     [SerializeField] private float hopHeight = 0.15f;
     [SerializeField] private float hopDuration = 0.18f;
 
+    [Header("Speech Bubble")]
+    [SerializeField] private Vector3 bubbleOffsetExtra = Vector3.zero;
+
+    public Vector3 BubbleOffsetExtra => bubbleOffsetExtra;
+
     private Vector2 homeFacing = Vector2.up;
     private Vector3 hopBasePos;
     private Vector3 shadowBasePos;
     private Coroutine glanceRoutine;
+    private Coroutine idleRoutine;
     private Coroutine cheerRoutine;
 
     // -- AWAKE --
@@ -43,7 +54,11 @@ public class CrowdMember : MonoBehaviour
         if (mover == null) mover = GetComponent<BaseMover>();
         if (hopTarget == null) hopTarget = animator != null ? animator.transform : transform;
 
-        if (animator != null) animator.updateMode = AnimatorUpdateMode.UnscaledTime;
+        if (animator != null && speedVariation > 0f)
+        {
+            float cap = animator.speed;
+            animator.speed = Random.Range(cap * (1f - speedVariation), cap);
+        }
 
         hopBasePos = hopTarget.localPosition;
         if (shadow != null) shadowBasePos = shadow.localPosition;
@@ -52,11 +67,16 @@ public class CrowdMember : MonoBehaviour
     private void OnEnable()
     {
         glanceRoutine = StartCoroutine(GlanceLoop());
+
+        if (randomizeIdle && animator != null && !string.IsNullOrEmpty(idleStateName))
+            idleRoutine = StartCoroutine(RandomizeIdleOffset());
     }
 
     private void OnDisable()
     {
         if (glanceRoutine != null) StopCoroutine(glanceRoutine);
+        if (idleRoutine != null) StopCoroutine(idleRoutine);
+        idleRoutine = null;
         if (cheerRoutine != null) StopCoroutine(cheerRoutine);
         glanceRoutine = null;
         cheerRoutine = null;
@@ -109,22 +129,51 @@ public class CrowdMember : MonoBehaviour
         return d.y >= 0f ? Vector2.up : Vector2.down;
     }
 
-    // -- GLANCE --
+    // -- IDLE OFFSET --
+    private IEnumerator RandomizeIdleOffset()
+    {
+        int idleHash = Animator.StringToHash(idleStateName);
+
+        yield return null;
+        yield return null;
+
+        int frames = 0;
+        while (frames < 180)
+        {
+            AnimatorStateInfo info = animator.GetCurrentAnimatorStateInfo(0);
+            if (info.shortNameHash == idleHash && !animator.IsInTransition(0))
+            {
+                animator.Play(idleHash, 0, Random.value);
+                idleRoutine = null;
+                yield break;
+            }
+
+            // Don't burn the timeout while the game is paused
+            if (Time.timeScale > 0f) frames++;
+            yield return null;
+        }
+
+        idleRoutine = null;
+    }
+
+    // -- GLANCE  --
     private IEnumerator GlanceLoop()
     {
-        yield return new WaitForSecondsRealtime(Random.Range(0f, glanceIntervalMax));
+        // Random first wait so the whole crowd doesn't glance in sync
+        yield return new WaitForSeconds(Random.Range(0f, glanceIntervalMax));
 
         while (true)
         {
-            yield return new WaitForSecondsRealtime(Random.Range(glanceIntervalMin, glanceIntervalMax));
+            yield return new WaitForSeconds(Random.Range(glanceIntervalMin, glanceIntervalMax));
             if (!glanceEnabled) continue;
 
+            // Perpendicular to home: left/right when home is up
             Vector2 side = Random.value < 0.5f
                 ? new Vector2(-homeFacing.y, homeFacing.x)
                 : new Vector2(homeFacing.y, -homeFacing.x);
 
             SetFacing(side);
-            yield return new WaitForSecondsRealtime(Random.Range(glanceDurationMin, glanceDurationMax));
+            yield return new WaitForSeconds(Random.Range(glanceDurationMin, glanceDurationMax));
             SetFacing(homeFacing);
         }
     }
@@ -134,6 +183,7 @@ public class CrowdMember : MonoBehaviour
     {
         if (!isActiveAndEnabled) return;
 
+        // Optional cheer animation plays together with the hop
         if (animator != null && HasTrigger(animator, cheerTrigger))
             animator.SetTrigger(cheerTrigger);
 
@@ -149,7 +199,7 @@ public class CrowdMember : MonoBehaviour
             float t = 0f;
             while (t < hopDuration)
             {
-                t += Time.unscaledDeltaTime;
+                t += Time.deltaTime;
                 float p = Mathf.Clamp01(t / Mathf.Max(0.0001f, hopDuration));
                 ApplyHop(Mathf.Sin(p * Mathf.PI) * hopHeight);
                 yield return null;

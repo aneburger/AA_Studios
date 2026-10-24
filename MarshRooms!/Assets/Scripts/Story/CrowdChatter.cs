@@ -43,7 +43,7 @@ public class CrowdChatter : MonoBehaviour
         foreach (CrowdMember m in list) AddMember(m);
     }
 
-    // -- CHEER --
+    // -- CHEER (one bubble) --
     public CrowdMember Cheer(string line)
     {
         if (string.IsNullOrEmpty(line) || bubblePrefab == null) return null;
@@ -51,8 +51,9 @@ public class CrowdChatter : MonoBehaviour
         CrowdMember who = PickMember();
         if (who == null) return null;
 
-        CrowdBubble bubble = Instantiate(PrefabFor(line), who.transform.position + bubbleOffset, Quaternion.identity);
-        bubble.Show(line, who.transform, bubbleOffset);
+        Vector3 offset = bubbleOffset + who.BubbleOffsetExtra;
+        CrowdBubble bubble = Instantiate(PrefabFor(line), who.transform.position + offset, Quaternion.identity);
+        bubble.Show(line, who.transform, offset);
 
         if (memberCheersWithBubble) who.Cheer();
         return who;
@@ -96,19 +97,25 @@ public class CrowdChatter : MonoBehaviour
     }
 
     // -- CHEER FOR --
-    public Coroutine CheerFor(float duration, string[] lines)
+    public Coroutine CheerFor(float duration, string[] lines, float intensity = 1f)
     {
-        return StartCoroutine(CheerForRoutine(duration, lines));
+        return StartCoroutine(CheerForRoutine(duration, lines, intensity));
     }
 
-    private IEnumerator CheerForRoutine(float duration, string[] lines)
+    private IEnumerator CheerForRoutine(float duration, string[] lines, float intensity)
     {
         if (lines == null || lines.Length == 0 || bubblePrefab == null) yield break;
+
+        intensity = Mathf.Max(0.1f, intensity);
+        int minCount = Mathf.Max(1, Mathf.RoundToInt(bubblesPerWaveMin * intensity));
+        int maxCount = Mathf.Max(minCount, Mathf.RoundToInt(bubblesPerWaveMax * intensity));
+        float gapScale = 1f / Mathf.Max(0.25f, intensity);
+        float hopChance = Mathf.Clamp01(waveHopChance * intensity);
 
         float elapsed = 0f;
         while (elapsed < duration)
         {
-            int count = Random.Range(bubblesPerWaveMin, bubblesPerWaveMax + 1);
+            int count = Random.Range(minCount, maxCount + 1);
             for (int i = 0; i < count && elapsed < duration; i++)
             {
                 Cheer(PickLine(lines));
@@ -118,16 +125,18 @@ public class CrowdChatter : MonoBehaviour
                 elapsed += d;
             }
 
+            // End of the wave: some of the crowd hops
             foreach (CrowdMember m in members)
-                if (m != null && Random.value < waveHopChance)
+                if (m != null && Random.value < hopChance)
                     StartCoroutine(DelayedCheer(m, Random.Range(0f, everyoneHopDelayMax)));
 
-            float gap = Random.Range(waveGapMin, waveGapMax);
+            float gap = Random.Range(waveGapMin, waveGapMax) * gapScale;
             yield return new WaitForSecondsRealtime(gap);
             elapsed += gap;
         }
     }
 
+    // Random line, but not the same one twice in a row
     private string PickLine(string[] lines)
     {
         string line = lines[Random.Range(0, lines.Length)];
