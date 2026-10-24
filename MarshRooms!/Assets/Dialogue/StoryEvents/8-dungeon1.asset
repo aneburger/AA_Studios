@@ -14,24 +14,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DialogueSequence
   lines:
   - speakerName: Marsh
-    portrait: {fileID: 0}
-    talkingPortrait: {fileID: 0}
+    portrait: {fileID: -4332381428540570747, guid: 96f423fd58af20743ab60c2815e095a2, type: 3}
+    talkingPortrait: {fileID: -1126149774, guid: 96f423fd58af20743ab60c2815e095a2, type: 3}
     text: ' It''s you again! Why are you in here?'
     voiceClip: {fileID: 0}
     typewriterSpeedOverride: 0
     fontSizeOverride: 0
     disablePortraitSquish: 0
   - speakerName: Mycena
-    portrait: {fileID: 0}
-    talkingPortrait: {fileID: 0}
-    text: ' I burnt the Escargot sauce... it''s a <shake>crime</shake>'
+    portrait: {fileID: -4838557198409533639, guid: 1f6f0d1b048dff747991882296d65ef3, type: 3}
+    talkingPortrait: {fileID: 2407537348783464230, guid: 1f6f0d1b048dff747991882296d65ef3, type: 3}
+    text: ' I burnt the Escargot sauce... it''s a <shake>crime</shake>.'
     voiceClip: {fileID: 0}
     typewriterSpeedOverride: 0
     fontSizeOverride: 0
     disablePortraitSquish: 0
   - speakerName: Marsh
-    portrait: {fileID: 0}
-    talkingPortrait: {fileID: 0}
+    portrait: {fileID: -1126149774, guid: 96f423fd58af20743ab60c2815e095a2, type: 3}
+    talkingPortrait: {fileID: 2022291355, guid: 96f423fd58af20743ab60c2815e095a2, type: 3}
     text: 'Escargot?! Have you seen Mr. Blobs?!
 
 '
@@ -40,8 +40,8 @@ MonoBehaviour:
     fontSizeOverride: 0
     disablePortraitSquish: 0
   - speakerName: Mycena
-    portrait: {fileID: 0}
-    talkingPortrait: {fileID: 0}
+    portrait: {fileID: 340477114914435048, guid: 1f6f0d1b048dff747991882296d65ef3, type: 3}
+    talkingPortrait: {fileID: 2407537348783464230, guid: 1f6f0d1b048dff747991882296d65ef3, type: 3}
     text: 'Oh, the little snail? Yeah, he was in here a few minutes ago.
 
 '
@@ -49,12 +49,10 @@ MonoBehaviour:
     typewriterSpeedOverride: 0
     fontSizeOverride: 0
     disablePortraitSquish: 0
-  - speakerName: Marsh
-    portrait: {fileID: 0}
-    talkingPortrait: {fileID: 0}
-    text: 'The guards took him upstairs for... <i>inspection</i>.
-
-'
+  - speakerName: Mycena
+    portrait: {fileID: 340477114914435048, guid: 1f6f0d1b048dff747991882296d65ef3, type: 3}
+    talkingPortrait: {fileID: 2407537348783464230, guid: 1f6f0d1b048dff747991882296d65ef3, type: 3}
+    text: The guards took him upstairs for... <shake><i>inspection</i></shake>
     voiceClip: {fileID: 0}
     typewriterSpeedOverride: 0
     fontSizeOverride: 0

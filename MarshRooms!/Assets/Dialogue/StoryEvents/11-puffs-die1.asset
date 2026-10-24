@@ -13,9 +13,11 @@ MonoBehaviour:
   m_Name: 11-puffs-die1
   m_EditorClassIdentifier: Assembly-CSharp::DialogueSequence
   lines:
-  - speakerName: Marsh
-    portrait: {fileID: 1730539990, guid: 96f423fd58af20743ab60c2815e095a2, type: 3}
-    talkingPortrait: {fileID: -1870950988, guid: 96f423fd58af20743ab60c2815e095a2, type: 3}
-    text: Where are you hiding Mr. Blobs?!
-    voiceClip: {fileID: 8300000, guid: eef9789cceb98a94c85314548f3e2021, type: 3}
-    typewriterSpeedOverride: 0
+  - speakerName: Chef Puffs
+    portrait: {fileID: -1673334681, guid: e6427522f1bd1e1489753f15e195cdf8, type: 3}
+    talkingPortrait: {fileID: 65184704, guid: e6427522f1bd1e1489753f15e195cdf8, type: 3}
+    text: Ughhh... <i>sacrebleu!</i>
+    voiceClip: {fileID: 0}
+    typewriterSpeedOverride: 35
+    fontSizeOverride: 0
+    disablePortraitSquish: 0
