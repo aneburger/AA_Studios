@@ -26,6 +26,16 @@ public class ImageAnimation : MonoBehaviour
         image = GetComponent<Image>();
     }
 
+    // -- SET FRAMES --
+    public void SetFrames(Sprite[] newFrames)
+    {
+        if (newFrames == null || newFrames.Length == 0) return;
+
+        sprites = newFrames;
+        index = 0;
+        frame = 0;
+    }
+
     // -- UPDATE --
     private void Update()
     {

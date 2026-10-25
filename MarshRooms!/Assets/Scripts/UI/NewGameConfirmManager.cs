@@ -304,13 +304,13 @@ public class NewGameConfirmManager : MonoBehaviour
         switch (difficulty)
         {
             case Difficulty.Easy:
-                return "Experience the story with a lighter combat challenge.";
+                return "Fewer, weaker, slower enemies";
             case Difficulty.Hard:
-                return "For those looking for a greater combat challenge.";
+                return "More, tougher, faster enemies";
             case Difficulty.DeathCap:
                 return "RESTART FROM FLOOR 1 WHEN YOU DIE.";
             default:
-                return "The intended experience of the game.";
+                return "The intended experience";
         }
     }
 

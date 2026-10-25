@@ -47,7 +47,7 @@ public class EndingDirector : MonoBehaviour
     [Header("Crowd")]
     [SerializeField] private CrowdChatter chatter;
     [SerializeField] private CrowdMember[] surroundCrowd;
-    [Header("Chef Puffs (only appears if he was NOT killed)")]
+    [Header("Chef Puffs")]
     [SerializeField] private CrowdMember puffsAudience;
 
     [Header("Crowd Spawn")]
@@ -60,6 +60,12 @@ public class EndingDirector : MonoBehaviour
     [SerializeField] private float pauseBeforeSpeakerSpawn = 0.6f;
     [SerializeField] private float pauseAfterSpeakerSpawn = 0.6f;
     [SerializeField] private DialogueSequence redOneDialogue;
+    [SerializeField] private float pauseBeforeBlobsPresident1 = 0.5f;
+    [SerializeField] private DialogueSequence blobsPresident1Dialogue;
+    [SerializeField] private float pauseBeforeBlobsPresident2 = 0.5f;
+    [SerializeField] private DialogueSequence blobsPresident2Dialogue;
+    [SerializeField] private float pauseBeforeAllHailBlobs = 0.5f;
+    [SerializeField] private DialogueSequence allHailBlobsDialogue;
     [SerializeField] private string[] hailCheerLines;
     [SerializeField] private float cheerBeforeFade = 4f;
     [SerializeField] private float fadeToBlackDuration = 1.2f;
@@ -79,7 +85,7 @@ public class EndingDirector : MonoBehaviour
     [SerializeField] private float fadeInDuration = 1.2f;
     [SerializeField] private float pauseAfterFadeIn = 0.8f;
 
-    [Header("Epilogue (F)")]
+    [Header("Epilogue")]
     [SerializeField] private DialogueSequence epilogueIntroDialogue;
     [SerializeField] private DialogueSequence demand1BlobsDialogue;
     [FormerlySerializedAs("demand1Dialogue")]
@@ -118,6 +124,11 @@ public class EndingDirector : MonoBehaviour
     [Range(0f, 1f)] [SerializeField] private float endMusicTargetVolume = 0f;
     [Range(0f, 1f)] [SerializeField] private float creditsVolume = 0.8f;
     [SerializeField] private float creditsFadeInDuration = 2f;
+
+    [Header("Music: Duck During Demands")]
+    [Range(0f, 1f)] [SerializeField] private float demandMusicDuckAmount = 0.15f;
+    [SerializeField] private float demandDuckFadeDuration = 0.5f;
+    [SerializeField] private float demandRestoreFadeDuration = 0.5f;
 
     [Header("Credits & Exit")]
     [SerializeField] private UnityEvent onCreditsStart;
@@ -194,6 +205,24 @@ public class EndingDirector : MonoBehaviour
         yield return new WaitForSeconds(pauseAfterSpeakerSpawn);
 
         yield return PlayDialogue(redOneDialogue);
+
+        if (blobsPresident1Dialogue != null)
+        {
+            yield return new WaitForSeconds(pauseBeforeBlobsPresident1);
+            yield return PlayDialogue(blobsPresident1Dialogue);
+        }
+
+        if (blobsPresident2Dialogue != null)
+        {
+            yield return new WaitForSeconds(pauseBeforeBlobsPresident2);
+            yield return PlayDialogue(blobsPresident2Dialogue);
+        }
+
+        if (allHailBlobsDialogue != null)
+        {
+            yield return new WaitForSeconds(pauseBeforeAllHailBlobs);
+            yield return PlayDialogue(allHailBlobsDialogue);
+        }
 
         PlayMusic(celebrationMusic, celebrationVolume, celebrationFadeInDuration);
         if (chatter != null) chatter.CheerFor(cheerBeforeFade + fadeToBlackDuration, hailCheerLines);
@@ -305,6 +334,9 @@ public class EndingDirector : MonoBehaviour
     // Blobs's demand
     private IEnumerator PlayDemandDialogue(DialogueSequence blobsDialogue, DialogueSequence marshDialogue)
     {
+        // Music dips while the demand is spoken...
+        DuckMusic();
+
         if (blobsDialogue != null)
         {
             yield return PlayDialogue(blobsDialogue);
@@ -314,6 +346,24 @@ public class EndingDirector : MonoBehaviour
 
         if (marshDialogue != null)
             yield return PlayDialogue(marshDialogue);
+
+        // ...and comes back up for the cheer
+        RestoreMusic();
+    }
+
+    private void DuckMusic()
+    {
+        if (celebrationMusic == null || demandMusicDuckAmount <= 0f) return;
+
+        float ducked = Mathf.Max(0f, celebrationVolume - demandMusicDuckAmount);
+        AudioManager.Instance?.FadeMusicVolume(ducked, demandDuckFadeDuration);
+    }
+
+    private void RestoreMusic()
+    {
+        if (celebrationMusic == null || demandMusicDuckAmount <= 0f) return;
+
+        AudioManager.Instance?.FadeMusicVolume(celebrationVolume, demandRestoreFadeDuration);
     }
 
     // -- TIME SKIP --

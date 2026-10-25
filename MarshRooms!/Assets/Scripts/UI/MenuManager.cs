@@ -43,13 +43,6 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private GameObject quitArrow;
     [SerializeField] private GameObject continueArrow;
 
-    [Header("Bonus")]
-    [SerializeField] private Button bonusButton;
-    [SerializeField] private TMP_Text bonusText;
-    [SerializeField] private GameObject bonusArrow;
-    [SerializeField] private string bonusSceneName = "Endless";
-    [SerializeField] private RectTransform continuePositionWhenBonusUnlocked;
-
     [Header("UI Audio")]
     [SerializeField] private AudioClip hoverClip;
     [SerializeField] private AudioClip clickClip;
@@ -70,8 +63,6 @@ public class MenuManager : MonoBehaviour
 
     private Button[] controlsMenuButtons;
     private TMP_Text[] controlsMenuTexts;
-
-    private Vector3 continueOriginalPosition;
 
     private int currentIndex = -1;
     private int currentControlsIndex = -1;
@@ -97,12 +88,9 @@ public class MenuManager : MonoBehaviour
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         player?.GetComponent<TopDown.Movement.PlayerMover>()?.SetInputLocked(true);
 
-        menuButtons = new[] { bonusButton, continueButton, tutorialButton, startButton, controlsButton, quitButton };
-        menuTexts = new[] { bonusText, continueText, tutorialText, startText, controlsText, quitText };
-        menuArrows = new[] { bonusArrow, continueArrow, tutorialArrow, startArrow, controlsArrow, quitArrow };
-
-        if (continueButton != null)
-            continueOriginalPosition = continueButton.transform.position;
+        menuButtons = new[] { continueButton, tutorialButton, startButton, controlsButton, quitButton };
+        menuTexts = new[] { continueText, tutorialText, startText, controlsText, quitText };
+        menuArrows = new[] { continueArrow, tutorialArrow, startArrow, controlsArrow, quitArrow };
 
         controlsMenuButtons = new[] { cancelControlsButton, confirmControlsButton };
         controlsMenuTexts = new[] { cancelText, confirmText };
@@ -139,9 +127,6 @@ public class MenuManager : MonoBehaviour
 
         if (continueButton != null)
             continueButton.onClick.AddListener(OnContinueGame);
-
-        if (bonusButton != null)
-            bonusButton.onClick.AddListener(OnBonusPressed);
 
         // Tutorial is default highlighted option
         SetSelection(GetMenuButtonIndex(tutorialButton), false);
@@ -408,24 +393,13 @@ public class MenuManager : MonoBehaviour
     private void UpdateContinueButtonVisibility()
     {
         bool showContinue = LevelLoader.Instance != null && LevelLoader.Instance.HasSavedGame;
-        bool showBonus = GameProgress.IsBeaten && bonusButton != null;
 
         if (continueButton != null)
             continueButton.gameObject.SetActive(showContinue);
 
-        if (bonusButton != null)
-            bonusButton.gameObject.SetActive(showBonus);
-
-        if (continueButton != null)
-        {
-            bool moveContinue = showBonus && continuePositionWhenBonusUnlocked != null;
-            continueButton.transform.position = moveContinue
-                ? continuePositionWhenBonusUnlocked.position
-                : continueOriginalPosition;
-        }
-
         ConfigureNavigation();
 
+        // If the highlighted button just got hidden, move the highlight to the first visible one
         if (currentIndex >= 0 && !IsUsable(menuButtons[currentIndex]))
             SetSelection(FirstActiveIndex(), false);
     }
@@ -472,30 +446,6 @@ public class MenuManager : MonoBehaviour
     {
         PlayUiSound(clickClip, clickVolume);
         newGameConfirmManager?.Open(NewGameConfirmManager.NewGameConfirmSource.MainMenuTutorial);
-    }
-
-    // -- BONUS  --
-    private void OnBonusPressed()
-    {
-        if (LevelLoader.Instance == null || string.IsNullOrEmpty(bonusSceneName))
-            return;
-
-        PlayUiSound(clickClip, clickVolume);
-        AudioManager.Instance?.PlayMusic(AudioManager.Instance.musicClip);
-
-        // Resume time
-        Time.timeScale = 1f;
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
-        player?.GetComponent<TopDown.Movement.PlayerMover>()?.SetInputLocked(false);
-
-        if (controlsMenuPanel != null)
-            controlsMenuPanel.SetActive(false);
-
-        if (menuPanel != null)
-            menuPanel.SetActive(false);
-
-        gameObject.GetComponent<MenuManager>().enabled = false;
-        LevelLoader.Instance.LoadLevel(bonusSceneName);
     }
 
     // -- OPEN CONTROLS --

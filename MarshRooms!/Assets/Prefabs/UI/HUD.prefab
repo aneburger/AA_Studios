@@ -16055,7 +16055,6 @@ GameObject:
   - component: {fileID: 398054369855910758}
   - component: {fileID: 7115363292743406181}
   - component: {fileID: 3422429070844907380}
-  - component: {fileID: 5928548300580764037}
   m_Layer: 0
   m_Name: HUD
   m_TagString: Untagged
@@ -16155,11 +16154,6 @@ MonoBehaviour:
   controlsArrow: {fileID: 6701835849815087829}
   quitArrow: {fileID: 6815304113603828682}
   continueArrow: {fileID: 6466695609656574264}
-  bonusButton: {fileID: 0}
-  bonusText: {fileID: 0}
-  bonusArrow: {fileID: 0}
-  bonusSceneName: Endless
-  continuePositionWhenBonusUnlocked: {fileID: 0}
   hoverClip: {fileID: 8300000, guid: 628151bdb07a41447ab80ee8c3f2abc3, type: 3}
   clickClip: {fileID: 8300000, guid: 0f47ab1cfdc3f0d4c90e50f3a42b2ecc, type: 3}
   hoverVolume: 0.3
@@ -16341,24 +16335,6 @@ MonoBehaviour:
   selectedColor: {r: 1, g: 0.95686275, b: 0.9372549, a: 1}
   normalColor: {r: 0.28627452, g: 0.16470589, b: 0.16862746, a: 1}
   quitConfirmManager: {fileID: 398054369855910758}
---- !u!114 &5928548300580764037
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7085789729006638418}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2ad2702286c66aa42ba9984c37c77486, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MenuProgressVisuals
-  defaultMarsh: {fileID: 0}
-  beatenMarsh: {fileID: 0}
-  inProgressMarsh: {fileID: 0}
-  inProgressOverridesBeaten: 1
-  menuPanel: {fileID: 0}
-  forceBeatenForTesting: 0
 --- !u!1 &7113318054974599020
 GameObject:
   m_ObjectHideFlags: 0

@@ -107,6 +107,14 @@ public class DialogueUI : MonoBehaviour
 
         if (dimOverlay != null)
         {
+            // A fade-out from the previous dialogue may still be running. If it isn't stopped it keeps lowering
+            // the alpha and finally switches the overlay off, so the new dialogue shows without its backdrop.
+            if (dimFadeCoroutine != null)
+            {
+                StopCoroutine(dimFadeCoroutine);
+                dimFadeCoroutine = null;
+            }
+
             dimOverlay.gameObject.SetActive(true);
             dimOverlay.alpha = dimMaxAlpha;
         }
