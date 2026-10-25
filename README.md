@@ -8,7 +8,7 @@ Members:
     Ané Burger - 24565068
 
 Game Title: MarshRooms!
-
+----------------------
 **Running the game:**
 
 Double click on the MarshRooms!.exe file to open the game.
