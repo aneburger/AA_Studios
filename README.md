@@ -26,5 +26,3 @@ markers to progress through the game with ease.
 
 To access it, open the in-game Pause Menu and navigate to the Options menu. 
 Then, toggle the “Open Cheats” button located below the Options menu to open the Cheats panel.
-
-
