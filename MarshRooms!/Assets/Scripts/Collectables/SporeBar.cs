@@ -142,24 +142,33 @@ public class SporeBar : MonoBehaviour
     // -- SHOW READY PROMPT --
     private void ShowReadyPrompt()
     {
-        if (readyPrompt != null && !readyPrompt.activeSelf)
-        {
-            promptRect.SetParent(shakeTarget.parent, false);
-            promptRect.anchoredPosition = new Vector2(
-                originalAnchoredPosition.x + shakeTarget.rect.width + (promptRect.rect.width * 0.5f) + readyPromptOffset.x,
-                originalAnchoredPosition.y + readyPromptOffset.y);
-            readyPrompt.SetActive(true);
-        }
-
-        if (!isSporeReadyActive)
-        {
-            isSporeReadyActive = true;
-
-            if (SporeManager.Instance != null && SporeManager.Instance.ConsumeReadyAudioSuppression())
+            if (readyPrompt == null || promptRect == null || shakeTarget == null)
                 return;
 
-            AudioManager.Instance?.PlaySFX(sporeReadyClip, sporeReadyVolume);
-        }
+            if (!readyPrompt.activeSelf)
+            {
+                promptRect.SetParent(shakeTarget, false);
+
+                promptRect.anchorMin = new Vector2(1f, 0.5f);
+                promptRect.anchorMax = new Vector2(1f, 0.5f);
+                promptRect.pivot = new Vector2(0f, 0.5f);
+                promptRect.anchoredPosition = readyPromptOffset;
+
+                readyPrompt.SetActive(true);
+            }
+
+            if (!isSporeReadyActive)
+            {
+                isSporeReadyActive = true;
+
+                if (SporeManager.Instance != null &&
+                    SporeManager.Instance.ConsumeReadyAudioSuppression())
+                {
+                    return;
+                }
+
+                AudioManager.Instance?.PlaySFX(sporeReadyClip, sporeReadyVolume);
+            }
     }
 
     // -- HIDE READY PROMPT --
